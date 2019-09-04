@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3eabfa25-21fe-4782-b625-e1edd432236c" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/datetimes.py" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/2019-08-29-subprocess.py" afterPath="$PROJECT_DIR$/2019-08-29-subprocess.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/2019-09-02-logging-traceback.py" afterPath="$PROJECT_DIR$/2019-09-02-logging-traceback.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Python_Core_technology_and_actual_combat/06-input_output.py" afterPath="$PROJECT_DIR$/Python_Core_technology_and_actual_combat/06-input_output.py" />
     </list>
     <ignored path="python_note.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -23,21 +26,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
-        <entry file="file://D:/python/Lib/logging/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="145">
-              <caret line="1712" column="4" selection-start-line="1712" selection-start-column="4" selection-end-line="1712" selection-end-column="4" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="2019-09-02-logging-traceback.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="2019-09-02-logging-traceback.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/2019-09-02-logging-traceback.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="671">
-              <caret line="78" column="56" selection-start-line="78" selection-start-column="17" selection-end-line="78" selection-end-column="56" />
+            <state relative-caret-position="152">
+              <caret line="8" column="16" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="16" />
               <folding>
                 <element signature="e#41#56#0" expanded="true" />
               </folding>
@@ -45,11 +38,97 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="sql_connector.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sql_connector.py">
+      <file leaf-file-name="2019-09-04-logging.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/2019-09-04-logging.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="348">
-              <caret line="127" column="24" selection-start-line="127" selection-start-column="24" selection-end-line="127" selection-end-column="24" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="06-input_output_file.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Python_Core_technology_and_actual_combat/06-input_output_file.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1919">
+              <caret line="101" column="3" selection-start-line="101" selection-start-column="3" selection-end-line="101" selection-end-column="3" />
+              <folding>
+                <element signature="e#50#59#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="out.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Python_Core_technology_and_actual_combat/out.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="766">
+              <caret line="125" column="0" selection-start-line="125" selection-start-column="0" selection-end-line="127" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="2019-09-03-iter_function.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/2019-09-03-iter_function.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="342">
+              <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="2019-09-03-datetimes.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/2019-09-03-datetimes.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="171">
+              <caret line="12" column="36" selection-start-line="40" selection-start-column="6" selection-end-line="40" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mysql_error_monitor_py2.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../work/2019-09-03-监控数据库错误日志/mysql_error_monitor_py2.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="296">
+              <caret line="50" column="13" selection-start-line="50" selection-start-column="8" selection-end-line="50" selection-end-column="13" />
+              <folding>
+                <element signature="e#40#50#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="2019-08-29-subprocess.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/2019-08-29-subprocess.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="394">
+              <caret line="40" column="10" selection-start-line="40" selection-start-column="0" selection-end-line="54" selection-end-column="53" />
+              <folding>
+                <element signature="e#41#59#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="2019-09-03-regulars.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/2019-09-03-regulars.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="133">
+              <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="2019-09-03-mysql_error.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../work/2019-09-03-监控数据库错误日志/2019-09-03-mysql_error.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="95">
+              <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -66,6 +145,15 @@
         <option value="$PROJECT_DIR$/2019-09-02-traceback.py" />
         <option value="$PROJECT_DIR$/2019-09-02-logging.py" />
         <option value="$PROJECT_DIR$/sql_connector.py" />
+        <option value="$PROJECT_DIR$/Python_Core_technology_and_actual_combat/06-input_output.py" />
+        <option value="$PROJECT_DIR$/2019-08-29-subprocess.py" />
+        <option value="$PROJECT_DIR$/mydata.txt" />
+        <option value="$PROJECT_DIR$/Python_Core_technology_and_actual_combat/06-input_output_file.py" />
+        <option value="$PROJECT_DIR$/2019-09-03-regular.py" />
+        <option value="$PROJECT_DIR$/2019-09-03-regulars.py" />
+        <option value="$PROJECT_DIR$/../../work/2019-09-03-监控数据库错误日志/2019-09-03-mysql_error.py" />
+        <option value="$PROJECT_DIR$/2019-09-03-iter_function.py" />
+        <option value="$PROJECT_DIR$/2019-09-03-datetimes.py" />
         <option value="$PROJECT_DIR$/2019-09-02-logging-traceback.py" />
       </list>
     </option>
@@ -121,6 +209,20 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="python_note" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="python_note" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Python_Core_technology_and_actual_combat" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -128,8 +230,8 @@
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
-  <component name="RunManager" selected="Python.sql_connector">
-    <configuration default="false" name="2019-09-02-logging" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.2019-09-02-logging-traceback">
+    <configuration default="false" name="2019-09-03-iter_function" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -141,12 +243,12 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="python_note" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/2019-09-02-logging.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/2019-09-03-iter_function.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="2019-09-02-traceback" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="false" name="2019-09-03-regulars" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -158,7 +260,41 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="python_note" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/2019-09-02-traceback.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/2019-09-03-regulars.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="2019-09-03-mysql_error" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../work/2019-09-03-监控数据库错误日志" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="python_note" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../work/2019-09-03-监控数据库错误日志/2019-09-03-mysql_error.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="2019-09-03-datetimes" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="python_note" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/2019-09-03-datetimes.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -176,23 +312,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="python_note" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/2019-09-02-logging-traceback.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
-    <configuration default="false" name="sql_connector" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="python_note" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sql_connector.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -331,18 +450,20 @@
       <option name="USE_KEYWORD" value="false" />
       <method />
     </configuration>
-    <list size="4">
-      <item index="0" class="java.lang.String" itemvalue="Python.2019-09-02-logging" />
-      <item index="1" class="java.lang.String" itemvalue="Python.2019-09-02-traceback" />
-      <item index="2" class="java.lang.String" itemvalue="Python.2019-09-02-logging-traceback" />
-      <item index="3" class="java.lang.String" itemvalue="Python.sql_connector" />
+    <list size="5">
+      <item index="0" class="java.lang.String" itemvalue="Python.2019-09-03-iter_function" />
+      <item index="1" class="java.lang.String" itemvalue="Python.2019-09-03-regulars" />
+      <item index="2" class="java.lang.String" itemvalue="Python.2019-09-03-mysql_error" />
+      <item index="3" class="java.lang.String" itemvalue="Python.2019-09-03-datetimes" />
+      <item index="4" class="java.lang.String" itemvalue="Python.2019-09-02-logging-traceback" />
     </list>
     <recent_temporary>
-      <list size="4">
-        <item index="0" class="java.lang.String" itemvalue="Python.sql_connector" />
-        <item index="1" class="java.lang.String" itemvalue="Python.2019-09-02-logging-traceback" />
-        <item index="2" class="java.lang.String" itemvalue="Python.2019-09-02-logging" />
-        <item index="3" class="java.lang.String" itemvalue="Python.2019-09-02-traceback" />
+      <list size="5">
+        <item index="0" class="java.lang.String" itemvalue="Python.2019-09-02-logging-traceback" />
+        <item index="1" class="java.lang.String" itemvalue="Python.2019-09-03-datetimes" />
+        <item index="2" class="java.lang.String" itemvalue="Python.2019-09-03-iter_function" />
+        <item index="3" class="java.lang.String" itemvalue="Python.2019-09-03-mysql_error" />
+        <item index="4" class="java.lang.String" itemvalue="Python.2019-09-03-regulars" />
       </list>
     </recent_temporary>
   </component>
@@ -366,7 +487,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12864584" sideWeight="0.5" order="-1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12864584" sideWeight="0.5" order="-1" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -426,13 +547,139 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Python_Core_technology_and_actual_combat/06-input_output_json.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="424">
+          <caret line="75" column="0" selection-start-line="75" selection-start-column="0" selection-end-line="76" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mydata.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="1" column="19" selection-start-line="1" selection-start-column="19" selection-end-line="1" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Python_Core_technology_and_actual_combat/in.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/python/Lib/subprocess.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="692" column="63" selection-start-line="692" selection-start-column="63" selection-end-line="692" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Python_Core_technology_and_actual_combat/06-input_output.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="82">
+          <caret line="50" column="35" selection-start-line="50" selection-start-column="33" selection-end-line="50" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Python_Core_technology_and_actual_combat/out.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="766">
+          <caret line="125" column="0" selection-start-line="125" selection-start-column="0" selection-end-line="127" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/2019-09-03-regular.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="5" column="9" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/2019-09-03-regulars.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../work/2019-09-03-监控数据库错误日志/2019-09-03-mysql_error.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/2019-08-29-subprocess.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="394">
+          <caret line="40" column="10" selection-start-line="40" selection-start-column="0" selection-end-line="54" selection-end-column="53" />
+          <folding>
+            <element signature="e#41#59#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Python_Core_technology_and_actual_combat/06-input_output_file.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1919">
+          <caret line="101" column="3" selection-start-line="101" selection-start-column="3" selection-end-line="101" selection-end-column="3" />
+          <folding>
+            <element signature="e#50#59#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/2019-09-03-iter_function.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/2019-09-03-datetimes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="12" column="36" selection-start-line="40" selection-start-column="6" selection-end-line="40" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../work/2019-09-03-监控数据库错误日志/mysql_error_monitor_py2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="296">
+          <caret line="50" column="13" selection-start-line="50" selection-start-column="8" selection-end-line="50" selection-end-column="13" />
+          <folding>
+            <element signature="e#40#50#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/2019-09-02-logging-traceback.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="671">
-          <caret line="78" column="56" selection-start-line="78" selection-start-column="17" selection-end-line="78" selection-end-column="56" />
+        <state relative-caret-position="152">
+          <caret line="8" column="16" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="16" />
           <folding>
             <element signature="e#41#56#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/2019-09-04-logging.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

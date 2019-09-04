@@ -1,0 +1,3 @@
+2019-01-20T22:57:01.297650Z 2 [Warning] InnoDB: Table mysql/innodb_table_stats has length mismatch in the column name table_name.  Please run mysql_upgrade
+2018-05-03T06:45:17.124884Z 0 [Note] Starting crash recovery...
+2018-05-03T06:45:17.124971Z 0 [Note] Crash recovery finished.

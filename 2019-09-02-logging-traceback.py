@@ -17,7 +17,7 @@ if __name__ == '__main__':
         func(1, 0)
     except Exception as e:
 
-        # print(e)
+        print(e)
         ### 输出 ###
         """
         division by zero
@@ -28,6 +28,7 @@ if __name__ == '__main__':
         """
         division by zero
         """
+
         # logger.error(traceback.print_exc())
         ### 输出 ###
         """
@@ -71,10 +72,15 @@ if __name__ == '__main__':
 
     """
     思考：
-        在项目中如何看到 这些信息 logger.error(f"MySQL语句执行报错，语句：{sql}，错误信息{traceback.format_exc()}")
+        在Django项目中如何看到 这些信息 logger.error(f"MySQL语句执行报错，语句：{sql}，错误信息{traceback.format_exc()}")
+        答： 需要在 settings文件下配置， 可以把通过 logging 写入到文件中
 
     Logging：
-        https://mp.weixin.qq.com/s/iZEjyEoxVUQ5cner2VY1kg
+        相关参考：
+         https://mp.weixin.qq.com/s/iZEjyEoxVUQ5cner2VY1kg
+         https://m.php.cn/article/424426.html
+         https://my.oschina.net/u/2474096/blog/800992
+
 
         logging 模块可以让你跟踪代码运行时的事件，当程序崩溃时可以查看日志并且发现是什么引发了错误。
 
