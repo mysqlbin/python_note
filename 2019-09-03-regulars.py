@@ -20,5 +20,9 @@ if m_search is not None:
 
 
 
+my_dict = {'a': 'c'}
+
+if not bool(my_dict):
+    print("Dictionary is empty")
 
 

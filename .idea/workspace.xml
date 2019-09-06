@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3eabfa25-21fe-4782-b625-e1edd432236c" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/2019-09-03-datetimes.py" afterPath="$PROJECT_DIR$/2019-09-03-datetimes.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/2019-09-03-regulars.py" afterPath="$PROJECT_DIR$/2019-09-03-regulars.py" />
     </list>
     <ignored path="python_note.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -90,7 +90,7 @@
       <file leaf-file-name="mysql_error_monitor_py2.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../work/2019-09-03-监控数据库错误日志/mysql_error_monitor_py2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="524">
+            <state relative-caret-position="380">
               <caret line="50" column="13" selection-start-line="50" selection-start-column="8" selection-end-line="50" selection-end-column="13" />
               <folding>
                 <element signature="e#40#50#0" expanded="true" />
@@ -114,8 +114,8 @@
       <file leaf-file-name="2019-09-03-regulars.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/2019-09-03-regulars.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="133">
-              <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
+            <state relative-caret-position="361">
+              <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -137,19 +137,18 @@
         <option value="$PROJECT_DIR$/mydata.txt" />
         <option value="$PROJECT_DIR$/Python_Core_technology_and_actual_combat/06-input_output_file.py" />
         <option value="$PROJECT_DIR$/2019-09-03-regular.py" />
-        <option value="$PROJECT_DIR$/2019-09-03-regulars.py" />
         <option value="$PROJECT_DIR$/../../work/2019-09-03-监控数据库错误日志/2019-09-03-mysql_error.py" />
         <option value="$PROJECT_DIR$/2019-09-03-iter_function.py" />
         <option value="$PROJECT_DIR$/2019-09-02-logging-traceback.py" />
         <option value="$PROJECT_DIR$/2019-09-03-datetimes.py" />
+        <option value="$PROJECT_DIR$/2019-09-03-regulars.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="y" value="3" />
+    <option name="width" value="1024" />
+    <option name="height" value="726" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -203,7 +202,7 @@
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
-  <component name="RunManager" selected="Python.2019-09-03-datetimes">
+  <component name="RunManager" selected="Python.2019-09-03-regulars">
     <configuration default="false" name="2019-09-03-iter_function" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -432,11 +431,11 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.2019-09-03-datetimes" />
-        <item index="1" class="java.lang.String" itemvalue="Python.2019-09-02-logging-traceback" />
-        <item index="2" class="java.lang.String" itemvalue="Python.2019-09-03-iter_function" />
-        <item index="3" class="java.lang.String" itemvalue="Python.2019-09-03-mysql_error" />
-        <item index="4" class="java.lang.String" itemvalue="Python.2019-09-03-regulars" />
+        <item index="0" class="java.lang.String" itemvalue="Python.2019-09-03-regulars" />
+        <item index="1" class="java.lang.String" itemvalue="Python.2019-09-03-datetimes" />
+        <item index="2" class="java.lang.String" itemvalue="Python.2019-09-02-logging-traceback" />
+        <item index="3" class="java.lang.String" itemvalue="Python.2019-09-03-iter_function" />
+        <item index="4" class="java.lang.String" itemvalue="Python.2019-09-03-mysql_error" />
       </list>
     </recent_temporary>
   </component>
@@ -457,10 +456,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="0" y="3" width="1024" height="726" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12864584" sideWeight="0.5" order="-1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24503969" sideWeight="0.5" order="-1" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -630,16 +629,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../work/2019-09-03-监控数据库错误日志/mysql_error_monitor_py2.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="524">
-          <caret line="50" column="13" selection-start-line="50" selection-start-column="8" selection-end-line="50" selection-end-column="13" />
-          <folding>
-            <element signature="e#40#50#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/2019-09-03-datetimes.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="614">
@@ -648,10 +637,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../../work/2019-09-03-监控数据库错误日志/mysql_error_monitor_py2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="50" column="13" selection-start-line="50" selection-start-column="8" selection-end-line="50" selection-end-column="13" />
+          <folding>
+            <element signature="e#40#50#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/2019-09-03-regulars.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
+        <state relative-caret-position="361">
+          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
           <folding />
         </state>
       </provider>
