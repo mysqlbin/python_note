@@ -52,11 +52,15 @@ def find_largest_element(l):
 
 
 find_largest_element([8, 1, -3, 2, 0])
-
+"""
+    定义了函数 find_largest_element，作用是遍历输入的列表，找出最大的值并打印。
+    当我们调用它，并传递列表  [8, 1, -3, 2, 0]  作为参数时，程序就会输出 largest element is: 8
+"""
 # 输出
 """
 largest element is: 8
 """
+
 
 #函数要在调用之前先声明好
 """
