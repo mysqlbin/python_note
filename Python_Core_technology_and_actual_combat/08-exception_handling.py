@@ -4,6 +4,8 @@
 
 # 默认用户输入以逗号相隔的两个整型数字,将其提取后,做后续的操作
 
+
+
 #场景1
 """
 如果输入 a,b
@@ -13,7 +15,7 @@
         所以 except block便会被执行
         最终输出 Value Error: invalid literal for int() with base 10: 'a' 并打印出 continue;
 """
-"""
+
 try:
     s = input('please enter two numbers separated by comma: ')
     num1 = int(s.split(',')[0].strip())
@@ -23,7 +25,7 @@ except ValueError as err:
     print('Value Error: {}'.format(err))
 
 print('continue')
-"""
+
 
 ########## 输出下面注释的内容 ##############
 """
@@ -59,7 +61,7 @@ IndexError: list index out of range
 # 1. 在 except block中加入多种异常的类型
     # 在每次程序执行时, except block 中只要有一个 exception 类型与实际匹配即可.
 # 写法1
-"""
+
 try:
     s = input('please enter two numbers separated by comma: ')
     num1 = int(s.split(',')[0].strip())
@@ -68,21 +70,22 @@ try:
 except (ValueError, IndexError) as err:
     print('Error: {}'.format(err))
 print('continue')
-"""
 
-"""
-#输入值 1
+
+### 输入值 1 ###
+### 输出 ###
 please enter two numbers separated by comma: 1
 Error: list index out of range
 continue
 
-#输入值 1, b
+### 输入值 1, b ###
+### 输出 ###
 Error: invalid literal for int() with base 10: 'b'
 continue
-"""
+
 
 # 写法2
-"""
+
 try:
     s = input('please enter two numbers separated by comma: ')
     num1 = int(s.split(',')[0].strip())
@@ -94,13 +97,17 @@ except ValueError as err:
     print('ValueError: {}'.format(err))
 
 print('continue')
-"""
 
-"""
-输入值: 1,b
+### 输入值 1 ###
+### 输出 ###
+IndexError: list index out of range
+continue
+
+### 输入值 1, b ###
+### 输出 ###
 ValueError: invalid literal for int() with base 10: 'b'
 continue
-"""
+
 
 """
 输入值: 1
@@ -114,7 +121,7 @@ continue
 # Exception 是其他所有非系统异常的基类, 能够匹配任意非系统异常.
 
 #写法1:
-"""
+
 try:
     s = input('please enter two numbers separated by comma: ')
     num1 = int(s.split(',')[0].strip())
@@ -127,7 +134,7 @@ except ValueError as err:
 except Exception as err:
     print('Other error: {}'.format(err))
 print('continue')
-"""
+
 
 
 """
@@ -150,7 +157,7 @@ continue
 
 #写法2:
 #也可以在 except 后面省略异常类型， 表示与任意异常匹配（包括系统异常等）
-"""
+
 try:
     s = input('please enter two numbers separated by comma: ')
     num1 = int(s.split(',')[0].strip())
@@ -163,7 +170,7 @@ except ValueError as err:
 except:
     print('Other error')
 print('continue')
-"""
+
 
 
 
@@ -181,7 +188,7 @@ print('continue')
 """
 # 在文件读取的场景中使用 finally
 """
-"""
+
 import sys
 try:
     f = open('file.txt', 'r')
@@ -192,7 +199,6 @@ except:
     print('Unexpected error:', sys.exc_info()[0])
 finally:
     f.close()
-"""
 
 """
 分析：
@@ -202,3 +208,16 @@ try block 尝试读取 file.txt 这个文件，并对其中的数据进行一系
 
 """
 
+
+try:
+    data = json.loads(raw_data)
+    ....
+except JSONDecodeError as err:
+    print('JSONDecodeError: {}'.format(err))
+
+
+
+
+if 'dob' in d:
+    value = d['dob']
+    ...
