@@ -4,6 +4,7 @@
 import argparse
 import sys
 import logging
+import re
 
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
@@ -55,6 +56,7 @@ def parse_args():
    parser.add_argument('-soT', '--source-table', dest='source_table', help='source table', type=str)
    parser.add_argument('-deD', '--dest-database', dest='dest_database', help='dest database', type=str)
    parser.add_argument('-deT', '--dest-table', dest='dest_table', help='dest table', type=str)
+   parser.add_argument('-beforeDay', '--before-data', dest='before_day', help='before day', type=int)
 
    return parser
 
@@ -76,11 +78,19 @@ if __name__ == '__main__':
     args = command_line_args(sys.argv[1:])   #接收参数
     source_database = args.source_database
     source_table = args.source_table
-    if source_database == '' or source_table == '':
+    before_day = args.before_day
+
+    if source_database == '' or source_table == '' or before_day == '':
         print('test')
         logger.error('source_database is Null or source_table is null')
         exit()
-    print(args.source_database)
-    print(args.source_table)
-    print(args.dest_database)
-    print(args.dest_table)
+
+    if before_day > 0:
+        logger.error('The date format does not match . exit')
+        exit()
+
+    # print(args.source_database)
+    # print(args.source_table)
+    # print(args.dest_database)
+    # print(args.dest_table)
+    # print(before_day)

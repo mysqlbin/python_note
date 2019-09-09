@@ -16,7 +16,7 @@ if not a:
     if seconds_behind_master != 0:
         print(1111)
 
-b
+
 
 # 1.None表示空，但它不等于空字符串、空列表，也不等同于False，通过下面的代码进行验证:
 """

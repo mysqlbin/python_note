@@ -38,17 +38,16 @@ print(default_time)
 # print(month)
 # print(day)
 
-now = datetime.datetime.now()
-year = now.strftime('%Y')
-month = now.strftime('%m')
-# day = now.strftime('%d')
+# now = datetime.datetime.now()
+# year = now.strftime('%Y')
+# month = now.strftime('%m')
+# # day = now.strftime('%d')
+#
+# current_time = time.strftime("%Y-%m-%d")
+# current_time = datetime.datetime.strptime(current_time, '%Y-%m-%d') + datetime.timedelta(days=-1)
+# day = current_time.strftime('%d')
 
-current_time = time.strftime("%Y-%m-%d")
-current_time = datetime.datetime.strptime(current_time, '%Y-%m-%d') + datetime.timedelta(days=-1)
-day = current_time.strftime('%d')
 
 
-filename = f'/data/mysql/mysql3306/data/error.log-{year}{month}{day}'
-print(filename)
 
 
