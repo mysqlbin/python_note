@@ -1,18 +1,25 @@
 #!/usr/local/bin/python3
 #coding=utf-8
 
+name = 'jason'
+city = 'beijing'
+text = "welcome to jike shijian"
+
+
+
 #字符串的格式
 s1 = 'hello'
 s2 = "hello"
 s3 = """hello"""
-"""
 s1 == s2 == s3
 True
-"""
+
 
 #在字符串中，内嵌带引号的字符串：
 strs = "I'm mysqlbin"
 print(strs)
+### 输出 ###
+
 # strs = 'I'm mysqlbin' 格式错误
 
 #Python 的三引号字符串，则主要应用于多行字符串的情境，比如函数的注释等等。
@@ -28,15 +35,26 @@ def calculate_similarity(item1, item2):
 
 #python的转义字符
 
-s = 'a\nb\t\c'
-print(s)
-"""
+str = 'a\nb\t\c'
+print(str)
+### l输出 ###
 a
 b	\c
-"""
+
 
 #虽然打印的输出横跨了两行，但是整个字符串 s 仍然只有5个元素：
 print(len(s))
+
+name = 'json'
+for char in name:
+    print(char)
+### 输出 ###
+j
+a
+s
+o
+n
+
 
 
 #字符串的常用操作
@@ -53,6 +71,8 @@ n
 
 
 #在转义字符的应用中，最常见的就是换行符 '\n' 的使用。比如文件读取，如果我们一行行地读取，那么每一行字符串的末尾，都会包含换行符 '\n' 。而最后做数据处理时，我们往往会丢掉每一行的换行符。
+
+
 
 #拼接字符串
 #使用 '+=' 操作符拼接字符串：
@@ -76,10 +96,14 @@ print(lists)
 # split()， 表示把字符串按照 separator（分割符）  分割成子字符串，并返回一个分割后子字符串组合的列表。
 
 path = 'hive://ads/training_table'
-namespace = path.split('//')[1].split('/')[0] # 返回'ads'
-table = path.split('//')[1].split('/')[1] # 返回 'training_table'
+namespace = path.split('//')[1].split('/')[0]
+table = path.split('//')[1].split('/')[1]
 print(namespace)
+### 输出 ###
+'ads'
 print(table)
+### 输出 ###
+'training_table'
 #拆分
 str_a = path.split("//")  #返回一个列表 ['hive:', 'ads/training_table']
 str_b = str_a[1]           # ads/training_table
@@ -104,10 +128,16 @@ string.find(sub, start, end)
 id = 1
 name = 'bin'
 print('no data available for person with id: {}, name: {}'.format(id, name))
-#no data available for person with id: 1, name: bin
+### 输出 ####no data available for person with id: 1, name: bin
 #之前版本中，字符串格式化通常用 % 来表示， %s 表示字符串，%d表示整型
 print('no data available for person with id: %s, name: %s' % (id, name))
 #no data available for person with id: 1, name: bin
 
+
+
+
+id = 1
+name = bin
+print('no data available for person with id: {bin}, name: {name}')
 
 
