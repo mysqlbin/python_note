@@ -10,3 +10,7 @@ if len(list) == 0:
     print('empty list2')
 
 
+
+a = 1
+b = a
+a = a + 1
