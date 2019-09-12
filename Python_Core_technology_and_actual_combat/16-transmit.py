@@ -37,6 +37,15 @@ list_01.append(4)
 print(list_01)
 print(list_02)
 
+l1 = [1, 2, 3]
+l2 = l1
+l1.append(4)
+l1
+[1, 2, 3, 4]
+l2
+[1, 2, 3, 4]
+
+
 """
 return [1,2,3,4]
 return [1,2,3,4]
@@ -57,12 +66,13 @@ l1和l2 同时指向这个列表， l1和l2 的值就都变为了 [1,2,3,4]
 
 
 
+
 def my_func1(b):
     b = 2
 
 a = 1
 my_func1(a)
-print(a)
+
 #return 1
 
 

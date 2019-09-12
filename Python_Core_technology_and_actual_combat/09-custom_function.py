@@ -127,3 +127,84 @@ world
 
 
 
+
+MIN_VALUE = 1
+MAX_VALUE = 10
+def validation_check(value):
+    global MIN_VALUE
+    ...
+    MIN_VALUE += 1
+    ...
+validation_check(5)
+
+
+MIN_VALUE = 1
+MAX_VALUE = 10
+def validation_check(value):
+    MIN_VALUE = 3
+    ...
+
+
+
+def outer():
+    x = "local"
+    def inner():
+        x = 'nonlocal' # 这里的 x 是 inner 这个函数的局部变量
+        print("inner:", x)
+    inner()
+    print("outer:", x)
+outer()
+# 输出
+"""
+inner: nonlocal
+outer: local
+"""
+
+# 闭包
+# 使用闭包计算一个数的 N次幂
+def nth_power(exponent):
+    def exponent_of(base):
+        return base ** exponent
+    return exponent_of # 返回值是 exponent_of 函数
+
+square = nth_power(2) # 计算一个数的平方
+cube = nth_power(3) # 计算一个数的立方
+print(square)
+print(cube)
+"""
+# 输出
+<function __main__.nth_power.<locals>.exponent(base)>
+
+# 输出
+<function __main__.nth_power.<locals>.exponent(base)>
+"""
+print(square(2))  # 计算 2 的平方
+print(cube(2)) # 计算 2 的立方
+"""
+# 输出
+4 # 2^2
+8 # 2^3
+"""
+
+
+
+
+# 不用毕包计算一个数的 N次幂
+def nth_power_rewrite(base, exponent):
+    return base ** exponent
+
+
+# 不适用闭包
+res1 = nth_power_rewrite(base1, 2)
+res2 = nth_power_rewrite(base2, 2)
+res3 = nth_power_rewrite(base3, 2)
+...
+
+# 使用闭包
+square = nth_power(2)
+res1 = square(base1)
+res2 = square(base2)
+res3 = square(base3)
+...
+
+
