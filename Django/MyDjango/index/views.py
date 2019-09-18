@@ -90,11 +90,11 @@ def orm_operater(request):
     # 聚合查询
 
     # annotate方法 实现 group by, annotate方法类似于 group by方法, 如果不设置 values, 就会默认对主键进行 group by 分组
-    # p_res = Product.objects.values('name').annotate(Sum('size'))
-    # SELECT `index_product`.`name`, SUM(`index_product`.`size`) AS `size__sum` FROM `index_product` GROUP BY `index_product`.`name` ORDER BY NULL LIMIT 21;
-    # <QuerySet [{'name': 'xiaomi1', 'size__sum': 100.0}, {'name': 'xiaomi2', 'size__sum': 200.0}, {'name': 'mac1', 'size__sum': 100.0}, {'name': 'mac2', 'size__sum': 200.0}]>
+    # p_res = Product.objects.values('name').annotate(sizes_sum = Sum('size'))
+    # SELECT `index_product`.`name`, SUM(`index_product`.`size`) AS `sizes_sum` FROM `index_product` GROUP BY `index_product`.`name` ORDER BY NULL LIMIT 21;
+    # <QuerySet [{'name': 'xiaomi1', 'sizes_sum': 100.0}, {'name': 'xiaomi2', 'sizes_sum': 200.0}, {'name': 'mac1', 'sizes_sum': 100.0}, {'name': 'mac2', 'sizes_sum': 200.0}]>
 
     # aggregate方法 实现 将某个字段的值进行计算并只返回计算结果
-    p_res = Product.objects.aggregate(id_count = Count('id'))
+    # p_res = Product.objects.aggregate(id_count = Count('id'))
     # SELECT COUNT(`index_product`.`id`) AS `id_count` FROM `index_product`;
     # {'id_count': 4}
