@@ -221,3 +221,4 @@ DEBUG 2019-09-18 17:51:45,171 utils 4732 5396 (0.000) SELECT COUNT(`index_produc
 DEBUG 2019-09-18 18:03:28,710 utils 4732 5396 (0.002) SELECT `index_product`.`name`, SUM(`index_product`.`size`) AS `size_sum` FROM `index_product` GROUP BY `index_product`.`name` ORDER BY NULL LIMIT 21; args=()
 DEBUG 2019-09-18 18:04:29,460 utils 4732 5396 (0.001) SELECT `index_product`.`name`, SUM(`index_product`.`size`) AS `sizes_sum` FROM `index_product` GROUP BY `index_product`.`name` ORDER BY NULL LIMIT 21; args=()
 DEBUG 2019-09-18 18:06:12,829 utils 4732 5396 (0.001) SELECT `index_product`.`id`, `index_product`.`name`, `index_product`.`weight`, `index_product`.`size`, `index_product`.`type_id`, SUM(`index_product`.`size`) AS `sizes_sum` FROM `index_product` GROUP BY `index_product`.`id` ORDER BY NULL LIMIT 21; args=()
+DEBUG 2019-09-19 12:14:39,243 utils 4732 5396 (0.000) None; args=()

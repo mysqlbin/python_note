@@ -6,7 +6,31 @@ from index.models import  Product
 from django.http import HttpResponse
 from django.db.models import Q, Sum, Count
 
-def orm_operater(request):
+def orm_operater_many_table(request):
+
+    # 查询模型 Product的字段name 和模型 Type的字段 type_name
+
+    # p_res = Product.objects.select_related('type').values('name', 'type__type_name')
+    #  SELECT `index_product`.`name`, `index_type`.`type_name` FROM `index_product` INNER JOIN `index_type` ON (`index_product`.`type_id` = `index_type`.`id`)
+    # <QuerySet [{'name': 'xiaomi1', 'type__type_name': '手机'}, {'name': 'xiaomi2', 'type__type_name': '手机'}, {'name': 'mac1', 'type__type_name': '平板电脑'}, {'name': 'mac2', 'type__type_name': '平板电脑'}]>
+
+
+    # 查询两个模型的全部数据
+
+    # p_res = Product.objects.select_related('type').all()
+    # SELECT `index_product`.`id`, `index_product`.`name`, `index_product`.`weight`, `index_product`.`size`, `index_product`.`type_id`, `index_type`.`id`, `in dex_type`.`type_name` FROM `index_product` INNER JOIN `index_type` ON (`index_product`.`type_id` = `index_type`.`id`)
+    # <QuerySet [<Product: Product object (1)>, <Product: Product object (2)>, <Product: Product object (3)>, <Product: Product object (4)>]>
+
+
+    # 查询两个模型的数据， 以模型Product 的id大于 2为查询条件
+
+    p_res = Product.objects.select_related('type').filter(id__gt=2)
+    # SELECT `index_product`.`id`, `index_product`.`name`, `index_product`.`weight`, `index_product`.`size`, `index_product`.`type_id`, `index_type`.`id`, `index_type`.`type_name` FROM `index_product` INNER JOIN `index_type` ON (`index_product`.`type_id` = `index_type`.`id`) WHERE `index_product`.`id` > 2 LIMIT 21;
+    # <QuerySet [<Product: Product object (3)>, <Product: Product object (4)>]>
+
+    return HttpResponse(1)
+
+def orm_operate_single_table(request):
 
     # 全表查询
     # 数据以列表形式返回
@@ -98,3 +122,5 @@ def orm_operater(request):
     # p_res = Product.objects.aggregate(id_count = Count('id'))
     # SELECT COUNT(`index_product`.`id`) AS `id_count` FROM `index_product`;
     # {'id_count': 4}
+
+    return HttpResponse(1)
