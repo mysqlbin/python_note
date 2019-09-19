@@ -2,11 +2,32 @@ from django.shortcuts import render
 
 # Create your views here.
 
-from index.models import  Product
+from index.models import  Product, Person
 from django.http import HttpResponse
 from django.db.models import Q, Sum, Count
 
-def orm_operater_many_table(request):
+def orm_operate_three_table(request):
+    # 查询 卢建斌现在居住的省份
+    p_res = Person.objects.select_related('living__province').get(name = '卢建斌')
+
+    """
+     SELECT `index_person`.`id`, `index_person`.`name`, `index_person`.`livin
+    g_id`, `index_city`.`id`, `index_city`.`name`, `index_city`.`provice_id`, `index
+    _provice`.`id`, `index_provice`.`name` FROM `index_person` INNER JOIN `index_cit
+    y` ON (`index_person`.`living_id` = `index_city`.`id`) INNER JOIN `index_provice
+    ` ON (`index_city`.`provice_id` = `index_provice`.`id`) WHERE `index_person`.`na
+    me` = '卢建斌';
+    """
+    print(p_res)
+    # Person object (1)
+
+    print(p_res.living.province)
+    # Province object (1)
+
+    print(p_res.living.province.name)
+    #广东
+
+def orm_operate_many_table(request):
 
     # 查询模型 Product的字段name 和模型 Type的字段 type_name
 
@@ -24,9 +45,30 @@ def orm_operater_many_table(request):
 
     # 查询两个模型的数据， 以模型Product 的id大于 2为查询条件
 
-    p_res = Product.objects.select_related('type').filter(id__gt=2)
+    # p_res = Product.objects.select_related('type').filter(id__gt=2)
     # SELECT `index_product`.`id`, `index_product`.`name`, `index_product`.`weight`, `index_product`.`size`, `index_product`.`type_id`, `index_type`.`id`, `index_type`.`type_name` FROM `index_product` INNER JOIN `index_type` ON (`index_product`.`type_id` = `index_type`.`id`) WHERE `index_product`.`id` > 2 LIMIT 21;
     # <QuerySet [<Product: Product object (3)>, <Product: Product object (4)>]>
+
+    # 查询两个模型的数据，以 模型Type的 type_name字段等于手机为查询条件
+    #p_res = Product.objects.select_related('type').filter(type__type_name='手机')
+    # SELECT `index_product`.`id`, `index_product`.`name`, `index_product`.`weight`, `index_product`.`size`, `index_product`.`type_id`, `index_type`.`id`, `index_type`.`type_name` FROM `index_product` INNER JOIN `index_type` ON (`index_product`.`type_id` = `index_type`.`id`) WHERE `index_type`.`type_name` = '手机' LIMIT 21;
+    # <QuerySet [<Product: Product object (1)>, <Product: Product object (2)>]>
+
+    # 输出 模型Product 信息
+    # print(p_res[0])
+    # SELECT `index_product`.`id`, `index_product`.`name`, `index_product`.`weight`, `index_product`.`size`, `index_product`.`type_id`, `index_type`.`id`, `index_type`.`type_name` FROM `index_product` INNER JOIN `index_type` ON (`index_product`.`type_id` = `index_type`.`id`) WHERE `index_type`.`type_name` = '手机' LIMIT 1;
+    # Product object (1)
+
+    # 输出 模型Product 所关联模型 Type的信息
+
+    #print(p_res[0].type)
+    # SELECT `index_product`.`id`, `index_product`.`name`, `index_product`.`weight`, `index_product`.`size`, `index_product`.`type_id`, `index_type`.`id`, `index_type`.`type_name` FROM `index_product` INNER JOIN `index_type` ON (`index_product`.`type_id` = `index_type`.`id`) WHERE `index_type`.`type_name` = '手机' LIMIT 1;
+    # Type object (1)
+
+    #print(p_res[0].type.type_name)
+    #  SELECT `index_product`.`id`, `index_product`.`name`, `index_product`.`weight`, `index_product`.`size`, `index_product`.`type_id`, `index_type`.`id`, `index_type`.`type_name` FROM `index_product` INNER JOIN `index_type` ON (`index_product`.`type_id` = `index_type`.`id`) WHERE `index_type`.`type_name` = '手机' LIMIT 1;
+    # 手机
+
 
     return HttpResponse(1)
 

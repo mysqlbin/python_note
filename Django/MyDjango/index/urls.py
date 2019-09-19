@@ -18,5 +18,6 @@ from index import views as index_view
 
 
 urlpatterns = [
-    path('orm_operater/', index_view.orm_operate_single_table),
+    path('orm_operate_single_table/', index_view.orm_operate_single_table),
+    path('orm_operate_many_table/', index_view.orm_operate_many_table),
 ]
