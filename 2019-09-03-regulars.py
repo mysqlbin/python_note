@@ -6,7 +6,7 @@
 import re
 
 #match
-str = 'foo abc'
+str = 'foo abc'        # 类似于 like 'foo'
 m = re.match('foo', str)
 if m is not None:
     print(m.group())
@@ -30,4 +30,6 @@ if m_search == None:
 # if not bool(my_dict):
 #     print("Dictionary is empty")
 
-
+sql = "select 2 from t"
+if re.search("\*", sql) is not None:
+    print(1111)
