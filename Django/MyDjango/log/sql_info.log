@@ -1,223 +1,231 @@
-DEBUG 2019-09-18 16:47:19,951 utils 6908 8584 (0.001) SELECT @@SQL_AUTO_IS_NULL; args=None
-DEBUG 2019-09-18 16:47:19,954 utils 6908 8584 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 16:47:19,956 utils 6908 8584 (0.001) SELECT VERSION(); args=None
-DEBUG 2019-09-18 16:47:19,962 utils 6908 8584 (0.001) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 16:47:19,964 utils 6908 8584 (0.001) SELECT `index_product`.`id`, `index_product`.`name`, `index_product`.`weight`, `index_product`.`size`, `index_product`.`type_id` FROM `index_product` WHERE `index_product`.`id` = 2; args=(2,)
-DEBUG 2019-09-18 16:47:34,841 utils 1352 6912 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
-DEBUG 2019-09-18 16:47:34,842 utils 1352 6912 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 16:47:34,843 utils 1352 6912 (0.000) SELECT VERSION(); args=None
-DEBUG 2019-09-18 16:47:34,867 utils 1352 6912 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 16:47:34,868 utils 1352 6912 (0.001) SHOW FULL TABLES; args=None
-DEBUG 2019-09-18 16:47:34,872 utils 1352 6912 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
-DEBUG 2019-09-18 16:47:39,841 utils 3264 6712 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
-DEBUG 2019-09-18 16:47:39,843 utils 3264 6712 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 16:47:39,843 utils 3264 6712 (0.000) SELECT VERSION(); args=None
-DEBUG 2019-09-18 16:47:39,867 utils 3264 6712 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 16:47:39,869 utils 3264 6712 (0.001) SHOW FULL TABLES; args=None
-DEBUG 2019-09-18 16:47:39,872 utils 3264 6712 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
-DEBUG 2019-09-18 16:50:59,970 utils 4724 8496 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
-DEBUG 2019-09-18 16:50:59,971 utils 4724 8496 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 16:50:59,972 utils 4724 8496 (0.000) SELECT VERSION(); args=None
-DEBUG 2019-09-18 16:50:59,996 utils 4724 8496 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 16:50:59,997 utils 4724 8496 (0.001) SHOW FULL TABLES; args=None
-DEBUG 2019-09-18 16:51:00,001 utils 4724 8496 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
-DEBUG 2019-09-18 16:51:46,479 utils 4732 5396 (0.001) SELECT @@SQL_AUTO_IS_NULL; args=None
-DEBUG 2019-09-18 16:51:46,481 utils 4732 5396 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 16:51:46,483 utils 4732 5396 (0.001) SELECT VERSION(); args=None
-DEBUG 2019-09-18 16:51:46,487 utils 4732 5396 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 16:51:46,489 utils 4732 5396 (0.000) SELECT `index_product`.`id`, `index_product`.`name`, `index_product`.`weight`, `index_product`.`size`, `index_product`.`type_id` FROM `index_product` WHERE `index_product`.`id` = 2 LIMIT 21; args=(2,)
-DEBUG 2019-09-18 16:52:51,151 utils 4732 5396 (0.002) SELECT `index_product`.`id`, `index_product`.`name`, `index_product`.`weight`, `index_product`.`size`, `index_product`.`type_id` FROM `index_product` WHERE `index_product`.`id` = 2; args=(2,)
-DEBUG 2019-09-18 16:53:43,888 utils 5116 8380 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
-DEBUG 2019-09-18 16:53:43,889 utils 5116 8380 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 16:53:43,889 utils 5116 8380 (0.000) SELECT VERSION(); args=None
-DEBUG 2019-09-18 16:53:43,920 utils 5116 8380 (0.001) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 16:53:43,922 utils 5116 8380 (0.001) SHOW FULL TABLES; args=None
-DEBUG 2019-09-18 16:53:43,926 utils 5116 8380 (0.001) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
-DEBUG 2019-09-18 16:54:01,101 utils 6140 9056 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
-DEBUG 2019-09-18 16:54:01,102 utils 6140 9056 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 16:54:01,103 utils 6140 9056 (0.000) SELECT VERSION(); args=None
-DEBUG 2019-09-18 16:54:01,128 utils 6140 9056 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 16:54:01,129 utils 6140 9056 (0.000) SHOW FULL TABLES; args=None
-DEBUG 2019-09-18 16:54:01,133 utils 6140 9056 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
-DEBUG 2019-09-18 16:56:24,052 utils 4732 5396 (0.001) SELECT `index_product`.`id`, `index_product`.`name`, `index_product`.`weight`, `index_product`.`size`, `index_product`.`type_id` FROM `index_product` LIMIT 21; args=()
-DEBUG 2019-09-18 16:57:33,816 utils 8476 8872 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
-DEBUG 2019-09-18 16:57:33,817 utils 8476 8872 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 16:57:33,817 utils 8476 8872 (0.000) SELECT VERSION(); args=None
-DEBUG 2019-09-18 16:57:33,843 utils 8476 8872 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 16:57:33,845 utils 8476 8872 (0.001) SHOW FULL TABLES; args=None
-DEBUG 2019-09-18 16:57:33,849 utils 8476 8872 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
-DEBUG 2019-09-18 16:57:41,635 utils 4732 5396 (0.000) SELECT `index_product`.`name` FROM `index_product` LIMIT 21; args=()
-DEBUG 2019-09-18 16:58:06,636 utils 4064 5612 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
-DEBUG 2019-09-18 16:58:06,637 utils 4064 5612 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 16:58:06,638 utils 4064 5612 (0.000) SELECT VERSION(); args=None
-DEBUG 2019-09-18 16:58:06,662 utils 4064 5612 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 16:58:06,663 utils 4064 5612 (0.000) SHOW FULL TABLES; args=None
-DEBUG 2019-09-18 16:58:06,666 utils 4064 5612 (0.001) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
-DEBUG 2019-09-18 16:58:11,705 utils 3344 4668 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
-DEBUG 2019-09-18 16:58:11,706 utils 3344 4668 (0.001) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 16:58:11,707 utils 3344 4668 (0.000) SELECT VERSION(); args=None
-DEBUG 2019-09-18 16:58:11,732 utils 3344 4668 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 16:58:11,734 utils 3344 4668 (0.001) SHOW FULL TABLES; args=None
-DEBUG 2019-09-18 16:58:11,737 utils 3344 4668 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
-DEBUG 2019-09-18 16:58:14,598 utils 7736 5480 (0.001) SELECT @@SQL_AUTO_IS_NULL; args=None
-DEBUG 2019-09-18 16:58:14,599 utils 7736 5480 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 16:58:14,599 utils 7736 5480 (0.000) SELECT VERSION(); args=None
-DEBUG 2019-09-18 16:58:14,623 utils 7736 5480 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 16:58:14,625 utils 7736 5480 (0.001) SHOW FULL TABLES; args=None
-DEBUG 2019-09-18 16:58:14,628 utils 7736 5480 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
-DEBUG 2019-09-18 16:58:49,221 utils 9184 9096 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
-DEBUG 2019-09-18 16:58:49,222 utils 9184 9096 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 16:58:49,223 utils 9184 9096 (0.000) SELECT VERSION(); args=None
-DEBUG 2019-09-18 16:58:49,247 utils 9184 9096 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 16:58:49,248 utils 9184 9096 (0.000) SHOW FULL TABLES; args=None
-DEBUG 2019-09-18 16:58:49,252 utils 9184 9096 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
-DEBUG 2019-09-18 16:59:38,797 utils 4732 5396 (0.001) SELECT `index_product`.`id`, `index_product`.`name`, `index_product`.`weight`, `index_product`.`size`, `index_product`.`type_id` FROM `index_product` WHERE `index_product`.`id` = 2 LIMIT 21; args=(2,)
-DEBUG 2019-09-18 17:00:15,745 utils 8584 7764 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
-DEBUG 2019-09-18 17:00:15,746 utils 8584 7764 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:00:15,747 utils 8584 7764 (0.000) SELECT VERSION(); args=None
-DEBUG 2019-09-18 17:00:15,773 utils 8584 7764 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:00:15,774 utils 8584 7764 (0.000) SHOW FULL TABLES; args=None
-DEBUG 2019-09-18 17:00:15,778 utils 8584 7764 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
-DEBUG 2019-09-18 17:00:42,730 utils 3500 6832 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
-DEBUG 2019-09-18 17:00:42,731 utils 3500 6832 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:00:42,732 utils 3500 6832 (0.000) SELECT VERSION(); args=None
-DEBUG 2019-09-18 17:00:42,757 utils 3500 6832 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:00:42,759 utils 3500 6832 (0.000) SHOW FULL TABLES; args=None
-DEBUG 2019-09-18 17:00:42,763 utils 3500 6832 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
-DEBUG 2019-09-18 17:02:26,002 utils 5608 3140 (0.001) SELECT @@SQL_AUTO_IS_NULL; args=None
-DEBUG 2019-09-18 17:02:26,003 utils 5608 3140 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:02:26,004 utils 5608 3140 (0.000) SELECT VERSION(); args=None
-DEBUG 2019-09-18 17:02:26,030 utils 5608 3140 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:02:26,032 utils 5608 3140 (0.000) SHOW FULL TABLES; args=None
-DEBUG 2019-09-18 17:02:26,035 utils 5608 3140 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
-DEBUG 2019-09-18 17:02:31,064 utils 5216 5736 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
-DEBUG 2019-09-18 17:02:31,065 utils 5216 5736 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:02:31,066 utils 5216 5736 (0.001) SELECT VERSION(); args=None
-DEBUG 2019-09-18 17:02:31,090 utils 5216 5736 (0.001) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:02:31,091 utils 5216 5736 (0.000) SHOW FULL TABLES; args=None
-DEBUG 2019-09-18 17:02:31,095 utils 5216 5736 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
-DEBUG 2019-09-18 17:03:18,482 utils 7400 3488 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
-DEBUG 2019-09-18 17:03:18,483 utils 7400 3488 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:03:18,484 utils 7400 3488 (0.000) SELECT VERSION(); args=None
-DEBUG 2019-09-18 17:03:18,508 utils 7400 3488 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:03:18,510 utils 7400 3488 (0.001) SHOW FULL TABLES; args=None
-DEBUG 2019-09-18 17:03:18,514 utils 7400 3488 (0.001) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
-DEBUG 2019-09-18 17:04:28,729 utils 8652 5404 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
-DEBUG 2019-09-18 17:04:28,731 utils 8652 5404 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:04:28,731 utils 8652 5404 (0.000) SELECT VERSION(); args=None
-DEBUG 2019-09-18 17:04:28,756 utils 8652 5404 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:04:28,758 utils 8652 5404 (0.001) SHOW FULL TABLES; args=None
-DEBUG 2019-09-18 17:04:28,761 utils 8652 5404 (0.001) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
-DEBUG 2019-09-18 17:04:32,438 utils 4732 5396 (0.001) SELECT `index_product`.`id`, `index_product`.`name`, `index_product`.`weight`, `index_product`.`size`, `index_product`.`type_id` FROM `index_product` WHERE (`index_product`.`id` = 2 AND `index_product`.`name` = 'xiaomi2') LIMIT 21; args=(2, 'xiaomi2')
-DEBUG 2019-09-18 17:05:25,251 utils 4736 6524 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
-DEBUG 2019-09-18 17:05:25,252 utils 4736 6524 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:05:25,253 utils 4736 6524 (0.000) SELECT VERSION(); args=None
-DEBUG 2019-09-18 17:05:25,276 utils 4736 6524 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:05:25,277 utils 4736 6524 (0.000) SHOW FULL TABLES; args=None
-DEBUG 2019-09-18 17:05:25,280 utils 4736 6524 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
-DEBUG 2019-09-18 17:05:40,289 utils 5288 7620 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
-DEBUG 2019-09-18 17:05:40,290 utils 5288 7620 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:05:40,291 utils 5288 7620 (0.000) SELECT VERSION(); args=None
-DEBUG 2019-09-18 17:05:40,315 utils 5288 7620 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:05:40,316 utils 5288 7620 (0.000) SHOW FULL TABLES; args=None
-DEBUG 2019-09-18 17:05:40,320 utils 5288 7620 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
-DEBUG 2019-09-18 17:05:52,972 utils 8560 8272 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
-DEBUG 2019-09-18 17:05:52,973 utils 8560 8272 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:05:52,974 utils 8560 8272 (0.000) SELECT VERSION(); args=None
-DEBUG 2019-09-18 17:05:52,997 utils 8560 8272 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:05:52,999 utils 8560 8272 (0.001) SHOW FULL TABLES; args=None
-DEBUG 2019-09-18 17:05:53,002 utils 8560 8272 (0.001) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
-DEBUG 2019-09-18 17:06:04,579 utils 8652 6680 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
-DEBUG 2019-09-18 17:06:04,580 utils 8652 6680 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:06:04,581 utils 8652 6680 (0.000) SELECT VERSION(); args=None
-DEBUG 2019-09-18 17:06:04,608 utils 8652 6680 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:06:04,609 utils 8652 6680 (0.000) SHOW FULL TABLES; args=None
-DEBUG 2019-09-18 17:06:04,612 utils 8652 6680 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
-DEBUG 2019-09-18 17:07:13,688 utils 5164 9104 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
-DEBUG 2019-09-18 17:07:13,690 utils 5164 9104 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:07:13,690 utils 5164 9104 (0.000) SELECT VERSION(); args=None
-DEBUG 2019-09-18 17:07:13,714 utils 5164 9104 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:07:13,715 utils 5164 9104 (0.000) SHOW FULL TABLES; args=None
-DEBUG 2019-09-18 17:07:13,719 utils 5164 9104 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
-DEBUG 2019-09-18 17:07:17,688 utils 6580 6944 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
-DEBUG 2019-09-18 17:07:17,689 utils 6580 6944 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:07:17,689 utils 6580 6944 (0.000) SELECT VERSION(); args=None
-DEBUG 2019-09-18 17:07:17,714 utils 6580 6944 (0.001) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:07:17,716 utils 6580 6944 (0.000) SHOW FULL TABLES; args=None
-DEBUG 2019-09-18 17:07:17,720 utils 6580 6944 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
-DEBUG 2019-09-18 17:08:09,524 utils 8512 1860 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
-DEBUG 2019-09-18 17:08:09,525 utils 8512 1860 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:08:09,526 utils 8512 1860 (0.000) SELECT VERSION(); args=None
-DEBUG 2019-09-18 17:08:09,551 utils 8512 1860 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:08:09,552 utils 8512 1860 (0.001) SHOW FULL TABLES; args=None
-DEBUG 2019-09-18 17:08:09,556 utils 8512 1860 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
-DEBUG 2019-09-18 17:08:49,846 utils 9104 7836 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
-DEBUG 2019-09-18 17:08:49,847 utils 9104 7836 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:08:49,848 utils 9104 7836 (0.000) SELECT VERSION(); args=None
-DEBUG 2019-09-18 17:08:49,874 utils 9104 7836 (0.001) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:08:49,875 utils 9104 7836 (0.000) SHOW FULL TABLES; args=None
-DEBUG 2019-09-18 17:08:49,881 utils 9104 7836 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
-DEBUG 2019-09-18 17:09:01,603 utils 5612 6188 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
-DEBUG 2019-09-18 17:09:01,604 utils 5612 6188 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:09:01,605 utils 5612 6188 (0.000) SELECT VERSION(); args=None
-DEBUG 2019-09-18 17:09:01,629 utils 5612 6188 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:09:01,630 utils 5612 6188 (0.001) SHOW FULL TABLES; args=None
-DEBUG 2019-09-18 17:09:01,633 utils 5612 6188 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
-DEBUG 2019-09-18 17:09:15,923 utils 4732 5396 (0.001) SELECT `index_product`.`id`, `index_product`.`name`, `index_product`.`weight`, `index_product`.`size`, `index_product`.`type_id` FROM `index_product` WHERE (`index_product`.`name` = 'xiaomi2' OR `index_product`.`id` = 2) LIMIT 21; args=('xiaomi2', 2)
-DEBUG 2019-09-18 17:09:39,533 utils 3744 6912 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
-DEBUG 2019-09-18 17:09:39,534 utils 3744 6912 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:09:39,535 utils 3744 6912 (0.000) SELECT VERSION(); args=None
-DEBUG 2019-09-18 17:09:39,561 utils 3744 6912 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:09:39,563 utils 3744 6912 (0.001) SHOW FULL TABLES; args=None
-DEBUG 2019-09-18 17:09:39,567 utils 3744 6912 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
-DEBUG 2019-09-18 17:09:42,511 utils 5276 9116 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
-DEBUG 2019-09-18 17:09:42,512 utils 5276 9116 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:09:42,512 utils 5276 9116 (0.000) SELECT VERSION(); args=None
-DEBUG 2019-09-18 17:09:42,540 utils 5276 9116 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:09:42,542 utils 5276 9116 (0.001) SHOW FULL TABLES; args=None
-DEBUG 2019-09-18 17:09:42,545 utils 5276 9116 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
-DEBUG 2019-09-18 17:09:54,308 utils 4236 6804 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
-DEBUG 2019-09-18 17:09:54,309 utils 4236 6804 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:09:54,310 utils 4236 6804 (0.001) SELECT VERSION(); args=None
-DEBUG 2019-09-18 17:09:54,333 utils 4236 6804 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:09:54,335 utils 4236 6804 (0.000) SHOW FULL TABLES; args=None
-DEBUG 2019-09-18 17:09:54,339 utils 4236 6804 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
-DEBUG 2019-09-18 17:09:58,302 utils 5404 6796 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
-DEBUG 2019-09-18 17:09:58,303 utils 5404 6796 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:09:58,304 utils 5404 6796 (0.000) SELECT VERSION(); args=None
-DEBUG 2019-09-18 17:09:58,327 utils 5404 6796 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:09:58,329 utils 5404 6796 (0.000) SHOW FULL TABLES; args=None
-DEBUG 2019-09-18 17:09:58,332 utils 5404 6796 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
-DEBUG 2019-09-18 17:10:04,426 utils 8472 6628 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
-DEBUG 2019-09-18 17:10:04,427 utils 8472 6628 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:10:04,428 utils 8472 6628 (0.000) SELECT VERSION(); args=None
-DEBUG 2019-09-18 17:10:04,452 utils 8472 6628 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:10:04,453 utils 8472 6628 (0.000) SHOW FULL TABLES; args=None
-DEBUG 2019-09-18 17:10:04,456 utils 8472 6628 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
-DEBUG 2019-09-18 17:10:08,469 utils 6604 9124 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
-DEBUG 2019-09-18 17:10:08,470 utils 6604 9124 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:10:08,471 utils 6604 9124 (0.000) SELECT VERSION(); args=None
-DEBUG 2019-09-18 17:10:08,497 utils 6604 9124 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:10:08,499 utils 6604 9124 (0.001) SHOW FULL TABLES; args=None
-DEBUG 2019-09-18 17:10:08,503 utils 6604 9124 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
-DEBUG 2019-09-18 17:15:28,950 utils 5392 4900 (0.001) SELECT @@SQL_AUTO_IS_NULL; args=None
-DEBUG 2019-09-18 17:15:28,951 utils 5392 4900 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:15:28,952 utils 5392 4900 (0.000) SELECT VERSION(); args=None
-DEBUG 2019-09-18 17:15:28,975 utils 5392 4900 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:15:28,976 utils 5392 4900 (0.000) SHOW FULL TABLES; args=None
-DEBUG 2019-09-18 17:15:28,980 utils 5392 4900 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
-DEBUG 2019-09-18 17:15:34,070 utils 8080 6932 (0.001) SELECT @@SQL_AUTO_IS_NULL; args=None
-DEBUG 2019-09-18 17:15:34,071 utils 8080 6932 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:15:34,072 utils 8080 6932 (0.000) SELECT VERSION(); args=None
-DEBUG 2019-09-18 17:15:34,096 utils 8080 6932 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
-DEBUG 2019-09-18 17:15:34,097 utils 8080 6932 (0.000) SHOW FULL TABLES; args=None
-DEBUG 2019-09-18 17:15:34,100 utils 8080 6932 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
-DEBUG 2019-09-18 17:15:39,078 utils 4732 5396 (0.001) SELECT COUNT(*) AS `__count` FROM `index_product` WHERE `index_product`.`name` = 'xiaomi2'; args=('xiaomi2',)
-DEBUG 2019-09-18 17:26:22,347 utils 4732 5396 (0.001) SELECT DISTINCT `index_product`.`name` FROM `index_product` WHERE `index_product`.`name` = 'xiaomi2' LIMIT 21; args=('xiaomi2',)
-DEBUG 2019-09-18 17:32:39,038 utils 4732 5396 (0.001) SELECT `index_product`.`id`, `index_product`.`name`, `index_product`.`weight`, `index_product`.`size`, `index_product`.`type_id` FROM `index_product` ORDER BY `index_product`.`id` DESC LIMIT 21; args=()
-DEBUG 2019-09-18 17:35:38,292 utils 4732 5396 (0.001) SELECT `index_product`.`id`, `index_product`.`name`, `index_product`.`weight`, `index_product`.`size`, `index_product`.`type_id` FROM `index_product` ORDER BY `index_product`.`id` DESC, `index_product`.`name` ASC LIMIT 21; args=()
-DEBUG 2019-09-18 17:44:04,845 utils 4732 5396 (0.001) SELECT `index_product`.`name`, SUM(`index_product`.`size`) AS `size__sum` FROM `index_product` GROUP BY `index_product`.`name` ORDER BY NULL LIMIT 21; args=()
-DEBUG 2019-09-18 17:51:45,171 utils 4732 5396 (0.000) SELECT COUNT(`index_product`.`id`) AS `id_count` FROM `index_product`; args=()
-DEBUG 2019-09-18 18:03:28,710 utils 4732 5396 (0.002) SELECT `index_product`.`name`, SUM(`index_product`.`size`) AS `size_sum` FROM `index_product` GROUP BY `index_product`.`name` ORDER BY NULL LIMIT 21; args=()
-DEBUG 2019-09-18 18:04:29,460 utils 4732 5396 (0.001) SELECT `index_product`.`name`, SUM(`index_product`.`size`) AS `sizes_sum` FROM `index_product` GROUP BY `index_product`.`name` ORDER BY NULL LIMIT 21; args=()
-DEBUG 2019-09-18 18:06:12,829 utils 4732 5396 (0.001) SELECT `index_product`.`id`, `index_product`.`name`, `index_product`.`weight`, `index_product`.`size`, `index_product`.`type_id`, SUM(`index_product`.`size`) AS `sizes_sum` FROM `index_product` GROUP BY `index_product`.`id` ORDER BY NULL LIMIT 21; args=()
+DEBUG 2019-09-19 16:22:45,509 utils 5052 8928 (0.000) None; args=(2,)
+DEBUG 2019-09-19 16:25:29,965 utils 5052 8928 (0.000) None; args=(2,)
+DEBUG 2019-09-19 16:25:36,445 utils 5052 8928 (0.000) None; args=(2,)
+DEBUG 2019-09-19 16:26:03,450 utils 9636 9288 (0.001) SELECT @@SQL_AUTO_IS_NULL; args=None
+DEBUG 2019-09-19 16:26:03,452 utils 9636 9288 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
+DEBUG 2019-09-19 16:26:03,455 utils 9636 9288 (0.000) SELECT VERSION(); args=None
+DEBUG 2019-09-19 16:26:03,461 utils 9636 9288 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
+DEBUG 2019-09-19 16:26:03,464 utils 9636 9288 (0.001) SELECT `index_product`.`id`, `index_product`.`name`, `index_product`.`weight`, `index_product`.`size`, `index_product`.`type_id`, `index_type`.`id`, `index_type`.`type_name` FROM `index_product` INNER JOIN `index_type` ON (`index_product`.`type_id` = `index_type`.`id`) WHERE `index_type`.`type_name` = '手机' LIMIT 21; args=('手机',)
+DEBUG 2019-09-19 16:27:20,863 utils 9636 9288 (0.002) SELECT `index_product`.`id`, `index_product`.`name`, `index_product`.`weight`, `index_product`.`size`, `index_product`.`type_id`, `index_type`.`id`, `index_type`.`type_name` FROM `index_product` INNER JOIN `index_type` ON (`index_product`.`type_id` = `index_type`.`id`) WHERE `index_type`.`type_name` = '手机' LIMIT 1; args=('手机',)
+DEBUG 2019-09-19 16:29:28,078 utils 9636 9288 (0.002) SELECT `index_product`.`id`, `index_product`.`name`, `index_product`.`weight`, `index_product`.`size`, `index_product`.`type_id`, `index_type`.`id`, `index_type`.`type_name` FROM `index_product` INNER JOIN `index_type` ON (`index_product`.`type_id` = `index_type`.`id`) WHERE `index_type`.`type_name` = '手机' LIMIT 1; args=('手机',)
+DEBUG 2019-09-19 16:31:01,494 utils 9636 9288 (0.002) SELECT `index_product`.`id`, `index_product`.`name`, `index_product`.`weight`, `index_product`.`size`, `index_product`.`type_id`, `index_type`.`id`, `index_type`.`type_name` FROM `index_product` INNER JOIN `index_type` ON (`index_product`.`type_id` = `index_type`.`id`) WHERE `index_type`.`type_name` = '手机' LIMIT 1; args=('手机',)
+DEBUG 2019-09-19 16:31:07,879 utils 9636 9288 (0.002) SELECT `index_product`.`id`, `index_product`.`name`, `index_product`.`weight`, `index_product`.`size`, `index_product`.`type_id`, `index_type`.`id`, `index_type`.`type_name` FROM `index_product` INNER JOIN `index_type` ON (`index_product`.`type_id` = `index_type`.`id`) WHERE `index_type`.`type_name` = '手机' LIMIT 1; args=('手机',)
+DEBUG 2019-09-19 16:31:20,613 utils 9636 9288 (0.001) SELECT `index_product`.`id`, `index_product`.`name`, `index_product`.`weight`, `index_product`.`size`, `index_product`.`type_id`, `index_type`.`id`, `index_type`.`type_name` FROM `index_product` INNER JOIN `index_type` ON (`index_product`.`type_id` = `index_type`.`id`) WHERE `index_type`.`type_name` = '手机' LIMIT 1; args=('手机',)
+DEBUG 2019-09-19 17:06:05,582 utils 9984 8364 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
+DEBUG 2019-09-19 17:06:05,583 utils 9984 8364 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
+DEBUG 2019-09-19 17:06:05,584 utils 9984 8364 (0.000) SELECT VERSION(); args=None
+DEBUG 2019-09-19 17:06:05,603 utils 9984 8364 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
+DEBUG 2019-09-19 17:06:05,604 utils 9984 8364 (0.000) SHOW FULL TABLES; args=None
+DEBUG 2019-09-19 17:06:05,607 utils 9984 8364 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+DEBUG 2019-09-19 17:06:12,905 utils 3676 5844 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
+DEBUG 2019-09-19 17:06:12,905 utils 3676 5844 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
+DEBUG 2019-09-19 17:06:12,906 utils 3676 5844 (0.001) SELECT @@sql_mode; args=None
+DEBUG 2019-09-19 17:06:12,911 utils 3676 5844 (0.000) SELECT VERSION(); args=None
+DEBUG 2019-09-19 17:06:12,933 utils 3676 5844 (0.000) SHOW FULL TABLES; args=None
+DEBUG 2019-09-19 17:06:12,936 utils 3676 5844 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+DEBUG 2019-09-19 17:06:12,937 utils 3676 5844 (0.000) SHOW FULL TABLES; args=None
+DEBUG 2019-09-19 17:06:12,939 utils 3676 5844 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+DEBUG 2019-09-19 17:06:12,951 utils 3676 5844 (0.000) SHOW FULL TABLES; args=None
+DEBUG 2019-09-19 17:06:12,953 schema 3676 5844 CREATE TABLE `index_city` (`id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY, `name` varchar(5) NOT NULL); (params None)
+DEBUG 2019-09-19 17:06:12,987 utils 3676 5844 (0.034) CREATE TABLE `index_city` (`id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY, `name` varchar(5) NOT NULL); args=None
+DEBUG 2019-09-19 17:06:12,989 utils 3676 5844 (0.000) SELECT engine FROM information_schema.tables WHERE table_name = 'index_city'; args=['index_city']
+DEBUG 2019-09-19 17:06:12,990 utils 3676 5844 (0.001) SELECT engine FROM information_schema.tables WHERE table_name = 'index_city'; args=['index_city']
+DEBUG 2019-09-19 17:06:12,993 schema 3676 5844 CREATE TABLE `index_person` (`id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY, `name` varchar(10) NOT NULL, `living_id` integer NOT NULL); (params None)
+DEBUG 2019-09-19 17:06:13,028 utils 3676 5844 (0.035) CREATE TABLE `index_person` (`id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY, `name` varchar(10) NOT NULL, `living_id` integer NOT NULL); args=None
+DEBUG 2019-09-19 17:06:13,030 utils 3676 5844 (0.001) SELECT engine FROM information_schema.tables WHERE table_name = 'index_person'; args=['index_person']
+DEBUG 2019-09-19 17:06:13,031 utils 3676 5844 (0.000) SELECT engine FROM information_schema.tables WHERE table_name = 'index_person'; args=['index_person']
+DEBUG 2019-09-19 17:06:13,033 utils 3676 5844 (0.000) SELECT engine FROM information_schema.tables WHERE table_name = 'index_person'; args=['index_person']
+DEBUG 2019-09-19 17:06:13,035 schema 3676 5844 CREATE TABLE `index_provice` (`id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY, `name` varchar(10) NOT NULL); (params None)
+DEBUG 2019-09-19 17:06:13,066 utils 3676 5844 (0.030) CREATE TABLE `index_provice` (`id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY, `name` varchar(10) NOT NULL); args=None
+DEBUG 2019-09-19 17:06:13,069 utils 3676 5844 (0.001) SELECT engine FROM information_schema.tables WHERE table_name = 'index_provice'; args=['index_provice']
+DEBUG 2019-09-19 17:06:13,071 utils 3676 5844 (0.001) SELECT engine FROM information_schema.tables WHERE table_name = 'index_provice'; args=['index_provice']
+DEBUG 2019-09-19 17:06:13,078 schema 3676 5844 ALTER TABLE `index_city` ADD COLUMN `provice_id` integer NOT NULL; (params [])
+DEBUG 2019-09-19 17:06:13,169 utils 3676 5844 (0.090) ALTER TABLE `index_city` ADD COLUMN `provice_id` integer NOT NULL; args=[]
+DEBUG 2019-09-19 17:06:13,171 utils 3676 5844 (0.001) SELECT engine FROM information_schema.tables WHERE table_name = 'index_city'; args=['index_city']
+DEBUG 2019-09-19 17:06:13,172 schema 3676 5844 ALTER TABLE `index_person` ADD CONSTRAINT `index_person_living_id_86a4aa66_fk_index_city_id` FOREIGN KEY (`living_id`) REFERENCES `index_city` (`id`); (params ())
+DEBUG 2019-09-19 17:06:13,251 utils 3676 5844 (0.078) ALTER TABLE `index_person` ADD CONSTRAINT `index_person_living_id_86a4aa66_fk_index_city_id` FOREIGN KEY (`living_id`) REFERENCES `index_city` (`id`); args=()
+DEBUG 2019-09-19 17:06:13,252 schema 3676 5844 ALTER TABLE `index_city` ADD CONSTRAINT `index_city_provice_id_50d765af_fk_index_provice_id` FOREIGN KEY (`provice_id`) REFERENCES `index_provice` (`id`); (params ())
+DEBUG 2019-09-19 17:06:13,333 utils 3676 5844 (0.080) ALTER TABLE `index_city` ADD CONSTRAINT `index_city_provice_id_50d765af_fk_index_provice_id` FOREIGN KEY (`provice_id`) REFERENCES `index_provice` (`id`); args=()
+DEBUG 2019-09-19 17:06:13,335 utils 3676 5844 (0.000) SHOW FULL TABLES; args=None
+DEBUG 2019-09-19 17:06:13,336 utils 3676 5844 (0.000) INSERT INTO `django_migrations` (`app`, `name`, `applied`) VALUES ('index', '0002_auto_20190919_1706', '2019-09-19 09:06:13.335858'); args=['index', '0002_auto_20190919_1706', '2019-09-19 09:06:13.335858']
+DEBUG 2019-09-19 17:06:13,343 utils 3676 5844 (0.000) SHOW FULL TABLES; args=None
+DEBUG 2019-09-19 17:06:13,344 utils 3676 5844 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+DEBUG 2019-09-19 17:06:13,347 utils 3676 5844 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'admin' AND `django_content_type`.`model` = 'logentry'); args=('admin', 'logentry')
+DEBUG 2019-09-19 17:06:13,350 utils 3676 5844 (0.000) SELECT `auth_permission`.`content_type_id`, `auth_permission`.`codename` FROM `auth_permission` INNER JOIN `django_content_type` ON (`auth_permission`.`content_type_id` = `django_content_type`.`id`) WHERE `auth_permission`.`content_type_id` IN (1) ORDER BY `django_content_type`.`app_label` ASC, `django_content_type`.`model` ASC, `auth_permission`.`codename` ASC; args=(1,)
+DEBUG 2019-09-19 17:06:13,352 utils 3676 5844 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE `django_content_type`.`app_label` = 'admin'; args=('admin',)
+DEBUG 2019-09-19 17:06:13,354 utils 3676 5844 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'auth' AND `django_content_type`.`model` = 'permission'); args=('auth', 'permission')
+DEBUG 2019-09-19 17:06:13,356 utils 3676 5844 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'auth' AND `django_content_type`.`model` = 'group'); args=('auth', 'group')
+DEBUG 2019-09-19 17:06:13,358 utils 3676 5844 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'auth' AND `django_content_type`.`model` = 'user'); args=('auth', 'user')
+DEBUG 2019-09-19 17:06:13,361 utils 3676 5844 (0.001) SELECT `auth_permission`.`content_type_id`, `auth_permission`.`codename` FROM `auth_permission` INNER JOIN `django_content_type` ON (`auth_permission`.`content_type_id` = `django_content_type`.`id`) WHERE `auth_permission`.`content_type_id` IN (2, 3, 4) ORDER BY `django_content_type`.`app_label` ASC, `django_content_type`.`model` ASC, `auth_permission`.`codename` ASC; args=(2, 3, 4)
+DEBUG 2019-09-19 17:06:13,364 utils 3676 5844 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE `django_content_type`.`app_label` = 'auth'; args=('auth',)
+DEBUG 2019-09-19 17:06:13,366 utils 3676 5844 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'contenttypes' AND `django_content_type`.`model` = 'contenttype'); args=('contenttypes', 'contenttype')
+DEBUG 2019-09-19 17:06:13,369 utils 3676 5844 (0.000) SELECT `auth_permission`.`content_type_id`, `auth_permission`.`codename` FROM `auth_permission` INNER JOIN `django_content_type` ON (`auth_permission`.`content_type_id` = `django_content_type`.`id`) WHERE `auth_permission`.`content_type_id` IN (5) ORDER BY `django_content_type`.`app_label` ASC, `django_content_type`.`model` ASC, `auth_permission`.`codename` ASC; args=(5,)
+DEBUG 2019-09-19 17:06:13,372 utils 3676 5844 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE `django_content_type`.`app_label` = 'contenttypes'; args=('contenttypes',)
+DEBUG 2019-09-19 17:06:13,374 utils 3676 5844 (0.001) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'sessions' AND `django_content_type`.`model` = 'session'); args=('sessions', 'session')
+DEBUG 2019-09-19 17:06:13,376 utils 3676 5844 (0.000) SELECT `auth_permission`.`content_type_id`, `auth_permission`.`codename` FROM `auth_permission` INNER JOIN `django_content_type` ON (`auth_permission`.`content_type_id` = `django_content_type`.`id`) WHERE `auth_permission`.`content_type_id` IN (6) ORDER BY `django_content_type`.`app_label` ASC, `django_content_type`.`model` ASC, `auth_permission`.`codename` ASC; args=(6,)
+DEBUG 2019-09-19 17:06:13,379 utils 3676 5844 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE `django_content_type`.`app_label` = 'sessions'; args=('sessions',)
+DEBUG 2019-09-19 17:06:13,381 utils 3676 5844 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'index' AND `django_content_type`.`model` = 'product'); args=('index', 'product')
+DEBUG 2019-09-19 17:06:13,383 utils 3676 5844 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'index' AND `django_content_type`.`model` = 'type'); args=('index', 'type')
+DEBUG 2019-09-19 17:06:13,385 utils 3676 5844 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'index' AND `django_content_type`.`model` = 'city'); args=('index', 'city')
+DEBUG 2019-09-19 17:06:13,388 utils 3676 5844 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'index' AND `django_content_type`.`model` = 'city'); args=('index', 'city')
+DEBUG 2019-09-19 17:06:13,390 utils 3676 5844 (0.001) INSERT INTO `django_content_type` (`app_label`, `model`) VALUES ('index', 'city'); args=['index', 'city']
+DEBUG 2019-09-19 17:06:13,398 utils 3676 5844 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'index' AND `django_content_type`.`model` = 'provice'); args=('index', 'provice')
+DEBUG 2019-09-19 17:06:13,400 utils 3676 5844 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'index' AND `django_content_type`.`model` = 'provice'); args=('index', 'provice')
+DEBUG 2019-09-19 17:06:13,403 utils 3676 5844 (0.000) INSERT INTO `django_content_type` (`app_label`, `model`) VALUES ('index', 'provice'); args=['index', 'provice']
+DEBUG 2019-09-19 17:06:13,413 utils 3676 5844 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'index' AND `django_content_type`.`model` = 'person'); args=('index', 'person')
+DEBUG 2019-09-19 17:06:13,416 utils 3676 5844 (0.001) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'index' AND `django_content_type`.`model` = 'person'); args=('index', 'person')
+DEBUG 2019-09-19 17:06:13,418 utils 3676 5844 (0.000) INSERT INTO `django_content_type` (`app_label`, `model`) VALUES ('index', 'person'); args=['index', 'person']
+DEBUG 2019-09-19 17:06:13,430 utils 3676 5844 (0.001) SELECT `auth_permission`.`content_type_id`, `auth_permission`.`codename` FROM `auth_permission` INNER JOIN `django_content_type` ON (`auth_permission`.`content_type_id` = `django_content_type`.`id`) WHERE `auth_permission`.`content_type_id` IN (7, 8, 9, 10, 11) ORDER BY `django_content_type`.`app_label` ASC, `django_content_type`.`model` ASC, `auth_permission`.`codename` ASC; args=(7, 8, 9, 10, 11)
+DEBUG 2019-09-19 17:06:13,433 utils 3676 5844 (0.000) INSERT INTO `auth_permission` (`name`, `content_type_id`, `codename`) VALUES ('Can add city', 9, 'add_city'), ('Can change city', 9, 'change_city'), ('Can delete city', 9, 'delete_city'), ('Can add provice', 10, 'add_provice'), ('Can change provice', 10, 'change_provice'), ('Can delete provice', 10, 'delete_provice'), ('Can add person', 11, 'add_person'), ('Can change person', 11, 'change_person'), ('Can delete person', 11, 'delete_person'); args=('Can add city', 9, 'add_city', 'Can change city', 9, 'change_city', 'Can delete city', 9, 'delete_city', 'Can add provice', 10, 'add_provice', 'Can change provice', 10, 'change_provice', 'Can delete provice', 10, 'delete_provice', 'Can add person', 11, 'add_person', 'Can change person', 11, 'change_person', 'Can delete person', 11, 'delete_person')
+DEBUG 2019-09-19 17:06:13,445 utils 3676 5844 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE `django_content_type`.`app_label` = 'index'; args=('index',)
+DEBUG 2019-09-19 17:13:32,172 utils 9436 10000 (0.001) SELECT @@SQL_AUTO_IS_NULL; args=None
+DEBUG 2019-09-19 17:13:32,174 utils 9436 10000 (0.001) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
+DEBUG 2019-09-19 17:13:32,176 utils 9436 10000 (0.000) SELECT VERSION(); args=None
+DEBUG 2019-09-19 17:13:32,182 utils 9436 10000 (0.001) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
+DEBUG 2019-09-19 17:13:32,185 utils 9436 10000 (0.001) SELECT `index_person`.`id`, `index_person`.`name`, `index_person`.`living_id`, `index_city`.`id`, `index_city`.`name`, `index_city`.`provice_id`, `index_provice`.`id`, `index_provice`.`name` FROM `index_person` INNER JOIN `index_city` ON (`index_person`.`living_id` = `index_city`.`id`) INNER JOIN `index_provice` ON (`index_city`.`provice_id` = `index_provice`.`id`) WHERE `index_person`.`name` = '卢建斌' LIMIT 21; args=('卢建斌',)
+DEBUG 2019-09-19 17:18:02,375 utils 9436 10000 (0.002) SELECT `index_person`.`id`, `index_person`.`name`, `index_person`.`living_id`, `index_city`.`id`, `index_city`.`name`, `index_city`.`provice_id`, `index_provice`.`id`, `index_provice`.`name` FROM `index_person` INNER JOIN `index_city` ON (`index_person`.`living_id` = `index_city`.`id`) INNER JOIN `index_provice` ON (`index_city`.`provice_id` = `index_provice`.`id`) WHERE `index_person`.`name` = '卢建斌'; args=('卢建斌',)
+DEBUG 2019-09-19 17:21:43,557 utils 4020 7544 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
+DEBUG 2019-09-19 17:21:43,559 utils 4020 7544 (0.001) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
+DEBUG 2019-09-19 17:21:43,561 utils 4020 7544 (0.001) SELECT VERSION(); args=None
+DEBUG 2019-09-19 17:21:43,567 utils 4020 7544 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
+DEBUG 2019-09-19 17:21:43,570 utils 4020 7544 (0.002) SELECT `index_person`.`id`, `index_person`.`name`, `index_person`.`living_id`, `index_city`.`id`, `index_city`.`name`, `index_city`.`provice_id`, `index_provice`.`id`, `index_provice`.`name` FROM `index_person` INNER JOIN `index_city` ON (`index_person`.`living_id` = `index_city`.`id`) INNER JOIN `index_provice` ON (`index_city`.`provice_id` = `index_provice`.`id`) WHERE `index_person`.`name` = '卢建斌'; args=('卢建斌',)
+DEBUG 2019-09-19 17:23:33,640 utils 9900 9224 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
+DEBUG 2019-09-19 17:23:33,641 utils 9900 9224 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
+DEBUG 2019-09-19 17:23:33,642 utils 9900 9224 (0.001) SELECT VERSION(); args=None
+DEBUG 2019-09-19 17:23:33,663 utils 9900 9224 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
+DEBUG 2019-09-19 17:23:33,665 utils 9900 9224 (0.000) SHOW FULL TABLES; args=None
+DEBUG 2019-09-19 17:23:33,668 utils 9900 9224 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+DEBUG 2019-09-19 17:23:47,903 utils 1888 4304 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
+DEBUG 2019-09-19 17:23:47,903 utils 1888 4304 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
+DEBUG 2019-09-19 17:23:47,904 utils 1888 4304 (0.000) SELECT @@sql_mode; args=None
+DEBUG 2019-09-19 17:23:47,908 utils 1888 4304 (0.000) SELECT VERSION(); args=None
+DEBUG 2019-09-19 17:23:47,930 utils 1888 4304 (0.000) SHOW FULL TABLES; args=None
+DEBUG 2019-09-19 17:23:47,933 utils 1888 4304 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+DEBUG 2019-09-19 17:23:47,934 utils 1888 4304 (0.000) SHOW FULL TABLES; args=None
+DEBUG 2019-09-19 17:23:47,935 utils 1888 4304 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+DEBUG 2019-09-19 17:23:47,949 utils 1888 4304 (0.001) SHOW FULL TABLES; args=None
+DEBUG 2019-09-19 17:23:47,954 utils 1888 4304 (0.000) SELECT @@LOWER_CASE_TABLE_NAMES; args=None
+DEBUG 2019-09-19 17:23:47,954 schema 1888 4304 RENAME TABLE `index_provice` TO `index_province`; (params ())
+DEBUG 2019-09-19 17:23:47,985 utils 1888 4304 (0.030) RENAME TABLE `index_provice` TO `index_province`; args=()
+DEBUG 2019-09-19 17:23:47,986 utils 1888 4304 (0.001) 
+            SELECT kc.`constraint_name`, kc.`column_name`,
+                kc.`referenced_table_name`, kc.`referenced_column_name`
+            FROM information_schema.key_column_usage AS kc
+            WHERE
+                kc.table_schema = DATABASE() AND
+                kc.table_name = 'index_city'
+        ; args=['index_city']
+DEBUG 2019-09-19 17:23:47,988 utils 1888 4304 (0.000) 
+            SELECT c.constraint_name, c.constraint_type
+            FROM information_schema.table_constraints AS c
+            WHERE
+                c.table_schema = DATABASE() AND
+                c.table_name = 'index_city'
+        ; args=['index_city']
+DEBUG 2019-09-19 17:23:47,990 utils 1888 4304 (0.000) SHOW INDEX FROM `index_city`; args=None
+DEBUG 2019-09-19 17:23:47,991 schema 1888 4304 ALTER TABLE `index_city` DROP FOREIGN KEY `index_city_provice_id_50d765af_fk_index_provice_id`; (params ())
+DEBUG 2019-09-19 17:23:48,040 utils 1888 4304 (0.048) ALTER TABLE `index_city` DROP FOREIGN KEY `index_city_provice_id_50d765af_fk_index_provice_id`; args=()
+DEBUG 2019-09-19 17:23:48,041 schema 1888 4304 ALTER TABLE `index_city` ADD CONSTRAINT `index_city_provice_id_50d765af_fk_index_province_id` FOREIGN KEY (`provice_id`) REFERENCES `index_province` (`id`); (params ())
+DEBUG 2019-09-19 17:23:48,140 utils 1888 4304 (0.097) ALTER TABLE `index_city` ADD CONSTRAINT `index_city_provice_id_50d765af_fk_index_province_id` FOREIGN KEY (`provice_id`) REFERENCES `index_province` (`id`); args=()
+DEBUG 2019-09-19 17:23:48,152 utils 1888 4304 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'index' AND `django_content_type`.`model` = 'provice'); args=('index', 'provice')
+DEBUG 2019-09-19 17:23:48,154 utils 1888 4304 (0.001) SAVEPOINT `s4304_x1`; args=None
+DEBUG 2019-09-19 17:23:48,155 utils 1888 4304 (0.000) UPDATE `django_content_type` SET `model` = 'province' WHERE `django_content_type`.`id` = 10; args=('province', 10)
+DEBUG 2019-09-19 17:23:48,156 utils 1888 4304 (0.000) RELEASE SAVEPOINT `s4304_x1`; args=None
+DEBUG 2019-09-19 17:23:48,164 utils 1888 4304 (0.000) SHOW FULL TABLES; args=None
+DEBUG 2019-09-19 17:23:48,166 utils 1888 4304 (0.001) INSERT INTO `django_migrations` (`app`, `name`, `applied`) VALUES ('index', '0003_auto_20190919_1723', '2019-09-19 09:23:48.165358'); args=['index', '0003_auto_20190919_1723', '2019-09-19 09:23:48.165358']
+DEBUG 2019-09-19 17:23:48,174 utils 1888 4304 (0.001) SHOW FULL TABLES; args=None
+DEBUG 2019-09-19 17:23:48,175 utils 1888 4304 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+DEBUG 2019-09-19 17:23:48,185 utils 1888 4304 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'admin' AND `django_content_type`.`model` = 'logentry'); args=('admin', 'logentry')
+DEBUG 2019-09-19 17:23:48,188 utils 1888 4304 (0.000) SELECT `auth_permission`.`content_type_id`, `auth_permission`.`codename` FROM `auth_permission` INNER JOIN `django_content_type` ON (`auth_permission`.`content_type_id` = `django_content_type`.`id`) WHERE `auth_permission`.`content_type_id` IN (1) ORDER BY `django_content_type`.`app_label` ASC, `django_content_type`.`model` ASC, `auth_permission`.`codename` ASC; args=(1,)
+DEBUG 2019-09-19 17:23:48,190 utils 1888 4304 (0.001) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE `django_content_type`.`app_label` = 'admin'; args=('admin',)
+DEBUG 2019-09-19 17:23:48,191 utils 1888 4304 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'auth' AND `django_content_type`.`model` = 'permission'); args=('auth', 'permission')
+DEBUG 2019-09-19 17:23:48,193 utils 1888 4304 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'auth' AND `django_content_type`.`model` = 'group'); args=('auth', 'group')
+DEBUG 2019-09-19 17:23:48,195 utils 1888 4304 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'auth' AND `django_content_type`.`model` = 'user'); args=('auth', 'user')
+DEBUG 2019-09-19 17:23:48,198 utils 1888 4304 (0.001) SELECT `auth_permission`.`content_type_id`, `auth_permission`.`codename` FROM `auth_permission` INNER JOIN `django_content_type` ON (`auth_permission`.`content_type_id` = `django_content_type`.`id`) WHERE `auth_permission`.`content_type_id` IN (2, 3, 4) ORDER BY `django_content_type`.`app_label` ASC, `django_content_type`.`model` ASC, `auth_permission`.`codename` ASC; args=(2, 3, 4)
+DEBUG 2019-09-19 17:23:48,201 utils 1888 4304 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE `django_content_type`.`app_label` = 'auth'; args=('auth',)
+DEBUG 2019-09-19 17:23:48,203 utils 1888 4304 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'contenttypes' AND `django_content_type`.`model` = 'contenttype'); args=('contenttypes', 'contenttype')
+DEBUG 2019-09-19 17:23:48,205 utils 1888 4304 (0.000) SELECT `auth_permission`.`content_type_id`, `auth_permission`.`codename` FROM `auth_permission` INNER JOIN `django_content_type` ON (`auth_permission`.`content_type_id` = `django_content_type`.`id`) WHERE `auth_permission`.`content_type_id` IN (5) ORDER BY `django_content_type`.`app_label` ASC, `django_content_type`.`model` ASC, `auth_permission`.`codename` ASC; args=(5,)
+DEBUG 2019-09-19 17:23:48,207 utils 1888 4304 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE `django_content_type`.`app_label` = 'contenttypes'; args=('contenttypes',)
+DEBUG 2019-09-19 17:23:48,209 utils 1888 4304 (0.001) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'sessions' AND `django_content_type`.`model` = 'session'); args=('sessions', 'session')
+DEBUG 2019-09-19 17:23:48,211 utils 1888 4304 (0.000) SELECT `auth_permission`.`content_type_id`, `auth_permission`.`codename` FROM `auth_permission` INNER JOIN `django_content_type` ON (`auth_permission`.`content_type_id` = `django_content_type`.`id`) WHERE `auth_permission`.`content_type_id` IN (6) ORDER BY `django_content_type`.`app_label` ASC, `django_content_type`.`model` ASC, `auth_permission`.`codename` ASC; args=(6,)
+DEBUG 2019-09-19 17:23:48,213 utils 1888 4304 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE `django_content_type`.`app_label` = 'sessions'; args=('sessions',)
+DEBUG 2019-09-19 17:23:48,216 utils 1888 4304 (0.001) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'index' AND `django_content_type`.`model` = 'product'); args=('index', 'product')
+DEBUG 2019-09-19 17:23:48,219 utils 1888 4304 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'index' AND `django_content_type`.`model` = 'type'); args=('index', 'type')
+DEBUG 2019-09-19 17:23:48,221 utils 1888 4304 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'index' AND `django_content_type`.`model` = 'city'); args=('index', 'city')
+DEBUG 2019-09-19 17:23:48,223 utils 1888 4304 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'index' AND `django_content_type`.`model` = 'person'); args=('index', 'person')
+DEBUG 2019-09-19 17:23:48,225 utils 1888 4304 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'index' AND `django_content_type`.`model` = 'province'); args=('index', 'province')
+DEBUG 2019-09-19 17:23:48,228 utils 1888 4304 (0.001) SELECT `auth_permission`.`content_type_id`, `auth_permission`.`codename` FROM `auth_permission` INNER JOIN `django_content_type` ON (`auth_permission`.`content_type_id` = `django_content_type`.`id`) WHERE `auth_permission`.`content_type_id` IN (7, 8, 9, 10, 11) ORDER BY `django_content_type`.`app_label` ASC, `django_content_type`.`model` ASC, `auth_permission`.`codename` ASC; args=(7, 8, 9, 10, 11)
+DEBUG 2019-09-19 17:23:48,232 utils 1888 4304 (0.001) INSERT INTO `auth_permission` (`name`, `content_type_id`, `codename`) VALUES ('Can add province', 10, 'add_province'), ('Can change province', 10, 'change_province'), ('Can delete province', 10, 'delete_province'); args=('Can add province', 10, 'add_province', 'Can change province', 10, 'change_province', 'Can delete province', 10, 'delete_province')
+DEBUG 2019-09-19 17:23:48,241 utils 1888 4304 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE `django_content_type`.`app_label` = 'index'; args=('index',)
+DEBUG 2019-09-19 17:24:30,378 utils 10076 9628 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
+DEBUG 2019-09-19 17:24:30,379 utils 10076 9628 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
+DEBUG 2019-09-19 17:24:30,380 utils 10076 9628 (0.000) SELECT VERSION(); args=None
+DEBUG 2019-09-19 17:24:30,383 utils 10076 9628 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
+DEBUG 2019-09-19 17:24:30,385 utils 10076 9628 (0.001) SELECT `index_person`.`id`, `index_person`.`name`, `index_person`.`living_id`, `index_city`.`id`, `index_city`.`name`, `index_city`.`provice_id`, `index_province`.`id`, `index_province`.`name` FROM `index_person` INNER JOIN `index_city` ON (`index_person`.`living_id` = `index_city`.`id`) INNER JOIN `index_province` ON (`index_city`.`provice_id` = `index_province`.`id`) WHERE `index_person`.`name` = '卢建斌'; args=('卢建斌',)
+DEBUG 2019-09-19 17:25:24,075 utils 9820 3140 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
+DEBUG 2019-09-19 17:25:24,076 utils 9820 3140 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
+DEBUG 2019-09-19 17:25:24,077 utils 9820 3140 (0.000) SELECT VERSION(); args=None
+DEBUG 2019-09-19 17:25:24,098 utils 9820 3140 (0.001) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
+DEBUG 2019-09-19 17:25:24,100 utils 9820 3140 (0.001) SHOW FULL TABLES; args=None
+DEBUG 2019-09-19 17:25:24,103 utils 9820 3140 (0.001) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+DEBUG 2019-09-19 17:25:30,156 utils 6140 6132 (0.000) SELECT @@SQL_AUTO_IS_NULL; args=None
+DEBUG 2019-09-19 17:25:30,157 utils 6140 6132 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
+DEBUG 2019-09-19 17:25:30,158 utils 6140 6132 (0.001) SELECT @@sql_mode; args=None
+DEBUG 2019-09-19 17:25:30,162 utils 6140 6132 (0.001) SELECT VERSION(); args=None
+DEBUG 2019-09-19 17:25:30,183 utils 6140 6132 (0.000) SHOW FULL TABLES; args=None
+DEBUG 2019-09-19 17:25:30,186 utils 6140 6132 (0.001) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+DEBUG 2019-09-19 17:25:30,188 utils 6140 6132 (0.000) SHOW FULL TABLES; args=None
+DEBUG 2019-09-19 17:25:30,189 utils 6140 6132 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+DEBUG 2019-09-19 17:25:30,203 utils 6140 6132 (0.001) SHOW FULL TABLES; args=None
+DEBUG 2019-09-19 17:25:30,207 utils 6140 6132 (0.000) 
+            SELECT kc.`constraint_name`, kc.`column_name`,
+                kc.`referenced_table_name`, kc.`referenced_column_name`
+            FROM information_schema.key_column_usage AS kc
+            WHERE
+                kc.table_schema = DATABASE() AND
+                kc.table_name = 'index_city'
+        ; args=['index_city']
+DEBUG 2019-09-19 17:25:30,210 utils 6140 6132 (0.000) 
+            SELECT c.constraint_name, c.constraint_type
+            FROM information_schema.table_constraints AS c
+            WHERE
+                c.table_schema = DATABASE() AND
+                c.table_name = 'index_city'
+        ; args=['index_city']
+DEBUG 2019-09-19 17:25:30,212 utils 6140 6132 (0.000) SHOW INDEX FROM `index_city`; args=None
+DEBUG 2019-09-19 17:25:30,212 schema 6140 6132 ALTER TABLE `index_city` DROP FOREIGN KEY `index_city_provice_id_50d765af_fk_index_province_id`; (params ())
+DEBUG 2019-09-19 17:25:30,244 utils 6140 6132 (0.031) ALTER TABLE `index_city` DROP FOREIGN KEY `index_city_provice_id_50d765af_fk_index_province_id`; args=()
+DEBUG 2019-09-19 17:25:30,244 schema 6140 6132 ALTER TABLE `index_city` CHANGE `provice_id` `province_id` integer NOT NULL; (params ())
+DEBUG 2019-09-19 17:25:30,257 utils 6140 6132 (0.012) ALTER TABLE `index_city` CHANGE `provice_id` `province_id` integer NOT NULL; args=()
+DEBUG 2019-09-19 17:25:30,258 schema 6140 6132 ALTER TABLE `index_city` ADD CONSTRAINT `index_city_province_id_3b03635c_fk_index_province_id` FOREIGN KEY (`province_id`) REFERENCES `index_province` (`id`); (params ())
+DEBUG 2019-09-19 17:25:30,389 utils 6140 6132 (0.130) ALTER TABLE `index_city` ADD CONSTRAINT `index_city_province_id_3b03635c_fk_index_province_id` FOREIGN KEY (`province_id`) REFERENCES `index_province` (`id`); args=()
+DEBUG 2019-09-19 17:25:30,390 utils 6140 6132 (0.001) SHOW FULL TABLES; args=None
+DEBUG 2019-09-19 17:25:30,391 utils 6140 6132 (0.000) INSERT INTO `django_migrations` (`app`, `name`, `applied`) VALUES ('index', '0004_auto_20190919_1725', '2019-09-19 09:25:30.391358'); args=['index', '0004_auto_20190919_1725', '2019-09-19 09:25:30.391358']
+DEBUG 2019-09-19 17:25:30,404 utils 6140 6132 (0.000) SHOW FULL TABLES; args=None
+DEBUG 2019-09-19 17:25:30,405 utils 6140 6132 (0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+DEBUG 2019-09-19 17:25:30,407 utils 6140 6132 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'admin' AND `django_content_type`.`model` = 'logentry'); args=('admin', 'logentry')
+DEBUG 2019-09-19 17:25:30,409 utils 6140 6132 (0.000) SELECT `auth_permission`.`content_type_id`, `auth_permission`.`codename` FROM `auth_permission` INNER JOIN `django_content_type` ON (`auth_permission`.`content_type_id` = `django_content_type`.`id`) WHERE `auth_permission`.`content_type_id` IN (1) ORDER BY `django_content_type`.`app_label` ASC, `django_content_type`.`model` ASC, `auth_permission`.`codename` ASC; args=(1,)
+DEBUG 2019-09-19 17:25:30,411 utils 6140 6132 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE `django_content_type`.`app_label` = 'admin'; args=('admin',)
+DEBUG 2019-09-19 17:25:30,413 utils 6140 6132 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'auth' AND `django_content_type`.`model` = 'permission'); args=('auth', 'permission')
+DEBUG 2019-09-19 17:25:30,415 utils 6140 6132 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'auth' AND `django_content_type`.`model` = 'group'); args=('auth', 'group')
+DEBUG 2019-09-19 17:25:30,417 utils 6140 6132 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'auth' AND `django_content_type`.`model` = 'user'); args=('auth', 'user')
+DEBUG 2019-09-19 17:25:30,420 utils 6140 6132 (0.000) SELECT `auth_permission`.`content_type_id`, `auth_permission`.`codename` FROM `auth_permission` INNER JOIN `django_content_type` ON (`auth_permission`.`content_type_id` = `django_content_type`.`id`) WHERE `auth_permission`.`content_type_id` IN (2, 3, 4) ORDER BY `django_content_type`.`app_label` ASC, `django_content_type`.`model` ASC, `auth_permission`.`codename` ASC; args=(2, 3, 4)
+DEBUG 2019-09-19 17:25:30,422 utils 6140 6132 (0.001) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE `django_content_type`.`app_label` = 'auth'; args=('auth',)
+DEBUG 2019-09-19 17:25:30,423 utils 6140 6132 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'contenttypes' AND `django_content_type`.`model` = 'contenttype'); args=('contenttypes', 'contenttype')
+DEBUG 2019-09-19 17:25:30,426 utils 6140 6132 (0.000) SELECT `auth_permission`.`content_type_id`, `auth_permission`.`codename` FROM `auth_permission` INNER JOIN `django_content_type` ON (`auth_permission`.`content_type_id` = `django_content_type`.`id`) WHERE `auth_permission`.`content_type_id` IN (5) ORDER BY `django_content_type`.`app_label` ASC, `django_content_type`.`model` ASC, `auth_permission`.`codename` ASC; args=(5,)
+DEBUG 2019-09-19 17:25:30,428 utils 6140 6132 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE `django_content_type`.`app_label` = 'contenttypes'; args=('contenttypes',)
+DEBUG 2019-09-19 17:25:30,430 utils 6140 6132 (0.001) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'sessions' AND `django_content_type`.`model` = 'session'); args=('sessions', 'session')
+DEBUG 2019-09-19 17:25:30,433 utils 6140 6132 (0.001) SELECT `auth_permission`.`content_type_id`, `auth_permission`.`codename` FROM `auth_permission` INNER JOIN `django_content_type` ON (`auth_permission`.`content_type_id` = `django_content_type`.`id`) WHERE `auth_permission`.`content_type_id` IN (6) ORDER BY `django_content_type`.`app_label` ASC, `django_content_type`.`model` ASC, `auth_permission`.`codename` ASC; args=(6,)
+DEBUG 2019-09-19 17:25:30,436 utils 6140 6132 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE `django_content_type`.`app_label` = 'sessions'; args=('sessions',)
+DEBUG 2019-09-19 17:25:30,437 utils 6140 6132 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'index' AND `django_content_type`.`model` = 'product'); args=('index', 'product')
+DEBUG 2019-09-19 17:25:30,439 utils 6140 6132 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'index' AND `django_content_type`.`model` = 'type'); args=('index', 'type')
+DEBUG 2019-09-19 17:25:30,441 utils 6140 6132 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'index' AND `django_content_type`.`model` = 'province'); args=('index', 'province')
+DEBUG 2019-09-19 17:25:30,443 utils 6140 6132 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'index' AND `django_content_type`.`model` = 'city'); args=('index', 'city')
+DEBUG 2019-09-19 17:25:30,445 utils 6140 6132 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE (`django_content_type`.`app_label` = 'index' AND `django_content_type`.`model` = 'person'); args=('index', 'person')
+DEBUG 2019-09-19 17:25:30,448 utils 6140 6132 (0.001) SELECT `auth_permission`.`content_type_id`, `auth_permission`.`codename` FROM `auth_permission` INNER JOIN `django_content_type` ON (`auth_permission`.`content_type_id` = `django_content_type`.`id`) WHERE `auth_permission`.`content_type_id` IN (7, 8, 9, 10, 11) ORDER BY `django_content_type`.`app_label` ASC, `django_content_type`.`model` ASC, `auth_permission`.`codename` ASC; args=(7, 8, 9, 10, 11)
+DEBUG 2019-09-19 17:25:30,451 utils 6140 6132 (0.000) SELECT `django_content_type`.`id`, `django_content_type`.`app_label`, `django_content_type`.`model` FROM `django_content_type` WHERE `django_content_type`.`app_label` = 'index'; args=('index',)
+DEBUG 2019-09-19 17:28:29,489 utils 9740 5412 (0.001) SELECT @@SQL_AUTO_IS_NULL; args=None
+DEBUG 2019-09-19 17:28:29,491 utils 9740 5412 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
+DEBUG 2019-09-19 17:28:29,493 utils 9740 5412 (0.000) SELECT VERSION(); args=None
+DEBUG 2019-09-19 17:28:29,500 utils 9740 5412 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
+DEBUG 2019-09-19 17:28:29,502 utils 9740 5412 (0.002) SELECT `index_person`.`id`, `index_person`.`name`, `index_person`.`living_id`, `index_city`.`id`, `index_city`.`name`, `index_city`.`province_id`, `index_province`.`id`, `index_province`.`name` FROM `index_person` INNER JOIN `index_city` ON (`index_person`.`living_id` = `index_city`.`id`) INNER JOIN `index_province` ON (`index_city`.`province_id` = `index_province`.`id`) WHERE `index_person`.`name` = '卢建斌'; args=('卢建斌',)

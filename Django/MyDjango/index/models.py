@@ -15,4 +15,18 @@ class Product(models.Model):
     size = models.CharField(max_length=20)
     type = models.ForeignKey(Type, on_delete=models.CASCADE)
 
+# 省份表
+class Province(models.Model):
+    name = models.CharField(max_length=10)
+
+# 城市表
+class City(models.Model):
+    name = models.CharField(max_length=5)
+    province = models.ForeignKey(Province, on_delete=models.CASCADE)
+
+# 人物信息表
+class Person(models.Model):
+    name = models.CharField(max_length=10)
+    living = models.ForeignKey(City, on_delete=models.CASCADE)
+
 
