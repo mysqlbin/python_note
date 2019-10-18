@@ -4,6 +4,11 @@ import os
 import sys
 print(sys.version)
 
+result = {'status': 0, 'msg': 'ok', 'data': {'priv_check': 1111, 'limit_num': 0}}
+print(result['data']['priv_check'])
+
+
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 print(BASE_DIR)
 
