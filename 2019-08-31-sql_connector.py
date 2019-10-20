@@ -16,15 +16,18 @@ INSERT INTO `t` VALUES ('2', '2', '2');
 INSERT INTO `t` VALUES ('3', '3', '3');
 
 """
-# sql = 'select * from zst.t;'
-# host = '192.168.1.27'
-# user = 'root'
-# passwd = '123456abc'
-# port = 3306
-#
-# connojb = pymysql.connect(host=host,user=user,passwd=passwd,port=int(port),charset='utf8mb4')
-# cursor = connojb.cursor()
-# cursor.execute(sql)
+
+sql = 'select * from zst.t;'
+host = '192.168.1.27'
+user = 'root'
+passwd = '123456abc'
+port = 3306
+
+connojb = pymysql.connect(host=host,user=user,passwd=passwd,port=int(port),charset='utf8mb4')
+cursor = connojb.cursor()
+cursor.execute(sql)
+data = cursor.fetchmany(size=1)
+print(data)
 
 # 获取查询结果的第一行数据
 # tuple_format = cursor.fetchone()
@@ -110,7 +113,7 @@ INSERT INTO `t` VALUES ('3', '3', '3');
 """
 
 
-
+"""
 def mysql_query(sql,user,passwd,host,port,dbname):
     try:
         conn   = pymysql.connect(host=host,user=user,passwd=passwd,port=int(port),connect_timeout=5,charset='utf8mb4')
@@ -150,6 +153,7 @@ print(data)
 print(col)
 """
 ['Log_name', 'File_size']
+"""
 """
 
 

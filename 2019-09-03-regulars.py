@@ -30,6 +30,16 @@ if m_search == None:
 # if not bool(my_dict):
 #     print("Dictionary is empty")
 
-sql = "select 2 from t"
+sql = "selecta 2 from t"
 if re.search("\*", sql) is not None:
     print(1111)
+
+
+if re.match("select|show|explain|desc", sql) is None:
+    print(2222)
+
+
+sql_content = 'select id,username from auth_user limit 2;'
+if re.match("show", sql_content) is not None:
+        limit_num = 0
+        print(limit_num)
