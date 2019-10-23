@@ -38,22 +38,22 @@ def calculate_similarity(item1, item2):
 str = 'a\nb\t\c'
 print(str)
 ### l输出 ###
-a
-b	\c
+# a
+# b	\c
 
 
 #虽然打印的输出横跨了两行，但是整个字符串 s 仍然只有5个元素：
-print(len(s))
+# print(len(s))
 
 name = 'json'
 for char in name:
     print(char)
 ### 输出 ###
-j
-a
-s
-o
-n
+# j
+# a
+# s
+# o
+# n
 
 
 

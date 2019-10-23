@@ -5,6 +5,14 @@ from django.shortcuts import render
 from index.models import  Product, Person
 from django.http import HttpResponse
 from django.db.models import Q, Sum, Count
+from .tasks import updateData
+
+def celery_task_test(request):
+    # 传递参数并执行异步任务
+    updateData.delay(3, '任务测试_update1514')
+    return HttpResponse("Hello Celery")
+
+
 
 def orm_operate_three_table(request):
     # 查询 卢建斌现在居住的省份
@@ -156,6 +164,7 @@ def orm_operate_single_table(request):
     # 聚合查询
 
     # annotate方法 实现 group by, annotate方法类似于 group by方法, 如果不设置 values, 就会默认对主键进行 group by 分组
+    # 根据设置的 values 做 group by
     # p_res = Product.objects.values('name').annotate(sizes_sum = Sum('size'))
     # SELECT `index_product`.`name`, SUM(`index_product`.`size`) AS `sizes_sum` FROM `index_product` GROUP BY `index_product`.`name` ORDER BY NULL LIMIT 21;
     # <QuerySet [{'name': 'xiaomi1', 'sizes_sum': 100.0}, {'name': 'xiaomi2', 'sizes_sum': 200.0}, {'name': 'mac1', 'sizes_sum': 100.0}, {'name': 'mac2', 'sizes_sum': 200.0}]>

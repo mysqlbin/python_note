@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'index',
+    'django_celery_results',    # 添加分布式任务功能
+
 ]
 
 MIDDLEWARE = [
@@ -132,6 +134,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# 设置存储 Celery 任务队列的Redis数据库
+CELERY_BROKER_URL = 'redis://192.168.0.54:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+# 设置存储 Celery 任务结果的Redis数据库
+CELERY_RESULT_BACKEND = 'redis://192.168.0.54:6379/1'
 
 # LOG配置
 BASE_LOG_DIR = os.path.join(BASE_DIR, "log")

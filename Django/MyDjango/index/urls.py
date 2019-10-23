@@ -20,4 +20,5 @@ from index import views as index_view
 urlpatterns = [
     path('orm_operate_single_table/', index_view.orm_operate_single_table),
     path('orm_operate_many_table/', index_view.orm_operate_many_table),
+    path('celery_task_test/', index_view.celery_task_test),
 ]
