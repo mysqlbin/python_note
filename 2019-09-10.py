@@ -1,6 +1,7 @@
 #!/usr/local/bin/python3
 #coding=utf-8
 
+
 # len: 判断数据类型是否为空
 a = -10
 if a > -11:

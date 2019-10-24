@@ -162,6 +162,8 @@ if (reaCode == None):
 else:
     print("not1!")
 
+
+
 if (reaCode is None):
     print("is null2")
 else:
@@ -192,3 +194,8 @@ else:
 
 # None是一个空的对象，代表什么都没有。
 # 而''，是一个字符串对象，代表一个空的字符串。
+
+
+a = ''
+if a == '':
+    print(2222)

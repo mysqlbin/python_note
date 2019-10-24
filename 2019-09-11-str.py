@@ -31,16 +31,20 @@
 # print(str[1:])
 
 
-str = ' my name is jason '
-str.strip()
-print(str)
+# str = ' my name is jason '
+# str.strip()
+# print(str)
 ### 输出 ###
 'my name is jason'
 
-id = 1
-name = 'bin'
-str = f'no data available for person with id: {id}, name: {name}'
-print(str)
+# id = 1
+# name = 'bin'
+# str = f'no data available for person with id: {id}, name: {name}'
+# print(str)
 ### 输出 ###
-no data available for person with id: 1, name: bin
+# no data available for person with id: 1, name: bin
 
+dicts = {'name': 'bin', 'age': 0, 'gender': 'male'}
+
+for k,v in dicts.items():
+   print('key: {}, value: {}'.format(k, v))
