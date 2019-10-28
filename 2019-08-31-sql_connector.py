@@ -17,13 +17,13 @@ INSERT INTO `t` VALUES ('3', '3', '3');
 
 """
 
-sql = 'select * from zst.t;'
-host = '192.168.1.27'
+sql = 'select id,a,b from t1 where id=1;'
+host = '192.168.0.54'
 user = 'root'
 passwd = '123456abc'
 port = 3306
 
-connojb = pymysql.connect(host=host,user=user,passwd=passwd,port=int(port),charset='utf8mb4')
+connojb = pymysql.connect(host=host,user=user,passwd=passwd,port=int(port),database='test_db',charset='utf8mb4')
 cursor = connojb.cursor()
 cursor.execute(sql)
 data = cursor.fetchmany(size=1)
