@@ -9,6 +9,8 @@ python3 manage.py migrate
 
 
 python3 manage.py runserver 192.168.0.71:8007
+python3 manage.py runserver 192.168.0.246:8000
+python3 manage.py runserver 127.0.0.1:8000
 
 
 python3 manage.py shell
@@ -22,3 +24,5 @@ Django 数据表更改
         python manage.py migrate
     这两行命令就会对我们的models.py 进行检测，自动发现需要更改的，应用到数据库中去。
 
+
+	
