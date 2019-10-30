@@ -17,7 +17,7 @@ class Entity():
 class Document(Entity):
     def __init__(self, title, author, context):       # 作为参数进行传递
         print('Document class init called')
-        Entity.__init__(self, 'document')            # 在 init() 函数中显示调用父类的构造函数
+        Entity.__init__(self, 'document')            # 自定义构造函数，在 init() 函数中显示调用父类的构造函数
         self.title = title
         self.author = author
         self.__context = context
@@ -48,6 +48,7 @@ Video class init called
 parent class init called
 """
 
+# 子类可以继承了父类的构造函数
 # print(harry_potter_book.object_type)
 # print(harry_potter_movie.object_type)
 """
@@ -55,21 +56,20 @@ document
 video
 """
 
-
 # entity = Entity('a')
 # print(entity)
 # print(entity.get_context_length())   #Exception: get_context_length not implemente
 
-
+# 子类可以继承父类的行为
 # harry_potter_book.print_title()
 # harry_potter_movie.print_title()
 
 """
 Harry Potter(Book)
 Harry Potter(Movie)
-
 """
 
+# 子类可以重写父类的行为
 # print(harry_potter_book.get_context_length())
 # print(harry_potter_movie.get_context_length())
 """

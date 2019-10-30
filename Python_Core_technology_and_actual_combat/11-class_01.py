@@ -58,6 +58,7 @@ AttributeError: 'Document' object has no attribute '__context'
 """
 
 """
+#　分析
 class Document 定义了 Document 类。
 
 Document 类的三个函数
