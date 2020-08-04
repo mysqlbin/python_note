@@ -6,8 +6,8 @@
 """ \d 匹配数字 """
 import re
 str = "abc123456"
-pattern = re.compile(r'\d')
-print(pattern.findall(str))
+pattern = re.compile(r'\d')  -- 正则表达式的匹配模式/规则 匹配的正则表达式
+print(pattern.findall(str))  -- 把所有的字符串都找出来
 """ 输出： ['1', '2', '3', '4', '5', '6'] """
 
 

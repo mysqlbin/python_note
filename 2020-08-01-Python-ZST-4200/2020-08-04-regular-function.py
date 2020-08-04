@@ -12,7 +12,7 @@ matchOjb = re.match(r'Cats are', line, re.M|re.I)
 print(matchOjb.group())
 """ 输出: Cats are """
 
-""" match """
+""" search """
 line = 'Cats are smarter than dogs'
 matchOjb = re.search(r'smarter', line, re.M|re.I)
 print(matchOjb.group())
