@@ -6,12 +6,20 @@
 import re
 
 #match
-str = 'foo abc'        # 类似于 like 'foo'
+str = 'foo abc'        # 
 m = re.match('foo', str)
 if m is not None:
     print(m.group())
 
-
+import re
+str = 'a foo abc'     
+m = re.match('foo', str)
+print(m)
+None
+if m is not None:
+    print(m.group())
+    
+    
 #search
 str_search = 'abc faad'
 m_search = re.search('aa', str_search)  #类似于 like '%aa%'
