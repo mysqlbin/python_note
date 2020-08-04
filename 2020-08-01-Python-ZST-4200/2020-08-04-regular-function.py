@@ -80,6 +80,13 @@ matchOjb = re.findall(r'\w+', line, re.M|re.I)
 print(matchOjb)
 """ 输出： ['Cats', 'are', 'smarter', 'than', 'dogs'] """
 
+等价于
+import re
+line = 'Cats are smarter than dogs'
+pattern = re.compile(r'\w+', re.M|re.I)
+print(pattern.findall(line))
+""" 输出： ['Cats', 'are', 'smarter', 'than', 'dogs'] """
+
 
 """ finditer """
 import re
