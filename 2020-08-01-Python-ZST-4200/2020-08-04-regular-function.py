@@ -23,6 +23,8 @@ print(matchOjb.group())
 <_sre.SRE_Match object at 0x7f49023a9440>
 >>> print(matchOjb.group())
 13202095158
+
+因为 match 从开头开始匹配，当匹配到 11个字符之后，就停止下来。
 """
 
 import  re
