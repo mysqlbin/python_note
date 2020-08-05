@@ -12,6 +12,29 @@ matchOjb = re.match(r'Cats are', line, re.M|re.I)
 print(matchOjb.group())
 """ 输出: Cats are """
 
+
+import  re
+line = '13202095158123'
+matchOjb = re.match(r'\d{11}', line)
+print(matchOjb)
+print(matchOjb.group())
+"""
+>>> print(matchOjb)
+<_sre.SRE_Match object at 0x7f49023a9440>
+>>> print(matchOjb.group())
+13202095158
+"""
+
+import  re
+line = '13202095158123'
+matchOjb = re.match(r'^\d{11}$', line)
+print(matchOjb)
+"""
+>>> print(matchOjb)
+None
+"""
+
+
 """ search """
 line = 'Cats are smarter than dogs'
 matchOjb = re.search(r'smarter', line, re.M|re.I)
@@ -94,8 +117,17 @@ line = 'Cats are smarter than dogs'
 matchOjb = re.finditer(r'\w+', line, re.M|re.I)
 print(matchOjb)
 """ 输出： <callable-iterator object at 0x7f49023a5dd0> """
-print(matchOjb.group())
+for items in matchOjb:
+    print (items.group())
 
+"""
+输出：
+Cats
+are
+smarter
+than
+dogs
+"""
 
 """ match 对象 """
 """
