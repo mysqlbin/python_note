@@ -132,10 +132,11 @@ dogs
 """
 
 """ match 对象 """
-"""
+
 import re
 line = '13202095158'
 matchOjb = re.match(r'(\d{3})(\d{4})(\d{4})', line)
+"""
 print(matchOjb)
 <_sre.SRE_Match object at 0x7f4902454ae0>
 print(matchOjb.group())
