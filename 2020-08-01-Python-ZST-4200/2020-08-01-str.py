@@ -116,3 +116,14 @@ print(strs)
 """小练习理解了。"""
 
 
+"""提取最后N个字符"""
+letters = 'abcxyz'
+print(letters[-2:])
+""" 输出： yz """
+
+
+""" 字符串反转 """
+letters = 'abcxyz'
+print(letters[::-1])
+""" 输出： zyxcba """
+
