@@ -1,0 +1,4 @@
+[mysqld]
+default_storage_engine = InnoDB
+port = 3306
+

@@ -145,7 +145,7 @@ fp.close()
 
 
 """
-check=True 如果希望当命令执行失败的时候，抛出异常
+check=True参数： 如果希望当命令执行失败的时候，抛出异常
 """
 import subprocess
 s = subprocess.run("sh ./2020-08-10.sh", shell=True, capture_output=True, text=True, check=True)

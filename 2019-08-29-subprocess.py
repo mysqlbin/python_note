@@ -11,6 +11,7 @@ logger = logging.getLogger('default')
 
 """
 subprocess模块：
+
     是派生进程的主要替换方案，可以单纯地执行任务，或者通过标准文件(stdin、stdout、stderr)进行进程间通信。 By Python核心编程第3版 163页
     stdin：  表示程序的标准输入
 
@@ -18,10 +19,13 @@ subprocess模块：
     stderr： 表示程序的标准错误输出
 
     subprocess.Popen:
-        subprocess模块下的Popen方法，实现：在执行该程序的服务器上实现shell命令的执行；
+        
+        subprocess模块下的Popen方法
+        实现：在执行该程序的服务器上实现shell命令的执行；
 
     subprocess.PIPE--->管道机制：一个程序与另一个程序实现通信，
     例如：cmd命令提示符与屏幕显示，又如：subprocess 与屏幕显示
+    
     subprocess.POPE：
         有stdout:标准输出内容扔到管道；
         有stderr：标准错误输出内容扔到管道；
