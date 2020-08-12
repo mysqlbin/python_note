@@ -1,4 +1,5 @@
 import requests
+import json
 
 if __name__ == "__main__":
 
@@ -217,3 +218,11 @@ if __name__ == "__main__":
    <class 'dict'>
    {'args': {'a': '1', 'b': '2'}, 'data': 'username=mysqlbin&password=guangdong', 'files': {}, 'form': {}, 'headers': {'Accept': '*/*', 'Accept-Encoding': 'gzip, deflate', 'Content-Length': '36', 'Content-Type': 'application/json', 'Host': 'httpbin.org', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Safari/537.36', 'X-Amzn-Trace-Id': 'Root=1-5f33c378-f46c0c30bbac3870fdea87d0'}, 'json': None, 'origin': '121.35.189.165', 'url': 'http://httpbin.org/post?a=1&b=2'}
    """
+   print(type(json.dumps(resp.json())))
+   print(json.dumps(resp.json()))
+
+   """
+   <class 'str'>
+   {"args": {"a": "1", "b": "2"}, "data": "username=mysqlbin&password=guangdong", "files": {}, "form": {}, "headers": {"Accept": "*/*", "Accept-Encoding": "gzip, deflate", "Content-Length": "36", "Content-Type": "application/json", "Host": "httpbin.org", "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Safari/537.36", "X-Amzn-Trace-Id": "Root=1-5f33c607-2f748db439420274c893cf7c"}, "json": null, "origin": "121.35.189.165", "url": "http://httpbin.org/post?a=1&b=2"}
+   """
+

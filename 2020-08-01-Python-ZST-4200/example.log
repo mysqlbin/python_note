@@ -5,3 +5,4 @@ abc 2020-08-12 14:35:05 2020-08-12-logger_trace.py:23 INFO this is a info messag
 abc 2020-08-12 14:35:06 2020-08-12-logger_trace.py:23 INFO this is a info message
 loggers 2020-08-12 14:36:13 2020-08-12-logger_trace.py:23 INFO this is a info message
 logger_test 2020-08-12 14:36:32 2020-08-12-logger_trace.py:23 INFO this is a info message
+logger_test 2020-08-12 18:30:23,694 2020-08-12-logger_trace.py:25 INFO this is a info message
