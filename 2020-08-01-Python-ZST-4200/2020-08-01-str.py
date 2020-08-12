@@ -98,13 +98,13 @@ lists = s.rstrip('。').split(",")
 for item in lists:
     print(item.ljust(8, '.'))
 
-lists_new = [item.ljust(8,'.') for item in lists]
-print(lists_new)
+lists_data = [item.ljust(8,'.') for item in lists]
+print(lists_data)
 """
 ['目录引言....', '天青色等烟雨..', '而我在等你...']
 """
 
-strs = "\n".join(lists_new)
+strs = "\n".join(lists_data)
 print(strs)
 
 """

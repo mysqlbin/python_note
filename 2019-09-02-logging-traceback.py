@@ -2,8 +2,8 @@
 #coding=utf-8
 
 
-import  logging
-import  traceback
+import logging
+import traceback
 
 
 logger = logging.getLogger('default')
