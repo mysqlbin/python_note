@@ -8,7 +8,7 @@ if __name__ == "__main__":
    """
    host = "http://httpbin.org/"
    resp = requests.get(host + "/get")
-   print(resp.text)
+   print(resp.text)  # 读取返回的数据
    """
 
    """
@@ -18,7 +18,7 @@ if __name__ == "__main__":
           "Accept": "*/*",
           "Accept-Encoding": "gzip, deflate",
           "Host": "httpbin.org",
-          "User-Agent": "python-requests/2.24.0",   # 标识由哪个程序发出请求
+          "User-Agent": "python-requests/2.24.0",   # 标识由哪个程序发出请求，可以理解为不同的浏览器类型
           "X-Amzn-Trace-Id": "Root=1-5f33b624-d0b086b6de53ddc4f50cfab6"
         },
         "origin": "121.35.189.165",
@@ -68,6 +68,7 @@ if __name__ == "__main__":
    """
 
    """
+   repsonse：
       {
         "args": {}, 
         "data": "", 
@@ -93,7 +94,7 @@ if __name__ == "__main__":
    """
 
 
-   """ 3. post请求： json """
+   """ 3. post请求： Content-Type：json """
 
    """
    host = "http://httpbin.org/"
@@ -109,27 +110,28 @@ if __name__ == "__main__":
    print(resp.text)
    """
    """
-   {
-     "args": {}, 
-     "data": "username=mysqlbin&password=guangdong", 
-     "files": {}, 
-     "form": {}, 
-     "headers": {
-       "Accept": "*/*", 
-       "Accept-Encoding": "gzip, deflate", 
-       "Content-Length": "36", 
-       "Content-Type": "application/json",     # json
-       "Host": "httpbin.org", 
-       "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Safari/537.36", 
-       "X-Amzn-Trace-Id": "Root=1-5f33bb3f-869e74626475da9e2a563262"
-     }, 
-     "json": null, 
-     "origin": "121.35.189.165", 
-     "url": "http://httpbin.org/post"
-   }
+   repsonse：
+      {
+        "args": {}, 
+        "data": "username=mysqlbin&password=guangdong", 
+        "files": {}, 
+        "form": {}, 
+        "headers": {
+          "Accept": "*/*", 
+          "Accept-Encoding": "gzip, deflate", 
+          "Content-Length": "36", 
+          "Content-Type": "application/json",     # json
+          "Host": "httpbin.org", 
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Safari/537.36", 
+          "X-Amzn-Trace-Id": "Root=1-5f33bb3f-869e74626475da9e2a563262"
+        }, 
+        "json": null, 
+        "origin": "121.35.189.165", 
+        "url": "http://httpbin.org/post"
+      }
    """
 
-   """ 4. get请求： 传参数 """
+   """ 4. post请求： Content-Type：json、传参数 """
 
    host = "http://httpbin.org/"
    headers = {
@@ -151,6 +153,7 @@ if __name__ == "__main__":
    print(resp.text)
 
    """
+   repsonse：
       {
          "args": {
             "a": "1",

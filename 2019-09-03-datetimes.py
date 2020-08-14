@@ -15,10 +15,15 @@ import datetime
 # print(start_time_b)
 
 # 日期减一天
-default_time = time.strftime("%Y-%m-%d")
-default_time = datetime.datetime.strptime(default_time, '%Y-%m-%d') + datetime.timedelta(days=-60)
-print(default_time)
+# default_time = time.strftime("%Y-%m-%d")
+# default_time = datetime.datetime.strptime(default_time, '%Y-%m-%d') + datetime.timedelta(days=-60)
+# print(default_time)
 # print(default_time.strftime('%d'))
+
+default_time = time.strftime("%Y-%m-%d %H:%M:%S")
+default_time = datetime.datetime.strptime(default_time, '%Y-%m-%d %H:%M:%S') + datetime.timedelta(days=-1)
+print(default_time)
+
 
 # 日期加一天
 # default_current_time = time.strftime("%Y-%m-%d")

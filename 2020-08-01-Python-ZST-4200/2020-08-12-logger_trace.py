@@ -9,11 +9,11 @@ DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
 # formatter = logging.Formatter(BASIC_FORMAT, DATE_FORMAT)  # 设置日志记录的格式
 formatter = logging.Formatter(BASIC_FORMAT)  # 设置日志记录的格式
 
-chlr = logging.StreamHandler()  # 输出到控制台的Handler
+chlr = logging.StreamHandler()  # 把日志输出到控制台的Handler
 chlr.setFormatter(formatter)
 chlr.setLevel('DEBUG')          # 也可以不设置，不设置就默认用logger的level
 
-fhlr = logging.FileHandler('example.log')  # 输出到文件的handler
+fhlr = logging.FileHandler('example.log')  # 把日志写入到文件的handler
 fhlr.setFormatter(formatter)
 fhlr.setLevel('INFO')           # 设置日志记录级别，把日志记录级别大于等于INFO的记录下来
 
