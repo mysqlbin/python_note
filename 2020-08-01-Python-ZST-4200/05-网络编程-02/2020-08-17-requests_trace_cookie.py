@@ -27,7 +27,7 @@ if __name__ == "__main__":
    # # print("Resp: {}".format(resp.text))     # 获取的是重定向的cookie， 但是因为关闭了重定向，所以获取不到 cookie
    # print(requests.utils.dict_from_cookiejar(resp.cookies))  # 因为关闭了重定向，所以可以获取到 cookie
 
-   
+
    """
       Resp: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
       <title>Redirecting...</title>
