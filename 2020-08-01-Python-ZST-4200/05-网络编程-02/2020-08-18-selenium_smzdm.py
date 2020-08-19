@@ -11,24 +11,23 @@ if __name__ == "__main__":
 
    print('0')
 
-   browser_for_login.page_source
+   time.sleep(3)
 
-   time.sleep(2)
+   # 触发点击登录按钮
+   browser_for_login.find_element_by_css_selector('.J_login_trigger').click()
 
    print('1')
 
-   browser_for_login.find_element_by_css_selector('.J_login_trigger').click()
+   time.sleep(30)
 
    print('2')
 
-   time.sleep(30)
+   # 触发签到按钮
+   browser_for_login.find_element_by_css_selector('.J_punch').click()
 
    print('3')
 
-   browser_for_login.find_element_by_css_selector('.J_punch').click()
-
-   print('4')
-
+   # 关闭浏览器
    browser_for_login.close()
 
 

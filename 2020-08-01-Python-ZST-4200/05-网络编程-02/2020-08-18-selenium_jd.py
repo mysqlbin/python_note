@@ -19,7 +19,7 @@ if __name__ == "__main__":
    time.sleep(2)
 
    browser_for_login.page_source
-   browser_for_login.
+
    for item in browser_for_login.find_elements_by_css_selector('.goods-item'):
       print(item.find_element_by_tag_name('a'))
 
