@@ -3,7 +3,7 @@ import requests
 
 if __name__ == "__main__":
 
-   #
+
    # host = "http://httpbin.org/"
    #
    # cookie = {
@@ -14,7 +14,7 @@ if __name__ == "__main__":
    #
    # print("Resp: {}".format(resp.text))   # 自动完成了获取重定向数据的工作
    # print(requests.utils.dict_from_cookiejar(resp.cookies))
-   #
+
 
 
    host = "http://httpbin.org/"
@@ -25,7 +25,7 @@ if __name__ == "__main__":
 
    resp = requests.get(host + "/cookies/set/zst/123456", allow_redirects=False)
 
-   # print("Resp: {}".format(resp.text))
+   print("Resp: {}".format(resp.text))
    print(requests.utils.dict_from_cookiejar(resp.cookies))
 
 
