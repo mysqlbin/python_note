@@ -5,11 +5,9 @@ if __name__ == "__main__":
 
    """ 0. get 请求 """
 
-   """
    host = "http://httpbin.org/"
    resp = requests.get(host + "/get")
    print(resp.text)  # 读取返回的数据
-   """
 
    """
       {
@@ -28,14 +26,13 @@ if __name__ == "__main__":
 
    """ 1. get 请求 """
 
-   """
    host = "http://httpbin.org/"
    headers = {
       'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Safari/537.36'
    }
    resp = requests.get(host + "/get", headers=headers)
    print(resp.text)
-   """
+
    """
       
       {
@@ -54,7 +51,6 @@ if __name__ == "__main__":
 
    """ 2. post请求： 表单 """
 
-   """
    host = "http://httpbin.org/"
    headers = {
       'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Safari/537.36'
@@ -65,7 +61,7 @@ if __name__ == "__main__":
    }
    resp = requests.post(host + "/post", headers=headers, data=data)
    print(resp.text)
-   """
+
 
    """
    repsonse：
@@ -96,7 +92,6 @@ if __name__ == "__main__":
 
    """ 3. post请求： Content-Type：json """
 
-   """
    host = "http://httpbin.org/"
    headers = {
       'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Safari/537.36',
@@ -108,7 +103,7 @@ if __name__ == "__main__":
    }
    resp = requests.post(host + "/post", headers=headers, data=data)
    print(resp.text)
-   """
+
    """
    repsonse：
       {
