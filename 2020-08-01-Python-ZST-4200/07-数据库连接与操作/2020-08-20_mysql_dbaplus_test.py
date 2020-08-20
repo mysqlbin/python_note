@@ -24,7 +24,7 @@ if __name__ == '__main__':
         exit(1)
 
     for li in list_group.children:
-        
+
         if li.name != "li":
             continue
         name_ele = li.select_one('.activ-text > .text > a')
