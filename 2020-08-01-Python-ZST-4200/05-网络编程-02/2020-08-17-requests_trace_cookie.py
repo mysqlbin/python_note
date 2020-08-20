@@ -3,6 +3,8 @@ import requests
 
 if __name__ == "__main__":
 
+   # install mysqlclient
+
 
    host = "http://httpbin.org/"
 
