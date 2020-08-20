@@ -9,7 +9,6 @@ if __name__ == '__main__':
 
     logging.basicConfig(level=logging.DEBUG, format="%(asctime)s %(levelname)s %(message)s")
 
-
     resp = requests.get("https://dbaplus.cn/")
     if resp.status_code >= 300:
         logging.error("failed to make a request to dbaplus, status_code: %d", resp.status_code)
@@ -27,6 +26,8 @@ if __name__ == '__main__':
 
         if li.name != "li":
             continue
+
+        # 获取 active name 活动名称
         name_ele = li.select_one('.activ-text > .text > a')
         # print(name_ele)
         if name_ele is not None:
@@ -35,26 +36,30 @@ if __name__ == '__main__':
             active_name = name_ele.get_text().strip()
             # print(active_name)
 
+
+        # 获取日期和形式
         date_div = li.find(class_="date")
 
         if date_div is not None:
-            print('None')
+            # print('None')
             # print(date_div)
 
-        span_list = date_div.find_all('span')
-        # print(span_list)
-        # print(len(span_list))
+            span_list = date_div.find_all('span')
+            # print(span_list)
+            # print(len(span_list))
 
-        if span_list is None or len(span_list) != 2:
-            print('None')
+            if span_list is not None or len(span_list) == 2:
 
-        time_splits = span_list[0].get_text().strip()
 
-        # print(time_splits.split("：")[1])
+                time_splits = span_list[0].get_text().strip()
 
-        style_splits = span_list[1].get_text().strip()
+                print('活动时间：{}'.format(time_splits.split("：")[1]))
 
-        print(style_splits.split("：")[1])
+                style_splits = span_list[1].get_text().strip()
+
+                print('活动形式：{}'.format(style_splits.split("：")[1]))
+
+
             # date_span = date_div.select_one('span').get_text().strip()
             # time_splits = date_span.split("：")[1]
 
