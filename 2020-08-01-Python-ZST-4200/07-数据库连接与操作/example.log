@@ -1,1 +1,116 @@
-logger_test 2020-08-19 23:22:54 2020-08-19-mysql-getcontent.py:27 DEBUG this is a debug message
+logger_test 2020-08-20 10:10:59 2020-08-19-mysql-getcontent.py:47 ERROR (1146, "Table 'test_db.t_activit1' doesn't exist")
+Traceback (most recent call last):
+  File "E:/github/python_note/2020-08-01-Python-ZST-4200/07-数据库连接与操作/2020-08-19-mysql-getcontent.py", line 36, in <module>
+    cur.execute("select * from t_activit1 ")
+  File "D:\Py\lib\site-packages\MySQLdb\cursors.py", line 206, in execute
+    res = self._query(query)
+  File "D:\Py\lib\site-packages\MySQLdb\cursors.py", line 319, in _query
+    db.query(q)
+  File "D:\Py\lib\site-packages\MySQLdb\connections.py", line 259, in query
+    _mysql.connection.query(self, query)
+MySQLdb._exceptions.ProgrammingError: (1146, "Table 'test_db.t_activit1' doesn't exist")
+logger_test 2020-08-20 10:10:59 2020-08-19-mysql-getcontent.py:56 INFO this is a debug message
+logger_test 2020-08-20 10:13:15 2020-08-19_mysql_fetchone.py:47 ERROR (1146, "Table 'test_db.t_activit' doesn't exist")
+Traceback (most recent call last):
+  File "E:/github/python_note/2020-08-01-Python-ZST-4200/07-数据库连接与操作/2020-08-19_mysql_fetchone.py", line 36, in <module>
+    cur.execute("select * from t_activit ")
+  File "D:\Py\lib\site-packages\MySQLdb\cursors.py", line 206, in execute
+    res = self._query(query)
+  File "D:\Py\lib\site-packages\MySQLdb\cursors.py", line 319, in _query
+    db.query(q)
+  File "D:\Py\lib\site-packages\MySQLdb\connections.py", line 259, in query
+    _mysql.connection.query(self, query)
+MySQLdb._exceptions.ProgrammingError: (1146, "Table 'test_db.t_activit' doesn't exist")
+logger_test 2020-08-20 10:13:15 2020-08-19_mysql_fetchone.py:56 INFO this is a debug message
+logger_test 2020-08-20 10:13:57 2020-08-19_mysql_fetchone.py:56 INFO this is a debug message
+logger_test 2020-08-20 10:14:39 2020-08-19_mysql_fetchone.py:56 INFO this is a debug message
+logger_test 2020-08-20 10:42:09 2020-08-20_mysql_fetchone.py:56 INFO this is a debug message
+logger_test 2020-08-20 10:42:14 2020-08-20_mysql_fetchone.py:58 INFO this is a debug message
+logger_test 2020-08-20 10:42:33 2020-08-20_mysql_fetchone.py:59 INFO this is a debug message
+logger_test 2020-08-20 10:42:41 2020-08-20_mysql_fetchone.py:61 INFO this is a debug message
+logger_test 2020-08-20 10:42:47 2020-08-20_mysql_fetchone.py:62 INFO this is a debug message
+logger_test 2020-08-20 10:49:04 2020-08-20_mysql_SSDictCursor.py:52 ERROR (1146, "Table 'test_db.t_activity1' doesn't exist")
+Traceback (most recent call last):
+  File "E:/github/python_note/2020-08-01-Python-ZST-4200/07-数据库连接与操作/2020-08-20_mysql_SSDictCursor.py", line 39, in <module>
+    cur.execute("select * from t_activity1")
+  File "D:\Py\lib\site-packages\MySQLdb\cursors.py", line 206, in execute
+    res = self._query(query)
+  File "D:\Py\lib\site-packages\MySQLdb\cursors.py", line 319, in _query
+    db.query(q)
+  File "D:\Py\lib\site-packages\MySQLdb\connections.py", line 259, in query
+    _mysql.connection.query(self, query)
+MySQLdb._exceptions.ProgrammingError: (1146, "Table 'test_db.t_activity1' doesn't exist")
+logger_test 2020-08-20 10:49:04 2020-08-20_mysql_SSDictCursor.py:61 INFO this is a debug message
+logger_test 2020-08-20 10:49:23 2020-08-20_mysql_SSDictCursor.py:61 INFO this is a debug message
+logger_test 2020-08-20 10:49:41 2020-08-20_mysql_SSDictCursor.py:62 INFO this is a debug message
+logger_test 2020-08-20 10:49:52 2020-08-20_mysql_fetchone.py:54 ERROR (1146, "Table 'test_db.t_activity1' doesn't exist")
+Traceback (most recent call last):
+  File "E:/github/python_note/2020-08-01-Python-ZST-4200/07-数据库连接与操作/2020-08-20_mysql_fetchone.py", line 37, in <module>
+    cur.execute("select * from t_activity1")
+  File "D:\Py\lib\site-packages\MySQLdb\cursors.py", line 206, in execute
+    res = self._query(query)
+  File "D:\Py\lib\site-packages\MySQLdb\cursors.py", line 319, in _query
+    db.query(q)
+  File "D:\Py\lib\site-packages\MySQLdb\connections.py", line 259, in query
+    _mysql.connection.query(self, query)
+MySQLdb._exceptions.ProgrammingError: (1146, "Table 'test_db.t_activity1' doesn't exist")
+logger_test 2020-08-20 10:49:52 2020-08-20_mysql_fetchone.py:63 INFO this is a debug message
+logger_test 2020-08-20 10:49:57 2020-08-20_mysql_fetchone.py:63 INFO this is a debug message
+logger_test 2020-08-20 10:50:12 2020-08-20_mysql_SSDictCursor.py:62 INFO this is a debug message
+logger_test 2020-08-20 10:50:24 2020-08-20_mysql_fetchone.py:63 INFO this is a debug message
+logger_test 2020-08-20 10:50:42 2020-08-20_mysql_SSDictCursor.py:64 INFO this is a debug message
+logger_test 2020-08-20 10:51:00 2020-08-20_mysql_SSDictCursor.py:64 INFO this is a debug message
+logger_test 2020-08-20 10:51:21 2020-08-20_mysql_SSDictCursor.py:56 INFO this is a debug message
+logger_test 2020-08-20 10:51:38 2020-08-20_mysql_SSDictCursor.py:57 INFO this is a debug message
+logger_test 2020-08-20 11:03:11 2020-08-20_mysql_cursor_control.py:46 ERROR execute() first
+Traceback (most recent call last):
+  File "E:/github/python_note/2020-08-01-Python-ZST-4200/07-数据库连接与操作/2020-08-20_mysql_cursor_control.py", line 40, in <module>
+    print(type(cur.fetchall()))
+  File "D:\Py\lib\site-packages\MySQLdb\cursors.py", line 379, in fetchall
+    self._check_executed()
+  File "D:\Py\lib\site-packages\MySQLdb\cursors.py", line 126, in _check_executed
+    raise ProgrammingError("execute() first")
+MySQLdb._exceptions.ProgrammingError: execute() first
+logger_test 2020-08-20 11:03:11 2020-08-20_mysql_cursor_control.py:55 INFO this is a debug message
+logger_test 2020-08-20 11:03:31 2020-08-20_mysql_cursor_control.py:56 INFO this is a debug message
+logger_test 2020-08-20 11:03:52 2020-08-20_mysql_cursor_control.py:58 INFO this is a debug message
+logger_test 2020-08-20 11:04:01 2020-08-20_mysql_cursor_control.py:58 INFO this is a debug message
+logger_test 2020-08-20 11:04:12 2020-08-20_mysql_cursor_control.py:58 INFO this is a debug message
+logger_test 2020-08-20 11:04:19 2020-08-20_mysql_cursor_control.py:58 INFO this is a debug message
+logger_test 2020-08-20 11:04:25 2020-08-20_mysql_cursor_control.py:58 INFO this is a debug message
+logger_test 2020-08-20 11:04:29 2020-08-20_mysql_cursor_control.py:58 INFO this is a debug message
+logger_test 2020-08-20 11:04:33 2020-08-20_mysql_cursor_control.py:58 INFO this is a debug message
+logger_test 2020-08-20 11:04:48 2020-08-20_mysql_cursor_control.py:58 INFO this is a debug message
+logger_test 2020-08-20 11:05:02 2020-08-20_mysql_cursor_control.py:59 INFO this is a debug message
+logger_test 2020-08-20 11:05:26 2020-08-20_mysql_cursor_control.py:61 INFO this is a debug message
+logger_test 2020-08-20 12:17:51 2020-08-20_mysql_getinsertaffectrows.py:59 INFO this is a debug message
+logger_test 2020-08-20 12:19:24 2020-08-20_mysql_getinsertaffectrows.py:59 INFO this is a debug message
+logger_test 2020-08-20 12:19:30 2020-08-20_mysql_getinsertaffectrows.py:59 INFO this is a debug message
+logger_test 2020-08-20 12:22:06 2020-08-20_mysql_autocommit.py:62 INFO this is a debug message
+logger_test 2020-08-20 12:25:27 2020-08-20_mysql_SSDictCursor.py:56 INFO this is a debug message
+logger_test 2020-08-20 12:25:32 2020-08-20_mysql_SSDictCursor.py:56 INFO this is a debug message
+logger_test 2020-08-20 12:27:25 2020-08-19_mysql_getcontent.py:49 ERROR (1146, "Table 'test_db.t_activit1' doesn't exist")
+Traceback (most recent call last):
+  File "E:/github/python_note/2020-08-01-Python-ZST-4200/07-数据库连接与操作/2020-08-19_mysql_getcontent.py", line 37, in <module>
+    cur.execute("select * from t_activit1 ")
+  File "D:\Py\lib\site-packages\MySQLdb\cursors.py", line 206, in execute
+    res = self._query(query)
+  File "D:\Py\lib\site-packages\MySQLdb\cursors.py", line 319, in _query
+    db.query(q)
+  File "D:\Py\lib\site-packages\MySQLdb\connections.py", line 259, in query
+    _mysql.connection.query(self, query)
+MySQLdb._exceptions.ProgrammingError: (1146, "Table 'test_db.t_activit1' doesn't exist")
+logger_test 2020-08-20 12:27:25 2020-08-19_mysql_getcontent.py:58 INFO this is a debug message
+logger_test 2020-08-20 12:27:37 2020-08-19_mysql_getcontent.py:49 ERROR (1146, "Table 'test_db.t_activit1' doesn't exist")
+Traceback (most recent call last):
+  File "E:/github/python_note/2020-08-01-Python-ZST-4200/07-数据库连接与操作/2020-08-19_mysql_getcontent.py", line 37, in <module>
+    cur.execute("select * from t_activit1 ")
+  File "D:\Py\lib\site-packages\MySQLdb\cursors.py", line 206, in execute
+    res = self._query(query)
+  File "D:\Py\lib\site-packages\MySQLdb\cursors.py", line 319, in _query
+    db.query(q)
+  File "D:\Py\lib\site-packages\MySQLdb\connections.py", line 259, in query
+    _mysql.connection.query(self, query)
+MySQLdb._exceptions.ProgrammingError: (1146, "Table 'test_db.t_activit1' doesn't exist")
+logger_test 2020-08-20 12:27:37 2020-08-19_mysql_getcontent.py:58 INFO this is a debug message
+logger_test 2020-08-20 12:27:44 2020-08-19_mysql_getcontent.py:58 INFO this is a debug message

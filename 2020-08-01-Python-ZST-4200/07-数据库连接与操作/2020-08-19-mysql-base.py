@@ -1,11 +1,12 @@
 import MySQLdb
 import logging
 
-host = "192.168.1.27"
-user = "root"
+host = "192.168.0.242"
+user = "ljb_user"
 passwd = "123456abc"
-db_name = "zst"
+db_name = "test_db"
 charset = "utf8mb4"
+
 
 if __name__ == '__main__':
 
