@@ -18,7 +18,8 @@ if __name__ == "__main__":
 
    print('1')
 
-   time.sleep(30)
+   # 这里的时间设置得长一点，避免登录操作慢，导致获取不到签到按钮
+   time.sleep(15)
 
    print('2')
 

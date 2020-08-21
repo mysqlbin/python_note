@@ -6,6 +6,8 @@ from bs4 import Tag
 import MySQLdb
 
 
+# 阅读代码和思考，要理解
+
 # 将beautifulsoap的Tag对象，解析成一个词典dict对象
 def parse_activity_li(li):
     if not isinstance(li, Tag):
@@ -43,22 +45,22 @@ def parse_activity_li(li):
 if __name__ == '__main__':
     # print("【".encode('utf-8'))
     # # 至少得把日志记录到文件
-    # logging.basicConfig(level=logging.DEBUG, format="%(asctime)s %(levelname)s %(message)s")
+    logging.basicConfig(level=logging.DEBUG, format="%(asctime)s %(levelname)s %(message)s")
     #
-    # host = "localhost"
-    # user = "root"
-    # passwd = "rxy123456"
-    # db_name = "zst"
-    # charset = "utf8mb4"
-    #
-    # db = MySQLdb.connect(
-    #     host=host,  # 主机名
-    #     user=user,  # 用户名
-    #     passwd=passwd,  # 密码
-    #     db=db_name,
-    #     charset=charset)  # 数据库名称
-    #
-    # cur = db.cursor()
+    host = "192.168.0.242"
+    user = "ljb_user"
+    passwd = "123456abc"
+    db_name = "test_db"
+    charset = "utf8mb4"
+
+    db = MySQLdb.connect(
+        host=host,  # 主机名
+        user=user,  # 用户名
+        passwd=passwd,  # 密码
+        db=db_name,
+        charset=charset)  # 数据库名称
+
+    cur = db.cursor()
 
     resp = requests.get("https://dbaplus.cn/")
     if resp.status_code >= 300:
@@ -83,7 +85,8 @@ if __name__ == '__main__':
     #     print(type(activity))
         print(activity)
     #     logging.debug("activity name: %s", activity['activity_name'])
-    #     cur.execute("select * from t_activity where activity_name = %s", tuple([activity["activity_name"]]))
+        print("select * from t_activity where activity_name = %s", tuple([activity["activity_name"]]))
+        cur.execute("select * from t_activity where activity_name = %s", tuple([activity["activity_name"]]))
     #     logging.debug("last execute: %s", cur._last_executed)
     #     logging.debug("Row_count1: %d", cur.rowcount)
     #

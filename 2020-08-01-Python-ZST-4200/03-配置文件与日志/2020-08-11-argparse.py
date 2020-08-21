@@ -3,6 +3,7 @@ import sys
 
 if __name__ == "__main__":
 
+    # 设置参数
     parser = argparse.ArgumentParser(description="这是一个仿mv命令行程序")
     parser.add_argument("source", help="源文件")
     parser.add_argument("dest", help="目标文件")
@@ -10,9 +11,11 @@ if __name__ == "__main__":
     parser.add_argument("-f", "--force", action='store_true')   # 结果为布尔值，如果命令行有添加 -f 参数，那么为 True，否则为 False
     parser.add_argument("-v", "--verbose", action='count')   # -vvv
 
-    args = parser.parse_args()   # 命令行参数解析方法
+    # 命令行参数解析方法
+    args = parser.parse_args()
     print(args)
 
+    # 取参数
     print("source: {}".format(args.source))
     print("dest: {}".format(args.dest))
     print("suffix: {}".format(args.suffix))
