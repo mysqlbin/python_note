@@ -8,12 +8,14 @@ npm install webpack -g --registry=https://registry.npm.taobao.org
 
 npm install webpack-cli -g --registry=https://registry.npm.taobao.org
 
-webpack main.js -o dist/main.js
-	main.js 表示入口文件
-	
+webpack index.js -o dist/main.js
+	index.js 表示入口文件
+	-- 打包代码命令 
 	
 python -m http.server --bind 127.0.0.1 9090
-	启动一个http服务器
+	启动一个http服务器，要在项目目录下执行
+	
+	
 	
 	
 	
