@@ -1,5 +1,6 @@
 console.log('javascript study')
 
+// ...... var .......
 // if (true){
 //    var abc = 1;
 //    console.log(abc) 
@@ -9,18 +10,20 @@ console.log('javascript study')
 // 1
 // 1
 
+
+// ...... let .......
 // if (true){
 //     let efg = 2;
 //     console.log(efg) 
 //  }
 //  console.log(efg)
 
-
 // 2
 // main.js:14 Uncaught ReferenceError: efg is not defined
 //     at main.js:14
 
 
+// ...... const .......
 // const abc = "123"
 // console.log(abc)
 // abc = "456"
@@ -47,6 +50,8 @@ console.log('javascript study')
 // Uncaught TypeError: Assignment to constant variable.
 
 
+// ...... undefined .......
+// Undefined 如果声明了一个变量，但没有任何赋值，那么这个变量就是Undefined；
 // var abc;
 // console.log(abc)
 
@@ -62,7 +67,7 @@ console.log('javascript study')
 // console.log(sums.name)   
 
 
-// 对象表达式
+// ...... 对象表达式 ......
 // 标识符号作为属性名
 // var obj = {}
 // obj.addr = '1st'
@@ -91,6 +96,7 @@ console.log('javascript study')
 // {addr: "abc", num: 1}
 
 
+// ...... 函数 ......
 // 普通函数
 // function abcd(p1, p2){
 //     console.log(p1, p2)
@@ -107,11 +113,14 @@ console.log('javascript study')
 // }
 
 // 箭头函数
+// 相关参考：https://www.cnblogs.com/fundebug/p/6904753.html
+
+// 返回值只能一个表达式，可以省略大括号
 // let sum = (a, b) => a + b;
 // console.log(sum(1, 2))
 // 3
 
-
+// 如果没有参数，还可以进一步简化
 // let print = () => {
 //     console.log('hello world')
 // }
@@ -127,34 +136,110 @@ console.log('javascript study')
 // 1 2
 
 
-// 展开操作符
+// ...... 数组 ......
+// let arr = []
+// arr[0] = 1
+// arr[1] = '2'
+// arr.push('3')
+// console.log(arr)
+// arr[40] = '41'
+// console.log(arr)
+//  [1, "2", "3", empty × 37, "41"]
+
+// delete删除
+// let arr = []
+// arr[0] = 1
+// arr[1] = '2'
+// arr.push('3')
+// arr[40] = '41'
+// // arr.push('42')
+// console.log(arr)
+// //   (41) [1, "2", "3", empty × 37, "41"]
+// delete arr[40]
+// console.log(arr)
+// //   (41) [1, "2", "3", empty × 38]
+// console.log(arr[40])
+
+// splice删除
+// let arr = []
+// arr[0] = 1
+// arr[1] = '2'
+// arr.push('3')
+// arr[40] = '41'
+// console.log(arr[40])
+// console.log('before splice', arr)
+// arr.splice(40, 1)
+// console.log('after splice', arr)
+// console.log(arr[40])
+
+// before splice (41) [1, "2", "3", empty × 37, "41"]
+// after splice (40) [1, "2", "3", empty × 37]
+
+/*
+https://www.cnblogs.com/jhuang-com/p/10476365.html  js数组删除（splice和delete）
+最近一直在写js的数组，然后就发现了很奇怪的问题，后来才发现了规律。
+
+删除数据的一行，一般有两种方法，一个是splice，一个是delete；
+
+splice：删除了数组后，数组的长度会自动变化。用法：arr.splice(2,1)——2是数组的下标值，1 代表输出一行数据。
+
+delete: 删除了数组后，数组的长度不会变化。 用法：delete arr[2] ——2是数组的下标值
+*/
+
+
+// 数组解析和对象解析
+// 数组的解析
+// let arr = ['a', 'b', 'c']
+// var a,b,c;
+// a = arr[0]
+// b = arr[1]
+// c = arr[2]
+// console.log(a, b, c)
+
 
 // let arr = ['a', 'b', 'c']
-// console.log(...arr)
-// console.log('a', 'b', 'c')
+// let [a, b, c] = arr
+// console.log(a, b, c)
+
+// 对象的解析
+
+// let obj = {
+//     a: '1',
+//     b: '2',
+//     c: '3'
+// }
+
+// var a, b, c;
+// a = obj.a;
+// b = obj.b;
+// c = obj.c;
+// console.log(a, b, c)
+
+// let { a: a1, b: b1, c: c1 } = obj;
+// console.log(a1, b1, c1)
+
+// let {a, b, c} = obj;
+// console.log(a, b, c)
+
+
+// ...... 展开操作符 ......
+// let arr = ['a', 'b', 'c']  
+// console.log(...arr) // 等价于 console.log('a', 'b', 'c')
 // console.log(arr)
 
 // let newArr = ['1', '2', ...arr] 
 // console.log(newArr)
 
-// // 二维数组
+// // // 二维数组
 // console.log(['1', '2', arr]) 
 
 
-// 箭头函数
-// let sum = (a, b) => a + b;
-// console.log(sum(1, 2))
-// 3
 
-// let print = () => {
-//     console.log('hello world')
-// }
+// ...... 异步 ......
 
-
+// ...... setTimeout ......
 // setTimeout有两个参数, 第一个参数是function, 第二个参数是延迟时间
-// setTimeout(() => console.log('i am time out'),
-//     1000
-// )
+// setTimeout(() => console.log('i am time out'),1000)
 // console.log('i am a console log')
 
 // setTimeout(function(){
@@ -163,7 +248,9 @@ console.log('javascript study')
 // console.log('i am a console log')
 
 
-// Ajax
+
+// ...... Ajax ......
+
 // function reqListener(){ 
 //     console.log(this.responseText);
 // }
@@ -174,6 +261,7 @@ console.log('javascript study')
 // oReq.send();
 // console.log('after oReq.send')
 
+// ...... 回调地狱 ......
 // setTimeout(function(){
 //     console.log("I am first")
 //     setTimeout(function(){
@@ -185,12 +273,40 @@ console.log('javascript study')
 // },1000)
 
 
+// https://www.cnblogs.com/wenxuehai/p/10455664.html  JavaScript中的回调地狱及解决方法
+// https://www.runoob.com/w3cnote/javascript-promise-object.html  JavaScript Promise 对象
+
+
+// 创建 promise 的步骤：
+
+// var promise = new Promise(function(resolve, reject) {
+//     // 异步处理
+//     // 处理结束后、调用resolve 或 reject
+// });
+
+
+// var myFirstPromise = new Promise(function(resolve, reject){
+//     //当异步代码执行成功时，我们才会调用resolve(...), 当异步代码失败时就会调用reject(...)
+//     //在本例中，我们使用setTimeout(...)来模拟异步代码，实际编码时可能是XHR请求或是HTML5的一些API方法.
+//     setTimeout(function(){
+//         resolve("成功!"); //代码正常执行！
+//     }, 3000);
+// });
+
+// myFirstPromise.then(function(successMessage){
+//     //successMessage的值是上面调用resolve(...)方法传入的值.
+//     //successMessage参数不一定非要是字符串类型，这里只是举个例子
+//     console.log("Yay! " + successMessage);
+// });
+
+// .............................................................................................
 
 // wait 是一个 function, 它的参数 ms
 // let wait = (ms) => new Promise(
+        // 异步处理
 //     (resolve) => setTimeout(resolve, ms)
 // )
-// // // 链式调用 
+// // // // 链式调用 
 // wait(5000)
 //     // 先执行这里
 //     .then(() => {console.log("i am first");  return wait(2000)})
@@ -205,11 +321,13 @@ console.log('javascript study')
 
 // let wait = function(ms){
 //     return new Promise(function(resolve, reject){
+//         //异步处理，处理结束后调用 resolve
 //         setTimeout(resolve, ms)
+
 //     })
 // }
 
-// wait(5000).then(function(){
+// wait(2000).then(function(){
 //     console.log("i am first")
 //     return wait(2000)
 // }).then(function(){
@@ -221,11 +339,23 @@ console.log('javascript study')
 
 // then() 方法是 Promise对象的方法
 
+// .............................................................................................
 
-Promise.resolve('foo')
-.then(Promise.resolve('bar'))   // 这一步不会输出
-.then(function (result) {       // result 是function一个参数
-    console.log(result);
+// Promise.resolve('foo')
+// .then(Promise.resolve('bar'))   // 这一步不会输出
+// .then(function (result) {       // result是function一个参数
+//     console.log(result);
+// });
+
+
+// 当代码执行成功时，会调用resolve(...)
+let newPromise = Promise.resolve('foo')
+newPromise.then(Promise.resolve('bar'))   // 这一步不会输出
+// then 是 newPromise对象的方法
+.then(function (result_data) {       // result 是function一个参数
+    //result_data的值是上面调用resolve(...)方法传入的值.
+    //result_data参数不一定非要是字符串类型，这里只是举个例子
+    console.log(result_data);
 });
 
 
