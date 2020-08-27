@@ -302,10 +302,10 @@ delete: 删除了数组后，数组的长度不会变化。 用法：delete arr[
 // .............................................................................................
 
 // wait 是一个 function, 它的参数 ms
-// let wait = (ms) => new Promise(
-        // 异步处理
-//     (resolve) => setTimeout(resolve, ms)
-// )
+let wait = (ms) => new Promise(
+        // 异步处理， (resolve) 的含义：等价于 function(resolve) {} 
+    (resolve) => setTimeout(resolve, ms)
+)
 // // // // 链式调用 
 // wait(5000)
 //     // 先执行这里
@@ -341,20 +341,24 @@ delete: 删除了数组后，数组的长度不会变化。 用法：delete arr[
 
 // .............................................................................................
 
+// 
 // Promise.resolve('foo')
 // .then(Promise.resolve('bar'))   // 这一步不会输出
 // .then(function (result) {       // result是function一个参数
 //     console.log(result);
 // });
 
-
+// Promise.resolve('foo') 方法 会生成一个Promise对象 newPromise, 调用resolve后， 它的状态为fulfilled，调用then函数， 所以回调函数会立即执行，Promise.resolve方法的参数就是回调函数的参数。
+// 如果 Promise.resolve 方法的参数，不是具有 then 方法的对象（又称 thenable 对象），则返回一个新的 Promise 对象，且它的状态为fulfilled。
+// 调用resolve后，编程fulfilled状态，调用then函数
 // 当代码执行成功时，会调用resolve(...)
 let newPromise = Promise.resolve('foo')
-newPromise.then(Promise.resolve('bar'))   // 这一步不会输出
+newPromise.then(Promise.resolve('bar'))   // 这一步不会输出, 原因：
 // then 是 newPromise对象的方法
-.then(function (result_data) {       // result 是function一个参数
-    //result_data的值是上面调用resolve(...)方法传入的值.
-    //result_data参数不一定非要是字符串类型，这里只是举个例子
+.then(function (result_data) {       
+    // result_data 是function一个参数
+    // result_data的值是上面调用resolve(...)方法传入的值.
+    // result_data参数不一定非要是字符串类型，这里只是举个例子
     console.log(result_data);
 });
 

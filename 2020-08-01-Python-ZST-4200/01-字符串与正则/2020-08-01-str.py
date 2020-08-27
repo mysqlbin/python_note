@@ -127,3 +127,9 @@ letters = 'abcxyz'
 print(letters[::-1])
 """ 输出： zyxcba """
 
+
+
+# str_table = "table_third_score_detail20200531"
+str_table = "table_clublogscore20200827"
+
+print(str_table.find('table_third_score_detail'))
