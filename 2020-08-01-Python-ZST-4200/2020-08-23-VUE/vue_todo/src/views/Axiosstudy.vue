@@ -53,7 +53,7 @@ export default {
     //  })
 
      this.$axios.get('/api/todo/').then(resp => {
-
+      // 赋值给todo_list
       this.todo_list = resp.data
       console.log('resp: ', resp.data)
 
