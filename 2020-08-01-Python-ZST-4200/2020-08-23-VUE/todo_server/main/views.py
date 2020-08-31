@@ -7,7 +7,7 @@ def index(request):
     for i in range(10):
         todo_list.append({
             "id": 1,
-            "content": 1
+            "content": 'abc'
         })
 
 

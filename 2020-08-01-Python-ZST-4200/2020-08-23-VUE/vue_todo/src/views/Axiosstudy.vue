@@ -1,8 +1,13 @@
 <template>
-  <div >
-
-    <h1>This is an axiosstudy page</h1>
-   
+  <div>
+    <ul>
+      <li v-for="(v, k) in todo_list" :key="k">
+        <input type="text"/>
+        {{ v.content }} 
+        <button @click="toDelete(k)">delete</button>
+      </li>
+      
+    </ul>
   </div>
 </template>
 
@@ -25,6 +30,12 @@ ViewModel 是 view 跟 model 之间的桥梁：
 export default {
  
   name: 'Axiosstudy',    // name这里不写也可以
+
+  data(){
+    return {  // 返回值
+      todo_list: []
+    }
+  },
   created() {
     //  this.$axios.get('https://5f4ca835ea007b0016b1e3f5.mockapi.io/article')
     //  .then(function(resp) {
@@ -41,17 +52,12 @@ export default {
     //    console.log('resp: ', resp)
     //  })
 
-     this.$axios.get('/api/todo/')
-     .then(function(resp) {
-       console.log('resp: ', resp)
-      //  console.log('respdata: ', resp.data)
-     })
+     this.$axios.get('/api/todo/').then(resp => {
 
-  },
-  data(){
-    return {
-      
-    }
+      this.todo_list = resp.data
+      console.log('resp: ', resp.data)
+
+     })
   },
   methods:{
    
