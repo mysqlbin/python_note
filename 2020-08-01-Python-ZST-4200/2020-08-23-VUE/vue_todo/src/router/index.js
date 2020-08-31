@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Todo from '../views/Todo.vue'
+import Axiosstudy from '../views/Axiosstudy.vue'
 
 Vue.use(VueRouter)
 
@@ -23,6 +24,11 @@ Vue.use(VueRouter)
     path: '/todo',
     name: 'Todo',
     component: Todo
+  },
+  {
+    path: '/axiosstudy',
+    name: 'Axiosstudy',
+    component: Axiosstudy
   }
 ]
 

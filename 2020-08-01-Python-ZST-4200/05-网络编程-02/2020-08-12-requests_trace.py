@@ -51,16 +51,16 @@ if __name__ == "__main__":
 
    """ 2. post请求： 表单 """
 
-   host = "http://httpbin.org/"
-   headers = {
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Safari/537.36'
-   }
-   data = {
-      'username': 'mysqlbin',
-      'password': 'guangdong',
-   }
-   resp = requests.post(host + "/post", headers=headers, data=data)
-   print(resp.text)
+   # host = "http://httpbin.org/"
+   # headers = {
+   #    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Safari/537.36'
+   # }
+   # data = {
+   #    'username': 'mysqlbin',
+   #    'password': 'guangdong',
+   # }
+   # resp = requests.post(host + "/post", headers=headers, data=data)
+   # print(resp.text)
 
 
    """
@@ -223,4 +223,16 @@ if __name__ == "__main__":
    <class 'str'>
    {"args": {"a": "1", "b": "2"}, "data": "username=mysqlbin&password=guangdong", "files": {}, "form": {}, "headers": {"Accept": "*/*", "Accept-Encoding": "gzip, deflate", "Content-Length": "36", "Content-Type": "application/json", "Host": "httpbin.org", "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Safari/537.36", "X-Amzn-Trace-Id": "Root=1-5f33c607-2f748db439420274c893cf7c"}, "json": null, "origin": "121.35.189.165", "url": "http://httpbin.org/post?a=1&b=2"}
    """
+
+
+
+
+   host = "http://mock-api.com/vzMr0qgG.mock/article"
+
+   headers = {
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Safari/537.36'
+   }
+
+   resp = requests.post(host + "/post", headers=headers)
+   print(resp.text)
 
