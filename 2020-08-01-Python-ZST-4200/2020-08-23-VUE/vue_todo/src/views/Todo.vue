@@ -21,8 +21,8 @@ MVVM是Model-View-ViewModel的简写。它本质上就是MVC 的改进版。MVVM
 template 是 view
 model 是 javascript代码
 ViewModel 是 view 跟 model 之间的桥梁：
-  databind
-  dom listener
+  databind（数据绑定）
+  dom listener（dom监听）
 
 
 <li>
