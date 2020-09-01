@@ -3,14 +3,13 @@
     <p>
         <input type="text" v-model="newcontent"  @keyup.enter="add" @blur="check" @focus="print('我获得焦点了')" @input="onInput"/>
         <button @click="add">添加</button>
-     </p>
-    <!-- <p> {{todoArrayLength}} </p>
     
-    <p> {{ fullName }} </p> -->
+    <p> {{todoArrayLength}} </p>
+    
+    <p> {{ fullName }} </p>
     <ul>
       <li v-for="(v, k) in todo_list" :key="k">
-        <TodoItem :text="v.content"></TodoItem>  
-<!-- 
+
         <template v-if="v.isEdit" >
             <input type="text" v-model="v.content" />
         </template>
@@ -20,8 +19,7 @@
         </template>
 
         <button @click="toUpdate(k)">编辑</button>
-        <button @click="toDelete(k)">删除</button> -->
-
+        <button @click="toDelete(k)">删除</button>
       </li>
       
     </ul>
@@ -50,12 +48,12 @@ data(){}:
   当这些 property 的值发生改变时，视图将会产生“响应”，即匹配更新为新的值。
 
 */
-import  TodoItem from '../components/TodoItem'
+
 // 导入一个default对象
 export default {
  
   name: 'Axiosstudy',    // name这里不写也可以
-  components: {TodoItem},
+
   data(){
     return {  
       // 在组件的 data 选项中声明初始值
