@@ -11,12 +11,12 @@ def index(request):
         })
 
 
-    # data_info = {
-    #     "status": 0,
-    #     "data": '',
-    #     "message": "您还未登录"
-    # }
-    response = JsonResponse(todo_list, safe=False)
+    data_info = {
+        "status": 1,
+        "data": todo_list,
+        "message": "数据请求成功"
+    }
+    response = JsonResponse(data_info, safe=False)
 
     # 解决跨域问题
     # response['Access-Control-Allow-Headers'] = '*'

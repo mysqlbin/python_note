@@ -1,12 +1,9 @@
 <template>
   <div>
     <p>
-        <input type="text" v-model="newcontent"  @keyup.enter="add" @blur="check" @focus="print('我获得焦点了')" @input="onInput"/>
+        <input type="text" v-model="newcontent"/>
         <button @click="add">添加</button>
-    
-    <p> {{todoArrayLength}} </p>
-    
-    <p> {{ fullName }} </p>
+    </p>
     <ul>
       <li v-for="(v, k) in todo_list" :key="k">
 
@@ -17,6 +14,7 @@
         <template v-else>
               {{ v.content }} 
         </template>
+
 
         <button @click="toUpdate(k)">编辑</button>
         <button @click="toDelete(k)">删除</button>
@@ -39,9 +37,6 @@ ViewModel 是 view 跟 model 之间的桥梁：
   databind
   dom listener
 
-m：model 也就是数据层
-v: view  相当于是HTML页面，用于展示数据
-vm: viewmodel 相当于是中间层
 */
 
 // 导入一个default对象
@@ -54,33 +49,8 @@ export default {
       // 在组件的 data 选项中声明初始值
       todo_list: [],   
       newcontent: '',
-      firstName: 'a',
-      lastName: 'b'
     }
   },
-  computed: {
-     todoArrayLength(){
-       if (this.todo_list.length === 10){
-         return 'None'
-       }else{
-         return this.todo_list.length
-       }
-     },
-     fullName: {
-        // getter，读取
-       
-        get: function () {
-          return this.firstName + ' ' + this.lastName
-        },
-
-        // setter，修改计算属性的值, newValue = this.fullName
-        set: function(newValue) {
-
-          this.firstName = newValue[0]
-          this.lastName = newValue[2]
-        }
-     }
-   },
   created() {
     //  this.$axios.get('https://5f4ca835ea007b0016b1e3f5.mockapi.io/article')
     //  .then(function(resp) {
@@ -105,53 +75,24 @@ export default {
 
      })
   },
-  mounted(){
-
-    this.fullName = 'c b'
-
-  },
   methods:{
    toDelete(key){
      // console.log('delete ' + 'key:' + key + ', content: ' + this.todo_list[index].content)
      this.todo_list.splice(key, 1)
    },
    toUpdate(key){
-     // this.$set(object, propertyname(属性名), value) ； 正确写法：this.$set(this.data,”key”,value')
-     this.$set(this.todo_list[key], 'isEdit', 'aaa')
+     this.$set(this.todo_list[key], 'isEdit', true)
      console.log(this.todo_list[key])
-     console.log(this.todo_list[key].content)
     //  console.log(this.todo_list)
    },
    add(){
-
-     if (this.newcontent == ""){
-       console.log('输入内容不能为空')
-       return
-     }
      console.log(this.newcontent)
      console.log(this.todo_list.length)
      this.todo_list.push({
        "content": this.newcontent,
        "id": this.todo_list.length
      })
-
-     this.newcontent = ""
-
    },
-   print(val){
-     console.log(val)
-   },
-   check(){
-      if (this.newcontent == ""){
-       console.log('输入内容不能为空')
-       return
-     }
-   },
-   onInput(val){
-     console.log(val)
-     console.log(val.data)
-   },
-   
   }
 }
 
