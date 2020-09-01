@@ -1,6 +1,6 @@
 <template>
    <p>
-       {{text}}
+       {{textcontent}}
     </p> 
 </template>
 
@@ -8,7 +8,7 @@
 export default {
     name: "TodoItem",
     props: {
-        "text": {
+        "textcontent": {
             default: 'no content',
             type: String
         }

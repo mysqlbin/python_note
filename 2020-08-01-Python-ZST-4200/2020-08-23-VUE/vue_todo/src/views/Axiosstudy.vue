@@ -9,7 +9,7 @@
     <p> {{ fullName }} </p> -->
     <ul>
       <li v-for="(v, k) in todo_list" :key="k">
-        <TodoItem :text="v.content"></TodoItem>  
+        <TodoItem :textcontent="v.content"></TodoItem>  
 <!-- 
         <template v-if="v.isEdit" >
             <input type="text" v-model="v.content" />
