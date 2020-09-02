@@ -58,9 +58,41 @@
 # a = ['d', 's', 'j', 's']
 # a.remove('s')
 # print(a)
+
+# 举例练习：将漫威电影里反面角色删除掉。
+
 #
 # _input = ["spiderman_1", "captain_1", "superman_1", "Thanos_0", "badzz_0", "doctor_strange_1"]
 # _input.remove('badzz_0')
+# print(_input)
+
+# _input = ["spiderman_1", "captain_1", "superman_1", "Thanos_0", "doctor_strange_1"]
+# for item in _input:
+#     # print(item)
+#     if item.find('_1') == -1:
+#         _input.remove(item)
+#
+# print(_input)
+
+# new_input = []
+# _input = ["spiderman_1", "captain_1", "superman_1", "Thanos_0", "badzz_0", "doctor_strange_1"]
+# for item in _input:
+#     if item.find('_1') != -1:
+#         new_input.append(item)
+# print(new_input)
+
+# new_input = []
+# _input = ["spiderman_1", "captain_1", "superman_1", "Thanos_0", "badzz_0", "doctor_strange_1"]
+# for item in _input:
+#     if item.split('_')[1] == '0':
+#         continue
+#     new_input.append(item)
+# print(new_input)
+
+# _input = ["spiderman_1", "captain_1", "superman_1", "Thanos_0", "badzz_0", "doctor_strange_1"]
+# for item in _input:
+#     if item.split('_')[1] == "0":
+#         _input.remove(item)
 # print(_input)
 
 # pop
