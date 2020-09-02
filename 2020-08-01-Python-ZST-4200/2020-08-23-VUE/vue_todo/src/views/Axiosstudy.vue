@@ -1,7 +1,13 @@
 <template>
   <div>
     <p>
-        <input type="text" v-model="newcontent"  @keyup.enter="add" @blur="check" @focus="print('我获得焦点了')" @input="onInput"/>
+        <input type="text" v-model="newcontent" 
+          @keyup.enter="add" 
+            @blur="check" 
+              @focus="print('我获得焦点了')" 
+                @input="onInput"
+                />
+
         <button @click="add">添加</button>
      </p>
     <!-- <p> {{todoArrayLength}} </p>
@@ -9,7 +15,13 @@
     <p> {{ fullName }} </p> -->
     <ul>
       <li v-for="(v, k) in todo_list" :key="k">
-        <TodoItem :textcontent="v.content"></TodoItem>  
+        <TodoItems :textcontent="v.content" @delItem="toDelete(k)" @updateItem="toUpdate(k)">
+          slot1
+          <template  v-slot:content>
+              slot2-content
+            </template> 
+        </TodoItems> 
+        
 <!-- 
         <template v-if="v.isEdit" >
             <input type="text" v-model="v.content" />
@@ -47,15 +59,18 @@ vm: viewmodel 相当于是中间层
 
 data(){}:
   当一个 Vue 实例被创建时，它将 data 对象中的所有的 property(属性) 加入到 Vue 的响应式系统中。
-  当这些 property 的值发生改变时，视图将会产生“响应”，即匹配更新为新的值。
+  当这些 property(属性)  的值发生改变时，视图将会产生“响应”，即匹配更新为新的值。
 
 */
-import  TodoItem from '../components/TodoItem'
+import TodoItems from '../components/TodoItem'
 // 导入一个default对象
 export default {
- 
-  name: 'Axiosstudy',    // name这里不写也可以
-  components: {TodoItem},
+  // name这里不写也可以
+  name: 'Axiosstudy',    
+  // 添加components属性
+  components: {TodoItems},
+
+  // data() 函数
   data(){
     return {  
       // 在组件的 data 选项中声明初始值
@@ -88,6 +103,7 @@ export default {
         }
      }
    },
+  // created 函数
   created() {
     //  this.$axios.get('https://5f4ca835ea007b0016b1e3f5.mockapi.io/article')
     //  .then(function(resp) {
@@ -105,18 +121,20 @@ export default {
     //  })
 
      this.$axios.get('/api/todo/').then(resp => {
-      // 赋值给todo_list
-      
-      this.todo_list = resp.data.data
+      this.todo_list = resp.data.data  // 赋值给todo_list
       console.log('resp: ', resp.data)
 
      })
   },
+  // mounted 函数，做一些 hook 操作。
   mounted(){
 
     this.fullName = 'c b'
 
   },
+  // methods 属性
+  // 在methods内部访问data中的数据：this.属性名
+  // 在 `methods` 对象中定义方法
   methods:{
    toDelete(key){
      // console.log('delete ' + 'key:' + key + ', content: ' + this.todo_list[index].content)
@@ -141,7 +159,8 @@ export default {
        "content": this.newcontent,
        "id": this.todo_list.length
      })
-
+     
+     // 清空 input框的值
      this.newcontent = ""
 
    },
