@@ -25,7 +25,7 @@ a = [2, 8, 1, 33, 43, 9, 3]
 # for index in [3, 5, 6]:
 #     print(a[index])
 
-for index, item in enumerate(a):
-    if index in [3, 5, 6]:
-        # print(a[index])
-        print(item)
+# for index, item in enumerate(a):
+#     if index in [3, 5, 6]:
+#         # print(a[index])
+#         print(item
