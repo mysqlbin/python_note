@@ -3,10 +3,16 @@
 django-admin startproject message
 cd todo_server
 python manage.py startapp index
+
+	
+python manage.py runserver 192.168.1.50:8080
+
 # 生成要执行的数据库文件
 python manage.py makemigrations
 # 通过编写的模型自动生成表结构
 python manage.py migrate
+
+python manage.py shell
 
 Create Update
 
