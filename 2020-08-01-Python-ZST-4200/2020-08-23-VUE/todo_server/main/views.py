@@ -18,7 +18,7 @@ def index(request):
     }
     response = JsonResponse(data_info, safe=False)
 
-    # 解决跨域问题
+    # 解决跨域问题，'*' 表示允许匹配需要访问的域名  
     # response['Access-Control-Allow-Headers'] = '*'
     # response['Access-Control-Allow-Origin'] = '*'
 
