@@ -15,9 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.urls import include
-
+from .views import hello_world, hello_world_v2, param_debug, user_detail, user_list
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('index/', include('index.urls')),    # 可以设置一个项目对应一个路由
+    path('hw1', hello_world),
+    path('hw2', hello_world_v2),
+    # http://127.0.0.1:8010/index/paramdebug/23/Bin
+    path('paramdebug/<int:id>/<str:name>', param_debug),
+    path('userdetail/<int:id>', user_detail),
+    path('userlist/<str:name>', user_list),
 ]

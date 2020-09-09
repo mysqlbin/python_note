@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User list</title>
+</head>
+<body>
+
+{% extends "base.html" %}
+{% block content %}
+    <h1>这里是列表</h1>
+    <ul>
+        {#% comment %#}
+            {% for u in Users %}
+                <li>
+                    {#% if u.id % 2 == 0 %#}
+                    {% if u.id|divisibleby:2 %}
+                        id_even: {{ u.id }}
+                    {% else %}
+                        id_odd: {{ u.id }}
+                    {% endif %}
+                </li>
+            {% endfor %}
+        {#% endcomment %#}
+    </ul>
+
+    list: {{ bar.1 }} <br>
+    list: {{ echo.method }} <br>
+    list: {{ echo.method2 }}
+    <p>value: {{ value | default_if_none:"nothing" }}</p>
+    <p>value: {{ value | default:"nothing" }}</p>
+    {% include "include.html" %}
+
+    {#{ html }#}
+
+    {#{ html|safe }#}
+
+    <br>
+
+    {% comment %}
+        {% autoescape off %}
+            Hello world {{ html }}
+        {% endautoescape %}
+    {% endcomment %}
+
+
+    {{ some.variable|default:"<script>alter(3)</script>" }}
+
+
+    {{ some.variable|default:html2 }}
+
+    <br>
+
+    {% with d="}}" %}
+        {{ some.variable|default:d }}
+    {% endwith %}
+
+    {% endblock %}
+
+
+</body>
+</html>
