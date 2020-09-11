@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .views import hello_world, hello_world_v2, param_debug, user_detail, user_list, auto_path_converter
+from .views import hello_world, hello_world_v2, param_debug, user_detail, user_list, auto_path_converter, register, login, me, logout, set_cookie, get_cookie, delete_cookie
 from django.urls import path, register_converter, re_path
 
 
@@ -40,6 +40,13 @@ urlpatterns = [
     path('userdetail/<int:id>', user_detail),
     path('userlist/<str:name>', user_list),
     # path('pathconverter/<yyyy:year>', auto_path_converter),
-    re_path('pathconverter/(?P<year>[0-9]{4})/', auto_path_converter)
+    re_path('pathconverter/(?P<year>[0-9]{4})/', auto_path_converter),
+    path('register/', register, name="register"),
+    path('login/', login, name="login"),
+    path('me/', me, name="me"),
+    path('logout/', logout, name="logout"),
 
+    path('set_cookie/', set_cookie, name="set_cookie"),
+    path('get_cookie/', get_cookie, name="get_cookie"),
+    path('delete_cookie/', delete_cookie, name="delete_cookie"),
 ]

@@ -2,7 +2,8 @@
 from django.shortcuts import *
 from django.http import *
 from .models import Users
-
+from .form import RegisterForm
+from django.contrib import messages
 # Create your views here.
 
 from django.http import HttpResponse
@@ -77,3 +78,81 @@ def auto_path_converter(request, year):
 
     return HttpResponse(year)
 
+def register(request):
+
+    print(request.method)
+    if request.method == 'POST':
+
+        regForm = RegisterForm(request.POST)
+
+        if regForm.is_valid():      # 如果校验通过，就会走下面的逻辑
+            print(regForm.cleaned_data)   # {'username': '3333', 'password': '3333', 'email': '122@qq.com'}
+            # return redirect('hw1')
+            return HttpResponse('success')
+
+        messages.error(request, "error")
+        print(regForm.errors)
+        # <ul class="errorlist"><li>password<ul class="errorlist"><li>密码由6-16位的数字和字母组成</li></ul></li></ul>
+        # <ul class="errorlist"><li>username<ul class="errorlist"><li>This field is required.</li></ul></li></ul>
+        # <ul class="errorlist"><li>username<ul class="errorlist"><li>用户名非法</li></ul></li></ul>
+        # <ul class="errorlist"><li>password<ul class="errorlist"><li>您输入的密码太简单</li></ul></li></ul>
+        # <ul class="errorlist"><li>password<ul class="errorlist"><li>密码太简单了</li></ul></li></ul>
+
+        return HttpResponse('error')
+
+    elif request.method == 'GET':
+        return render(request, 'register.html')
+
+    raise Http404
+
+
+def login(request):
+    username = 'bin'
+    # 设置 session
+    request.session['username'] = username
+    return redirect(resolve_url('me'))
+
+
+def me(request):
+    if 'username' in request.session:
+        # 获取 session
+        username = request.session['username']
+    else:
+        username = None
+
+    data = {
+        "username": username
+    }
+    return render(request, "me.html", data)
+
+
+def logout(request):
+    try:
+        del request.session['username']
+    except KeyError:
+        pass
+    print(111)
+    # print(request.session['username'])
+    # return redirect(resolve_url('me'))
+    return HttpResponse('logout')
+
+
+def set_cookie(request):
+    response = render(request, "cookie.html")
+    response.set_cookie("username", "zst")
+    return response
+
+
+def get_cookie(request):
+    username = request.COOKIES.get('username')
+    response = render(request, "cookie.html", {
+      "username": username
+    })
+
+    return response
+
+
+def delete_cookie(request):
+    response = render(request, "cookie.html")
+    response.delete_cookie("username")
+    return response

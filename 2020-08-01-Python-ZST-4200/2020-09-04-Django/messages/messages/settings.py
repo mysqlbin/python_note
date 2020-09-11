@@ -129,3 +129,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+SESSION_ENGINE = 'redis_sessions.session'
+SESSION_REDIS = {
+    'host': '192.168.0.1',
+    'port': 6379,
+    'db': 2,  # 指明使用1号数据库
+    'password': '',
+    'prefix': 'session',
+    'socket_timeout': 1
+}
