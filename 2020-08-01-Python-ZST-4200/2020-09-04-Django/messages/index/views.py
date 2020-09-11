@@ -71,3 +71,9 @@ def user_list(request, name):
     }
 
     return render(request, 'list.html', context)
+
+
+def auto_path_converter(request, year):
+
+    return HttpResponse(year)
+

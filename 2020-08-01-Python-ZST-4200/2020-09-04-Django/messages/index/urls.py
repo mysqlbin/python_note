@@ -15,7 +15,22 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .views import hello_world, hello_world_v2, param_debug, user_detail, user_list
+from .views import hello_world, hello_world_v2, param_debug, user_detail, user_list, auto_path_converter
+from django.urls import path, register_converter, re_path
+
+
+class FourDigitYearConverter:
+    regex = '[0-9]{4}'
+
+    def to_python(self, value):
+        return int(value)
+
+    def to_url(self, value):
+        return '%04d' % value
+
+register_converter(FourDigitYearConverter, 'yyyy')
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('hw1', hello_world),
@@ -24,4 +39,7 @@ urlpatterns = [
     path('paramdebug/<int:id>/<str:name>', param_debug),
     path('userdetail/<int:id>', user_detail),
     path('userlist/<str:name>', user_list),
+    # path('pathconverter/<yyyy:year>', auto_path_converter),
+    re_path('pathconverter/(?P<year>[0-9]{4})/', auto_path_converter)
+
 ]

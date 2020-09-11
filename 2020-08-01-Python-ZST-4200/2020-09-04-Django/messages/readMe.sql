@@ -24,7 +24,12 @@
 	5.1 创建数据
 	5.2 查询
 
-		
+6. Model class Meta
+
+7. Model def __str__(self)
+	
+
+	
 1. 基本命令
 
 	django-admin startproject message
@@ -42,6 +47,7 @@
 	python manage.py shell
 
 2. 单表DML和SELECT操作
+
 2.1 Create和Update
 
 	>>> from index.models import Message
@@ -741,7 +747,115 @@ a2.publications.add(p2)
 -----------------------------------------
 
 
+6. Model class Meta
+
+	class CommonInfo(models.Model):
+		gmt_update = models.DateTimeField(auto_now=True, null=True, blank=True)
+		gmt_create = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+
+		class Meta:
+			abstract = True
+
+	class Users(CommonInfo):
+		first_name = models.CharField(max_length=30)
+		last_name = models.CharField(max_length=30)
+		email = models.EmailField()
+		def __str__(self):
+			return "%s %s %s" % (self.first_name, self.last_name, self.email)
+
+		class Meta:
+			ordering=['email']
+	
+	>>> from index.models import Users
+	>>> Users.objects.all()
+	<QuerySet [<Users: la la 1114056230@qq.com>, <Users: la la 1224056230@qq.com>, <Users: okc okc 1334056230@qq.com>, <Users: la la 1444056230@qq.com>]>
+	
+		SELECT
+			`index_users`.`id`,
+			`index_users`.`gmt_update`,
+			`index_users`.`gmt_create`,
+			`index_users`.`first_name`,
+			`index_users`.`last_name`,
+			`index_users`.`email`
+		FROM
+			`index_users`
+		ORDER BY
+			`index_users`.`email` ASC
+		LIMIT 21;
+
+		ljb_user@mysqldb 11:15:  [test2_db]> select * from index_users;
+		+----+----------------------------+----------------------------+------------+-----------+-------------------+
+		| id | gmt_update                 | gmt_create                 | first_name | last_name | email             |
+		+----+----------------------------+----------------------------+------------+-----------+-------------------+
+		|  1 | 2020-09-09 12:14:49.000000 | 2020-09-09 12:14:52.000000 | la         | la        | 1224056230@qq.com |
+		|  2 | NULL                       | 2020-09-09 12:15:14.000000 | okc        | okc       | 1334056230@qq.com |
+		|  3 | NULL                       | NULL                       | la         | la        | 1444056230@qq.com |
+		|  4 | NULL                       | NULL                       | la         | la        | 1114056230@qq.com |
+		+----+----------------------------+----------------------------+------------+-----------+-------------------+
+		4 rows in set (0.00 sec)
+
+
+	ordering=['email'] 表示 返回的结果集 根据 email 排序。
+	
+
+
+7. Model def __str__(self)
+
+	class CommonInfo(models.Model):
+		gmt_update = models.DateTimeField(auto_now=True, null=True, blank=True)
+		gmt_create = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+
+		class Meta:
+			abstract = True
+
+	class Users(CommonInfo):
+		first_name = models.CharField(max_length=30)
+		last_name = models.CharField(max_length=30)
+		email = models.EmailField()
+		def __str__(self):
+			return "%s %s %s" % (self.first_name, self.last_name, self.email)
+
+		class Meta:
+			ordering=['email']
+	
+	>>> from index.models import Users
+	>>> Users.objects.all()
+	<QuerySet [<Users: la la 1114056230@qq.com>, <Users: la la 1224056230@qq.com>, <Users: okc okc 1334056230@qq.com>, <Users: la la 1444056230@qq.com>]>
+	
+
+		ljb_user@mysqldb 11:15:  [test2_db]> select * from index_users;
+		+----+----------------------------+----------------------------+------------+-----------+-------------------+
+		| id | gmt_update                 | gmt_create                 | first_name | last_name | email             |
+		+----+----------------------------+----------------------------+------------+-----------+-------------------+
+		|  1 | 2020-09-09 12:14:49.000000 | 2020-09-09 12:14:52.000000 | la         | la        | 1224056230@qq.com |
+		|  2 | NULL                       | 2020-09-09 12:15:14.000000 | okc        | okc       | 1334056230@qq.com |
+		|  3 | NULL                       | NULL                       | la         | la        | 1444056230@qq.com |
+		|  4 | NULL                       | NULL                       | la         | la        | 1114056230@qq.com |
+		+----+----------------------------+----------------------------+------------+-----------+-------------------+
+		4 rows in set (0.00 sec)
+
+
+	return "%s %s %s" % (self.first_name, self.last_name, self.email)：
+		返回的结果集只有 first_name、last_name、email 这3个字段的值。
+		后台对应的模型 显示这3个字段的值。
+
+		
+
+model 
+	username = models.CharField(max_length=64, db_index=True, help_text="用户名", verbose_name='用户名')
+
+	null=True, blank=True, help_text="创建时间", verbose_name='开课时间'
+	null=True:               是否允许为NULL， 允许
+	blank=True:              处理多对多的关联关系时，是否允许为空
+	help_text="创建时间"：     
+	verbose_name='开课时间'： 后台在显示 username 字段的时候，显示的 '开课时间' 。
+	
+	
+
+
+
 思考：
+
 	什么时候用 get()，什么时候用 filter()
 		获取对象的时候用 get() 过滤条件，获取数据的时候用 filter()
 		
@@ -753,6 +867,7 @@ a2.publications.add(p2)
 	remove() 的用法？
 	
 	orm 中创建的表名，如何添加表的注释 ？
+	
 	
 	
 	

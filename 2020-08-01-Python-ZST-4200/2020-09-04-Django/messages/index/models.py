@@ -9,10 +9,10 @@ class Reporter(models.Model):
 
 class Message(models.Model):
     id = models.BigAutoField(primary_key=True)  # 更改主键类型
-    reporter = models.ForeignKey(Reporter, on_delete=models.CASCADE, null=True) # 定义关联外键，外键字段为 reporter_id
-    username = models.CharField(max_length=64, db_index=True, help_text="用户名")
+    reporter = models.ForeignKey(Reporter, on_delete=models.CASCADE, null=True)  # 定义关联外键，外键字段为 reporter_id
+    username = models.CharField(max_length=64, db_index=True, help_text="用户名", verbose_name='用户名')
     content = models.TextField(max_length=65535, help_text="内容")
-    create_time = models.DateTimeField(auto_now_add=True, null=True, blank=True,help_text="创建时间")
+    create_time = models.DateTimeField(auto_now_add=True, null=True, blank=True, help_text="创建时间")
     deleted = models.BooleanField(default=False, help_text="是否被删除")
     email = models.EmailField(help_text="邮箱", null=True)
     ip = models.GenericIPAddressField(null=True, help_text="ip地址")
@@ -20,7 +20,8 @@ class Message(models.Model):
     # img = models.ImageField(null=True)
     uuid = models.UUIDField(null=True)
 
-
+    def __str__(self):
+        return "%s %s %s" % (self.username, self.create_time, self.email)
 
 """
 
@@ -138,7 +139,11 @@ class Users(CommonInfo):
     last_name = models.CharField(max_length=30)
     email = models.EmailField()
     def __str__(self):
-        return "%s %s" % (self.first_name, self.last_name)
+        return "%s %s %s" % (self.first_name, self.last_name, self.email)
+
+    class Meta:
+        ordering=['email']
+
 
 """
 
