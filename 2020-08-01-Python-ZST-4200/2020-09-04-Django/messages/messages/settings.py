@@ -85,9 +85,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'test2_db',
-        'USER': 'ljb_user',
+        'USER': 'root',
         'PASSWORD': '123456abc',
-        'HOST': '192.168.0.242',
+        'HOST': '192.168.1.27',
         'PORT': '3306',
     }
 }
@@ -128,14 +128,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
-
-SESSION_ENGINE = 'redis_sessions.session'
-SESSION_REDIS = {
-    'host': '192.168.0.1',
-    'port': 6379,
-    'db': 2,  # 指明使用1号数据库
-    'password': '',
-    'prefix': 'session',
-    'socket_timeout': 1
-}
+# STATIC_URL = '/static/'
+# # 配置服务器的 session 保存在 Redis 中。
+# SESSION_ENGINE = 'redis_sessions.session'
+# SESSION_REDIS = {
+#     'host': '192.168.0.1',
+#     'port': 6379,
+#     'db': 2,  # 指明使用1号数据库
+#     'password': '',
+#     'prefix': 'session',
+#     'socket_timeout': 1
+# }

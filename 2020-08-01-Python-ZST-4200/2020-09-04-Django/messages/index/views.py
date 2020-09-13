@@ -128,6 +128,7 @@ def me(request):
 
 def logout(request):
     try:
+        # 删除 session
         del request.session['username']
     except KeyError:
         pass
