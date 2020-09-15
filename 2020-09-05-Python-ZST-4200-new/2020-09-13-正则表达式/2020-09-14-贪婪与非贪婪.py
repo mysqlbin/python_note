@@ -55,8 +55,6 @@ pattern = re.compile(r'a.*?b')
 match = pattern.findall(str)
 print(match)
 
-
-
 """
 相关参考： 
     https://www.runoob.com/regexp/regexp-syntax.html
