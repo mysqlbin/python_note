@@ -5,7 +5,7 @@ import os
 cur_path = './'
 if os.path.isdir(cur_path):
     files = os.listdir(cur_path)   # 返回指定路径下的文件和文件夹列表。返回结果的数据类型是一个列表
-    print(files)
+    print(files)d
     for file in files:
         # print(file)
         print(os.path.join('usr', file))
