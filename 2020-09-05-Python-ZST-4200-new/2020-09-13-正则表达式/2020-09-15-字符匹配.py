@@ -26,7 +26,6 @@ print(pattern.findall(str))
 """ 输出： ['a', 'b', 'c', '1', '2', '3', '4', '5', '6'] """
 
 
-
 """ \W 匹配非数字或者字母"""
 import re
 str = "abc,123456……%"
