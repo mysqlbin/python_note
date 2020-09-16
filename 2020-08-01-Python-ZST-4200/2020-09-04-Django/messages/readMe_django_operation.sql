@@ -474,21 +474,6 @@ a2.publications.add(p2)
 	4.2 查询数据
 	
 	4.2.1 查一篇文章的所有出版社 即 根据文章查出版社
-from index.models import Article
-a = Article.objects.get(id=2)
-a.publications.all()
-
-SELECT
-	`index_publication`.`id`,
-	`index_publication`.`title`
-FROM
-	`index_publication`
-INNER JOIN `index_article_publications` ON (
-	`index_publication`.`id` = `index_article_publications`.`publication_id`
-)
-WHERE
-	`index_article_publications`.`article_id` = 2
-LIMIT 21
 	
 		方式1: 
 			
