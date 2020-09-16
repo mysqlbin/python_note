@@ -35,7 +35,7 @@
 		"""
 		返回：['<div><span>用户:<span/><span>张三<span/></div>', '<div><span>密码:<span/><span>123456<span/></div>']
 		我的分析： 
-			匹配第一个div标签结束之后，得到第一个div标签的内容；发现第二个div标签也符合匹配规则，得到第二个div标签的内容。
+			匹配第一个div标签结束之后，得到第一个div标签的内容；发现第二个div标签也符合匹配规则，继续匹配，得到第二个div标签的内容。
 			因此返回结果是 ['<div><span>用户:<span/><span>张三<span/></div>', '<div><span>密码:<span/><span>123456<span/></div>']
 		"""
 		

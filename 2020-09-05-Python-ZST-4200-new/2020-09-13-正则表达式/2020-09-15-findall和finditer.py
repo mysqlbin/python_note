@@ -5,14 +5,14 @@ import re
 """ findall """
 import re
 line = 'Cats are smarter than dogs'
-matchOjb = re.findall(r'\w+', line, re.M|re.I)
+matchOjb = re.findall(r'\w+', line, re.M | re.I)
 print(matchOjb)
 """ 输出： ['Cats', 'are', 'smarter', 'than', 'dogs'] """
 
 # 等价于
 import re
 line = 'Cats are smarter than dogs'
-pattern = re.compile(r'\w+', re.M|re.I)
+pattern = re.compile(r'\w+', re.M | re.I)
 print(pattern.findall(line))
 """ 输出： ['Cats', 'are', 'smarter', 'than', 'dogs'] """
 
@@ -20,7 +20,7 @@ print(pattern.findall(line))
 """ finditer """
 import re
 line = 'Cats are smarter than dogs'
-matchOjb = re.finditer(r'\w+', line, re.M|re.I)
+matchOjb = re.finditer(r'\w+', line, re.M | re.I)
 print(matchOjb)
 """ 输出： <callable-iterator object at 0x7f49023a5dd0> """
 for items in matchOjb:

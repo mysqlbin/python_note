@@ -132,3 +132,32 @@ IndexError: no such group
 
 """
 
+
+line = "13202095158555"
+matchOjb = re.match(r'\d{11}', line)
+print(matchOjb)
+# <_sre.SRE_Match object; span=(0, 11), match='13202095158'>
+print(type(matchOjb))
+# <class '_sre.SRE_Match'>
+print(matchOjb.group())
+# 13202095158
+
+line = "13202095158555"
+matchOjb = re.match(r'\d{11}$', line)
+print(matchOjb)
+# None
+
+# -------------------------------------------------------------------------
+
+line = "13202095158"
+
+pattern = re.compile(r'\d{11}$')
+matchOjb = pattern.match(line)
+print(matchOjb.group())
+
+# 等价于
+
+matchOjb = re.match(r'\d{11}$', line)
+print(matchOjb.group())
+
+
