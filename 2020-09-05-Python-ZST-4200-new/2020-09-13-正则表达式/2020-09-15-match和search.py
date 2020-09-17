@@ -160,4 +160,11 @@ print(matchOjb.group())
 matchOjb = re.match(r'\d{11}$', line)
 print(matchOjb.group())
 
+# -------------------------------------------------------------------------
+
+username = "123456A33bc"
+matchOjb = re.match(r'^[a-z0-9_-]{3,15}', username)
+if matchOjb:
+    print(matchOjb.group())
+
 
