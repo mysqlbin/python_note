@@ -125,6 +125,7 @@ else:
 import re
 line = '13202095158'
 matchOjb = re.match(r'(\d{3})(\d{4})(\d{4})', line)
+
 """
 print(matchOjb)
 # 获得一个或多个分组截获的字符串；
