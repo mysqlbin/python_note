@@ -50,7 +50,12 @@ if __name__ == '__main__':
     print("l_a after change", l_a, id(l_a))
     for i in range(10000000):
         l_a.append(i)
-    print("l_a after many changes", id(l_a))
+    print("l_a after many changes", len(l_a), id(l_a))
+    """
+    l_a before change [1, 2] 40246280
+    l_a after change [1, 2, 3] 40246280
+    l_a after many changes 10000003 40246280
+    """
 
     # 相当于是别名
     # l_b = l_a
