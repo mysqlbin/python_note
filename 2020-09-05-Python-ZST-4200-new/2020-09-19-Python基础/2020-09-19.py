@@ -93,7 +93,7 @@ if __name__ == '__main__':
 
     # 不可变类型：在函数内部修改传参的变量，函数外的变量不会发生改变。
     # 不可变类型在函数中传递的变化
-    b = 2
+    b = 1
     def func(a):
         print("a id", a,  id(a))
         a += 1
@@ -104,10 +104,10 @@ if __name__ == '__main__':
     print("after func", b, id(b))
 
     """
-    before func 2 1678535456
-    a id 2 1678535456
-    a after add 3 1678535488
-    after func 2 1678535456
+        before func 1 500591360
+        a id 1 500591360
+        a after add 2 500591392
+        after func 1 5005913606
     """
 
     a = 1
@@ -117,7 +117,7 @@ if __name__ == '__main__':
     funct(a)
 
     # 明白 str 跟 bytes 的互相转换
-    a_str = "我a中国字"
+    a_str = "中国"
     # str 转换为  bytes
     print(a_str.encode('utf-8'))
     #    bytes 转换为 str
@@ -125,7 +125,11 @@ if __name__ == '__main__':
     # bytes的表达方式
     a_bytes = b'abcdf'
     print(a_bytes)
-
+    """
+    b'\xe4\xb8\xad\xe5\x9b\xbd'
+    中国
+    b'abcdf'
+    """
     print(".....................")
 
     # def use_type(name):
