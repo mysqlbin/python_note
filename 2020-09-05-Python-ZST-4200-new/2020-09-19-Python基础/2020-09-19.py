@@ -48,39 +48,39 @@ if __name__ == '__main__':
     print("l_a before change", l_a, id(l_a))
     l_a.append(3)
     print("l_a after change", l_a, id(l_a))
-    for i in range(2):
+    for i in range(10000000):
         l_a.append(i)
     print("l_a after many changes", id(l_a))
 
     # 相当于是别名
-    l_b = l_a
-    print("l_b", id(l_b))
-    print("l_a length before l_b append", l_a, len(l_a))
-    l_b.append(1)
-    print("l_b length after l_b append", l_a, len(l_b))
-    print("l_a length after l_b append", l_a, len(l_a))
+    # l_b = l_a
+    # print("l_b", id(l_b))
+    # print("l_a length before l_b append", l_a, len(l_a))
+    # l_b.append(1)
+    # print("l_b length after l_b append", l_a, len(l_b))
+    # print("l_a length after l_b append", l_a, len(l_a))
 
 
     print(".....................")
 
-    a_str = "zst"
-    print("a_str before change", a_str, id(a_str))
-
-    a_str = "python"
-    print("a_str after change", a_str, id(a_str))
+    # a_str = "zst"
+    # print("a_str before change", a_str, id(a_str))
+    #
+    # a_str = "python"
+    # print("a_str after change", a_str, id(a_str))
 
     print(".....................")
 
     # 可变类型： 在函数内部修改传参的列表，函数外的列表也会发生改变。
     # 传值
-    def lfunc(l):
-        print("in func", l, id(l))
-        l.append(1)
-        print("in func append after", l, id(l))
-    l = []
-    print("out of func", l, id(l))
-    lfunc(l)
-    print("out of func", l, id(l))
+    # def lfunc(l):
+    #     print("in func", l, id(l))
+    #     l.append(1)
+    #     print("in func append after", l, id(l))
+    # l = []
+    # print("out of func", l, id(l))
+    # lfunc(l)
+    # print("out of func", l, id(l))
 
     """
     out of func [] 1535551993992
@@ -93,15 +93,15 @@ if __name__ == '__main__':
 
     # 不可变类型：在函数内部修改传参的变量，函数外的变量不会发生改变。
     # 不可变类型在函数中传递的变化
-    b = 1
-    def func(a):
-        print("a id", a,  id(a))
-        a += 1
-        # 数值型是不可变的数据类型，所以 a += 1 实际了开辟了新的一块内存地址。
-        print("a after add", a, id(a))
-    print("before func", b, id(b))
-    func(b)
-    print("after func", b, id(b))
+    # b = 1
+    # def func(a):
+    #     print("a id", a,  id(a))
+    #     a += 1
+    #     # 数值型是不可变的数据类型，所以 a += 1 实际了开辟了新的一块内存地址。
+    #     print("a after add", a, id(a))
+    # print("before func", b, id(b))
+    # func(b)
+    # print("after func", b, id(b))
 
     """
         before func 1 500591360
@@ -110,26 +110,22 @@ if __name__ == '__main__':
         after func 1 5005913606
     """
 
-    a = 1
-    def funct(a):
-        print(a)
-
-    funct(a)
+    # a = 1
+    # def funct(a):
+    #     print(a)
+    #
+    # funct(a)
 
     # 明白 str 跟 bytes 的互相转换
-    a_str = "中国"
+    # a_str = "中国"
     # str 转换为  bytes
-    print(a_str.encode('utf-8'))
+    # print(a_str.encode('utf-8'))
     #    bytes 转换为 str
-    print(a_str.encode('utf-8').decode('utf-8'))
+    # print(a_str.encode('utf-8').decode('utf-8'))
     # bytes的表达方式
-    a_bytes = b'abcdf'
-    print(a_bytes)
-    """
-    b'\xe4\xb8\xad\xe5\x9b\xbd'
-    中国
-    b'abcdf'
-    """
+    # a_bytes = b'abcdf'
+    # print(a_bytes)
+
     print(".....................")
 
     # def use_type(name):
@@ -152,32 +148,32 @@ if __name__ == '__main__':
     # Exception: name must be string
 
     # 单个参数的：
-    g = lambda x: x ** 2
-    print(type(g))
-    print(g(2))
-    # 多个参数的：
-    g = lambda x, y, z: (x + y) ** z
-    print(g(1, 2, 3))
+    # g = lambda x: x ** 2
+    # print(type(g))
+    # print(g(2))
+    # # 多个参数的：
+    # g = lambda x, y, z: (x + y) ** z
+    # print(g(1, 2, 3))
 
 
-    a_str = "abc"
-    b_str = "abc"
-    print('a_str', id(a_str))
-    print('b_str', id(b_str))
-    # == 是查看内容是否一样， is 表示内存地址是否一样 id(xx) == id(xx)
+    # a_str = "abc"
+    # b_str = "abc"
+    # print('a_str', id(a_str))
+    # print('b_str', id(b_str))
+    # # == 是查看内容是否一样， is 表示内存地址是否一样 id(xx) == id(xx)
+    # #
+    # if a_str is b_str:
+    #     print("true")
+    # else:
+    #     print("false")
+    # # true
     #
-    if a_str is b_str:
-        print("true")
-    else:
-        print("false")
-    # true
-
-    a_list = ['a', 'b', 'c']
-    b_list = ['a', 'b', 'c']
-    print("a_list", id(a_list))
-    print("b_list", id(b_list))
-    if a_list is b_list:
-        print("true")
-    else:
-        print("false")
+    # a_list = ['a', 'b', 'c']
+    # b_list = ['a', 'b', 'c']
+    # print("a_list", id(a_list))
+    # print("b_list", id(b_list))
+    # if a_list is b_list:
+    #     print("true")
+    # else:
+    #     print("false")
     # false
