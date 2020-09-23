@@ -324,17 +324,17 @@ if __name__ == '__main__':
 
     # 深拷贝
     import copy
-    a = {
-        'l': [1, 2, 3]
-    }
-    b = copy.deepcopy(a)
-    print("a", id(a))
-    print("b", id(b))
-    print("a.l", id(a["l"]))
-    print("b.l", id(b["l"]))
-
-    a["l"].append(4)
-    print(b["l"], id(b["l"]))
+    # a = {
+    #     'l': [1, 2, 3]
+    # }
+    # b = copy.deepcopy(a)
+    # print("a", id(a))
+    # print("b", id(b))
+    # print("a.l", id(a["l"]))
+    # print("b.l", id(b["l"]))
+    #
+    # a["l"].append(4)
+    # print(b["l"], id(b["l"]))
 
     """
         a 1827202065320
@@ -352,3 +352,17 @@ if __name__ == '__main__':
             因为深拷贝完全拷贝了一份数据，所以数据的修改不会互相影响。
     """
 
+    a = [1, 2, 3]
+    b = copy.deepcopy(a)
+    print("a", id(a[0]))
+    print("b", id(b[0]))
+    b[0] = 4
+    print("a after", id(a[0]))
+    print("b after b[0] = 4", id(b[0]))
+
+    """
+        a 1678535424
+        b 1678535424
+        a after 1678535424
+        b after b[0] = 4 1678535520
+    """
