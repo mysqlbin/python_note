@@ -44,13 +44,14 @@ if __name__ == '__main__':
 
     print(".....................")
 
-    l_a = [1, 2]
-    print("l_a before change", l_a, id(l_a))
-    l_a.append(3)
-    print("l_a after change", l_a, id(l_a))
-    for i in range(10000000):
-        l_a.append(i)
-    print("l_a after many changes", len(l_a), id(l_a))
+    # l_a = [1, 2]
+    # print("l_a before change", l_a, id(l_a))
+    # l_a.append(3)
+    # print("l_a after change", l_a, id(l_a))
+    # for i in range(10000000):
+    #     l_a.append(i)
+    # print("l_a after many changes", len(l_a), id(l_a))
+
     """
     l_a before change [1, 2] 40246280
     l_a after change [1, 2, 3] 40246280
@@ -153,13 +154,17 @@ if __name__ == '__main__':
     # Exception: name must be string
 
     # 单个参数的：
-    # g = lambda x: x ** 2
-    # print(type(g))
-    # print(g(2))
+    g = lambda x: x ** 2
+    print(type(g))
+    print(g(2))
     # # 多个参数的：
-    # g = lambda x, y, z: (x + y) ** z
-    # print(g(1, 2, 3))
-
+    g = lambda x, y, z: (x + y) ** z
+    print(g(1, 2, 3))
+    """
+    <class 'function'>
+    4
+    27
+    """
 
     # a_str = "abc"
     # b_str = "abc"
@@ -182,3 +187,168 @@ if __name__ == '__main__':
     # else:
     #     print("false")
     # false
+
+
+    """
+    
+    >>> print(True or True and False)
+    True
+    >>> print(1 or 5 and 4)
+    1
+    >>> print((1 or 5) and 4)
+    4
+    >>> print(1 and 4)
+    4
+    >>> print(1 or 5)
+    1
+    
+    >>> print(True and False)
+    False
+    
+    >>> print(False and True)
+    False
+    
+    >>> print(True or False)
+    True
+    
+    >>> print(False or True)
+    True
+    
+    # or：只要有一个为真就为真
+    # and: 只要有一个为假就为假
+    
+    
+    >>> print(4+1|2)
+    7
+    # 4+1+2
+    
+    """
+
+    it = iter([1, 2, 3, 4, 5])
+    while True:
+        try:
+            x = next(it)
+            print(x)
+        except StopIteration:
+            break
+    """
+    1
+    2
+    3
+    4
+    5
+    """
+
+    import re
+    str = 'abc ABCD AbC'
+    pattern = re.compile(r'abc', re.I)
+    m = pattern.finditer(str)
+    if m:
+        while True:
+            try:
+                x = next(m)
+                print(x)
+                print(x.group())
+            except StopIteration:
+                break
+    else:
+        print("not find")
+
+    """
+    <_sre.SRE_Match object; span=(0, 3), match='abc'>
+    abc
+    <_sre.SRE_Match object; span=(4, 7), match='ABC'>
+    ABC
+    <_sre.SRE_Match object; span=(9, 12), match='AbC'>
+    AbC
+    """
+    for x, y in zip(range(2), range(4)):
+        print(x, y)
+    """
+    0 0
+    1 1
+    """
+
+    for x, y in zip(range(4), range(2)):
+        print(x, y)
+    """
+    0 0
+    1 1
+    """
+
+    from itertools import zip_longest
+    for x, y in zip_longest(range(4), range(2)):
+        print(x, y)
+    """
+    0 0
+    1 1
+    2 None
+    3 None
+    """
+
+    from itertools import zip_longest
+    for x, y in zip_longest(range(2), range(4)):
+        print(x, y)
+    """
+    0 0
+    1 1
+    None 2
+    None 3
+    """
+
+    # 浅拷贝
+    # a = {
+    #     'l': [1, 2, 3]
+    # }
+    # b = a.copy()
+    # print("a", id(a))
+    # print("b", id(b))
+    # print("a.l", id(a["l"]))
+    # print("b.l", id(b["l"]))
+    #
+    # a["l"].append(4)
+    # print(b["l"], id(b["l"]))
+    """
+        a 2793259131816
+        b 2793259092512
+        a.l 2793260805768
+        b.l 2793260805768
+        [1, 2, 3, 4] 2299101998728
+        
+        变量a的数据字典 {'l': [1, 2, 3]} 是一个父对象
+        [1, 2, 3] 是变量a的子对象
+        b = a.copy(): 
+            发生了一次浅拷贝，变量b开辟了一块新的内存地址 2793259092512，变量b的子对象 [1, 2, 3] 还是指向已有的内存地址 2793260805768
+            所以当变量a的列表子对象发生改变，变量b的列表子对象也会发生改变。
+    """
+
+    # 深拷贝
+    import copy
+    a = {
+        'l': [1, 2, 3]
+    }
+    b = copy.deepcopy(a)
+    print("a", id(a))
+    print("b", id(b))
+    print("a.l", id(a["l"]))
+    print("b.l", id(b["l"]))
+
+    a["l"].append(4)
+    print(b["l"], id(b["l"]))
+
+    """
+        a 1827202065320
+        b 1827203735488
+        a.l 1827203643336
+        b.l 1827203643272
+        [1, 2, 3] 1827203643272
+         
+        变量a的数据字典 {'l': [1, 2, 3]} 是一个父对象
+        [1, 2, 3] 是变量a的子对象
+        
+        b = copy.deepcopy(a)：
+            发生了一次深拷贝，变量b开辟了一块新的内存地址 1827203735488，变量b的子对象 [1, 2, 3] 还是指新的内存地址 1827203643272
+            所以当变量a的列表子对象发生改变，变量b的列表子对象不会发生改变。
+            因为深拷贝完全拷贝了一份数据，所以数据的修改不会互相影响。
+    """
+
