@@ -1,6 +1,6 @@
 
 """
-    *args 用来将参数打包成 tuple(元组) 给函数体调用
+    *args    用来将参数打包成 tuple(元组) 给函数体调用
     **kwargs 用来将参数打包成 dict(词典)) 给函数体调用
 """
 def weather(name, time, *args, **kwargs):
@@ -34,7 +34,7 @@ if __name__ == '__main__':
 
     print(".....................")
 
-    week('zst', '20200919', "a", "b", "cde", k=1, v=3)
+    # week('zst', '20200919', "a", "b", "cde", k=1, v=3)
 
     print(".....................")
 
@@ -44,7 +44,7 @@ if __name__ == '__main__':
 
     print(".....................")
 
-    # 列表的修改--原地修改
+    # 可变数据类型-列表的修改(原地修改)
     # l_a = [1, 2]
     # print("id(id)", id(l_a))
     # l_a.append(3)
@@ -68,12 +68,14 @@ if __name__ == '__main__':
     # print("l_a after many changes", len(l_a), id(l_a))
 
     """
-    l_a before change [1, 2] 40246280
-    l_a after change [1, 2, 3] 40246280
-    l_a after many changes 10000003 40246280
+        l_a before change [1, 2] 40246280
+        l_a after change [1, 2, 3] 40246280
+        l_a after many changes 10000003 40246280
+        
+        扩容后(拆迁后)的内存地址没有变化
     """
 
-    # 相当于是别名, 对象的引用
+    # 列表的引用，相当于是别名(对象的引用)
     # l_a = [1, 2]
     # l_b = l_a
     # """
@@ -98,11 +100,12 @@ if __name__ == '__main__':
 
     print(".....................")
 
-    a_str = "zst"
-    print("a_str before change", a_str, id(a_str))
-
-    a_str = "python"
-    print("a_str after change", a_str, id(a_str))
+    # 不可变类型-字符串string
+    # a_str = "zst"
+    # print("a_str before change", a_str, id(a_str))
+    #
+    # a_str = "python"
+    # print("a_str after change", a_str, id(a_str))
 
     """
         a_str before change zst 2095443116808
@@ -124,10 +127,11 @@ if __name__ == '__main__':
     # print("out of func", l, id(l))
 
     """
-    out of func [] 1535551993992
-    in func [] 1535551993992
-    in func append after [1] 1535551993992
-    out of func [1] 1535551993992
+        out of func [] 1535551993992
+        in func [] 1535551993992
+        in func append after [1] 1535551993992
+        out of func [1] 1535551993992
+        这里理解了，可以参考老师画的图来理解。
     """
     print(".....................")
 
@@ -149,6 +153,7 @@ if __name__ == '__main__':
         a id 1 500591360
         a after add 2 500591392
         after func 1 5005913606
+        这里理解了，可以参考老师画的图来理解。
     """
 
     # a = 1
@@ -201,8 +206,12 @@ if __name__ == '__main__':
     27
     """
 
+    # 字符串的intern机制
     # a_str = "abc"
     # b_str = "abc"
+    # """
+    #     等价于 b_str = a_str
+    # """
     # print('a_str', id(a_str))
     # print('b_str', id(b_str))
     # # == 是查看内容是否一样， is 表示内存地址是否一样 id(xx) == id(xx)
@@ -213,19 +222,34 @@ if __name__ == '__main__':
     #     print("false")
     # # true
     #
-    # a_list = ['a', 'b', 'c']
-    # b_list = ['a', 'b', 'c']
-    # print("a_list", id(a_list))
-    # print("b_list", id(b_list))
+    a_list = ['a', 'b', 'c']
+    b_list = ['a', 'b', 'c']
+    print("a_list", id(a_list))
+    print("b_list", id(b_list))
+    """
+        a_list 40085640
+        b_list 40115144
+        -- 这里还不理解。
+    """
     # if a_list is b_list:
     #     print("true")
     # else:
     #     print("false")
     # false
 
+    # l_a = [1, 2]
+    # l_b = l_a
+    # print("l_a", id(l_a))
+    # print("l_b", id(l_b))
 
     """
-    
+        l_a 37791752
+        l_b 37791752
+        
+    """
+
+    # Python运算符优先级和结合性
+    """
     >>> print(True or True and False)
     True
     >>> print(1 or 5 and 4)
@@ -251,14 +275,14 @@ if __name__ == '__main__':
     
     # or：只要有一个为真就为真
     # and: 只要有一个为假就为假
-    
-    
+
     >>> print(4+1|2)
     7
     # 4+1+2
     
     """
 
+    # 迭代器
     # it = iter([1, 2, 3, 4, 5])
     # while True:
     #     try:
