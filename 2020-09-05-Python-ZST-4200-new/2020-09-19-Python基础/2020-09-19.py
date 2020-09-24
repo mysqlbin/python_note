@@ -44,6 +44,7 @@ if __name__ == '__main__':
 
     print(".....................")
 
+    # 列表的修改--原地修改
     # l_a = [1, 2]
     # print("id(id)", id(l_a))
     # l_a.append(3)
@@ -57,6 +58,7 @@ if __name__ == '__main__':
     """
     print(".....................")
 
+    # 列表的扩容
     # l_a = [1, 2]
     # print("l_a before change", l_a, id(l_a))
     # l_a.append(3)
@@ -329,6 +331,7 @@ if __name__ == '__main__':
     None 3
     """
 
+    # yield 关键字
     # 定义一个生成器的函数
     def generator_function(n):
         for i in range(n):
