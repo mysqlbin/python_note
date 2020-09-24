@@ -45,6 +45,19 @@ if __name__ == '__main__':
     print(".....................")
 
     # l_a = [1, 2]
+    # print("id(id)", id(l_a))
+    # l_a.append(3)
+    # print("id(la)", id(l_a))
+    # print("l_a value", l_a)
+
+    """
+        id(id) 2557599872264
+        id(la) 2557599872264
+        l_a value [1, 2, 3]
+    """
+    print(".....................")
+
+    # l_a = [1, 2]
     # print("l_a before change", l_a, id(l_a))
     # l_a.append(3)
     # print("l_a after change", l_a, id(l_a))
@@ -58,22 +71,42 @@ if __name__ == '__main__':
     l_a after many changes 10000003 40246280
     """
 
-    # 相当于是别名
+    # 相当于是别名, 对象的引用
+    # l_a = [1, 2]
     # l_b = l_a
+    # """
+    #     等价于：
+    #       l_a = [1, 2]
+    #       l_b = [1, 2]
+    # """
+    # print("l_a", id(l_a))
     # print("l_b", id(l_b))
     # print("l_a length before l_b append", l_a, len(l_a))
     # l_b.append(1)
-    # print("l_b length after l_b append", l_a, len(l_b))
+    # print("l_b length after l_b append", l_b, len(l_b))
     # print("l_a length after l_b append", l_a, len(l_a))
 
+    """
+        l_a 2404859442504
+        l_b 2404859442504
+        l_a length before l_b append [1, 2] 2
+        l_b length after l_b append [1, 2, 1] 3
+        l_a length after l_b append [1, 2, 1] 3
+    """
 
     print(".....................")
 
-    # a_str = "zst"
-    # print("a_str before change", a_str, id(a_str))
-    #
-    # a_str = "python"
-    # print("a_str after change", a_str, id(a_str))
+    a_str = "zst"
+    print("a_str before change", a_str, id(a_str))
+
+    a_str = "python"
+    print("a_str after change", a_str, id(a_str))
+
+    """
+        a_str before change zst 2095443116808
+        a_str after change python 2095443255344
+    """
+
 
     print(".....................")
 
@@ -296,166 +329,14 @@ if __name__ == '__main__':
     None 3
     """
 
-    # 字典对象的浅拷贝
-    # a = {
-    #     'l': [1, 2, 3]
-    # }
-    # b = a.copy()
-    # print("a", id(a))
-    # print("b", id(b))
-    # print("a.l", id(a["l"]))
-    # print("b.l", id(b["l"]))
-    #
-    # a["l"].append(4)
-    #
-    # print(a["l"], id(a["l"]))
-    # print(b["l"], id(b["l"]))
+    # 定义一个生成器的函数
+    def generator_function(n):
+        for i in range(n):
+            yield i
+            # 相当于是 return
 
-    """
-        a 35150440
-        b 35150872
-        a.l 37559304
-        b.l 37559304
-        [1, 2, 3, 4] 37559304
-        [1, 2, 3, 4] 37559304
+    for item in generator_function(5):
+        print(item)
 
-        变量a的数据字典 {'l': [1, 2, 3]} 是一个父对象
-        [1, 2, 3] 是变量a的子对象
-        b = a.copy(): 
-            发生了一次浅拷贝，变量b开辟了一块新的内存地址 2793259092512，变量b的子对象 [1, 2, 3, 4] 还是指向已有的内存地址 2793260805768
-            所以当变量a的列表子对象发生改变，变量b的列表子对象也会发生改变。
-        
-    """
-
-    # 字典对象的深拷贝与修改
-    # import copy
-    # a = {
-    #     'l': [1, 2, 3]
-    # }
-    # b = copy.deepcopy(a)
-    # print("a", id(a))
-    # print("b", id(b))
-    # print("a.l", id(a["l"]))
-    # print("b.l", id(b["l"]))
-    #
-    # a["l"].append(4)
-    # print(a["l"], id(a["l"]))
-    # print(b["l"], id(b["l"]))
-
-    """
-        a 36854376
-        b 37317440
-        a.l 40146696
-        b.l 40146760
-        [1, 2, 3, 4] 40146696
-        [1, 2, 3] 40146760
-         
-        变量a的数据字典 {'l': [1, 2, 3]} 是一个父对象
-        [1, 2, 3] 是变量a的子对象
-        
-        b = copy.deepcopy(a)：
-            发生了一次深拷贝，变量b开辟了一块新的内存地址 1827203735488，变量b的子对象 [1, 2, 3] 还是指新的内存地址 1827203643272
-            所以当变量a的列表子对象发生改变，变量b的列表子对象不会发生改变。
-            因为深拷贝完全拷贝了一份数据，所以数据的修改不会互相影响。
-    """
-
-    # 单层的list列表对象使用 copy()方法
-
-    a = [1, 2, 3]
-    b = a.copy()
-    print("a", id(a))
-    print("b", id(b))
-    print("a id(a[0])", id(a[0]))
-    print("b id(b[0])", id(b[0]))
-    a.append(4)
-    print("a after a.append()", a)
-    print("b after a.append()", b)
-    print("a after a.append()", id(a))
-    print("b after a.append()", id(b))
-    print("a after a.append() id(a[0])", id(a[0]))
-    print("b after a.append() id(b[0])", id(b[0]))
-
-    """
-        a 36716936
-        b 36716872
-        a id(a[0]) 493185792
-        b id(b[0]) 493185792
-        a after a.append() [1, 2, 3, 4]
-        b after a.append() [1, 2, 3]
-        a after a.append() 36716936
-        b after a.append() 36716872
-        a after a.append() id(a[0]) 493185792
-        b after a.append() id(b[0]) 493185792
-    
-        对于单层的list来说，使用浅拷贝，实际上用的是深拷贝
-        最外层的内存地址不一样
-        子对象的内存一样，但是 列表a发生修改后，列表b并没有发生改变。
-        
-        
-        
-        
-        
-    """
-
-    # 嵌套的list列表对象使用 copy()方法
-    # a = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-    # b = a.copy()
-    # print("a", id(a))
-    # print("b", id(b))
-    # print("a id(a[0]", id(a[0]))
-    # print("b id(b[0]", id(b[0]))
-    # a[0].append(4)
-    # print("b after a.append()", b)
-    # print("b after a.append()", id(b))
-    #
-    # print("a after a.append()", id(a[0]))
-    # print("b after a.append()", id(b[0]))
-
-    """
-        a 40846600
-        b 40959432
-        a id(a[0] 40845704
-        b id(b[0] 40845704
-        b after a.append() [[1, 2, 3, 4], [4, 5, 6], [7, 8, 9]]
-        b after a.append() 40959432
-        a after a.append() 40845704
-        b after a.append() 40845704
-        嵌套的list列表对象使用 copy()方法：发生的是浅拷贝
-        最外层的内存地址不一样，里层的内存地址一样，所以 a[0] 发生改变之后，b[0] 也会随之改变。
-        -- 这里理解了。
-        
-    """
-
-    # 列表对象的深拷贝与修改
-    # a = [1, 2, 3]
-    # b = copy.deepcopy(a)
-    # print("a by id[a]", id(a))
-    # print("b by id[b]", id(b))
-    # print("a by id[0]", id(a[0]))
-    # print("b by id[0]", id(b[0]))
-    # b[0] = 4
-    # print("a after by a[0]", id(a[0]))
-    # print("b after by b[0] = 4", id(b[0]))
-    # print("b by id[b]", id(b))
-
-    """
-        a by id[a] 40587848
-        b by id[b] 40587784
-        a by id[0] 506030848
-        b by id[0] 506030848
-        a after by a[0] 506030848
-        b after by b[0] = 4 506030944
-        b by id[b] 38224456
-        
-        a = [1, 2, 3] ： 变量a是一个列表
-        b = copy.deepcopy(a) ： 
-            对列表进行深拷贝操作，所以变量a 和 变量b 在内存中的地址是不一样的
-        a[0] 和 b[0] 的内存地址一样的原因：
-            这里还不明白。
-            因为 a[0] 和 b[0] 两者之间是相等的，所以指向的是同一个内存地址。
-            
-        b[0] = 4： 
-            对b列表中的元素进行修改，因为值为4是一个int型的数据结构，所以b[0] = 4 的修改操作是一个不可变类型的操作
-            因此这里发生了一个拷贝动作，申请了新的一个内存地址，所以 b[0] 的内存地址发生了变化。
-          
-    """
+    for item in range(5):
+        print(item)
