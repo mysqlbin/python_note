@@ -1,7 +1,8 @@
 
 
 if __name__ == '__main__':
-
+    # Defaultdict
+    # Counter
 
     # Defaultdict
     # 作用：该例子统计strings/元组中某个单词出现的次数，并在counts字典中作记录。
@@ -71,3 +72,28 @@ if __name__ == '__main__':
     print(l)
     l.popleft()
     print(l)
+
+    # Enum
+    # 当我们需要定义常量时，可以使用枚举类
+    from enum import Enum
+    class DbType(Enum):
+        mysql = 1
+        pg = 2
+        oracle = 3
+    def connect(db_type):
+        if not isinstance(db_type, DbType):
+            raise Exception("invalid dbtype")
+        print(db_type)
+    connect(DbType.mysql)
+    
+    # OrderedDict
+    # 作用：让列表的Key保持有序
+
+    from collections import OrderedDict
+    d = dict([('a', 1), ('c', 3), ('b', 2)])
+    print(d)
+    # {'a': 1, 'c': 3, 'b': 2}
+
+    od = OrderedDict([('a', 1), ('b', 2), ('c', 3)])
+    print(od)
+    # OrderedDict([('a', 1), ('b', 2), ('c', 3)])

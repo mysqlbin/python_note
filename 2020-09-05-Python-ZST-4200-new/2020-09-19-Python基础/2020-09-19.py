@@ -1,7 +1,12 @@
 
 """
-    *args    用来将参数打包成 tuple(元组) 给函数体调用
-    **kwargs 用来将参数打包成 dict(词典)) 给函数体调用
+    *args：
+        用来将参数打包成 tuple(元组) 给函数体调用
+        表示任何多个无名参数，它本质是一个tuple；
+        
+    **kwargs：
+        用来将参数打包成 dict(词典)) 给函数体调用
+        表示关键字参数，它本质上是一个dict；
 """
 def weather(name, time, *args, **kwargs):
     print(name)
@@ -79,7 +84,7 @@ if __name__ == '__main__':
     # l_a = [1, 2]
     # l_b = l_a
     # """
-    #     等价于：
+    #     区别：
     #       l_a = [1, 2]
     #       l_b = [1, 2]
     # """
@@ -229,7 +234,7 @@ if __name__ == '__main__':
     """
         a_list 40085640
         b_list 40115144
-        -- 这里还不理解。
+        a_list 和 b_list 是两个不同的列表对象，所以它们的内存地址是不一样的。
     """
     # if a_list is b_list:
     #     print("true")
