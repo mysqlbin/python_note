@@ -55,11 +55,20 @@ x = MyClass()
 x.f()
 print("out class type", type(x))
 print("out class id", id(x))
-
+"""
+in class type <class '__main__.MyClass'>
+in class id  2494357672008
+out class type <class '__main__.MyClass'>
+out class id 2494357672008
+"""
 
 y = MyClass()
 y.f()
 
+"""
+in class type <class '__main__.MyClass'>
+in class id  2494357672456
+"""
 # self 代表类的实例。   -- 算是明白了。
 
 
@@ -71,3 +80,27 @@ class ZstClass:
 
 # 实例化类
 ZstClass()
+"""
+zst class init
+"""
+
+
+# 在 init 方法初始化成员变量
+class Rectangle:
+    def __init__(self, width, length):
+        if not isinstance(width, float):
+            raise Exception("invalid width")
+        if not isinstance(length, float):
+            raise Exception("invalid length")
+        self.width = width
+        self.length = length
+
+    def area(self):
+        return self.length * self.width
+
+r = Rectangle(13.0, 3.0)
+print(r.area())
+
+"""
+39.0
+"""
