@@ -20,15 +20,17 @@
 		4.2.2 根据出版社查文章 即 查一个出版社的所有文章
 	4.3 删除
 
-5. 模型的继承
+5. 模型的继承 --OneToOne
 	5.1 创建数据
 	5.2 查询
-
-6. Model class Meta
+	5.3 应用场景
+	
+6. Model class Meta 和 abstract
 
 7. Model def __str__(self)
 	
 
+小结
 	
 1. 基本命令
 
@@ -723,8 +725,38 @@ a2.publications.add(p2)
 		
 
 
-5. 模型的继承
+5. 模型的继承 --OneToOne
+	
+	class Place(models.Model):
+		name = models.CharField(max_length=50)
+		address = models.CharField(max_length=80)
+		
+	class Restaurant(Place):
+		serves_hot_dogs = models.BooleanField(default=False)
+		serves_pizza = models.BooleanField(default=False)
 
+	
+	Restaurant 是一个子类，继承了 Place 这个父类
+	在应用中，在创建 Restaurant 的同时，还自动创建了一个 Place
+	
+	-- 对应的表结构如下
+		CREATE TABLE `index_place` (
+		  `id` int(11) NOT NULL AUTO_INCREMENT,
+		  `name` varchar(50) NOT NULL,
+		  `address` varchar(80) NOT NULL,
+		  PRIMARY KEY (`id`)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+		CREATE TABLE `index_restaurant` (
+		  `place_ptr_id` int(11) NOT NULL,
+		  `serves_hot_dogs` tinyint(1) NOT NULL,
+		  `serves_pizza` tinyint(1) NOT NULL,
+		  PRIMARY KEY (`place_ptr_id`),
+		  CONSTRAINT `index_restaurant_place_ptr_id_9254a287_fk_index_place_id` FOREIGN KEY (`place_ptr_id`) REFERENCES `index_place` (`id`)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+	 
 5.1 创建数据
 
 -- 创建一个place
@@ -743,7 +775,7 @@ a2.publications.add(p2)
 		INSERT INTO `index_place` (`name`, `address`) VALUES ('', '')
 		INSERT INTO `index_restaurant` (`place_ptr_id`, `serves_hot_dogs`, `serves_pizza`) VALUES (2, 1, 0)
 		
-		# 可以看到在创建Restaurant的同时，还自动创建了一个Place
+		-- 可以看到在创建 Restaurant 的同时，还自动创建了一个 Place
 		
 
 	r2 = Restaurant.objects.create(serves_hot_dogs=True,serves_pizza=False, name='pizza', address='address2')
@@ -753,7 +785,7 @@ a2.publications.add(p2)
 		INSERT INTO `index_place` (`name`, `address`) VALUES ('pizza', 'address2')
 		INSERT INTO `index_restaurant` (`place_ptr_id`, `serves_hot_dogs`, `serves_pizza`) VALUES (3, 1, 0)
 		
-		# 可以看到在创建Restaurant的同时，还自动创建了一个Place
+		-- 可以看到在创建 Restaurant 的同时，还自动创建了一个 Place
 
 		mysql> select * from index_place where id=3;
 		+----+-------+----------+
@@ -778,7 +810,7 @@ a2.publications.add(p2)
 	p2.restaurant
 
 		>>> p2 = Place.objects.get(name='pizza')
-		>>> p2.restaurant    # 通过父类查询子类的数据
+		>>> p2.restaurant    -- 通过父类查询子类的数据
 		<Restaurant: Restaurant object (3)>
 
 			SELECT
@@ -820,11 +852,11 @@ a2.publications.add(p2)
 		>>> print(r3.name)
 		pizza
 		>>>
-		>>> print(r3.place)        # 不能通过子类查询父类
+		
+		>>> print(r3.place)        -- 不能通过子类查询父类，理解了
 		Traceback (most recent call last):
 		  File "<console>", line 1, in <module>
 		AttributeError: 'Restaurant' object has no attribute 'place'
-
 
 			SELECT
 				`index_place`.`id`,
@@ -842,11 +874,17 @@ a2.publications.add(p2)
 				`index_restaurant`.`place_ptr_id` = 3
 			LIMIT 21;
 			
-	
+5.3 应用场景
+
+	一对一的关系
+	什么时候会用模型的继承呢？
+		当需要把一些字段拆分出去的时候，就可以使用模型的继承
+		-- 理解了。
+
 -----------------------------------------
 
 
-6. Model class Meta
+6. Model class Meta 和 abstract
 
 	class CommonInfo(models.Model):
 		gmt_update = models.DateTimeField(auto_now=True, null=True, blank=True)
@@ -911,6 +949,7 @@ a2.publications.add(p2)
 		first_name = models.CharField(max_length=30)
 		last_name = models.CharField(max_length=30)
 		email = models.EmailField()
+		# 重写 __str__ 方法，自定义输出数据的格式
 		def __str__(self):
 			return "%s %s %s" % (self.first_name, self.last_name, self.email)
 
@@ -970,13 +1009,18 @@ model
 	
 	
 	
-	
-	
-	
-小结：
+小结
 	每次重复看视频，都有收获。
+	模型的继承：
+		abstract
+		
+	模型的对应关系
+		ForeignKey：一对多
+		OneToOneField： 一对一
+		ManyToManyField：多对多
 	
 	
-	
+	什么时候会用模型的继承呢：
+		当需要把一些字段拆分出去的时候，就可以使用模型的继承
 	
 	
