@@ -21,12 +21,14 @@ class MySQLSchema(CommonInfo):
     MASTER = 'master'
     SLAVE = 'slave'
     id = models.BigAutoField(primary_key=True)
-    # host_ip = models.GenericIPAddressField(max_length=128)
-    host_ip = models.ForeignKey(Host, on_delete=models.CASCADE)  # 一个主机下可以有多个数据库实例
+    host_ip = models.GenericIPAddressField(max_length=128)
+
     port = models.IntegerField()
     schema = models.CharField(max_length=64)
     role = models.CharField(max_length=64, choices=((MASTER, 'master'), (SLAVE, 'slave')))
     status = models.EmailField(max_length=64, default='online')
+
+    host = models.ForeignKey(Host, null=True, on_delete=models.CASCADE)  # 一个主机下可以有多个数据库实例
 
     #class Meta:
         # unique_together = ('host_ip', 'port', 'schema', 'role')
@@ -51,7 +53,7 @@ class MySQLSchema(CommonInfo):
             role=self.role).exists() # objects是一个模型管理器，默认的模型管理
         if exists:
             raise ValidationError("repeat data for " + str(self))
-        
+
         super().save(force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields)
 
 
@@ -67,7 +69,6 @@ CREATE TABLE `meta_manage_host` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
-
 CREATE TABLE `meta_manage_mysqlschema` (
   `gmt_update` datetime(6) DEFAULT NULL,
   `gmt_create` datetime(6) DEFAULT NULL,
@@ -76,11 +77,13 @@ CREATE TABLE `meta_manage_mysqlschema` (
   `schema` varchar(64) NOT NULL,
   `role` varchar(64) NOT NULL,
   `status` varchar(64) NOT NULL,
-  `host_ip_id` int(11) NOT NULL,
+  `host_ip` char(39) NOT NULL,
+  `host_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `meta_manage_mysqlsch_host_ip_id_fdb874d5_fk_meta_mana` (`host_ip_id`),
-  CONSTRAINT `meta_manage_mysqlsch_host_ip_id_fdb874d5_fk_meta_mana` FOREIGN KEY (`host_ip_id`) REFERENCES `meta_manage_host` (`id`)
+  KEY `meta_manage_mysqlschema_host_id_dee277d1_fk_meta_manage_host_id` (`host_id`),
+  CONSTRAINT `meta_manage_mysqlschema_host_id_dee277d1_fk_meta_manage_host_id` FOREIGN KEY (`host_id`) REFERENCES `meta_manage_host` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 
 

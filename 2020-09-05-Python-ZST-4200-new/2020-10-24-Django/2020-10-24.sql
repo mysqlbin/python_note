@@ -36,6 +36,10 @@ Consider using the `--user` option or check the permissions.
 
  --  解决办法：重新安装 pip
  
+
+pip install pipenv -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+
 django-admin startproject zst_mysql_server
 
 cd zst_mysql_server
@@ -62,6 +66,8 @@ Installation Failed
 
 	-- url = "https://pypi.douban.com/simple"
 	
+
+pipenv install mysqlclient
 
 (zst_mysql_server-7KHOPOWB) λ  python run manager.py
 python: can t open file 'run': [Errno 2] No such file or directory
