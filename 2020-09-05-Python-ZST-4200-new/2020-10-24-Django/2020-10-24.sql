@@ -296,3 +296,21 @@ ManyToOne
 第二次实践、学习、听课，对Django的知识会比之前理解得更好。
 
 
+E:\github\python_note\2020-09-05-Python-ZST-4200-new\zst_mysql_server (master -> origin)
+(zst_mysql_server-7KHOPOWB) λ python manage.py createsuperuser
+Username (leave blank to use 'administrator'):
+Email address:
+Operation cancelled.
+
+E:\github\python_note\2020-09-05-Python-ZST-4200-new\zst_mysql_server (master -> origin)
+(zst_mysql_server-7KHOPOWB) λ python manage.py createsuperuser
+Username (leave blank to use 'administrator'): admin
+Email address: 1224056230@qq.com
+Password:
+Password (again):
+This password is too common.
+Bypass password validation and create user anyway? [y/N]: y
+Superuser created successfully.
+
+
+
