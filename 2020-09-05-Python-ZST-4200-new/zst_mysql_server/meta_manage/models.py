@@ -51,7 +51,7 @@ class MySQLSchema(CommonInfo):
             role=self.role).exists() # objects是一个模型管理器，默认的模型管理
         if exists:
             raise ValidationError("repeat data for " + str(self))
-        
+
         super().save(force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields)
 
 
