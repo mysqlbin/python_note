@@ -92,8 +92,6 @@ python manage.py migrate
 ManyToOne
 
 
-
-	
 --子表插入1行数据
 
 	from meta_manage.models import Host, MySQLSchema
