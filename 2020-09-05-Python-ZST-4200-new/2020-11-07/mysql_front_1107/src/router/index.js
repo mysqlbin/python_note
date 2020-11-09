@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Todo from '../views/Todo.vue'
-import Axiosstudy from '../views/Axiosstudy.vue'
+import Zst from '../views/Zst.vue'
+import Login from '../views/Login.vue'
 
 Vue.use(VueRouter)
 
-  const routes = [
+const routes = [
   {
     path: '/',
     name: 'Home',
@@ -21,15 +21,23 @@ Vue.use(VueRouter)
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
-    path: '/todo',
-    name: 'Todo',
-    component: Todo
+    path: '/zst',
+    name: 'Zst',
+    // component: Zst
+    // component: function(){
+    //   return import('../views/Zst.vue')
+    // }
+    component: () => import('../views/Zst.vue')
   },
   {
-    path: '/axiosstudy',
-    name: 'Axiosstudy',
-    component: Axiosstudy
-  }
+    path: '/login',
+    name: 'Login',
+    // component: Zst
+    // component: function(){
+    //   return import('../views/Zst.vue')
+    // }
+    component: () => import('../views/Login.vue')
+  },
 ]
 
 const router = new VueRouter({
