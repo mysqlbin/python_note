@@ -87,13 +87,12 @@ create  database zst_server DEFAULT CHARSET utf8mb4 -- UTF-8 Unicode COLLATE utf
 python manage.py makemigrations
 python manage.py migrate
 
+python manager.py shell
 
 
 ManyToOne
 
 
-
-	
 --子表插入1行数据
 
 	from meta_manage.models import Host, MySQLSchema

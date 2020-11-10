@@ -70,8 +70,11 @@ h = Host.objects.create(name='hostname-02', memory='4', cpu='32')
 m = MySQLSchema.objects.create(phy_host=h, port=int(3306), host_ip='192.168.0.202', schema='test_db', role='slave')
 
 
+<<<<<<< HEAD
 http://127.0.0.1:8001/meta_manage/v1/host/?host_id=1
 
+=======
+>>>>>>> 4822112044a88888697e4f3a3d41dacf45cfa249
 
 疑问1：
 	model .values() 是什么意思 

@@ -16,7 +16,11 @@ class HostView(APIView):
             
         else:
             h = Host.objects.get(id=host_id)
+<<<<<<< HEAD
             # serializers = HostSerializer(h.values())
             #  "message": "'Host' object has no attribute 'values'",
             serializers = HostSerializer(h)
+=======
+            serializers = HostSerializer(h.values())
+>>>>>>> 4822112044a88888697e4f3a3d41dacf45cfa249
         return MyJsonResponse(data=serializers.data)

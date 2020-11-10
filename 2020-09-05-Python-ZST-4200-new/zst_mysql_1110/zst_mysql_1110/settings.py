@@ -87,9 +87,15 @@ DATABASES = {
     'default': {
     'ENGINE': 'django.db.backends.mysql',  # 数据库引擎
     'NAME': 'zst_mysql_1110',  # 数据库名，先前创建的
+<<<<<<< HEAD
     'USER': 'lujb',  # 用户名，可以自己创建用户
     'PASSWORD': '123456abc',  # 密码
     'HOST': '192.168.1.27',  # mysql服务所在的主机ip
+=======
+    'USER': 'root',  # 用户名，可以自己创建用户
+    'PASSWORD': '123456abc',  # 密码
+    'HOST': '192.168.0.201',  # mysql服务所在的主机ip
+>>>>>>> 4822112044a88888697e4f3a3d41dacf45cfa249
     'PORT': '3306',  # mysql服务端口
     }
 }
