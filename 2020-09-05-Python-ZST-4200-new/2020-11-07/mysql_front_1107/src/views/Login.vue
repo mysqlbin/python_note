@@ -37,6 +37,6 @@
 
 <style scoped>
   .form-item {
-    margin-bottom: 20px;
+    margin-bottom: 20px;  /* margin-bottom 就是元素的下边距，相当于把排在下面的元素往下方移动了20个像素，px是单位，表示像素点*/
   }
 </style>
