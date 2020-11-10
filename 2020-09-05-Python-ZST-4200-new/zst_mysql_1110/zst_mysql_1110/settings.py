@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'dtuks(#vmi@__32@452_ioqc8x*dd+*ivkt15v^%q8bm9&=a&a'
+SECRET_KEY = 'f-m5=u@hh0l@w&2ki&ni0u*y4wh^$#k3ta4q!w-kwj0z4v=0rb'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'meta_manage.apps.MetaManageConfig',
+    'user.apps.UserConfig',
 ]
 
 MIDDLEWARE = [
@@ -73,10 +76,21 @@ WSGI_APPLICATION = 'zst_mysql_1110.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    'ENGINE': 'django.db.backends.mysql',  # 数据库引擎
+    'NAME': 'zst_mysql_1110',  # 数据库名，先前创建的
+    'USER': 'lujb',  # 用户名，可以自己创建用户
+    'PASSWORD': '123456abc',  # 密码
+    'HOST': '192.168.1.27',  # mysql服务所在的主机ip
+    'PORT': '3306',  # mysql服务端口
     }
 }
 
@@ -118,3 +132,19 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+AUTHENTICATION_BACKENDS = ["user.ldap_backends.LdapBackend"]
+
+ZST_LDAP_HOST = 'ldap://127.0.0.1:10389'
+ZST_LDAP_ADMIN_BIND_DN = 'uid=admin,ou=system'
+ZST_LDAP_ADMIN_PASSWD = 'secret'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        #'zst_mysql_1110.auth.CsrfExemptSessionAuthentication',
+    ],
+
+    'EXCEPTION_HANDLER': 'zst_mysql_1110.response.my_api_exception_handler'
+}
