@@ -1,4 +1,4 @@
-
+1
 
 django-admin startproject zst_mysql_1110
 cd zst_mysql_1110
