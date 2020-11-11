@@ -61,6 +61,11 @@ class HostView(APIView):
         return MyJsonResponse(message="success")
 
 
+	"""
+		def post 和 def put都调用的是 save() 方法，类似于 Django Model的创建和更新都可以调用save()方法
+		def put serializer 有传入 模型，所以调用的是 序列化器的 update()方法。
+		
+	"""
 
 class HostListView(ListAPIView):
     serializer_class = HostSerializer

@@ -11,8 +11,6 @@ from zst_mysql_1110.response import MyJsonResponse
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
-from django.contrib.auth import get_user_model
-
 
 @api_view(['POST'])
 def django_ldap_login(request):
@@ -33,12 +31,13 @@ You should either call `.is_valid()` first, or access `.initial_data` instead.
 
     data = serializer.data
 
-    # 返回一个用户名
+    # 做用户名和密码的认证，认证成功返回一个用户名，认证失败则返回 None
     user = authenticate(request, username=data['username'], password=data['password'])
 
     if user is None:
         return MyJsonResponse(code=4001, message="error username or password...")
 
+    # 用户进行登录
     login(request, user)
 
     # print(get_user_model())

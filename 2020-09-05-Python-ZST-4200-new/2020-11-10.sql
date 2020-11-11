@@ -125,7 +125,45 @@ filter_backends
 
 	
 	
-	
+简单的用户登录登出
+	from django.contrib.auth import login, logout, authenticate
+	login： 用户登录
+	authenticate：验证用户名和密码
+	logout： 登出
+
+下面是一个典型的验证登录的过程
+	若用户名、密码正确的话，返回一个User；若不正确的话，返回None
+	接着必须调用login方法，才真正设置session，使用户处于登录状态
+	def django_login(request):
+		username = request.POST['username']
+		password = request.POST['password']
+		user = authenticate(request, username=username, password=password)
+		if user is None:
+			return HttpResponse('error username or password', status=401)
+		login(request, user)
+		return HttpResponse('login success')
+
+		
+		
+用户注册的要点
+	--这里的内容要再听下
+	使用 get_user_model 函数来获取用户类
+	尽量不要使用from django.contrib.auth.models import User 这种方式来导入Django 的用户类。 这是因为，我们可以扩展
+	from django.contrib.auth import get_user_model
+	def django_register(request):
+	email = request.POST['email']
+	username = request.POST['username']
+	password = request.POST['password']
+	User = get_user_model()
+	field_meta = User._meta.get_field('username')
+	user = User()
+	setattr(user, 'username', username)
+	setattr(user, 'email', email)
+	user.set_password(password)
+	user.save()
+	return HttpResponse('register success')
+		
+
 GenericAPIView层次
 
 	1. GenericAPIView 基础类
