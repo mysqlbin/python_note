@@ -40,13 +40,14 @@ INSTALLED_APPS = [
     'rest_framework',
     'meta_manage.apps.MetaManageConfig',
     'user.apps.UserConfig',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -87,15 +88,9 @@ DATABASES = {
     'default': {
     'ENGINE': 'django.db.backends.mysql',  # 数据库引擎
     'NAME': 'zst_mysql_1110',  # 数据库名，先前创建的
-<<<<<<< HEAD
-    'USER': 'lujb',  # 用户名，可以自己创建用户
-    'PASSWORD': '123456abc',  # 密码
-    'HOST': '192.168.1.27',  # mysql服务所在的主机ip
-=======
     'USER': 'root',  # 用户名，可以自己创建用户
     'PASSWORD': '123456abc',  # 密码
     'HOST': '192.168.0.201',  # mysql服务所在的主机ip
->>>>>>> 4822112044a88888697e4f3a3d41dacf45cfa249
     'PORT': '3306',  # mysql服务端口
     }
 }
@@ -148,8 +143,8 @@ ZST_LDAP_ADMIN_PASSWD = 'secret'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
-        #'zst_mysql_1110.auth.CsrfExemptSessionAuthentication',
+        # 'rest_framework.authentication.TokenAuthentication',
+        'zst_mysql_1110.auth.CsrfExemptSessionAuthentication',
     ],
 
     'EXCEPTION_HANDLER': 'zst_mysql_1110.response.my_api_exception_handler'

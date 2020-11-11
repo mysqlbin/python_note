@@ -13,23 +13,23 @@ class MyJsonResponse(Response):
             "data": data
         }
 
-def my_api_exception_handler(exec, context):
-    exception_handler(exec, context)
-    return MyJsonResponse(code=5000, data=None, message=str(exec))
-
 # def my_api_exception_handler(exec, context):
-#     logging.exception("exception occur: %s", exec)
-#     response = exception_handler(exec, context)
-#     if response is None:
-#         resp_mapping = (
-#             (NotAcceptable, 40001, 'invalid data'),
-#         )
-#         for m in resp_mapping:
-#             if isinstance(exec, m[0]):
-#                 response = ZstJsonResponse(code=m[1], message=m[2])
-#
-#         response = ZstJsonResponse(code=5001, message="internal error") if response is None else response
-#     else:
-#         response = ZstJsonResponse(code=response.status_code, message=response.data)
-#
-#     return response
+#     exception_handler(exec, context)
+#     return MyJsonResponse(code=5000, data=None, message=str(exec))
+
+def my_api_exception_handler(exec, context):
+    logging.exception("exception occur: %s", exec)
+    response = exception_handler(exec, context)
+    if response is None:
+        resp_mapping = (
+            (NotAcceptable, 40001, 'invalid data'),
+        )
+        for m in resp_mapping:
+            if isinstance(exec, m[0]):
+                response = MyJsonResponse(code=m[1], message=m[2])
+
+        response = MyJsonResponse(code=5001, message="internal error") if response is None else response
+    else:
+        response = MyJsonResponse(code=response.status_code, message=response.data)
+
+    return response

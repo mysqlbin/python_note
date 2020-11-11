@@ -6,13 +6,18 @@ from rest_framework.decorators import api_view
 from django.http.response import HttpResponse
 import ldap
 from django.contrib.auth import logout, login, authenticate, get_user_model
-from .serializers import LoginSerializer
+from .serializers import LoginSerializer, UserDetailSerializer
 from zst_mysql_1110.response import MyJsonResponse
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
-@api_view(['GET'])
+from django.contrib.auth import get_user_model
+
+
+@api_view(['POST'])
 def django_ldap_login(request):
     json_data = {
-        'username': 'apple1111',
+        'username': 'apple',
         'password': '123456abc'
     }
     serializer = LoginSerializer(data=json_data)
@@ -27,6 +32,8 @@ You should either call `.is_valid()` first, or access `.initial_data` instead.
         return MyJsonResponse(code=4001, message="invalid data")
 
     data = serializer.data
+
+    # 返回一个用户名
     user = authenticate(request, username=data['username'], password=data['password'])
 
     if user is None:
@@ -34,6 +41,8 @@ You should either call `.is_valid()` first, or access `.initial_data` instead.
 
     login(request, user)
 
+    # print(get_user_model())
+    # <class 'django.contrib.auth.models.User'>
     return MyJsonResponse(message="login success")
 
     '''
@@ -85,4 +94,21 @@ def ldap_login(request):
 
 
 
+class UserDetailView(APIView):
+    permission_classes = [IsAuthenticated]
+    # IsAuthenticated：判断有没有登录过
 
+    def get(self, request, *args, **kwargs):
+        # 获取当前登录的用户，返回用户名
+        user = request.user
+        print(user)
+        serializer = UserDetailSerializer(user)
+        return MyJsonResponse(data=serializer.data)
+
+    # 修改当前登录用户的资料
+    def put(self, request, *args, **kwargs):
+        user = request.user
+        serializer = UserDetailSerializer(instance=user, data=request.data, partial=True)
+        serializer.is_valid(True)
+        serializer.save()
+        return MyJsonResponse(data=UserDetailSerializer(user).data)

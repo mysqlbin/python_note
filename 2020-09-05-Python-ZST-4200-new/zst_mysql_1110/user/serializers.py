@@ -1,6 +1,7 @@
 
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
+from django.contrib.auth import get_user_model
 
 def max_length(value):
     if not isinstance(value, str):
@@ -16,3 +17,7 @@ class LoginSerializer(serializers.Serializer):
     password = serializers.CharField(required=True, max_length=60, min_length=6)
 
 
+class UserDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = ['username', 'email', 'first_name', 'last_name']

@@ -1,4 +1,4 @@
-1
+
 
 django-admin startproject zst_mysql_1110
 cd zst_mysql_1110
@@ -70,14 +70,80 @@ h = Host.objects.create(name='hostname-02', memory='4', cpu='32')
 m = MySQLSchema.objects.create(phy_host=h, port=int(3306), host_ip='192.168.0.202', schema='test_db', role='slave')
 
 
-<<<<<<< HEAD
+
 http://127.0.0.1:8001/meta_manage/v1/host/?host_id=1
 
-=======
->>>>>>> 4822112044a88888697e4f3a3d41dacf45cfa249
 
-疑问1：
+疑问：
 	model .values() 是什么意思 
 	
+	get_user_model() 得到的值是什么
+		    # print(get_user_model())
+			# <class 'django.contrib.auth.models.User'>
+			
+	ModelSerializer 这里还不明白
+
+
+pipenv install django-filter
+
+
+filter_backends
+	
+	通过DRF的filter_backends机制来实现 多个字段的搜索
+	
+	http://127.0.0.1:8001/meta_manage/v1/host_list/	
+		SELECT `meta_manage_host`.`id`, `meta_manage_host`.`gmt_update`, `meta_manage_host`.`gmt_create`, `meta_manage_host`.`name`, `meta_manage_host`.`memory`, `meta_manage_host`.`cpu` 
+		FROM `meta_manage_host`
+
+	http://127.0.0.1:8001/meta_manage/v1/host_list/?name=hostname-01
+		SELECT `meta_manage_host`.`id`, `meta_manage_host`.`gmt_update`, `meta_manage_host`.`gmt_create`, `meta_manage_host`.`name`, `meta_manage_host`.`memory`, `meta_manage_host`.`cpu` 
+		FROM `meta_manage_host` WHERE `meta_manage_host`.`name` = 'hostname-01'
+
+	http://127.0.0.1:8001/meta_manage/v1/host_list/?name=hostname-01&memory=4
+		SELECT `meta_manage_host`.`id`, `meta_manage_host`.`gmt_update`, `meta_manage_host`.`gmt_create`, `meta_manage_host`.`name`, `meta_manage_host`.`memory`, `meta_manage_host`.`cpu` 
+		FROM `meta_manage_host` WHERE (`meta_manage_host`.`name` = 'hostname-01' AND `meta_manage_host`.`memory` = '4')
+		
+	
+关键词搜索：search_filter	
+	http://127.0.0.1:8001/meta_manage/v1/host_list_api/?search=hostname-02
+
+
+		filter_backends = [filters.SearchFilter]
+		search_fields = ['^name', 'memory']
+		
+			SELECT `meta_manage_host`.`id`, `meta_manage_host`.`gmt_update`, `meta_manage_host`.`gmt_create`, `meta_manage_host`.`name`, `meta_manage_host`.`memory`, `meta_manage_host`.`cpu` 
+			FROM `meta_manage_host` WHERE (`meta_manage_host`.`name` LIKE 'hostname-02%' OR `meta_manage_host`.`memory` LIKE '%hostname-02%')
+
+		filter_backends = [filters.SearchFilter]
+		search_fields = ['^name', '=memory']
+		
+			http://127.0.0.1:8001/meta_manage/v1/host_list_api/?search=hostname-02
+			
+			SELECT `meta_manage_host`.`id`, `meta_manage_host`.`gmt_update`, `meta_manage_host`.`gmt_create`, `meta_manage_host`.`name`, `meta_manage_host`.`memory`, `meta_manage_host`.`cpu` 
+			FROM `meta_manage_host` WHERE (`meta_manage_host`.`name` LIKE 'hostname-02%' OR `meta_manage_host`.`memory` LIKE 'hostname-02')
+
+
 	
 	
+	
+GenericAPIView层次
+
+	1. GenericAPIView 基础类
+	2. Mixin 				可以认为是接口，只实现一些简单的方法
+		CreateModelMixin	对应insert
+		ListModelMixin		查询全部
+		RetrieveModelMixin	根据ID查询单个
+		UpdateModelMixin	对应update
+		DestroyModelMixin	对应delete
+		-- 1和2是一起用的，写的代码量会少很多，参考 class HostList
+	
+	3. OtherViews 复合类，实现get，post等方法  --写最少的代码
+		CreateAPIView
+		ListAPIView
+		RetrieveAPIView
+		DestroyAPIView
+
+		-- 参考 class HostListView
+		
+rest_framework 写更少、最小的代码
+
