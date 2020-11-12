@@ -38,16 +38,16 @@ info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this comm
 	$ vue-cli-service serve
 	 INFO  Starting development server...
 
-
-created() 和 mounted()：
-    先执行完成 created()中的内容，再执行 mounted() 中的内容；
-    类似于操作系统和磁盘，操作系统先启动，再挂载磁盘。
-    应用场景之一：图表库ECharts，先在 created() 加载完成Dom后，然后在 mounted()中绑定Dom元素，引入图表库ECharts。
-	
-	先 created(), 等加载完成Dom后，然后在 mounted()中绑定Dom元素。
-	
-		先加载 html(Dom)、再加载 图表。
-		如果不加载完html(Dom)，可能就会找不到要绑定的元素。
+Vue的生命周期
+	created() 和 mounted()：
+		先执行完成 created()中的内容，再执行 mounted() 中的内容；
+		类似于操作系统和磁盘，操作系统先启动，再挂载磁盘。
+		应用场景之一：图表库ECharts，先在 created() 加载完成Dom后，然后在 mounted()中绑定Dom元素，引入图表库ECharts。
 		
+		先 created(), 等加载完成Dom后，然后在 mounted()中绑定Dom元素。
+		
+			先加载 html(Dom)、再加载 图表。
+			如果不加载完html(Dom)，可能就会找不到要绑定的元素。
+			
 		
 		
