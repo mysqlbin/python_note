@@ -48,6 +48,18 @@ Vue的生命周期
 		
 			先加载 html(Dom)、再加载 图表。
 			如果不加载完html(Dom)，可能就会找不到要绑定的元素。
-			
-		
-		
+	
+	在created中调用echarts的画图会报以下的错误。这是因为dom节点还不存在，所以echarts无法获取	
+		[Vue warn]: Error in created hook: "TypeError: Cannot read property 'getAttribute' of null"
+
+		found in
+
+		---> <Login> at src/views/Login.vue
+			   <App> at src/App.vue
+				 <Root>
+			 
+		 
+npm install echarts --registry=https://registry.npm.taobao.org		
+
+yarn add axios
+
