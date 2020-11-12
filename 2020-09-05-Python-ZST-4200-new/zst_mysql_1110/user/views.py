@@ -12,7 +12,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 
-@api_view(['POST'])
+@api_view(['GET'])
 def django_ldap_login(request):
     json_data = {
         'username': 'apple',
@@ -111,3 +111,28 @@ class UserDetailView(APIView):
         serializer.is_valid(True)
         serializer.save()
         return MyJsonResponse(data=UserDetailSerializer(user).data)
+
+@api_view(['GET'])
+def django_is_login(request):
+
+    # 返回登录的用户名，如果没有登录，返回 AnonymousUser(如果没有登录的话，那么输出AnonymousUser)
+    print(request.user)
+
+    # request.user.is_authenticated 验证是否通过登录认证，认证返回 True，没有认证返回 False
+    # return HttpResponse(request.user.is_authenticated)
+
+    if request.user.is_authenticated:
+        return MyJsonResponse(message='login success')
+
+    return MyJsonResponse(message='login failed')
+
+@api_view(['GET'])
+def django_login(request):
+
+    username = 'apple'
+    password = '123456abc'
+    user = authenticate(request, username=username, password=password)
+    if user is None:
+        return MyJsonResponse(message='error username or password', code=401)
+    login(request, user)
+    return MyJsonResponse(message='login success')

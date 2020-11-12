@@ -4,6 +4,22 @@ django-admin startproject zst_mysql_1110
 cd zst_mysql_1110
 
 pipenv --python 3.6
+	
+	E:\github\python_note\2020-09-05-Python-ZST-4200-new\zst_mysql_1110 (master -> origin)
+	λ pipenv --python 3.6
+	Virtualenv already exists!
+	Removing existing virtualenv…
+	Creating a virtualenv for this project…
+	Pipfile: E:\github\python_note\2020-09-05-Python-ZST-4200-new\zst_mysql_1110\Pipfile
+	Using d:/py/python.exe (3.6.7) to create virtualenv…
+	[    ] Creating virtual environment...created virtual environment CPython3.6.7.final.0-64 in 6242ms
+	  creator CPython3Windows(dest=C:\Users\Administrator.SC-202007271117\.virtualenvs\zst_mysql_1110-CRw6Dq79, clear=False, global=False)
+	  seeder FromAppData(download=False, pip=bundle, setuptools=bundle, wheel=bundle, via=copy, app_data_dir=C:\Users\Administrator.SC-202007271117\AppData\Local\pypa\virtualenv)
+		added seed packages: pip==20.2.4, setuptools==50.3.2, wheel==0.35.1
+	  activators BashActivator,BatchActivator,FishActivator,PowerShellActivator,PythonActivator,XonshActivator
+
+	Successfully created virtual environment!
+	Virtualenv location: C:\Users\Administrator.SC-202007271117\.virtualenvs\zst_mysql_1110-CRw6Dq79
 
 pipenv shell
 pipenv install django 
@@ -76,20 +92,28 @@ http://127.0.0.1:8001/meta_manage/v1/host/?host_id=1
 
 疑问：
 	model .values() 是什么意思 
-	
+		Host.objects.all().values()
+		
 	get_user_model() 得到的值是什么
 		    # print(get_user_model())
 			# <class 'django.contrib.auth.models.User'>
-			
+			-- 使用 get_user_model 函数来获取用户类
 	ModelSerializer 这里还不明白
-
+	
+	URL反转
+		from django.urls import reverse
+		print(reverse('host-list'))
+	
 
 pipenv install django-filter
 
 
-filter_backends
+等值查询filter_backends
 	
-	通过DRF的filter_backends机制来实现 多个字段的搜索
+	filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['name', 'cpu', 'memory']
+	
+	通过DRF的filter_backends机制来实现 多个字段的等值搜索
 	
 	http://127.0.0.1:8001/meta_manage/v1/host_list/	
 		SELECT `meta_manage_host`.`id`, `meta_manage_host`.`gmt_update`, `meta_manage_host`.`gmt_create`, `meta_manage_host`.`name`, `meta_manage_host`.`memory`, `meta_manage_host`.`cpu` 
@@ -104,10 +128,10 @@ filter_backends
 		FROM `meta_manage_host` WHERE (`meta_manage_host`.`name` = 'hostname-01' AND `meta_manage_host`.`memory` = '4')
 		
 	
-关键词搜索：search_filter	
+关键词搜索search_filter	
+	
 	http://127.0.0.1:8001/meta_manage/v1/host_list_api/?search=hostname-02
-
-
+	
 		filter_backends = [filters.SearchFilter]
 		search_fields = ['^name', 'memory']
 		
@@ -122,13 +146,19 @@ filter_backends
 			SELECT `meta_manage_host`.`id`, `meta_manage_host`.`gmt_update`, `meta_manage_host`.`gmt_create`, `meta_manage_host`.`name`, `meta_manage_host`.`memory`, `meta_manage_host`.`cpu` 
 			FROM `meta_manage_host` WHERE (`meta_manage_host`.`name` LIKE 'hostname-02%' OR `meta_manage_host`.`memory` LIKE 'hostname-02')
 
+		filter_backends = [filters.SearchFilter]
+		search_fields = ['^name', '=memory']
+			http://127.0.0.1:8001/meta_manage/v1/host_list_api/?search=hostname-02,4
+			SELECT `meta_manage_host`.`id`, `meta_manage_host`.`gmt_update`, `meta_manage_host`.`gmt_create`, `meta_manage_host`.`name`, `meta_manage_host`.`memory`, `meta_manage_host`.`cpu` 
+			FROM `meta_manage_host` 
+			WHERE ((`meta_manage_host`.`name` LIKE 'hostname-02%' OR `meta_manage_host`.`memory` LIKE 'hostname-02') 
+			AND (`meta_manage_host`.`name` LIKE '4%' OR `meta_manage_host`.`memory` LIKE '4'))
 
-	
-	
+
 简单的用户登录登出
 	from django.contrib.auth import login, logout, authenticate
 	login： 用户登录
-	authenticate：验证用户名和密码
+	authenticate：验证用户名和密码是否正确
 	logout： 登出
 
 下面是一个典型的验证登录的过程
@@ -151,37 +181,52 @@ filter_backends
 	尽量不要使用from django.contrib.auth.models import User 这种方式来导入Django 的用户类。 这是因为，我们可以扩展
 	from django.contrib.auth import get_user_model
 	def django_register(request):
-	email = request.POST['email']
-	username = request.POST['username']
-	password = request.POST['password']
-	User = get_user_model()
-	field_meta = User._meta.get_field('username')
-	user = User()
-	setattr(user, 'username', username)
-	setattr(user, 'email', email)
-	user.set_password(password)
-	user.save()
-	return HttpResponse('register success')
+		email = request.POST['email']
+		username = request.POST['username']
+		password = request.POST['password']
+		User = get_user_model()
+		field_meta = User._meta.get_field('username')
+		user = User()
+		setattr(user, 'username', username)
+		setattr(user, 'email', email)
+		user.set_password(password)
+		user.save()
+		return HttpResponse('register success')
+			
+
+
+1. 序列化器：类似于post表单数据的验证
+
+2. DRF框架-APIView
+	APIView是DRF提供一个视图类，用法和django的View相似，实际上APIView就是继承了Django的View类，在View类的基础上，提供了权限、认证相关的功能	
+		class HostView(APIView)、 class UserDetailView(APIView)
 		
+	GenericAPIView
+		GenericAPIView层次
 
-GenericAPIView层次
+			1. GenericAPIView 基础类
+			2. Mixin 				可以认为是接口，只实现一些简单的方法
+				CreateModelMixin	对应insert
+				ListModelMixin		查询全部
+				RetrieveModelMixin	根据ID查询单个
+				UpdateModelMixin	对应update
+				DestroyModelMixin	对应delete
+				-- 1和2是一起用的，写的代码量会少很多，参考class HostListView(ListAPIView)
+			
+			3. OtherViews 复合类，实现get，post等方法  --写最少的代码
+				CreateAPIView
+				ListAPIView      --其中 ListAPIView有继承GenericAPIView             
+				RetrieveAPIView
+				DestroyAPIView
 
-	1. GenericAPIView 基础类
-	2. Mixin 				可以认为是接口，只实现一些简单的方法
-		CreateModelMixin	对应insert
-		ListModelMixin		查询全部
-		RetrieveModelMixin	根据ID查询单个
-		UpdateModelMixin	对应update
-		DestroyModelMixin	对应delete
-		-- 1和2是一起用的，写的代码量会少很多，参考 class HostList
+			-- 参考 class HostListView(ListAPIView)、class HostListAPIView(ListAPIView)
+			
+				
+3. DRF viewset(视图集合) 
 	
-	3. OtherViews 复合类，实现get，post等方法  --写最少的代码
-		CreateAPIView
-		ListAPIView
-		RetrieveAPIView
-		DestroyAPIView
-
-		-- 参考 class HostListView
-		
-rest_framework 写更少、最小的代码
-
+4. DRF ModelViewSet
+	
+	
+	
+	
+	

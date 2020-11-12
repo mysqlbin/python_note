@@ -31,7 +31,7 @@ info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this comm
 	
 	
 	执行 npm install
-	
+		-- 会生成  node_modules 文件 
 	E:\github\python_note\2020-09-05-Python-ZST-4200-new\2020-11-07\mysql_front_1107 (master -> origin)
 	λ yarn serve
 	yarn run v1.22.10
