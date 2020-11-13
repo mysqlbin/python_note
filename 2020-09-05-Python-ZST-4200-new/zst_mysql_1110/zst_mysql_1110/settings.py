@@ -41,13 +41,15 @@ INSTALLED_APPS = [
     'meta_manage.apps.MetaManageConfig',
     'user.apps.UserConfig',
     'django_filters',
+    # 'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    # 'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
-    #'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -149,3 +151,10 @@ REST_FRAMEWORK = {
 
     'EXCEPTION_HANDLER': 'zst_mysql_1110.response.my_api_exception_handler'
 }
+
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:8080"
+# ]
+
+
+# CORS_ORIGIN_ALLOW_ALL = True

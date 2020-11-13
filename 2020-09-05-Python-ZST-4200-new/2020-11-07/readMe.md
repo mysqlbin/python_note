@@ -63,3 +63,68 @@ npm install echarts --registry=https://registry.npm.taobao.org
 
 yarn add axios
 
+修改 vue.config.js 之后，要重启
+
+// 1. 如果有多个axios请求，没有必要为每个请求都写 axios.post(), 因此可以独立出来在 api 目录的文件中 
+	
+	Login.vue
+	
+		before
+			Login.vue
+			import Axios from "axios"	
+			Axios.post('/user/api/django_ldap_login/', this.login).then(resp => {
+		
+		after 
+			auth.js
+				import Axios from "axios"
+
+				export let login = (data) => {
+					return Axios.post("/user/api/django_ldap_login/", data)
+				}
+				
+			Login.vue
+				import {login} from '../api/auth'
+				login(this.login).then(resp => {
+
+		
+		
+		
+// 2. 同一个APP的每个axios请求的URL前缀都是一样，因此URL前缀又可以独立出来在 util 目录的文件中 
+
+	before
+		auth.js
+			import Axios from "axios"
+
+			export let login = (data) => {
+				return Axios.post("/user/api/django_ldap_login/", data)
+			}
+	after 
+		auth.js
+			
+			import request from '../util/requests'
+			
+			export let login = (data) => {
+				return request.post('/auth/login/', data)
+			}
+			
+		request.js 
+		
+			import axios from 'axios'
+
+			const request = axios.create({
+				baseURL: '/api/zst_mysql/v1/',
+				timeout: 10000
+			})
+
+			export default request
+				
+	
+	
+	
+	
+	
+yarn add lodash
+
+	
+	
+	

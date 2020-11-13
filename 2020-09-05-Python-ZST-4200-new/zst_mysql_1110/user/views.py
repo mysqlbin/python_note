@@ -12,14 +12,16 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 
-@api_view(['GET'])
+@api_view(['POST'])
 def django_ldap_login(request):
-    json_data = {
-        'username': 'apple',
-        'password': '123456abc'
-    }
-    serializer = LoginSerializer(data=json_data)
-
+    print(1)
+    # json_data = {
+    #     'username': 'apple',
+    #     'password': '123456abc'
+    # }
+    # serializer = LoginSerializer(data=json_data)
+    print(request.data)
+    serializer = LoginSerializer(data=request.data)
     """
     When a serializer is passed a `data` keyword argument you must call `.is_valid()` before attempting to access the serialized `.data` representation.
 You should either call `.is_valid()` first, or access `.initial_data` instead.
