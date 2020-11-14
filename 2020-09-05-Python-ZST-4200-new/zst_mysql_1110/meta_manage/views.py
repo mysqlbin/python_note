@@ -72,8 +72,7 @@ class HostView(APIView):
 
 # 继承ListAPIView
 """
-class ListAPIView(mixins.ListModelMixin,
-                  GenericAPIView):
+class ListAPIView(mixins.ListModelMixin,GenericAPIView):
 ListAPIView有继承GenericAPIView             
 """
 class HostListView(ListAPIView):
@@ -121,6 +120,7 @@ class HostList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericA
 
 
 
+# ModelViewSet
 class HostModelViewSet(viewsets.ModelViewSet):
     serializer_class = HostSerializer
     queryset = Host.objects.all()
@@ -129,6 +129,7 @@ class HostModelViewSet(viewsets.ModelViewSet):
     class HostModelViewSet 的代码包含了 class HostViewSet 的代码 
 """
 
+# ViewSet
 class HostViewSet(viewsets.ViewSet):
     def list(self, request):
         hosts = Host.objects.all().values()

@@ -3,7 +3,7 @@ from rest_framework.views import exception_handler
 from rest_framework.exceptions import NotAcceptable
 import logging
 
-# 用的是 DRF 的构架,继承于 DRF 中的Response
+# 自定义response, 这里用的是 DRF 的构架,继承于 DRF 中的Response
 class MyJsonResponse(Response):
     def __init__(self, data=None, message="", code=2000, **kwargs):
         super().__init__(**kwargs)

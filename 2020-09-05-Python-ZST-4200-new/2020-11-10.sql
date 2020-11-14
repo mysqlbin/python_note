@@ -93,6 +93,9 @@ http://127.0.0.1:8001/meta_manage/v1/host/?host_id=1
 疑问：
 	model .values() 是什么意思 
 		Host.objects.all().values()
+		返回的queryset是一个字典
+		https://www.cnblogs.com/rgxx/p/10382664.html
+		
 		
 	get_user_model() 得到的值是什么
 		    # print(get_user_model())
@@ -199,9 +202,13 @@ pipenv install django-filter
 
 2. DRF框架-APIView
 	APIView是DRF提供一个视图类，用法和django的View相似，实际上APIView就是继承了Django的View类，在View类的基础上，提供了权限、认证相关的功能	
-		class HostView(APIView)、 class UserDetailView(APIView)
+		class HostView(APIView)
+		class UserDetailView(APIView)
 		
 	GenericAPIView
+	
+		GenericAPIView（当然也不仅仅只有这个类）就是这么一个视图类，可以帮助我们少写很多代码
+
 		GenericAPIView层次
 
 			1. GenericAPIView 基础类
@@ -220,13 +227,21 @@ pipenv install django-filter
 				DestroyAPIView
 
 			-- 参考 class HostListView(ListAPIView)、class HostListAPIView(ListAPIView)
-			
 				
+		from rest_framework.views import APIView
+		from rest_framework.generics import GenericAPIView, CreateAPIView, ListAPIView
+
+						
 3. DRF viewset(视图集合) 
 	
 4. DRF ModelViewSet
 	
+
+
+	
+django-admin startapp check
 	
 	
-	
-	
+看项目的代码，自己要理解、思考
+不理解的地方就看视频
+

@@ -3,7 +3,7 @@ from .models import Host
 
 
 class HostSerializer(serializers.Serializer):
-    # 字段的声明类似于模型的声明
+    # 字段的声明类似于模型的声明，只返回这３个字段的数据
     name = serializers.CharField(max_length=30)
     memory = serializers.CharField(max_length=30)
     cpu = serializers.CharField(max_length=30)

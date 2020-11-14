@@ -22,6 +22,8 @@ def django_ldap_login(request):
     # serializer = LoginSerializer(data=json_data)
     print(request.data)
     serializer = LoginSerializer(data=request.data)
+    # LoginSerializer登录序列化器在这里的作用，做post表单数据的验证，减少代码量
+
     """
     When a serializer is passed a `data` keyword argument you must call `.is_valid()` before attempting to access the serialized `.data` representation.
 You should either call `.is_valid()` first, or access `.initial_data` instead.
@@ -84,6 +86,7 @@ def ldap_login(request):
         if results is not None and len(results) == 1:
             user = results[0]
             user_dn = user[0]
+            # 验证账号和密码
             con.simple_bind_s(user_dn, password)
         else:
             return HttpResponse('user not exists')
@@ -96,8 +99,9 @@ def ldap_login(request):
 
 
 class UserDetailView(APIView):
-    permission_classes = [IsAuthenticated]
+
     # IsAuthenticated：判断有没有登录过
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
         # 获取当前登录的用户，返回用户名
