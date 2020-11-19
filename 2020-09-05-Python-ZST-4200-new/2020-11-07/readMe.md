@@ -126,5 +126,6 @@ yarn add axios
 yarn add lodash
 
 	
+yarn add vuex
 	
 	

@@ -8,6 +8,8 @@ urlpatterns = [
     path('user_detail', UserDetailView.as_view()),
     path('django_is_login', django_is_login),
     path('django_login', django_login),
+    path('api/current_user/', current_user),
+    path('logout_user', logout_user),
 
 
 ]

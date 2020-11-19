@@ -46,7 +46,7 @@ You should either call `.is_valid()` first, or access `.initial_data` instead.
 
     # print(get_user_model())
     # <class 'django.contrib.auth.models.User'>
-    return MyJsonResponse(message="login success")
+    return MyJsonResponse(message="login success", data=data['username'])
 
     '''
     username = 'apple'
@@ -142,3 +142,19 @@ def django_login(request):
         return MyJsonResponse(message='error username or password', code=401)
     login(request, user)
     return MyJsonResponse(message='login success')
+
+@api_view(['GET'])
+def current_user(request):
+
+    if request.user.is_authenticated:
+        return MyJsonResponse(message='login success', data='apple')
+
+    return MyJsonResponse(message='login failed', code=4001)
+
+
+@api_view(['GET'])
+def logout_user(request):
+
+    logout(request)
+
+    return MyJsonResponse(message='退出成功')
