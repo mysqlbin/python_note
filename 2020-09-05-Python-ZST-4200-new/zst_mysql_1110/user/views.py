@@ -15,11 +15,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 @api_view(['POST'])
 def django_ldap_login(request):
     print(1)
-    # json_data = {
-    #     'username': 'apple',
-    #     'password': '123456abc'
-    # }
-    # serializer = LoginSerializer(data=json_data)
+
     print(request.data)
     serializer = LoginSerializer(data=request.data)
     # LoginSerializer登录序列化器在这里的作用，做post表单数据的验证，减少代码量

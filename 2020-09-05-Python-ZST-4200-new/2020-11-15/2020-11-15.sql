@@ -22,6 +22,7 @@ if (to.path !== '/login') {
 	  console.log('to path1: ', to.path)
 	  next('/login')  // 跳转到登录页面
 	}
+	
 // 访问登录页面
 }else{
 	// 已经登录
@@ -61,9 +62,14 @@ next('some_path') 半路拦截，跳转到其他的地方
 -- 如何解决next无限循环
 
 
+第二种方式
+	https://blog.csdn.net/longzhoufeng/article/details/106646698   vue实现登录后跳转到之前的页面
+	https://www.cnblogs.com/goloving/p/9147975.html     
+	https://segmentfault.com/q/1010000009846553    
+	http://www.mamicode.com/info-detail-1871916.html
 
-https://blog.csdn.net/longzhoufeng/article/details/106646698   vue实现登录后跳转到之前的页面
-https://www.cnblogs.com/goloving/p/9147975.html     
+第一种方式
+	https://blog.csdn.net/longzhoufeng/article/details/106646698
 
 
 vue-router.esm.js:2008 Uncaught (in promise) NavigationDuplicated: Avoided redundant navigation to current location: "/login".
@@ -79,3 +85,30 @@ vue-router.esm.js:2008 Uncaught (in promise) NavigationDuplicated: Avoided redun
 	-- NavigationDuplicated：避免冗余导航到当前位置：“ / login”
 
 
+vue-router.esm.js:2008 Uncaught (in promise) Error: Redirected when going from "/login?redirect=%2Fabout" to "/login" via a navigation guard.
+    at createRouterError (vue-router.esm.js:2008)
+    at createNavigationRedirectedError (vue-router.esm.js:1967)
+    at vue-router.esm.js:2314
+    at _callee$ (index.js:117)
+    at tryCatch (runtime.js:63)
+    at Generator.invoke [as _invoke] (runtime.js:293)
+    at Generator.next (runtime.js:118)
+    at asyncGeneratorStep (asyncToGenerator.js:3)
+    at _next (asyncToGenerator.js:25)
+    at asyncToGenerator.js:32
+
+新增问题
+	this.$route  跟 this.$router 的区别 
+	https://www.jb51.net/article/164718.htm
+	
+	this.$router.push(this.$route.query.redirect);
+	
+	this.$router是VueRouter的实例方法，当导航到不同url，可以使用this.$router.push方法，这个方法则会向history里面添加一条记录，当点击浏览器回退按钮或者this.$router.back()就会回退之前的url。
+	
+	const router = new VueRouter({
+	  mode: 'history',
+	  base: process.env.BASE_URL,
+	  routes
+	})
+	
+	this.$route相当于当前激活的路由对象，包含当前url解析得到的数据，可以从对象里获取一些数据，如name,path等。

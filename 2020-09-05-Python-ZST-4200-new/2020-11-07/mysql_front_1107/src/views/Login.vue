@@ -65,15 +65,18 @@
                 alert('登录成功')
                 this.$store.commit('setUser', data.data)
 
-                // const curr = localStorage.getItem('preRoute')
+                // 获取redirect参数, 传入 this.$router.push() 中
+                this.$router.push(this.$route.query.redirect);
 
-                // console.log('preRoute: ', curr)
+                const curr = localStorage.getItem('preRoute')
 
-                // if (curr == null) {
-                //   this.$router.push({ path: "/" });
-                // } else {
-                //   this.$router.push({ path: curr });
-                // }
+                console.log('preRoute: ', curr)
+
+                if (curr == null) {
+                  this.$router.push({ path: "/" });
+                } else {
+                  this.$router.push({ path: curr });
+                }
               
             }else{
                 alert('登录失败')
