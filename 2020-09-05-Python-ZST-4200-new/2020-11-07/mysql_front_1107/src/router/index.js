@@ -49,16 +49,43 @@ const router = new VueRouter({
 })
 
 
+router.beforeEach(async(to, from, next) => {
+	let user = await 
+	// 含有异步操作，数据提交至 actions ，可用于向后台提交数据
+	store.dispatch('getCurrentUser')
+	console.log('current user:', user)
+	let hasLogin = !_.isEmpty(user)
+	if (to.path !== '/login') {
+		if (hasLogin) {
+			next()
+		}else{
+			next({
+        path:"/login",
+        query: {redirect: to.fullPath}  //将目的路由地址存入login的query中; 当登录成功后，获取这个query(this.$route.query.redirect)，跳转到登录前的页面
+      })
+		}
+	}else{
+		if(hasLogin) {
+			next('/')
+		}else{
+			next()
+		} 
+	}
+})
+
+
+/*
 router.beforeEach(async(to, from , next) => {
   console.log('to   ：', to)
   console.log('from ：', from)
   console.log('next ：', next)
-  // 获取登录的用户
+  // 获取登录的用户并判断是否为空
   let hasLogin = !_.isEmpty(store.state.user)
   console.log("hasLogin: ", hasLogin)
+  // 当user为空的时候，尝试从服务端获取一遍
   if (!hasLogin) {
     console.log("01")
-	  // 当user为空的时候，尝试从服务端获取一遍
+	  // 
 	  // 让异步函数变成像同步函数那样使用
 	  //   await的含义为等待。意思就是代码需要等待await后面的函数运行完并且有了返回结果之后，才继续执行下面的代码。
 	  // https://www.cnblogs.com/robinunix/articles/10900474.html
@@ -82,6 +109,7 @@ router.beforeEach(async(to, from , next) => {
   if (to.path !== '/login') {
     // 访问除登录界面以外的界面，但是已经登录
     if (hasLogin) {
+      // 做这个打印，是为了看代码执行到哪一步
       console.log(11)
       next()
     // 访问除登录界面以外的界面, 跳转到登录页面
@@ -89,13 +117,13 @@ router.beforeEach(async(to, from , next) => {
       console.log(21)
       console.log('to path1: ', to.path)
       // vue实现登录后跳转到之前的页面
-      localStorage.setItem("preRoute", to.path)
-      next('/login')  
+      // localStorage.setItem("preRoute", to.path)
+      // next('/login')  
 
-      // next({
-      //   path:"/login",
-      //   query: {redirect: to.fullPath}  //将目的路由地址存入login的query中
-      // })
+      next({
+        path:"/login",
+        query: {redirect: to.fullPath}  //将目的路由地址存入login的query中; 当登录成功后，获取这个query(this.$route.query.redirect)，跳转到登录前的页面
+      })
     }
 
   // 访问登录界面
@@ -130,57 +158,8 @@ router.beforeEach(async(to, from , next) => {
   }
   
 })
-
-
-/*
-router.beforeEach(async(to, from , next) => {
-  console.log('to', to)
-  console.log('from', from)
-  console.log('next', next)
-  // 获取登录的用户
-  let hasLogin = !_.isEmpty(store.state.user)
-  if (!hasLogin) {
-	  // 当user为空的时候，尝试从服务端获取一遍
-	  // 让异步函数变成像同步函数那样使用
-	  //   await的含义为等待。意思就是代码需要等待await后面的函数运行完并且有了返回结果之后，才继续执行下面的代码。
-	  // https://www.cnblogs.com/robinunix/articles/10900474.html
-    let resp = await getCurrentUser()
-    console.log(resp)
-    let data = resp.data
- 
-    if (data.code === 2000) {
-      console.log(11)
-	  // 键值对：键为 setUser，值为 store.state.user
-      store.commit('setUser', data.data)
-    }
-  }
-  
-  if (to.path !== '/login') {
-    if (hasLogin) {
-      console.log(11)
-      next()
-    }else{
-      console.log(21)
-      console.log('router.currentRoute.fullPath: ', router.currentRoute.fullPath)
-      console.log('to path1: ', to.path)
-      localStorage.setItem("preRoute", to.path)
-      next('/login')
-    }
-  }else{
-    if(hasLogin) {
-      console.log(31)
-      console.log('to path2: ', to.path)
-      next('/')
-    }else{
-      console.log(41)
-      console.log('to path2: ', to.path)
-      // localStorage.setItem("preRoute", router.currentRoute.fullPath)
-      next()
-    } 
-  }
-  
-})
 */
+
 
 /*
 router.beforeEach(async(to, from , next) => {

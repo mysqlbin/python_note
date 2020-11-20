@@ -273,9 +273,9 @@ delete: 删除了数组后，数组的长度不会变化。 用法：delete arr[
 // },1000)
 
 
-// https://www.cnblogs.com/wenxuehai/p/10455664.html  JavaScript中的回调地狱及解决方法
+// https://www.cnblogs.com/wenxuehai/p/10455664.html              JavaScript中的回调地狱及解决方法
 // https://www.runoob.com/w3cnote/javascript-promise-object.html  JavaScript Promise 对象
-
+// https://blog.csdn.net/hyupeng1006/article/details/80351174     ES6---new Promise()讲解
 
 // 创建 promise 的步骤：
 
