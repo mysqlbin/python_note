@@ -10,7 +10,11 @@
     "axios": "^0.21.0",
     "core-js": "^3.6.5",
     "echarts": "^4.9.0",
+    "element": "^0.1.4",
+    "element-ui": "^2.14.1",
     "lodash": "^4.17.20",
+    "sass": "^1.29.0",
+    "sass-loader": "^10.1.0",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vuex": "^3.5.1"
