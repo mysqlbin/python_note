@@ -6,6 +6,7 @@ from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register(r'host_view', HostViewSet, basename='host')
+router.register(r'mysql_schema', SchemaViewSet, basename='mysql_schema')
 
 """
 router.register(r'host_view', HostViewSet, basename='host')
@@ -23,7 +24,7 @@ urlpatterns = [
     path('v1/host_list/', HostListView.as_view()),
     path('v1/host_list_api/', HostListAPIView.as_view()),
     path('v1/host_list_mixin/', HostList.as_view()),
+    # path('v1/schema_list/', SchemaViewSet.as_view()),
     *router.urls
-
 
 ]

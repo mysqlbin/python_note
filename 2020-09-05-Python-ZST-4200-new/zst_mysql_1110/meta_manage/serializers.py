@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Host
+from .models import Host,MySQLSchema
 
 
 class HostSerializer(serializers.Serializer):
@@ -19,3 +19,9 @@ class HostSerializer(serializers.Serializer):
             setattr(instance, attr, value)
         instance.save()
         return instance
+
+
+class MySQLSchemaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MySQLSchema
+        fields = '__all__'

@@ -4,7 +4,7 @@ from django.shortcuts import render
 
 from zst_mysql_1110.response import MyJsonResponse
 from rest_framework.views import APIView
-from .models import Host
+from .models import Host, MySQLSchema
 from .serializers import HostSerializer
 from rest_framework.generics import GenericAPIView, CreateAPIView, ListAPIView
 from django_filters.rest_framework import DjangoFilterBackend
@@ -13,6 +13,33 @@ from rest_framework import mixins, generics
 
 from rest_framework import viewsets
 from django.urls import reverse
+from rest_framework.pagination import PageNumberPagination
+from meta_manage.serializers import MySQLSchemaSerializer
+
+from rest_framework.decorators import action
+
+
+class CustomPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'
+    page_query_param = 'page_num'
+    max_page_size = 500
+
+
+class SchemaViewSet(viewsets.ModelViewSet):
+    queryset = MySQLSchema.objects.all()
+    serializer_class = MySQLSchemaSerializer
+    pagination_class = CustomPagination
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['status', 'schema', 'host_ip', 'port']
+
+    @action(detail=False, methods=['get'])
+    def get_distinct_schema_names(self, request, *args, **kwargs):
+        queryset = self.get_queryset().values('schema').distinct()
+        # 我们这里没有使用序列化器，而是将query set变成了一个列表返回
+        name_list = [d["schema"] for d in list(queryset)]
+        return Response(name_list)
+
 
 
 # 基于APIView来写 get、put、post请示（继承APIView）

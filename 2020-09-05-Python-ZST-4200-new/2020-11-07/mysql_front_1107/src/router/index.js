@@ -7,7 +7,7 @@ import store from '../store'
 import {getCurrentUser} from '../api/user'
 
 Vue.use(VueRouter)
-
+/*
 const routes = [
   {
     path: '/',
@@ -23,7 +23,7 @@ const routes = [
       {
         path: '/about',
         name: 'About',
-        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+        component: About
       },
 
     ]
@@ -36,13 +36,62 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    // component: Zst
-    // component: function(){
-    //   return import('../views/Zst.vue')
-    // }
     component: () => import('../views/Login.vue')
   },
 ]
+*/
+
+export const menuRouts = [
+  {
+    path: '/',
+    name: 'Home',
+    component: () => import('@/layout/index'),
+    redirect: '/home',
+    meta: { title: 'Dashboard' },
+    children: [
+      {
+        path: '/Home',
+        name: 'Home',
+        meta: { title: 'Home' },
+        component: Home
+      },
+      {
+        path: '/about',
+        name: 'About',
+        meta: { title: 'About' },
+        component: () => import('../views/About.vue')
+      },
+
+    ]
+  },
+  {
+    path: '/schema_manage',
+    meta: {title: '数据库管理'},
+    component: () => import('@/layout/index'),
+    children: [
+        {
+            path: '/mysql',
+            name: 'MySQLManage',
+            meta: { title: 'mysql实例' },
+            component: () => import('../views/schema_manage/mysql.vue')
+        }
+    ]
+  }
+]
+
+
+const mainRouter = [
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('../views/Login')
+  }
+]
+
+const routes = [].concat(
+    menuRouts,
+    mainRouter
+)
 
 const router = new VueRouter({
   mode: 'history',

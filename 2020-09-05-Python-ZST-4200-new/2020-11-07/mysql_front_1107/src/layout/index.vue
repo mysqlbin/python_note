@@ -1,9 +1,52 @@
 <template>
     <div>
+        {{routePath}}
         <el-container style="height: 500px; border: 1px solid #eee">
         <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-            <el-menu :default-openeds="['1', '3']">
-            <el-submenu index="1">
+            <el-menu :default-active="routePath" :default-openeds="['1', '3']">
+                 <div v-for="(submenu, key) in menuRouts" :key="key">
+
+                    <template v-if="!submenu.children || submenu.children.length == 0">
+                        <el-menu-item :index="resolvePath('/', submenu.path)">
+                            {{routeName(submenu)}}
+                        </el-menu-item>
+                    </template>
+
+                    <template v-else>
+
+                        <el-submenu :index="resolvePath('/', submenu.path)">
+                            <template slot="title">
+                                <i class="el-icon-location"></i>
+                                <span>{{routeName(submenu)}}</span>
+                            </template>
+
+                            <el-menu-item-group>
+                                <el-menu-item v-for="(child, cKey) in submenu.children" :key="cKey" :index="resolvePath(submenu.path, child.path)">
+                                    <!-- {{routeName(child)}} -->
+                                    <router-link :to="child.path">{{routeName(child)}}</router-link>
+                                </el-menu-item>
+                            </el-menu-item-group>
+
+                        </el-submenu>
+                    </template>
+
+                </div>
+                <!-- <el-submenu v-for="(submenu, key) in menuRouts" :key="key">
+                    <template slot="title">
+                        <i class="el-icon-location"></i>
+                        <span>{{ submenu.meta ? submenu.meta.title : 'no title' }}</span>
+                    </template>
+
+                    <el-menu-item-group>
+                        <el-menu-item v-for="(child, cKey) in submenu.children" :key="cKey">
+                            <router-link :to="child.path">{{ child.meta ? child.meta.title : 'no title' }}</router-link>
+                        </el-menu-item>
+                    </el-menu-item-group>
+                </el-submenu> -->
+                
+
+
+            <!-- <el-submenu index="1">
                 <template slot="title"><i class="el-icon-message"></i>导航一</template>
                 <el-menu-item-group>
                 <template slot="title">分组一</template>
@@ -33,21 +76,9 @@
                 <el-menu-item index="2-4-1">选项4-1</el-menu-item>
                 </el-submenu>
             </el-submenu>
-            <el-submenu index="3">
-                <template slot="title"><i class="el-icon-setting"></i>导航三</template>
-                <el-menu-item-group>
-                <template slot="title">分组一</template>
-                <el-menu-item index="3-1">选项1</el-menu-item>
-                <el-menu-item index="3-2">选项2</el-menu-item>
-                </el-menu-item-group>
-                <el-menu-item-group title="分组2">
-                <el-menu-item index="3-3">选项3</el-menu-item>
-                </el-menu-item-group>
-                <el-submenu index="3-4">
-                <template slot="title">选项4</template>
-                <el-menu-item index="3-4-1">选项4-1</el-menu-item>
-                </el-submenu>
-            </el-submenu>
+         -->
+
+
             </el-menu>
         </el-aside>
         
@@ -81,10 +112,34 @@
 </template>
 
 <script>
+
+    import { menuRouts } from '../router/index'
+    import path from 'path'
+
     export default {
-     data() {
-      
-     }       
+        name: "index",
+        computed: { // 计算属性
+            routePath() {
+                return this.$route.path
+            }  
+        },
+        data() {
+            return {
+                menuRouts: menuRouts
+            }
+        },
+        created() {
+            console.log("routePath: ", this.routePath);
+            console.log("menuRouts: ", this.menuRouts)
+        },
+        methods: {
+            resolvePath(base, p) {
+                return path.resolve(base, p)
+            },
+            routeName(route) {
+                return route.meta ? route.meta.title : route.name
+            }
+        }   
     }
 </script>
 
