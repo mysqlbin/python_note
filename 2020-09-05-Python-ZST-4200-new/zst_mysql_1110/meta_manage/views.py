@@ -17,7 +17,9 @@ from rest_framework.pagination import PageNumberPagination
 from meta_manage.serializers import MySQLSchemaSerializer
 
 from rest_framework.decorators import action
+from rest_framework.response import Response
 
+import MySQLdb
 
 class CustomPagination(PageNumberPagination):
     page_size = 10
@@ -38,9 +40,37 @@ class SchemaViewSet(viewsets.ModelViewSet):
         queryset = self.get_queryset().values('schema').distinct()
         # 我们这里没有使用序列化器，而是将query set变成了一个列表返回
         name_list = [d["schema"] for d in list(queryset)]
+        print(name_list)
         return Response(name_list)
 
 
+    @action(detail=True, methods=['get'])
+    def get_schema_processlist(self, request, pk=None, *args, **kwargs):
+        if pk is None:
+            print(1111)
+            raise Http404
+        instance = self.get_queryset().get(pk=pk)
+        db = self.get_connection(pk)
+        c = db.cursor()
+        c.execute("show processlist;")
+        results = c.fetchall() # 获取所有数据
+        columns = ["id", "user", "host", "db", "command", "time", "state", "info"]
+
+        process_lists = []
+        for row in results:
+            d = {}
+            for idx, col_name in enumerate(columns):
+                d[col_name] = row[idx]
+            process_lists.append(d)
+        c.close()
+        db.close()
+        return Response(process_lists)
+
+    def get_connection(self, schema_id):
+        instance = self.get_queryset().get(pk=schema_id)
+        db = MySQLdb.connect(host=instance.host_ip, port=instance.port, user="root",
+                passwd="123456abc", db=instance.schema, connect_timeout=2)
+        return db
 
 # 基于APIView来写 get、put、post请示（继承APIView）
 class HostView(APIView):

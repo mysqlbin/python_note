@@ -27,7 +27,7 @@ yarn add sass-loader
 
 
 https://blog.csdn.net/qq_37746973/article/details/78402812  在elementUI中使用 el-autocomplete 实现远程搜索的下拉框
-
+https://element.eleme.cn/#/zh-CN
 https://element.eleme.io/#/zh-CN/component/input    
 	autocomplete 是一个可带输入建议的输入框组件，fetch-suggestions 是一个返回输入建议的方法属性，如 querySearch(queryString, cb)，在
 	该方法中你可以在你的输入建议数据准备好时通过 cb(data) 返回到 autocomplete 组件中。
@@ -35,4 +35,25 @@ https://element.eleme.io/#/zh-CN/component/input
 http://127.0.0.1:8001/api/meta_manage/mysql_schema/
 
 
+
+
+
+我的问题
+	
+    @action(detail=True, methods=['get'])
+    def get_schema_processlist(self, request, pk=None, *args, **kwargs):
+	http://127.0.0.1:8001/api/meta_manage/mysql_schema/1/get_schema_processlist/
+	-- detail=True 对应 /1/get_schema_processlist/
+	
+	
+	@action(detail=False, methods=['get'])
+	-- 获取所有的
+	
+	
+export function getProcessList(schemaId) {
+    return request({
+        url: `/v1/schema_info/mysql_schema/${schemaId}/get_process_list/`,
+        method: 'get'
+    })
+}
 

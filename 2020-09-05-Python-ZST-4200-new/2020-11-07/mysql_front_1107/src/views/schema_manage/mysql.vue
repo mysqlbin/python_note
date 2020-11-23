@@ -22,46 +22,58 @@
             </el-form-item> -->
 
             <el-form-item>
-                <el-button type="primary" >查询</el-button>
+                <el-button type="primary" @click="doSearch">查询</el-button>
             </el-form-item>
 
         </el-form>
         
-        <el-table
-        :data="tableData"
-        style="width: 100%">
-        <el-table-column
-            prop="date"
-            label="日期1"
-            width="180">
-        </el-table-column>
-        <el-table-column
-            prop="name"
-            label="姓名"
-            width="180">
-        </el-table-column>
-        <el-table-column
-            prop="address"
-            label="地址">
-        </el-table-column>
+        <el-table :data="tableData" style="width: 100%">
+            <el-table-column
+                    prop="schema"
+                    label="库名"
+                    width="180">
+            </el-table-column>
+
+            <el-table-column
+                    prop="host_ip"
+                    label="ip"
+                    width="180">
+            </el-table-column>
+			
+            <el-table-column
+                    prop="port"
+                    label="端口"
+                    width="180">
+            </el-table-column>
+
+             <el-table-column
+                label="操作"
+                width="100">
+                <template slot-scope="scope">
+                    <el-button @click="showProcessList(scope.row)" type="text" size="small">查看process</el-button>
+                </template>
+
+            </el-table-column>
         </el-table>
+         <ProcessListDialog ref="process_list_dialog"></ProcessListDialog>
         </div>
 </template>
 
 <script>
 
-    import {getSchemaNameList, getSchemas} from '../..//api/schema_info'
-
+    import {getSchemaNameList, getSchemaList} from '../../api/schema_info'
+    import ProcessListDialog from './process_list'
     export default {
         name: "index",
-        
+        components: {ProcessListDialog},
         data() {
             return {
                 searchBar: {
                     schema: "",
-                    tableData: []
                 },
-                schemaList: []
+                tableData: [],
+                schemaList: [],
+                tableLoading: false,
             }
         },
         created() {
@@ -69,20 +81,53 @@
                 
                 // if(resp.code === 2000) {
                 this.schemaList = resp.data
-                console.log(this.schemaList)
-                console.log(1111111)   
+                console.log("schemaList:", this.schemaList)
                 // }
             })
         },
         methods: {
             querySearch(queryString, cb) {
-                let results = this.schemaList.filter(s => {
+                let schemaList = this.schemaList
+                let results = schemaList.filter(s => {
                     return queryString ? s.toLocaleLowerCase().indexOf(queryString.toLowerCase()) > -1 : true
                 }).map(s => {
                     return {value: s}
                 })
+                console.log(results)
                 cb(results)
             },
+            doSearch(){
+                console.log('do search')
+                getSchemaList(this.searchBar).then(resp => {
+                    this.total = resp.data.count
+                    this.tableData = resp.data.results
+                }).finally(_ => {
+                    this.tableLoading = false
+                })
+            },
+            showProcessList(row){
+                const loading = this.$loading({
+                    lock: true,
+                    text: 'Loading',
+                    spinner: 'el-icon-loading',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
+                this.$refs.process_list_dialog.showProcessList(row).then(_ => {
+                    loading.close();
+                })
+            }
+
+            // querySearch(queryString, cb) {
+            //     var schemaList = this.schemaList;
+            //     var results = queryString ? schemaList.filter(this.createFilter(queryString)) : schemaList;
+            //     // 调用 callback 返回建议列表的数据
+            //     cb(results);
+            // },
+            // createFilter(queryString) {
+            //     return (schemaList) => {
+            //     return (schemaList.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+            // };
+
         },
     //     data() {
     //         return {
