@@ -55,7 +55,15 @@
 
             </el-table-column>
         </el-table>
-
+        <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="searchBar.page_num"
+            :page-sizes="[5, 20, 100, 200, 500]"
+            :page-size="searchBar.page_size"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="total">
+        </el-pagination>
          <ProcessListDialog ref="process_list_dialog"></ProcessListDialog>
          
         </div>
@@ -72,6 +80,8 @@
             return {
                 searchBar: {
                     schema: "",
+                    page_size: 100,
+                    page_num: 1,
                 },
                 tableData: [],
                 schemaNameList: [],
@@ -106,6 +116,7 @@
                 console.log('do search')
                 console.log('searchBar: ', this.searchBar )
                 getSchemaList(this.searchBar).then(resp => {
+                    // 总共有多少行记录
                     this.total = resp.data.count
                     this.tableData = resp.data.results
                 }).finally(_ => {

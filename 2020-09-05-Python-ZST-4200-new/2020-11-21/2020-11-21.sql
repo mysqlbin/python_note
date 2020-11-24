@@ -197,4 +197,13 @@ path.resolve
 		resolvePath(submenu.path, child.path) 对应 resolvePath('/dashboard', '/home')
 	
 
+分页：
 
+	SELECT `mysql_schema`.`gmt_update`, `mysql_schema`.`gmt_create`, `mysql_schema`.`id`, `mysql_schema`.`host_ip`, `mysql_schema`.`port`, `mysql_schema`.`schema`, `mysql_schema`.`role`, `mysql_schema`.`status`, `mysql_schema`.`phy_host_id` 
+	FROM `mysql_schema` LIMIT 2 OFFSET 2
+	
+	OFFSET 2：第3条记录开始
+	LIMIT 2: 取2条
+	
+	
+	

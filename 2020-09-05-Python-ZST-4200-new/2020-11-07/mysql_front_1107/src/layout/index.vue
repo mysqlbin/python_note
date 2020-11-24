@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-container style="border: 1px solid #eee">
-        <el-aside width="200px" style=" position: fixed;  height: 100%; overflow: scroll; background-color: rgb(238, 241, 246)">
+        <el-aside width="200px" style="height: 100%; overflow: scroll; background-color: rgb(238, 241, 246)">
             <el-menu :default-active="routePath" :default-openeds="['1', '3']">
                  <div v-for="(submenu, key) in menuRouts" :key="key">
                         <!-- {{submenu.path}} -->

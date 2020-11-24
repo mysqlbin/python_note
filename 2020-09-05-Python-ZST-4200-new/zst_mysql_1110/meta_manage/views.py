@@ -22,8 +22,12 @@ from rest_framework.response import Response
 import MySQLdb
 
 class CustomPagination(PageNumberPagination):
-    page_size = 10
+    # 这几个的含义
+    # 每页5行记录
+    page_size = 2
     page_size_query_param = 'page_size'
+
+    # 第几页
     page_query_param = 'page_num'
     max_page_size = 500
 
