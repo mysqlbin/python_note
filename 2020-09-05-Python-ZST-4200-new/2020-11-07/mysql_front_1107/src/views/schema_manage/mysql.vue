@@ -55,7 +55,9 @@
 
             </el-table-column>
         </el-table>
+
          <ProcessListDialog ref="process_list_dialog"></ProcessListDialog>
+         
         </div>
 </template>
 
@@ -72,23 +74,26 @@
                     schema: "",
                 },
                 tableData: [],
-                schemaList: [],
+                schemaNameList: [],
                 tableLoading: false,
             }
         },
         created() {
             getSchemaNameList().then(resp => {
-                
                 // if(resp.code === 2000) {
-                this.schemaList = resp.data
-                console.log("schemaList:", this.schemaList)
+                this.schemaNameList = resp.data
+                console.log("schemaNameList:", this.schemaNameList)
                 // }
             })
+
+            this.doSearch()
+
         },
         methods: {
+            // 库名的搜索功能
             querySearch(queryString, cb) {
-                let schemaList = this.schemaList
-                let results = schemaList.filter(s => {
+                let schemaNameList = this.schemaNameList
+                let results = schemaNameList.filter(s => {
                     return queryString ? s.toLocaleLowerCase().indexOf(queryString.toLowerCase()) > -1 : true
                 }).map(s => {
                     return {value: s}
@@ -96,8 +101,10 @@
                 console.log(results)
                 cb(results)
             },
+            // 获取实例列表
             doSearch(){
                 console.log('do search')
+                console.log('searchBar: ', this.searchBar )
                 getSchemaList(this.searchBar).then(resp => {
                     this.total = resp.data.count
                     this.tableData = resp.data.results
@@ -105,6 +112,7 @@
                     this.tableLoading = false
                 })
             },
+            // dialog弹窗
             showProcessList(row){
                 const loading = this.$loading({
                     lock: true,

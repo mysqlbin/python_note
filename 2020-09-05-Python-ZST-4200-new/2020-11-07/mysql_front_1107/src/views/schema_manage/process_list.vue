@@ -57,7 +57,7 @@
                     <el-table-column
                             label="操作">
                         <template slot-scope="scope">
-                            <el-button type="text" size="small" :loading="scope.row.loading" >kill</el-button>
+                            <el-button type="text" size="small" @click="killProcess(scope.row)" >kill</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -68,7 +68,7 @@
 </template>
 
 <script>
-    import {getSchemaPorcesslist} from '../../api/schema_info'
+    import {getSchemaPorcesslist, killProcessById}  from '../../api/schema_info'
 
     export default {
         name: "process_list",
@@ -85,16 +85,16 @@
             }
         },
         methods: {
-            
+            // 获取 show processlist 列表
             showProcessList(schema){
                 this.schema = schema
                 console.log("schema_id: ", schema.id)
                 return new Promise((resolve) => {
                     getSchemaPorcesslist(schema.id).then(resp => {
                         this.processList = resp.data
-                        _.forEach(this.processList, (v, k) => {
-                            this.$set(this.processList[k], 'loading', false)
-                        })
+                        // _.forEach(this.processList, (v, k) => {
+                        //     this.$set(this.processList[k], 'loading', false)
+                        // })
                         this.dialogVisible = true
                     }).catch(err => {
                         if (err) {
@@ -104,7 +104,49 @@
                         resolve()
                     })
                 })
-            }
+            },
+
+            killProcess(row) {
+                // row.loading = true
+                // console.log("row: ", row)
+                // console.log("schema_id: ", this.schema.id)
+                // killProcessById(this.schema.id, row.id).then(_ => {
+                //     this.$message.info('操作成功')
+                // }).finally(_ => {
+                //     row.loading = false
+                //     // 重新加载 show processlist 的数据
+                //     this.showProcessList(this.schema)
+                // })
+                
+                row.loading = true
+                console.log("row: ", row)
+                console.log("schema_id: ", this.schema.id)
+
+                this.$confirm('确定要kill该线程吗?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+
+                    killProcessById(this.schema.id, row.id).then(_ => {
+                        this.$message.info('操作成功')
+                    }).finally(_ => {
+                        row.loading = false
+                        // 重新加载 show processlist 的数据
+                        this.showProcessList(this.schema)
+                    })
+
+                }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消'
+                });          
+                });
+            
+
+            },
+
+
         }
     }
 </script>

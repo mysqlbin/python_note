@@ -14,7 +14,7 @@ from rest_framework import mixins, generics
 from rest_framework import viewsets
 from django.urls import reverse
 from rest_framework.pagination import PageNumberPagination
-from meta_manage.serializers import MySQLSchemaSerializer
+from meta_manage.serializers import MySQLSchemaSerializer, KillMySQLProcessSerializer
 
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -29,6 +29,7 @@ class CustomPagination(PageNumberPagination):
 
 
 class SchemaViewSet(viewsets.ModelViewSet):
+
     queryset = MySQLSchema.objects.all()
     serializer_class = MySQLSchemaSerializer
     pagination_class = CustomPagination
@@ -65,6 +66,27 @@ class SchemaViewSet(viewsets.ModelViewSet):
         c.close()
         db.close()
         return Response(process_lists)
+
+    @action(detail=True, methods=['delete'])
+    def kill_processlist_by_id(self, request, pk=None, *args, **kwargs):
+        """
+        http://127.0.0.1:8080/api/meta_manage/mysql_schema/1/get_schema_processlist/
+        pk=1
+
+        """
+        if pk is None is None:
+            raise Http404
+        serializer = KillMySQLProcessSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        # 获取process_id参数
+        process_id = serializer.validated_data.get('process_id')
+        print("process_id: {}".format(process_id))
+        db = self.get_connection(pk)
+        c = db.cursor()
+        c.execute("kill %d" % process_id)
+        c.close()
+        db.close()
+        return Response("success")
 
     def get_connection(self, schema_id):
         instance = self.get_queryset().get(pk=schema_id)

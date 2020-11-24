@@ -1,11 +1,10 @@
 <template>
     <div>
-        {{routePath}}
-        <el-container style="height: 500px; border: 1px solid #eee">
-        <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
+        <el-container style="border: 1px solid #eee">
+        <el-aside width="200px" style=" position: fixed;  height: 100%; overflow: scroll; background-color: rgb(238, 241, 246)">
             <el-menu :default-active="routePath" :default-openeds="['1', '3']">
                  <div v-for="(submenu, key) in menuRouts" :key="key">
-
+                        <!-- {{submenu.path}} -->
                     <template v-if="!submenu.children || submenu.children.length == 0">
                         <el-menu-item :index="resolvePath('/', submenu.path)">
                             {{routeName(submenu)}}
@@ -21,8 +20,9 @@
                             </template>
 
                             <el-menu-item-group>
-                                <el-menu-item v-for="(child, cKey) in submenu.children" :key="cKey" :index="resolvePath(submenu.path, child.path)">
-                                    <!-- {{routeName(child)}} -->
+                                <el-menu-item v-for="(child, cKey) in submenu.children" :key="cKey">
+                                    {{resolvePath2(submenu.path, '/', child.path)}}
+                                    <!-- {{child.path}} -->
                                     <router-link :to="child.path">{{routeName(child)}}</router-link>
                                 </el-menu-item>
                             </el-menu-item-group>
@@ -120,6 +120,7 @@
         name: "index",
         computed: { // 计算属性
             routePath() {
+                // 获取当前页面的 path
                 return this.$route.path
             }  
         },
@@ -129,12 +130,18 @@
             }
         },
         created() {
+
+            console.log("route_path: ", this.$route.path)
             console.log("routePath: ", this.routePath);
             console.log("menuRouts: ", this.menuRouts)
+            console.log("path: ", path)
         },
         methods: {
             resolvePath(base, p) {
                 return path.resolve(base, p)
+            },
+            resolvePath2(base, middle, p) {
+                return path.resolve(base, middle, p)
             },
             routeName(route) {
                 return route.meta ? route.meta.title : route.name

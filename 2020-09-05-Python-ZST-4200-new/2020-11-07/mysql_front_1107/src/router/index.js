@@ -50,7 +50,7 @@ export const menuRouts = [
     meta: { title: 'Dashboard' },
     children: [
       {
-        path: '/Home',
+        path: 'Home',
         name: 'Home',
         meta: { title: 'Home' },
         component: Home
