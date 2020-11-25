@@ -24,7 +24,7 @@ export default new Vuex.Store({
             if (respData.code === 2000) {
               // console.log("login user1: ", respData.data)
               commit('setUser', respData.data)
-              resolve("login user2:", respData.data)
+              resolve(respData.data)
             }else{
               resolve({})
             }

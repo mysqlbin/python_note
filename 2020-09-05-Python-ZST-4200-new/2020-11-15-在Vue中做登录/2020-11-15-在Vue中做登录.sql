@@ -106,8 +106,27 @@
 		  routes
 		})
 		
-		this.$route相当于当前激活的路由对象，包含当前url解析得到的数据，可以从对象里获取一些数据，如name,path等。
-		
+		this.$route相当于当前激活的路由对象，包含当前url解析得到的数据，可以从对象里获取一些数据，如 name,path 等。
+
+			{
+				path: 'Home',
+				name: 'Home',
+				meta: { title: 'Home' },
+				component: Home
+			},
+
+			this_route:  
+				{name: "MySQLManage", meta: {…}, path: "/mysql", hash: "", query: {…}, …}
+				fullPath: "/mysql?page_num=1&page_size=5"
+				hash: ""
+				matched: (2) [{…}, {…}]
+				meta: {__ob__: Observer}
+				name: "MySQLManage"
+				params: {}
+				path: "/mysql"
+				query: {page_num: "1", page_size: "5"}
+				__proto__: Object
+						  
 	2.  new Promise((resolve, reject)
 	
 		https://blog.csdn.net/hyupeng1006/article/details/80351174  new Promise()讲解

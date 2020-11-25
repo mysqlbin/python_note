@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-dialog
-                title="提示"
+                title="show processlist"
                 :visible.sync="dialogVisible"
                 width="70%">
             <div>
@@ -74,7 +74,7 @@
         name: "process_list",
         data() {
             return {
-                dialogVisible: false,
+                dialogVisible: false,  // 默认关闭弹窗dialog
                 processList: [],
                 schema: {}
             };
@@ -86,11 +86,12 @@
         },
         methods: {
             // 获取 show processlist 列表
-            showProcessList(schema){
-                this.schema = schema
-                console.log("schema_id: ", schema.id)
+            showProcessList(row){
+                this.row = row
+                console.log("schema_id: ", row.id)
+                console.log("row: ", row)
                 return new Promise((resolve) => {
-                    getSchemaPorcesslist(schema.id).then(resp => {
+                    getSchemaPorcesslist(row.id).then(resp => {
                         this.processList = resp.data
                         // _.forEach(this.processList, (v, k) => {
                         //     this.$set(this.processList[k], 'loading', false)

@@ -1,4 +1,8 @@
 
+https://element.eleme.cn/#/zh-CN
+
+
+
 yarn add element-ui
 
 yarn add sass-loader  
@@ -60,34 +64,40 @@ http://127.0.0.1:8001/api/meta_manage/mysql_schema/
 	2. dialog组件的使用
 		用于弹窗
 		需要设置visible属性，它接收Boolean，当为true时显示 Dialog。
-	
+			:visible.sync="dialogVisible"
+			https://element.eleme.cn/#/zh-CN/component/dialog
+		
+		
 	3. 在父组件中，调用子组件的方法
 	
 	4. loading
 		https://element.eleme.io/#/zh-CN/component/loading
 		
 	5. 打开http://127.0.0.1:8080/mysql链接，表格就加载数据
-	
-	6. 计算属性
+		created() {
+			this.doSearch()   // 调用加载数据的方法
+		}
+		
+	6. 计算属性 computed
 		把函数当成一个变量来使用，方便传值
 		计算属性就是当其依赖属性的值发生变化时，这个属性的值会自动更新，与之相关的DOM部分也会同步自动更新。
 	
 	7. 访问路由不生效
-	http://127.0.0.1:8080/mysql
-	
-	 {
-		path: '/schema_manage',
-		meta: {title: '数据库管理'},
-		component: () => import('@/layout/index'),
-		children: [
-			{
-				path: 'mysql',
-				name: 'MySQLManage',
-				meta: { title: 'mysql实例' },
-				component: () => import('../views/schema_manage/mysql.vue')
-			}
-		]
-	  }
+		http://127.0.0.1:8080/mysql
+		
+		 {
+			path: '/schema_manage',
+			meta: {title: '数据库管理'},
+			component: () => import('@/layout/index'),
+			children: [
+				{
+					path: 'mysql',
+					name: 'MySQLManage',
+					meta: { title: 'mysql实例' },
+					component: () => import('../views/schema_manage/mysql.vue')
+				}
+			]
+		  }
   
 	
 	8. :index 和 :to 的含义
@@ -145,18 +155,88 @@ http://127.0.0.1:8001/api/meta_manage/mysql_schema/
 
 
 	-- Vue 基础知识需要提升，目前是在项目中学习
+	
+	
+	10. loading 
+		
+		https://element.eleme.io/#/zh-CN/component/loading
+		
+		正在访问：loading = true 表示正在加载中...
+		加载完成: loadin = false 表示关闭加载
+		-- 网络请求慢，或者数据请求慢，页面提示"loading"，这时就起到作用了。
+		
+		:loading="scope.row.loading"	
+				
+	11. @click.native
+	
+		<el-dropdown-item @click.native="logout">退出</el-dropdown-item>
+		el-dropdown-item 并不是 vue原生的元素，所以要加  .native 属性
+		
+		-----------------------
+		
+		<el-button :loading="loading" type="primary" @click.native.prevent="handleLogin">登录</el-button>
+		-- prevent：阻止
+		-- @click.native.prevent="handleLogin" 在form表单中，点击一个button按钮，触发 handleLogin函数，而不是使用form表单直接提交。
+	
+	
+	12. to.path 和 to.fullPath
+		
+		http://127.0.0.1:8080/mysql?page_num=1&page_size=5
+		
+		console.log("path: ", to.path)
+			path: /mysql
+		
+		console.log("fullPath: ", to.fullPath)
+			fullPath: /mysql?page_num=1&page_size=5
+		
+		
+	13.
+
+		let redirect = this.$route.query.redirect;
+		redirect = _.isString(redirect) ? redirect : undefined;
+		redirect = redirect ? decodeURI(redirect) : "/";   -- 如果 redirect 为 undefined，就取 "/" ？
+		this.$router.push({
+		  path: redirect,
+		});
+
+		 
+	-- 代码出问题了，一步步断点调试
+
 
 	
-未完成：
-	分页相关
-	二次确认
-	
+	14. watch
+		侦听事件
+		https://cn.vuejs.org/v2/guide/computed.html#%E4%BE%A6%E5%90%AC%E5%99%A8  
+		
+		
+		 // 不加这个，点击上一页、下一页不生效
+		watch: {
+			$route(to, from) {
+				this.updateByQuery(to)
+			}
+		},
+		
+		侦听路由的变化
 
-自己完成的2个功能：
-	1. 二次确认
-	2. 页面一加载就把表格数据展示出来
+		watch: {
+            dialogVisible(){
+                console.log('dialogVisible', this.dialogVisible)
+            }
+        },
 	
-
+	15. dialogVisible
+	
+		需要设置visible属性，它接收Boolean，当为true时显示 Dialog。
+			:visible.sync="dialogVisible"
+		
+		https://www.h5w3.com/16478.html  elementui代码visible.sync这是什么意思？
+		 
+		
+		初始情况下通过该值控制 dialog显示。
+		dialog关闭的时候，element自动设置该值为false
+		-- 理解了。通过理论+实践理解的。
+		
+		
 import path from 'path'
 console.log("path: ", path)
 path:  {resolve: ƒ, normalize: ƒ, isAbsolute: ƒ, join: ƒ, relative: ƒ, …}
@@ -206,4 +286,47 @@ path.resolve
 	LIMIT 2: 取2条
 	
 	
+	:current-page="searchBar.page_num"    当前第几页
+	:page-sizes="[20, 100, 200, 500]"	  
+	:page-size="searchBar.page_size"      每页多少行记录
+	layout="total, sizes, prev, pager, next, jumper"
+	:total="dataTotal">					  总共有多少行记录
+
+		
+	searchBar: {
+		schema: "",
+		status: "",
+		page_size: 100,
+		page_num: 1
+	},
+	
+	class CustomPagination(PageNumberPagination):
+
+		# 每页显示记录数，前端没有传入page_num，则默认显示此参数
+		page_size = 2
+
+		# 前端传入每页显示的数量
+		page_size_query_param = 'page_size'
+
+		# 前端传入第几页
+		page_query_param = 'page_num'
+
+		# #后端控制每页显示最大记录数
+		max_page_size = 500
+
+	https://blog.csdn.net/bubblelone/article/details/106630535    PageNumberPagination分页器使用
+
+	https://www.cnblogs.com/863652104kai/p/11523358.html#%E4%BE%A6%E5%90%AC%E5%99%A8   drf - 基础分页组件 PageNumberPagination
+	
+
+
+
+	
+	
+https://www.cnblogs.com/hahahakc/p/12790463.html  使用Vuex实现登陆成功后展示登录用户的信息
+
+
+	自己完成的2个功能：
+	1. 二次确认
+	2. 页面一加载就把表格数据展示出来
 	

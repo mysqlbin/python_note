@@ -9,7 +9,7 @@ urlpatterns = [
     path('django_is_login', django_is_login),
     path('django_login', django_login),
     path('current_user/', current_user),
-    path('logout_user', logout_user),
+    path('logout_user/', logout_user),
 
 
 ]

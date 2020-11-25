@@ -22,13 +22,17 @@ from rest_framework.response import Response
 import MySQLdb
 
 class CustomPagination(PageNumberPagination):
-    # 这几个的含义
-    # 每页5行记录
+
+    # 每页显示记录数，前端没有传入page_num，则默认显示此参数
     page_size = 2
+
+    # 前端传入每页显示的数量
     page_size_query_param = 'page_size'
 
-    # 第几页
+    # 前端传入第几页
     page_query_param = 'page_num'
+
+    # #后端控制每页显示最大记录数
     max_page_size = 500
 
 
@@ -45,14 +49,13 @@ class SchemaViewSet(viewsets.ModelViewSet):
         queryset = self.get_queryset().values('schema').distinct()
         # 我们这里没有使用序列化器，而是将query set变成了一个列表返回
         name_list = [d["schema"] for d in list(queryset)]
-        print(name_list)
+
         return Response(name_list)
 
 
     @action(detail=True, methods=['get'])
     def get_schema_processlist(self, request, pk=None, *args, **kwargs):
         if pk is None:
-            print(1111)
             raise Http404
         instance = self.get_queryset().get(pk=pk)
         db = self.get_connection(pk)
