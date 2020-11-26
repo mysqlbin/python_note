@@ -134,7 +134,6 @@ router.beforeEach(async(to, from, next) => {
 	let hasLogin = !_.isEmpty(username)
 	if (to.path !== '/login') {
 		if (hasLogin) {
-      console.log(222222)
 			next()
 		}else{
       // console.log("path: ", to.path)

@@ -1,13 +1,13 @@
 
 
-	
-element-ui安装
-我的问题
-path.resolve	
-分页
-element-ui的相关参考
-
-
+大纲
+	element-ui安装
+	我的问题
+	path.resolve	
+	分页
+	element-ui的相关参考
+	小结
+	自己完成的2个功能
 
 element-ui安装
 
@@ -17,6 +17,7 @@ element-ui安装
 
 
 我的问题
+
 	1. action的作用
 		@action(detail=True, methods=['get'])
 		def get_schema_processlist(self, request, pk=None, *args, **kwargs):
@@ -43,7 +44,8 @@ element-ui安装
 		
 		
 	3. 在父组件中，调用子组件的方法
-	
+		
+		
 	4. loading
 		https://element.eleme.io/#/zh-CN/component/loading
 		
@@ -55,7 +57,13 @@ element-ui安装
 	6. 计算属性 computed
 		把函数当成一个变量来使用，方便传值
 		计算属性就是当其依赖属性的值发生变化时，这个属性的值会自动更新，与之相关的DOM部分也会同步自动更新。
-	
+		
+		也可以在计算属性中做复杂的计算逻辑
+		
+		https://www.cnblogs.com/hahahakc/p/12790463.html  使用Vuex实现登陆成功后展示登录用户的信息
+			state里的username, 但是一定要用computed，因为页面展示完了可能值还没有取到，就导致无法显示登录人的username
+
+		
 	7. 访问路由不生效
 		http://127.0.0.1:8080/mysql
 		
@@ -169,6 +177,8 @@ element-ui安装
 		
 		console.log("fullPath: ", to.fullPath)
 			fullPath: /mysql?page_num=1&page_size=5
+		
+		to.path 表示路由的路径
 		
 		
 	13.
@@ -343,10 +353,87 @@ element-ui的相关参考
 		该方法中你可以在你的输入建议数据准备好时通过 cb(data) 返回到 autocomplete 组件中。
 	
 	
-https://www.cnblogs.com/hahahakc/p/12790463.html  使用Vuex实现登陆成功后展示登录用户的信息
-	state里的username, 但是一定要用computed，因为页面展示完了可能值还没有取到，就导致无法显示登录人的username
 
-自己完成的2个功能：
+
+			
+			
+一些报错
+
+	1. The computed property "userName" is already defined in data.			
+		computed: { // 计算属性
+			routePath() {
+				// 获取当前页面的 path
+				return this.$route.path
+			},
+			username() {
+				return this.$store.state.username
+			}
+		},
+		data() {
+			return {
+				menuRouts: menuRouts,
+				// username: ''
+			}
+		},		
+		
+		在 data() 函数中定义的变量，不能在 computed计算属性中再定义。
+		
+	
+	2. 
+		vue-router.esm.js:2008 Uncaught (in promise) Error: Redirected when going from "/login?redirect=%2Fhome" to "/home" via a navigation guard.
+			https://www.cnblogs.com/lightice/p/13410200.html  ﻿vue路由跳转错误：Error: Redirected when going from "/login" to "/home" via a navigation guard.
+					
+		
+		export default new Vuex.Store({
+		  state: {
+			username: {}
+		  },
+		  mutations: {
+		    // state 参数就是 state: {username: {}},
+			setUser (state, username) {
+			  state.username = username
+			}
+		  },
+		  actions: {  
+			getCurrentUser(context) {
+			  let {commit} = context
+			  console.log('content: ',context)
+			  return new Promise((resolve, reject) => {
+				if(_.isEmpty(context.state.username)) {
+				  getCurrentUser().then(resp => {
+					let respData = resp.data
+					if (respData.code === 2000) {
+					  // console.log("login user1: ", respData.data)
+					  commit('setUser', respData.data)
+					  resolve(respData.data)
+					}else{
+					  resolve({})
+					}
+				 }).catch(err => {
+					resolve({})
+				  })
+				}else{
+				  resolve(context.state.user) 
+				}
+			  })
+			}
+
+		  },
+		  modules: {
+		  }
+		})		
+		-- resolve(context.state.user)  改为 resolve(context.state.username) 
+		
+小结
+	Vue 基础知识需要提升，目前是在项目中学习
+	增加了一些功能之后，原来的代码出问题了，一步步断点调试
+		
+		
+拉取某个分支的代码
+	git clone -b  11_21 https://github.com/textworld/mysql_front.git
+
+
+自己完成的2个功能
 	1. 二次确认
 	2. 页面一加载就把表格数据展示出来
 
@@ -355,32 +442,4 @@ import path from 'path'
 console.log("path: ", path)
 path:  {resolve: ƒ, normalize: ƒ, isAbsolute: ƒ, join: ƒ, relative: ƒ, …}
 			basename: ƒ (path, ext)delimiter: ":"dirname: ƒ (path)extname: ƒ (path)isAbsolute: ƒ (path)join: ƒ ()normalize: ƒ (path)relative: ƒ (from, to)resolve: ƒ ()sep: "/"__proto__: Object
-
-			
-			
-
-The computed property "userName" is already defined in data.			
-	computed: { // 计算属性
-		routePath() {
-			// 获取当前页面的 path
-			return this.$route.path
-		},
-		username() {
-			return this.$store.state.username
-		}
-	},
-	data() {
-		return {
-			menuRouts: menuRouts,
-			// username: ''
-		}
-	},		
-		
-vue-router.esm.js:2008 Uncaught (in promise) Error: Redirected when going from "/login?redirect=%2Fhome" to "/home" via a navigation guard.
-	https://www.cnblogs.com/lightice/p/13410200.html  ﻿vue路由跳转错误：Error: Redirected when going from "/login" to "/home" via a navigation guard.
-			
-
-拉取某个分支的代码
-	git clone -b  11_21 https://github.com/textworld/mysql_front.git
-
 			

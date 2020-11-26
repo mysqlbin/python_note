@@ -145,7 +145,7 @@
             },
             // 获取实例列表
             doSearch(){
-                console.log('do search')
+                // console.log('do search')
                 console.log('searchBar: ', this.searchBar )
                 this.tableLoading = true
                 getSchemaList(this.searchBar).then(resp => {

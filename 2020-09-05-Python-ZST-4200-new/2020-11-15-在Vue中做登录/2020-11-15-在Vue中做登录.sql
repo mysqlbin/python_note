@@ -181,8 +181,11 @@
 				写法示例： this.$store.commit('loginStatus', 1);
 			
 6. mutations 和 actions	
-
-	mutations 中不可以做异步操作
+	
+	https://blog.csdn.net/joyvonlee/article/details/96916489  vuex的mutations用法
+	https://vuex.vuejs.org/zh/guide/mutations.html   
+	
+	mutations 中不可以做异步操作, 在 Vuex 中，mutation 都是同步事务：
 	actions   中可以做异步操作
 		
 	export default new Vuex.Store({
@@ -333,3 +336,43 @@
 	2. let {commit} = context
 	
 	3. resolve(respData.data)、resolve({})、resolve(context.state.user) 
+	
+	4. 这里的视频要再看看。
+	
+	
+	login.vue
+		this.$store.commit('setUser', data.data)   // 触发mutations方法
+	
+	// store/index.js
+	export default new Vuex.Store({
+	  state: {
+		username: {}
+	  },
+	  mutations: {
+		setUser (state, username) {    
+		  state.username = username  // 这里将state传进来了
+		} 
+	  },
+		
+	router.beforeEach(async(to, from, next) => {
+		let user = await store.dispatch('getUserInfo')
+		if(_.isEmpty(user)) {
+			if (to.path === '/login') {
+				next()
+			}else{
+				next(`/login?redirect=${to.path}`)
+			}
+		}else{
+			if(to.path == '/login') {
+				let redirect = to.query.redirect
+				if (!_.isEmpty(redirect)) {
+					redirect = decodeURI(redirect)
+				}else{
+					redirect = '/'
+				}
+				next(redirect)
+			}else{
+				next()
+			}
+		}
+	})	

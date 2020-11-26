@@ -32,7 +32,7 @@ export default new Vuex.Store({
             resolve({})
           })
         }else{
-          resolve(context.state.user) 
+          resolve(context.state.username) 
         }
       })
     }

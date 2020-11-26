@@ -378,7 +378,6 @@ newPromise.then(Promise.resolve('bar'))   // 这一步不会输出, 原因：
 
 
 
-
 let redirect = '/mysql';
 console.log(typeof(redirect))
 redirect = typeof(redirect) == "number" ? redirect : undefined;
@@ -393,6 +392,6 @@ a = undefined
 if (a)
 	console.log(1)
 
-// undefined 不为真
+// 如果值等于undefined，那么不为真
 
 
