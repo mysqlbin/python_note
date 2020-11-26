@@ -188,23 +188,27 @@
 	mutations 中不可以做异步操作, 在 Vuex 中，mutation 都是同步事务：
 	actions   中可以做异步操作
 		
-	export default new Vuex.Store({
-	  state: {
-		user: {}
-	  },
-	  mutations: {
-		setUser (state, user) {
-		  state.user = user
-		}
-	  },
-	  actions: {
-	  },
-	  modules: {
-	  }
-	})
-
-
-
+	
+		
+	store/index.js
+		export default new Vuex.Store({
+		  state: {
+			username: {}
+		  },
+		  mutations: {
+			setUser (state, username) {    
+			  state.username = username  // state.username：将state传进来了， 
+			} 
+		  },
+			
+	login.vue
+		this.$store.commit('setUser', data.data)   // 触发mutations方法，同步操作，数据提交至mutations，其中 'setUser' 对应 setUser (state, username) 中的 setUser()方法
+		
+		你可以向 store.commit 传入额外的参数，即 mutation 的 载荷（payload）：
+		data.data 就是额外的参数，对应 setUser (state, username) 中的 username 
+		
+		
+		
 	旧的代码
 		router.beforeEach(async(to, from , next) => {
 		  console.log('to   ：', to)
@@ -309,8 +313,9 @@
 	  
 	// router/index.js 这里代码逻辑简化了很多
 	router.beforeEach(async(to, from, next) => {
+		// 这里看不懂
 		let user = await 
-		// 含有异步操作，数据提交至 actions ，可用于向后台提交数据
+		// 含有异步操作，数据提交至 actions 中的 getCurrentUser(context) ，可用于向后台提交数据
 		store.dispatch('getCurrentUser')
 		console.log('current user:', user)
 		let hasLogin = !_.isEmpty(user)
@@ -334,26 +339,31 @@
 		getCurrentUser(context) {
 		
 	2. let {commit} = context
+	console.log("context: ", context)
 	
+	content: {getters: {…}, state: {…}, rootGetters: {…}, dispatch: ƒ, commit: ƒ, …}
+		commit: ƒ boundCommit(type, payload, options)
+		dispatch: ƒ boundDispatch(type, payload)
+		getters: {}
+		rootGetters: {}
+		rootState: {__ob__: Observer}
+		state: {__ob__: Observer}
+		__proto__: Object
+
+    console.log('commit: ',commit)
+		commit:  ƒ boundCommit (type, payload, options) {
+			return commit.call(store, type, payload, options)
+		}
+  
 	3. resolve(respData.data)、resolve({})、resolve(context.state.user) 
 	
 	4. 这里的视频要再看看。
 	
+	5. let user = await 
 	
-	login.vue
-		this.$store.commit('setUser', data.data)   // 触发mutations方法
 	
-	// store/index.js
-	export default new Vuex.Store({
-	  state: {
-		username: {}
-	  },
-	  mutations: {
-		setUser (state, username) {    
-		  state.username = username  // 这里将state传进来了
-		} 
-	  },
-		
+	
+	
 	router.beforeEach(async(to, from, next) => {
 		let user = await store.dispatch('getUserInfo')
 		if(_.isEmpty(user)) {

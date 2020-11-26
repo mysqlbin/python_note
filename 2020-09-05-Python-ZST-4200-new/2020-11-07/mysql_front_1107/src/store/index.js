@@ -17,12 +17,13 @@ export default new Vuex.Store({
     getCurrentUser(context) {
       let {commit} = context
       console.log('content: ',context)
+      console.log('commit: ',commit)
       return new Promise((resolve, reject) => {
         if(_.isEmpty(context.state.username)) {
           getCurrentUser().then(resp => {
             let respData = resp.data
             if (respData.code === 2000) {
-              // console.log("login user1: ", respData.data)
+              // commit：同步操作，数据提交至 mutations 
               commit('setUser', respData.data)
               resolve(respData.data)
             }else{
