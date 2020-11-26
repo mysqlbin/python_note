@@ -378,3 +378,21 @@ newPromise.then(Promise.resolve('bar'))   // 这一步不会输出, 原因：
 
 
 
+
+let redirect = '/mysql';
+console.log(typeof(redirect))
+redirect = typeof(redirect) == "number" ? redirect : undefined;
+console.log(redirect);
+console.log("decodeURI(redirect): ", decodeURI(redirect));
+redirect = redirect ? decodeURI(redirect) : "/";  // 如果 redirect 为 undefined，就取 "/" ？ 是的。
+console.log(redirect);
+
+
+a = undefined
+
+if (a)
+	console.log(1)
+
+// undefined 不为真
+
+

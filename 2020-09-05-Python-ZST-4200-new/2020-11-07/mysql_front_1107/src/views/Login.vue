@@ -84,6 +84,7 @@
                 let redirect = this.$route.query.redirect;
                 redirect = _.isString(redirect) ? redirect : undefined;
                 redirect = redirect ? decodeURI(redirect) : "/";
+                console.log("redirect: ", redirect)
                 this.$router.push({
                   path: redirect,
                 });

@@ -76,12 +76,15 @@
             routePath() {
                 // 获取当前页面的 path
                 return this.$route.path
+            },
+            username() {
+                return this.$store.state.username
             }
         },
         data() {
             return {
                 menuRouts: menuRouts,
-                username: ''
+                // username: ''
             }
         },
         created() {   
@@ -91,8 +94,7 @@
             // console.log("path: ", path)
         },
         mounted(){
-            this.username = this.$store.state.user
-            console.log(this.username)
+           
         },
         methods: {
             resolvePath(base, p) {

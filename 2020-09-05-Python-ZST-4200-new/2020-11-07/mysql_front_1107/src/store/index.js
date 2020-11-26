@@ -6,11 +6,11 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    user: {}
+    username: {}
   },
   mutations: {
-    setUser (state, user) {
-      state.user = user
+    setUser (state, username) {
+      state.username = username
     }
   },
   actions: {  
@@ -18,7 +18,7 @@ export default new Vuex.Store({
       let {commit} = context
       console.log('content: ',context)
       return new Promise((resolve, reject) => {
-        if(_.isEmpty(context.state.user)) {
+        if(_.isEmpty(context.state.username)) {
           getCurrentUser().then(resp => {
             let respData = resp.data
             if (respData.code === 2000) {

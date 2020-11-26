@@ -1,45 +1,19 @@
 
-https://element.eleme.cn/#/zh-CN
+
+	
+element-ui安装
+我的问题
+path.resolve	
+分页
+element-ui的相关参考
 
 
 
-yarn add element-ui
+element-ui安装
 
-yarn add sass-loader  
+	yarn add element-ui
 
-
-
-These dependencies were not found:
-
-* element-ui in ./src/main.js
-* element-ui/lib/theme-chalk/index.css in ./src/main.js
-
-To install them, you can run: npm install --save element-ui element-ui/lib/theme-chalk/index.css
-
-
-
-
-Cannot find module 'sass'
-
-yarn add sass-loader  
-
-
-拉取某个分支的代码
-	git clone -b  11_21 https://github.com/textworld/mysql_front.git
-
-
-
-
-https://blog.csdn.net/qq_37746973/article/details/78402812  在elementUI中使用 el-autocomplete 实现远程搜索的下拉框
-https://element.eleme.cn/#/zh-CN
-https://element.eleme.io/#/zh-CN/component/input    
-	autocomplete 是一个可带输入建议的输入框组件，fetch-suggestions 是一个返回输入建议的方法属性，如 querySearch(queryString, cb)，在
-	该方法中你可以在你的输入建议数据准备好时通过 cb(data) 返回到 autocomplete 组件中。
-
-http://127.0.0.1:8001/api/meta_manage/mysql_schema/
-
-
-
+	yarn add sass-loader  
 
 
 我的问题
@@ -183,6 +157,13 @@ http://127.0.0.1:8001/api/meta_manage/mysql_schema/
 		
 		http://127.0.0.1:8080/mysql?page_num=1&page_size=5
 		
+		{
+			path: 'Home',
+			name: 'Home',
+			meta: { title: 'Home' },
+			component: Home
+		},		
+		
 		console.log("path: ", to.path)
 			path: /mysql
 		
@@ -194,7 +175,7 @@ http://127.0.0.1:8001/api/meta_manage/mysql_schema/
 
 		let redirect = this.$route.query.redirect;
 		redirect = _.isString(redirect) ? redirect : undefined;
-		redirect = redirect ? decodeURI(redirect) : "/";   -- 如果 redirect 为 undefined，就取 "/" ？
+		redirect = redirect ? decodeURI(redirect) : "/";   // 如果 redirect 为 undefined，就取 "/" ？ 是的。
 		this.$router.push({
 		  path: redirect,
 		});
@@ -232,15 +213,46 @@ http://127.0.0.1:8001/api/meta_manage/mysql_schema/
 		https://www.h5w3.com/16478.html  elementui代码visible.sync这是什么意思？
 		 
 		
-		初始情况下通过该值控制 dialog显示。
+		初始情况下通过该值控制 dialog 显示。
 		dialog关闭的时候，element自动设置该值为false
 		-- 理解了。通过理论+实践理解的。
 		
+	16.  this.$route  跟 this.$router 的区别 
+		https://www.jb51.net/article/164718.htm
 		
-import path from 'path'
-console.log("path: ", path)
-path:  {resolve: ƒ, normalize: ƒ, isAbsolute: ƒ, join: ƒ, relative: ƒ, …}
-			basename: ƒ (path, ext)delimiter: ":"dirname: ƒ (path)extname: ƒ (path)isAbsolute: ƒ (path)join: ƒ ()normalize: ƒ (path)relative: ƒ (from, to)resolve: ƒ ()sep: "/"__proto__: Object
+		this.$router.push(this.$route.query.redirect);
+		
+		this.$router是VueRouter的实例方法，当导航到不同url，可以使用this.$router.push方法，这个方法则会向history里面添加一条记录，当点击浏览器回退按钮或者this.$router.back()就会回退之前的url。
+		
+		const router = new VueRouter({
+		  mode: 'history',
+		  base: process.env.BASE_URL,
+		  routes
+		})
+		
+		this.$route:
+			相当于当前激活的路由对象，包含当前url解析得到的数据，可以从对象里获取一些数据，如 name,path 等。
+			获取路由URL信息	
+			{
+				path: 'Home',
+				name: 'Home',
+				meta: { title: 'Home' },
+				component: Home
+			},
+
+			this_route:  
+				{name: "MySQLManage", meta: {…}, path: "/mysql", hash: "", query: {…}, …}
+				fullPath: "/mysql?page_num=1&page_size=5"
+				hash: ""
+				matched: (2) [{…}, {…}]
+				meta: {__ob__: Observer}
+				name: "MySQLManage"
+				params: {}
+				path: "/mysql"
+				query: {page_num: "1", page_size: "5"}
+				__proto__: Object
+						  
+						  
 
 
 
@@ -277,7 +289,7 @@ path.resolve
 		resolvePath(submenu.path, child.path) 对应 resolvePath('/dashboard', '/home')
 	
 
-分页：
+分页
 
 	SELECT `mysql_schema`.`gmt_update`, `mysql_schema`.`gmt_create`, `mysql_schema`.`id`, `mysql_schema`.`host_ip`, `mysql_schema`.`port`, `mysql_schema`.`schema`, `mysql_schema`.`role`, `mysql_schema`.`status`, `mysql_schema`.`phy_host_id` 
 	FROM `mysql_schema` LIMIT 2 OFFSET 2
@@ -321,12 +333,54 @@ path.resolve
 
 
 
+element-ui的相关参考
+	https://element.eleme.cn/#/zh-CN
+
+	https://blog.csdn.net/qq_37746973/article/details/78402812  在elementUI中使用 el-autocomplete 实现远程搜索的下拉框
+	https://element.eleme.cn/#/zh-CN
+	https://element.eleme.io/#/zh-CN/component/input    
+		autocomplete 是一个可带输入建议的输入框组件，fetch-suggestions 是一个返回输入建议的方法属性，如 querySearch(queryString, cb)，在
+		该方法中你可以在你的输入建议数据准备好时通过 cb(data) 返回到 autocomplete 组件中。
 	
 	
 https://www.cnblogs.com/hahahakc/p/12790463.html  使用Vuex实现登陆成功后展示登录用户的信息
+	state里的username, 但是一定要用computed，因为页面展示完了可能值还没有取到，就导致无法显示登录人的username
 
-
-	自己完成的2个功能：
+自己完成的2个功能：
 	1. 二次确认
 	2. 页面一加载就把表格数据展示出来
+
 	
+import path from 'path'
+console.log("path: ", path)
+path:  {resolve: ƒ, normalize: ƒ, isAbsolute: ƒ, join: ƒ, relative: ƒ, …}
+			basename: ƒ (path, ext)delimiter: ":"dirname: ƒ (path)extname: ƒ (path)isAbsolute: ƒ (path)join: ƒ ()normalize: ƒ (path)relative: ƒ (from, to)resolve: ƒ ()sep: "/"__proto__: Object
+
+			
+			
+
+The computed property "userName" is already defined in data.			
+	computed: { // 计算属性
+		routePath() {
+			// 获取当前页面的 path
+			return this.$route.path
+		},
+		username() {
+			return this.$store.state.username
+		}
+	},
+	data() {
+		return {
+			menuRouts: menuRouts,
+			// username: ''
+		}
+	},		
+		
+vue-router.esm.js:2008 Uncaught (in promise) Error: Redirected when going from "/login?redirect=%2Fhome" to "/home" via a navigation guard.
+	https://www.cnblogs.com/lightice/p/13410200.html  ﻿vue路由跳转错误：Error: Redirected when going from "/login" to "/home" via a navigation guard.
+			
+
+拉取某个分支的代码
+	git clone -b  11_21 https://github.com/textworld/mysql_front.git
+
+			

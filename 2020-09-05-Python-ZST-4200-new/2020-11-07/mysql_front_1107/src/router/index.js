@@ -127,11 +127,11 @@ const router = new VueRouter({
 
 
 router.beforeEach(async(to, from, next) => {
-	let user = await 
+	let username = await 
 	// 含有异步操作，数据提交至 actions ，可用于向后台提交数据
 	store.dispatch('getCurrentUser')
 	// console.log('current user:', user)
-	let hasLogin = !_.isEmpty(user)
+	let hasLogin = !_.isEmpty(username)
 	if (to.path !== '/login') {
 		if (hasLogin) {
       console.log(222222)
