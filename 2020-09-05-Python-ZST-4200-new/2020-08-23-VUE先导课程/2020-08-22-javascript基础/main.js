@@ -203,11 +203,11 @@ delete: 删除了数组后，数组的长度不会变化。 用法：delete arr[
 
 // 对象的解析
 
-// let obj = {
-//     a: '1',
-//     b: '2',
-//     c: '3'
-// }
+let obj = {
+    a: '1',
+    b: '2',
+    c: '3'
+}
 
 // var a, b, c;
 // a = obj.a;
@@ -218,8 +218,8 @@ delete: 删除了数组后，数组的长度不会变化。 用法：delete arr[
 // let { a: a1, b: b1, c: c1 } = obj;
 // console.log(a1, b1, c1)
 
-// let {a, b, c} = obj;
-// console.log(a, b, c)
+let {a, b, c} = obj;
+console.log(a, b, c)
 
 
 // ...... 展开操作符 ......
@@ -395,3 +395,8 @@ if (a)
 // 如果值等于undefined，那么不为真
 
 
+var data = {};
+data.name = "hello";
+ 
+let {name} = data;
+console.log(name); // hello

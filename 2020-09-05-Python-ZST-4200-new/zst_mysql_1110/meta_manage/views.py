@@ -21,6 +21,9 @@ from rest_framework.response import Response
 
 import MySQLdb
 
+from rest_framework.decorators import api_view
+
+
 class CustomPagination(PageNumberPagination):
 
     # 每页显示记录数，前端没有传入page_num，则默认显示此参数
@@ -61,7 +64,7 @@ class SchemaViewSet(viewsets.ModelViewSet):
         db = self.get_connection(pk)
         c = db.cursor()
         c.execute("show processlist;")
-        results = c.fetchall() # 获取所有数据
+        results = c.fetchall()  # 获取所有数据
         columns = ["id", "user", "host", "db", "command", "time", "state", "info"]
 
         process_lists = []
@@ -74,6 +77,7 @@ class SchemaViewSet(viewsets.ModelViewSet):
         db.close()
         return Response(process_lists)
 
+    # @api_view(['DELETE'])
     @action(detail=True, methods=['delete'])
     def kill_processlist_by_id(self, request, pk=None, *args, **kwargs):
         """
@@ -83,8 +87,15 @@ class SchemaViewSet(viewsets.ModelViewSet):
         """
         if pk is None is None:
             raise Http404
+
         serializer = KillMySQLProcessSerializer(data=request.data)
+        #
         serializer.is_valid(raise_exception=True)
+
+        if not serializer.is_valid():
+            return MyJsonResponse(code=4001, message="invalid data")
+
+
         # 获取process_id参数
         process_id = serializer.validated_data.get('process_id')
         print("process_id: {}".format(process_id))
@@ -93,7 +104,8 @@ class SchemaViewSet(viewsets.ModelViewSet):
         c.execute("kill %d" % process_id)
         c.close()
         db.close()
-        return Response("success")
+        return MyJsonResponse(message="success")
+        # return Response('success')
 
     def get_connection(self, schema_id):
         instance = self.get_queryset().get(pk=schema_id)

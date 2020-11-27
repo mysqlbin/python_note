@@ -27,4 +27,4 @@ class MySQLSchemaSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class KillMySQLProcessSerializer(serializers.Serializer):
-    process_id = serializers.IntegerField(min_value=1)
+    process_id = serializers.IntegerField(min_value=200000)

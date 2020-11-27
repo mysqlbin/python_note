@@ -84,7 +84,6 @@
         data() {
             return {
                 menuRouts: menuRouts,
-                // username: ''
             }
         },
         created() {   

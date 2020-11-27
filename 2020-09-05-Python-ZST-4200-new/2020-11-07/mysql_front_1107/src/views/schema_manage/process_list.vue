@@ -86,12 +86,11 @@
         },
         methods: {
             // 获取 show processlist 列表
-            showProcessList(row){
-                this.row = row
-                console.log("schema_id: ", row.id)
-                console.log("row: ", row)
+            showProcessList(schema){
+                this.schema = schema
+                // console.log("schema_id: ", schema.id)
                 return new Promise((resolve) => {
-                    getSchemaPorcesslist(row.id).then(resp => {
+                    getSchemaPorcesslist(schema.id).then(resp => {
                         this.processList = resp.data
                         // _.forEach(this.processList, (v, k) => {
                         //     this.$set(this.processList[k], 'loading', false)
@@ -120,8 +119,8 @@
                 // })
                 
                 row.loading = true
-                console.log("row: ", row)
-                console.log("schema_id: ", this.schema.id)
+                console.log("row_id: ", row.id)
+                console.log("schema: ", this.schema)
 
                 this.$confirm('确定要kill该线程吗?', '提示', {
                     confirmButtonText: '确定',
@@ -129,8 +128,15 @@
                     type: 'warning'
                 }).then(() => {
 
-                    killProcessById(this.schema.id, row.id).then(_ => {
-                        this.$message.info('操作成功')
+                    killProcessById(this.schema.id, row.id).then(resp => {
+                        console.log(resp.data)
+                        let data = resp.data
+                        console.log(data.message)
+                        if (data.code === 2000){
+                            this.$message.info('操作成功')
+                        }else{
+                            this.$message.warning(data.message)
+                        }
                     }).finally(_ => {
                         row.loading = false
                         // 重新加载 show processlist 的数据

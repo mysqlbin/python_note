@@ -26,6 +26,5 @@ urlpatterns = [
     path('v1/host_list/', HostListView.as_view()),
     path('v1/host_list_api/', HostListAPIView.as_view()),
     path('v1/host_list_mixin/', HostList.as_view()),
-    # path('v1/schema_list/', SchemaViewSet.as_view()),
     *router.urls
 ]

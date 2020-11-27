@@ -4,42 +4,8 @@ import Home from '../views/Home.vue'
 import Zst from '../views/Zst.vue'
 import Login from '../views/Login.vue'
 import store from '../store'
-import {getCurrentUser} from '../api/user'
 
 Vue.use(VueRouter)
-/*
-const routes = [
-  {
-    path: '/',
-    name: 'HomePage',
-    component: () => import('@/layout/index'),
-    redirect: '/dashboard',
-    children: [
-      {
-        path: '/dashboard',
-        name: 'Home',
-        component: Home
-      },
-      {
-        path: '/about',
-        name: 'About',
-        component: About
-      },
-
-    ]
-  },
-  {
-    path: '/zst',
-    name: 'Zst',
-    component: () => import('../views/Zst.vue')
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: () => import('../views/Login.vue')
-  },
-]
-*/
 
 export const menuRouts = [
   {
@@ -100,44 +66,14 @@ const router = new VueRouter({
 })
 
 
-// router.beforeEach(async(to, from, next) => {
-//   let user = await 
-//   	// 含有异步操作，数据提交至 actions ，可用于向后台提交数据
-// 	store.dispatch('getCurrentUser')
-//   if(_.isEmpty(user)) {
-//     if (to.path === '/login') {
-//         next()
-//     }else{
-//         next(`/login?redirect=${to.path}`)
-//     }
-// }else{
-//     if(to.path == '/login') {
-//         let redirect = to.query.redirect
-//         if (!_.isEmpty(redirect)) {
-//             redirect = decodeURI(redirect)
-//         }else{
-//             redirect = '/'
-//         }
-//         next(redirect)
-//     }else{
-//         next()
-//     }
-// }
-// })
-
-
 router.beforeEach(async(to, from, next) => {
-	let username = await 
-	// 含有异步操作，数据提交至 actions ，可用于向后台提交数据
-	store.dispatch('getCurrentUser')
-	// console.log('current user:', user)
+  let username = await store.dispatch('getCurrentUserF') 
+	console.log('current username:', username)
 	let hasLogin = !_.isEmpty(username)
 	if (to.path !== '/login') {
 		if (hasLogin) {
 			next()
 		}else{
-      // console.log("path: ", to.path)
-      // console.log("fullPath: ", to.fullPath)
 			next({
         path:"/login",
         query: {redirect: to.fullPath}  //将目的路由地址存入login的query中; 当登录成功后，获取这个query(this.$route.query.redirect)，跳转到登录前的页面

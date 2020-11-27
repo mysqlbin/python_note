@@ -1,56 +1,112 @@
 
 
-django-admin startproject zst_mysql_1110
-cd zst_mysql_1110
 
-pipenv --python 3.6
-	
-	E:\github\python_note\2020-09-05-Python-ZST-4200-new\zst_mysql_1110 (master -> origin)
-	λ pipenv --python 3.6
-	Virtualenv already exists!
-	Removing existing virtualenv…
-	Creating a virtualenv for this project…
-	Pipfile: E:\github\python_note\2020-09-05-Python-ZST-4200-new\zst_mysql_1110\Pipfile
-	Using d:/py/python.exe (3.6.7) to create virtualenv…
-	[    ] Creating virtual environment...created virtual environment CPython3.6.7.final.0-64 in 6242ms
-	  creator CPython3Windows(dest=C:\Users\Administrator.SC-202007271117\.virtualenvs\zst_mysql_1110-CRw6Dq79, clear=False, global=False)
-	  seeder FromAppData(download=False, pip=bundle, setuptools=bundle, wheel=bundle, via=copy, app_data_dir=C:\Users\Administrator.SC-202007271117\AppData\Local\pypa\virtualenv)
-		added seed packages: pip==20.2.4, setuptools==50.3.2, wheel==0.35.1
-	  activators BashActivator,BatchActivator,FishActivator,PowerShellActivator,PythonActivator,XonshActivator
+1. 创建项目和安装相关依赖包
 
-	Successfully created virtual environment!
-	Virtualenv location: C:\Users\Administrator.SC-202007271117\.virtualenvs\zst_mysql_1110-CRw6Dq79
-
-pipenv shell
-pipenv install django 
-
-pipenv install mysqlclient
-
-python manage.py runserver 127.0.0.1:8001
+2. 使用login、authenticate、logout			
+3. 一些问题	
+4. 创建APP
+5. 查询相关
+	5.1 等值查询filter_backends
+	5.2 关键词搜索search_filter	
+6. DRF相关
+7. 接口列表相关
 
 
-pipenv install python_ldap-3.3.1-cp36-cp36m-win_amd64.whl
+1. 创建项目和安装相关依赖包
+	django-admin startproject zst_mysql_1110
+	cd zst_mysql_1110
+
+	pipenv --python 3.6
+		
+		E:\github\python_note\2020-09-05-Python-ZST-4200-new\zst_mysql_1110 (master -> origin)
+		λ pipenv --python 3.6
+		Virtualenv already exists!
+		Removing existing virtualenv…
+		Creating a virtualenv for this project…
+		Pipfile: E:\github\python_note\2020-09-05-Python-ZST-4200-new\zst_mysql_1110\Pipfile
+		Using d:/py/python.exe (3.6.7) to create virtualenv…
+		[    ] Creating virtual environment...created virtual environment CPython3.6.7.final.0-64 in 6242ms
+		  creator CPython3Windows(dest=C:\Users\Administrator.SC-202007271117\.virtualenvs\zst_mysql_1110-CRw6Dq79, clear=False, global=False)
+		  seeder FromAppData(download=False, pip=bundle, setuptools=bundle, wheel=bundle, via=copy, app_data_dir=C:\Users\Administrator.SC-202007271117\AppData\Local\pypa\virtualenv)
+			added seed packages: pip==20.2.4, setuptools==50.3.2, wheel==0.35.1
+		  activators BashActivator,BatchActivator,FishActivator,PowerShellActivator,PythonActivator,XonshActivator
+
+		Successfully created virtual environment!
+		Virtualenv location: C:\Users\Administrator.SC-202007271117\.virtualenvs\zst_mysql_1110-CRw6Dq79
+
+	pipenv shell
+	pipenv install django 
+
+	pipenv install mysqlclient
+
+	python manage.py runserver 127.0.0.1:8001
 
 
-django-admin startapp user
+	pipenv install python_ldap-3.3.1-cp36-cp36m-win_amd64.whl
 
 
-create  database zst_mysql_1110 DEFAULT CHARSET utf8mb4 -- UTF-8 Unicode COLLATE utf8mb4_general_ci;
-
-python manage.py makemigrations
-
-python manage.py migrate
+	django-admin startapp user
 
 
-pipenv install djangorestframework
+	create  database zst_mysql_1110 DEFAULT CHARSET utf8mb4 -- UTF-8 Unicode COLLATE utf8mb4_general_ci;
+
+	python manage.py makemigrations
+
+	python manage.py migrate
 
 
-使用login，authenticate，logout
+	pipenv install djangorestframework
+
+
+2. 使用login、authenticate、logout
 	下面是一个典型的验证登录的过程
 		若用户名、密码正确的话，返回一个User；若不正确的话，返回None
 		接着必须调用login方法，才真正设置session，使用户处于登录状态
 		
-		
+	简单的用户登录登出
+		from django.contrib.auth import login, logout, authenticate
+		login： 用户登录
+		authenticate：验证用户名和密码是否正确
+		logout： 登出
+	
+
+
+	下面是一个典型的验证登录的过程
+		若用户名、密码正确的话，返回一个User；若不正确的话，返回None
+		接着必须调用login方法，才真正设置session，使用户处于登录状态
+		def django_login(request):
+			username = request.POST['username']
+			password = request.POST['password']
+			user = authenticate(request, username=username, password=password)
+			if user is None:
+				return HttpResponse('error username or password', status=401)
+			login(request, user)
+			return HttpResponse('login success')
+
+			
+			
+	用户注册的要点
+		--这里的内容要再听下
+		使用 get_user_model 函数来获取用户类
+		尽量不要使用from django.contrib.auth.models import User 这种方式来导入Django 的用户类。 这是因为，我们可以扩展
+		from django.contrib.auth import get_user_model
+		def django_register(request):
+			email = request.POST['email']
+			username = request.POST['username']
+			password = request.POST['password']
+			User = get_user_model()
+			field_meta = User._meta.get_field('username')
+			user = User()
+			setattr(user, 'username', username)
+			setattr(user, 'email', email)
+			user.set_password(password)
+			user.save()
+			return HttpResponse('register success')
+				
+
+			
+3. 一些问题		
 问题1	
 	AssertionError at /user/django_ldap_login/
 	.accepted_renderer not set on Response
@@ -69,28 +125,7 @@ pipenv install djangorestframework
 
 		--后面再看Postman
 		
-		
-django-admin startapp meta_manage
-	-- 记得在 settings.py INSTALLED_APPS 中添加 APP名称 
-python manage.py makemigrations 
-
-python manage.py migrate
-
-python manage.py shell
-
-from meta_manage.models import Host, MySQLSchema
-h = Host.objects.create(name='hostname-01', memory='4', cpu='32')
-m = MySQLSchema.objects.create(phy_host=h, port=int(3306), host_ip='192.168.0.201', schema='test_db', role='master')
-
-h = Host.objects.create(name='hostname-02', memory='4', cpu='32')
-m = MySQLSchema.objects.create(phy_host=h, port=int(3306), host_ip='192.168.0.202', schema='test_db', role='slave')
-
-
-
-http://127.0.0.1:8001/meta_manage/v1/host/?host_id=1
-
-
-疑问：
+问题2
 	model .values() 是什么意思 
 		Host.objects.all().values()
 		返回的queryset是一个字典
@@ -106,12 +141,34 @@ http://127.0.0.1:8001/meta_manage/v1/host/?host_id=1
 	URL反转
 		from django.urls import reverse
 		print(reverse('host-list'))
-	
-
-pipenv install django-filter
 
 
-等值查询filter_backends
+4. 创建APP			
+	django-admin startapp meta_manage
+		-- 记得在 settings.py INSTALLED_APPS 中添加 APP名称 
+	python manage.py makemigrations 
+
+	python manage.py migrate
+
+	python manage.py shell
+
+	from meta_manage.models import Host, MySQLSchema
+	h = Host.objects.create(name='hostname-01', memory='4', cpu='32')
+	m = MySQLSchema.objects.create(phy_host=h, port=int(3306), host_ip='192.168.0.201', schema='test_db', role='master')
+
+	h = Host.objects.create(name='hostname-02', memory='4', cpu='32')
+	m = MySQLSchema.objects.create(phy_host=h, port=int(3306), host_ip='192.168.0.202', schema='test_db', role='slave')
+
+
+	http://127.0.0.1:8001/meta_manage/v1/host/?host_id=1
+
+
+	pipenv install django-filter
+
+
+5. 查询相关
+
+5.1 等值查询filter_backends
 	
 	filter_backends = [DjangoFilterBackend]
     filterset_fields = ['name', 'cpu', 'memory']
@@ -131,7 +188,7 @@ pipenv install django-filter
 		FROM `meta_manage_host` WHERE (`meta_manage_host`.`name` = 'hostname-01' AND `meta_manage_host`.`memory` = '4')
 		
 	
-关键词搜索search_filter	
+5.2 关键词搜索search_filter	
 	
 	http://127.0.0.1:8001/meta_manage/v1/host_list_api/?search=hostname-02
 	
@@ -158,45 +215,11 @@ pipenv install django-filter
 			AND (`meta_manage_host`.`name` LIKE '4%' OR `meta_manage_host`.`memory` LIKE '4'))
 
 
-简单的用户登录登出
-	from django.contrib.auth import login, logout, authenticate
-	login： 用户登录
-	authenticate：验证用户名和密码是否正确
-	logout： 登出
 
-下面是一个典型的验证登录的过程
-	若用户名、密码正确的话，返回一个User；若不正确的话，返回None
-	接着必须调用login方法，才真正设置session，使用户处于登录状态
-	def django_login(request):
-		username = request.POST['username']
-		password = request.POST['password']
-		user = authenticate(request, username=username, password=password)
-		if user is None:
-			return HttpResponse('error username or password', status=401)
-		login(request, user)
-		return HttpResponse('login success')
 
-		
-		
-用户注册的要点
-	--这里的内容要再听下
-	使用 get_user_model 函数来获取用户类
-	尽量不要使用from django.contrib.auth.models import User 这种方式来导入Django 的用户类。 这是因为，我们可以扩展
-	from django.contrib.auth import get_user_model
-	def django_register(request):
-		email = request.POST['email']
-		username = request.POST['username']
-		password = request.POST['password']
-		User = get_user_model()
-		field_meta = User._meta.get_field('username')
-		user = User()
-		setattr(user, 'username', username)
-		setattr(user, 'email', email)
-		user.set_password(password)
-		user.save()
-		return HttpResponse('register success')
-			
 
+
+6. DRF相关
 
 1. 序列化器：类似于post表单数据的验证
 
@@ -236,6 +259,28 @@ pipenv install django-filter
 	
 4. DRF ModelViewSet
 	
+5. 相关课件
+	《3-3用户登录与注册1031.pdf》
+	《3-3用户登录与注册1101.pdf》
+	《3-3用户登录与注册1107.pdf》
+
+7. 接口列表相关
+
+get
+	http://127.0.0.1:8001/api/meta_manage/v1/host/1
+
+	http://127.0.0.1:8001/api/meta_manage/host_view/
+
+	http://127.0.0.1:8001/api/meta_manage/host_view/
+
+	http://127.0.0.1:8001/api/meta_manage/v1/host_list
+
+	http://127.0.0.1:8001/api/meta_manage/v1/host_list_api/?search=hostname-02,4
+
+	http://127.0.0.1:8001/api/meta_manage/v1/host_list_mixin/
+
+
+
 
 
 	

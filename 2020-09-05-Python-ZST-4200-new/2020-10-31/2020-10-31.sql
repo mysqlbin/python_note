@@ -28,18 +28,3 @@ Caused by: java.net.ConnectException: Connection refused: no further information
 ERR_04110_CANNOT_CONNECT_TO_SERVER Cannot connect to the server: Connection refused: no further information
 
 
-
-这个界面里面，月场次，周场次，今日场次，意思是指这个合伙人以及他下线，在以今天的时间点来算，月，周，今日的场次合计数。
-
-月场次: 当前时间减一个月，然后场次根据哪个字段来统计？
-
-
-周场次 是指
-
-
-首先是合伙人自己，nplayerid是自己的，在那个时间段中有多少条（注意这里也有那个根据分数做条件的情况）
-然后就是所有自己的下线 就是nextenID是合伙人的
-来计算记录的条数
-
-
-月场次: 当前时间减一个月，

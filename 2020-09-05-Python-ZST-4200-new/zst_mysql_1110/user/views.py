@@ -58,7 +58,7 @@ You should either call `.is_valid()` first, or access `.initial_data` instead.
     '''
 
 
-def ldap_login(request):
+def ldap_login_debug(request):
     # try:
     #     con = ldap.initialize('ldap://127.0.0.1:10389')
     #     username = "uid=apple,o=zst_k8s,dc=example,dc=com"
@@ -138,6 +138,7 @@ def django_login(request):
         return MyJsonResponse(message='error username or password', code=401)
     login(request, user)
     return MyJsonResponse(message='login success')
+
 
 @api_view(['GET'])
 def current_user(request):

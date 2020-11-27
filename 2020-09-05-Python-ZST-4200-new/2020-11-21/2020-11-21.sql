@@ -6,6 +6,7 @@
 	path.resolve	
 	分页
 	element-ui的相关参考
+	一些报错
 	小结
 	自己完成的2个功能
 
@@ -265,7 +266,23 @@ element-ui安装
 						  
 
 
+	17. 两者的区别
+	
+		# 对值进入验证判断
+		if not serializer.is_valid():
+			return MyJsonResponse(code=4001, message="invalid data")
 
+
+		serializer.is_valid(raise_exception=True)
+		
+	
+	18. 
+		http://localhost:8080/api/meta_manage/mysql_schema/undefined/kill_processlist_by_id/
+	
+	
+		https://www.jianshu.com/p/291450f2435c?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation
+	
+	
 path.resolve
 	path.resolve(‘/目录1’, ‘/目录2’, ‘目录3’) 返回 “/目录2/目录3
 	涉及到 vue router 的生成方式
@@ -436,7 +453,7 @@ element-ui的相关参考
 自己完成的2个功能
 	1. 二次确认
 	2. 页面一加载就把表格数据展示出来
-
+	3. 小功能：登录表单验证不通过，不能提交。 --2020-11-27
 	
 import path from 'path'
 console.log("path: ", path)

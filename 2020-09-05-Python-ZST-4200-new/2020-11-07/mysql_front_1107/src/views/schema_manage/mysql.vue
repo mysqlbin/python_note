@@ -106,11 +106,11 @@
             getSchemaNameList().then(resp => {
                 // if(resp.code === 2000) {
                 this.schemaNameList = resp.data
-                console.log("schemaNameList:", this.schemaNameList)
+                // console.log("schemaNameList:", this.schemaNameList)
                 // }
             })
             this.updateByQuery(this.$route)
-            console.log("this_route: ", this.$route)
+            // console.log("this_route: ", this.$route)
 
         },
         // 侦听事件，不加这个，点击上一页、下一页不生效
@@ -146,7 +146,7 @@
             // 获取实例列表
             doSearch(){
                 // console.log('do search')
-                console.log('searchBar: ', this.searchBar )
+                // console.log('searchBar: ', this.searchBar )
                 this.tableLoading = true
                 getSchemaList(this.searchBar).then(resp => {
                     // 总共有多少行记录
@@ -159,6 +159,7 @@
             // dialog弹窗
             // 这个方法是表格中，"查看process list" 按钮的click 回调函数
             showProcessList(row){
+                console.log('row: ', row)
                 const loading = this.$loading({
                     lock: true,
                     text: 'Loading',
@@ -171,14 +172,14 @@
             },
             // 处理每页页数/大小变动
             handleSizeChange(val) {
-                console.log(`每页 ${val} 条`)
+                // console.log(`每页 ${val} 条`)
                 let queryCopy = _.cloneDeep(this.$route.query)
                 queryCopy.page_size = val
                 this.updateRouteQuery(queryCopy)
             },
             // 处理当前页变动：点击上一页、下一页、前往第几页时生效
             handleCurrentChange(val) {
-                console.log(`当前页: ${val}`)
+                // console.log(`当前页: ${val}`)
                 let queryCopy = _.cloneDeep(this.$route.query)
                 queryCopy.page_num = val
                 this.updateRouteQuery(queryCopy)
@@ -186,7 +187,7 @@
             },
             // 更改url中的query参数
             updateRouteQuery(query) {
-                console.log("query: ", query)
+                // console.log("query: ", query)
                 this.$router.push({
                     //path: this.$route.path,
                     query: query

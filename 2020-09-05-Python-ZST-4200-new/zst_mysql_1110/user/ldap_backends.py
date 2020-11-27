@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 class LdapBackend:
 
     def authenticate(self, request, username=None, password=None, **kwargs):
-        # return '1'
+
         try:
             # con = ldap.initialize('ldap://127.0.0.1:10389')
             # con.simple_bind_s('uid=admin,ou=system', 'secret')

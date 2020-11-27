@@ -4,7 +4,9 @@
 3. vue实现登录后跳转到之前的页面
 4. Vuex 
 5. 问题
-6. mutations 和 actions	
+6. mutations和actions	
+7. vue中异步函数async和await的用法
+8. js变量赋值给大括号
 
 
 1. 当用户访问未登录界面时跳回登录界面
@@ -63,7 +65,7 @@
 	from ：来源的路由(从哪个地址过来的)、当前导航正要离开的路由
 
 	next ：一个函数，调用next()就跳转到to; 
-	next('some_path') 半路拦截，跳转到其他的地方
+		next('some_path') 半路拦截，跳转到其他的地方
 
 	https://router.vuejs.org/zh/guide/advanced/navigation-guards.html#%E5%85%A8%E5%B1%80%E5%89%8D%E7%BD%AE%E5%AE%88%E5%8D%AB
 
@@ -87,8 +89,6 @@
 	我们把用户是否登录的状态放在vuex中，那么之前关于如何获取的用户是否登录这个问题是否就解决了
 
 	https://vuex.vuejs.org/zh/guide/
-	
-	
 	
 
 
@@ -163,7 +163,9 @@
 	4. this.$store.commit 和 this.$store.dispatch
 
 		https://blog.csdn.net/AiHuanhuan110/article/details/89160241  vuex中store存储store.commit和store.dispatch的区别及用法
-
+		
+		https://blog.csdn.net/sunhuaqiang1/article/details/85211227   Vue进阶（二十四）：vue store存储commit 和dispatch
+		
 		代码示例：
 
 			this.$store.commit('loginStatus', 1);
@@ -174,20 +176,24 @@
 
 			dispatch：
 				含有异步操作，数据提交至 actions ，可用于向后台提交数据
-				写法示例： this.$store.dispatch('isLogin', true);
+				写法示例： this.$store.dispatch('action方法名',值)
 
 			commit：
 				同步操作，数据提交至 mutations ，可用于登录成功后读取用户信息写到缓存里
-				写法示例： this.$store.commit('loginStatus', 1);
-			
-6. mutations 和 actions	
+				写法示例： this.$store.commit('mutations方法名',值)
+	
+
+
+	
+6. mutations和actions
+	
 	
 	https://blog.csdn.net/joyvonlee/article/details/96916489  vuex的mutations用法
 	https://vuex.vuejs.org/zh/guide/mutations.html   
 	
 	mutations 中不可以做异步操作, 在 Vuex 中，mutation 都是同步事务：
 	actions   中可以做异步操作
-		
+	mutations 和 actions 都是 vuex 中的核心概念。	
 	
 		
 	store/index.js
@@ -202,7 +208,8 @@
 		  },
 			
 	login.vue
-		this.$store.commit('setUser', data.data)   // 触发mutations方法，同步操作，数据提交至mutations，其中 'setUser' 对应 setUser (state, username) 中的 setUser()方法
+		this.$store.commit('setUser', data.data)   
+		// 触发mutations方法，同步操作，数据提交至mutations，其中 'setUser' 对应 setUser (state, username) 中的 setUser()方法
 		
 		你可以向 store.commit 传入额外的参数，即 mutation 的 载荷（payload）：
 		data.data 就是额外的参数，对应 setUser (state, username) 中的 username 
@@ -220,7 +227,7 @@
 		  // 当user为空的时候，尝试从服务端获取一遍
 		  if (!hasLogin) {
 			console.log("01")
-			let resp = await getCurrentUser()
+			let resp = await getCurrentUser() // 同步操作
 			console.log(resp)
 			let data = resp.data
 		 
@@ -272,29 +279,29 @@
 		})
 
 
-	变量声明
-		函数内使用 var 声明的变量只能在函数内容访问，如果不使用，var 则是全局变量。
-		使用 let 关键字来实现块级作用域
-		const 用于声明一个或多个常量，不能通过再赋值修改，也不能再次声明
-
 
 	// 新的代码
 	// 尝试读懂下面的代码，然后理解Promise
-	// store/index.js
-	actions: {
-		// 这里的 context 是什么，感觉是回调函数
-		getCurrentUser(context) {
+	  // store/index.js
+	  actions: {  
+		// 方法名
+		// 这里的参数 context 是什么，感觉是回调函数，是的，从 actions 的回调函数来的。
+		getCurrentUserF(context) {
 		  let {commit} = context
-		  console.log("context: ", context)
-		  // 返回一个 promise 对象，此时是异步请求
+		  console.log('content: ', context)
+		  console.log('context_typeof: ', typeof(context))  // context_typeof:  object
+		  console.log('commit_typeof: ', typeof(commit))    // commit_typeof:   function
+		  console.log('commit: ', {commit})
+		  / 返回一个 promise 对象，此时是异步请求
 		  return new Promise((resolve, reject) => {
-			if(_.isEmpty(context.state.user)) {
-			  //  getCurrentUser() 发送一个API请求获取当前登录用户，同步操作; 执行完成并且有了返回结果之后，才继续执行 then() 方法
+			if(_.isEmpty(context.state.username)) {
+			  // getCurrentUser() 是一个API函数，发送一个API请求获取当前登录用户，这里then()方法的作用就是回调
 			  getCurrentUser().then(resp => {
 				let respData = resp.data
 				if (respData.code === 2000) {
-				  // store.commit：同步操作，数据提交至 mutations 
+				  // commit：同步操作，数据提交至 mutations 
 				  commit('setUser', respData.data)
+				  // 返回用户名
 				  resolve(respData.data)
 				}else{
 				  resolve({})
@@ -303,86 +310,134 @@
 				resolve({})
 			  })
 			}else{
-			  resolve(context.state.user) 
+			  // 返回用户名
+			  resolve(context.state.username) 
 			}
 		  })
 		}
 
-	},
+	  },	
 	  
-	  
-	// router/index.js 这里代码逻辑简化了很多
-	router.beforeEach(async(to, from, next) => {
-		// 这里看不懂
-		let user = await 
-		// 含有异步操作，数据提交至 actions 中的 getCurrentUser(context) ，可用于向后台提交数据
-		store.dispatch('getCurrentUser')
-		console.log('current user:', user)
-		let hasLogin = !_.isEmpty(user)
-		if (to.path !== '/login') {
-			if (hasLogin) {
-				next()
+		// router/index.js 这里代码逻辑简化了很多
+		router.beforeEach(async(to, from, next) => {
+			// await 'getCurrentUserF' ： 同步操作 getCurrentUserF() 方法，getCurrentUserF() 方法中调用了一个 getCurrentUser() 是API函数获取用户名
+			// dispatch： 含有异步操作，数据提交至 actions ，可用于向后台提交数据
+			// 获取到用户名，通过 store.dispatch 提交给 actions
+			let user = await store.dispatch('getCurrentUserF')
+			console.log('current user:', user)
+			let hasLogin = !_.isEmpty(user)
+			if (to.path !== '/login') {
+				if (hasLogin) {
+					next()
+				}else{
+					next('/login')
+				}
 			}else{
-				next('/login')
+				if(hasLogin) {
+					next('/')
+				}else{
+					next()
+				} 
 			}
-		}else{
-			if(hasLogin) {
-				next('/')
-			}else{
-				next()
-			} 
-		}
-	})
-
-	// 看看哪里不明白，到时候提出来
+		})
+		
+	------------------------------------------------------------------------------------------
+	
 	1. 这里的 context 是什么，感觉是回调函数
+		是的，从 actions 的回调函数来的。
 		getCurrentUser(context) {
+		console.log('context_typeof: ', typeof(context))  // context_typeof:  object
 		
 	2. let {commit} = context
-	console.log("context: ", context)
-	
-	content: {getters: {…}, state: {…}, rootGetters: {…}, dispatch: ƒ, commit: ƒ, …}
-		commit: ƒ boundCommit(type, payload, options)
-		dispatch: ƒ boundDispatch(type, payload)
-		getters: {}
-		rootGetters: {}
-		rootState: {__ob__: Observer}
-		state: {__ob__: Observer}
-		__proto__: Object
+		-- 将 对象 赋值给变量
+		console.log("context: ", context)
+		
+		content: {getters: {…}, state: {…}, rootGetters: {…}, dispatch: ƒ, commit: ƒ, …}
+			commit: ƒ boundCommit(type, payload, options)
+			dispatch: ƒ boundDispatch(type, payload)
+			getters: {}
+			rootGetters: {}
+			rootState: {__ob__: Observer}
+			state: {__ob__: Observer}
+			__proto__: Object
 
-    console.log('commit: ',commit)
-		commit:  ƒ boundCommit (type, payload, options) {
-			return commit.call(store, type, payload, options)
-		}
-  
+		console.log('commit: ',commit)
+			commit:  ƒ boundCommit (type, payload, options) {
+				return commit.call(store, type, payload, options)
+			}
+	  
+	  
+	  
+		---------------------------------------------------------------------------
+	
+		let {commit} = context
+	
+	 	console.log('context_typeof: ', typeof(context))  // context_typeof:  object
+		console.log('commit_typeof: ', typeof(commit))    // commit_typeof:   function
+	 
+	 
 	3. resolve(respData.data)、resolve({})、resolve(context.state.user) 
+		-- await 后面放置的就是返回 promise 对象的一个表达式
+		-- 参考 《7. vue中异步函数async和await的用法》
+
+
+		
 	
-	4. 这里的视频要再看看。
+7. vue中异步函数async和await的用法
 	
-	5. let user = await 
+	https://www.cnblogs.com/zhoujuan/p/11692818.html vue中异步函数async和await的用法
+	
+	现在再写一个 async 函数，从而可以使用 await 关键字， await 后面放置的就是返回 promise 对象的一个表达式，所以它后面可以写上 doubleAfter2seconds 函数的调用	
+	
+	async function testResult() {
+		let result = await doubleAfter2seconds(30);
+		console.log(result);
+	}
+	
+	function doubleAfter2seconds(num) {
+		return new Promise((resolve, reject) => {
+			setTimeout(() => {
+				resolve(2 * num)
+			}, 2000);
+		} )
+	}
+	
+8. js变量赋值给大括号
+
+	https://zhidao.baidu.com/question/1900506892331202140.html
+
+
+	// 对象的解析
+
+	let obj = {
+		a: '1',
+		b: '2',
+		c: '3'
+	}
+
+	// var a, b, c;
+	// a = obj.a;
+	// b = obj.b;
+	// c = obj.c;
+	// console.log(a, b, c)
+	
+	跟上面的是一样的
+	let {a, b, c} = obj;
+	console.log(a, b, c)
+	
+	// let { a: a1, b: b1, c: c1 } = obj;
+	// console.log(a1, b1, c1)
+
+	
+	var data = {};
+	data.name = "hello";
+	 
+	let {name} = data;
+	console.log(name); // hello
 	
 	
-	
-	
-	router.beforeEach(async(to, from, next) => {
-		let user = await store.dispatch('getUserInfo')
-		if(_.isEmpty(user)) {
-			if (to.path === '/login') {
-				next()
-			}else{
-				next(`/login?redirect=${to.path}`)
-			}
-		}else{
-			if(to.path == '/login') {
-				let redirect = to.query.redirect
-				if (!_.isEmpty(redirect)) {
-					redirect = decodeURI(redirect)
-				}else{
-					redirect = '/'
-				}
-				next(redirect)
-			}else{
-				next()
-			}
-		}
-	})	
+变量声明
+函数内使用 var 声明的变量只能在函数内容访问，如果不使用，var 则是全局变量。
+使用 let 关键字来实现块级作用域
+const 用于声明一个或多个常量，不能通过再赋值修改，也不能再次声明
+

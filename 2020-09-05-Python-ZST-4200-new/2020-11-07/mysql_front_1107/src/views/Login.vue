@@ -1,7 +1,8 @@
 <template>
   <div class="login-container">
 
-    <el-form label-width="80px" class="login-form"  :model="formLogin" :rules="loginRules">
+    <el-form label-width="80px" class="login-form" ref="ruleForm"  :model="formLogin" :rules="loginRules">
+
       <el-form-item label="username：" prop="username">
         <el-input v-model="formLogin.username" placeholder="请输入用户名" name="username"></el-input>
       </el-form-item>
@@ -11,8 +12,9 @@
       </el-form-item>
       
       <el-form-item>
-        <el-button :loading="loading" type="primary" @click.native.prevent="handleLogin">登录</el-button>
+        <el-button :loading="loading" type="primary" @click.native.prevent="handleLogin('ruleForm')">登录</el-button>
       </el-form-item>
+
     </el-form>
     
   </div>
@@ -55,7 +57,8 @@
       // this.drawChart()
     },
     methods: {
-      handleLogin(){
+      handleLogin(formName){
+
         console.log("login_username: ", this.formLogin.username)
         // this.login.username = this.login.username.toUpperCase()
 
@@ -65,58 +68,53 @@
         // 1. 如果有多个axios请求，没有必要为每个请求都写 axios.post(), 因此可以独立出来 
         // 2. 同一个APP的每个axios请求的URL前缀都是一样，因此又可以独立出来  
 
-        this.loading = true   // 表示在加载中
-        login(this.formLogin).then(resp => {
-          console.log(resp)
-          let data = resp.data
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
 
-          if (_.isInteger(data.code)){
-              console.log('code is int')
+            this.loading = true   // 表示在加载中
+            login(this.formLogin).then(resp => {
+              console.log(resp)
+              let data = resp.data
+
+              if (_.isInteger(data.code)){
+                  console.log('code is int')
+              }else{
+                  console.log('code is not int')
+              }
+
+              if (data.code === 2000) {
+
+                    this.$message.info('登录成功')
+                    this.$store.commit('setUser', data.data)
+
+                    // 获取redirect参数, 传入 this.$router.push() 中, 跳转到登录前的页面
+                    let redirect = this.$route.query.redirect;
+                    redirect = _.isString(redirect) ? redirect : undefined;
+                    redirect = redirect ? decodeURI(redirect) : "/";
+                    console.log("redirect: ", redirect)
+                    this.$router.push({
+                      path: redirect,
+                    });
+
+                }else{
+                    this.$message.error('用户名或者密码不正确')
+                }
+
+            }).catch(err => {
+            
+              this.$message.error('无法连接服务器')
+              console.error(err)
+
+            }).finally(() => {
+              // 访问完成，把 loading 改为 false
+              this.loading = false
+            })
+
           }else{
-              console.log('code is not int')
+            this.$message.warning('用户名或者密码不符合规则')
+            return false;
           }
-
-          if (data.code === 2000) {
-
-                this.$message.info('登录成功')
-                this.$store.commit('setUser', data.data)
-
-                let redirect = this.$route.query.redirect;
-                redirect = _.isString(redirect) ? redirect : undefined;
-                redirect = redirect ? decodeURI(redirect) : "/";
-                console.log("redirect: ", redirect)
-                this.$router.push({
-                  path: redirect,
-                });
-
-                // 获取redirect参数, 传入 this.$router.push() 中, 跳转到登录前的页面
-                // this.$router.push(this.$route.query.redirect);
-
-                // const curr = localStorage.getItem('preRoute')
-
-                // console.log('preRoute: ', curr)
-
-                // if (curr == null) {
-                //   this.$router.push({ path: "/" });
-                // } else {
-                //   this.$router.push({ path: curr });
-                // }
-              
-            }else{
-                this.$message.error('用户名或者密码不正确')
-            }
-
-        }).catch(err => {
-         
-          this.$message.error('无法连接服务器')
-          console.error(err)
-
-        }).finally(() => {
-          // 访问完成，把 loading 改为 false
-          this.loading = false
-        })
-
-        // console.log('after post')
+        });
 
       },
             // drawChart() {
