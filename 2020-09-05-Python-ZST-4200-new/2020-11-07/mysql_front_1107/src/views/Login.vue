@@ -76,12 +76,12 @@
               console.log(resp)
               let data = resp.data
 
-              if (_.isInteger(data.code)){
-                  console.log('code is int')
-              }else{
-                  console.log('code is not int')
-              }
-
+              // if (_.isInteger(data.code)){
+              //     console.log('code is int')
+              // }else{
+              //     console.log('code is not int')
+              // }
+              
               if (data.code === 2000) {
 
                     this.$message.info('登录成功')

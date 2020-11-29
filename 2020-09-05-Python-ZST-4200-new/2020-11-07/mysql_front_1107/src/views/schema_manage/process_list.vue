@@ -129,13 +129,15 @@
                 }).then(() => {
 
                     killProcessById(this.schema.id, row.id).then(resp => {
-                        console.log(resp.data)
+
                         let data = resp.data
-                        console.log(data.message)
+                        let messages = data.message ? data.message : '操作失败'
+                        console.log("messages: ", messages)
                         if (data.code === 2000){
                             this.$message.info('操作成功')
                         }else{
-                            this.$message.warning(data.message)
+                            
+                            this.$message.warning(messages)
                         }
                     }).finally(_ => {
                         row.loading = false

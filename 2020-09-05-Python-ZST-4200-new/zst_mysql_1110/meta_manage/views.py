@@ -92,9 +92,9 @@ class SchemaViewSet(viewsets.ModelViewSet):
         #
         serializer.is_valid(raise_exception=True)
 
-        if not serializer.is_valid():
-            return MyJsonResponse(code=4001, message="invalid data")
-
+        # if not serializer.is_valid():
+        #     print(11111)
+        #     return MyJsonResponse(message="invalid data", code=4001)
 
         # 获取process_id参数
         process_id = serializer.validated_data.get('process_id')
@@ -105,7 +105,6 @@ class SchemaViewSet(viewsets.ModelViewSet):
         c.close()
         db.close()
         return MyJsonResponse(message="success")
-        # return Response('success')
 
     def get_connection(self, schema_id):
         instance = self.get_queryset().get(pk=schema_id)
