@@ -6,7 +6,6 @@ https://blog.csdn.net/u013866352/article/details/105413717  Vagrant-新增-root-
 
 
 
-
 C:\Users\Administrator\Desktop
 λ vagrant -v
 Vagrant 2.2.6
@@ -14,7 +13,6 @@ Vagrant 2.2.6
 
 
 vagrant box add my-box vagrant-centos-7.box
-vagrant box add my-box vagrant-centos-7.2.box
 
 	E:\centos7
 	λ vagrant box add my-box vagrant-centos-7.box
@@ -136,57 +134,4 @@ vagrant up
 
 
 
-[root@localhost pip-8.0.2]# pip3 install ansible
-	
-	出现的错误1：
-
-		distutils.errors.DistutilsError: Setup script exited with error: command 'gcc' failed with exit status 1
-		
-		----------------------------------------
-		Command "python setup.py egg_info" failed with error code 1 in /tmp/pip-build-sm694z3n/cryptography
-		You are using pip version 8.0.2, however version 20.2.4 is available.
-		You should consider upgrading via the 'pip install --upgrade pip' command.
-
-		
-	出现的错误2：
-	
-		File "/usr/local/lib/python3.6/site-packages/pip/_vendor/requests/packages/urllib3/response.py", line 237, in _error_catcher
-		raise ReadTimeoutError(self._pool, None, 'Read timed out.')
-		pip._vendor.requests.packages.urllib3.exceptions.ReadTimeoutError: HTTPSConnectionPool(host='files.pythonhosted.org', port=443): Read timed out.
-
-
-	
-	pip3 --default-timeout=1800 install -i https://pypi.tuna.tsinghua.edu.cn/simple ansible
-
-
-	[root@localhost Python-3.6.4]#  ansible --version
-	ansible 2.10.3
-	config file = None
-	configured module search path = ['/root/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
-	ansible python module location = /usr/local/lib/python3.6/site-packages/ansible
-	executable location = /usr/local/bin/ansible
-	python version = 3.6.4 (default, Nov 29 2020, 15:51:31) [GCC 4.8.5 20150623 (Red Hat 4.8.5-44)]
-
-	
-需要配置SSH进行通信	
-	[root@localhost ansible]# vim hosts
-
-	[test]
-	192.168.1.27
-		
-	[root@localhost ansible]# ansible test -m ping
-	The authenticity of host '192.168.1.27 (192.168.1.27)' can t be established.
-	ECDSA key fingerprint is SHA256:8oX7cJnno8AFyt6PSm4aqPmK5IVSGn07igAWkamaNlg.
-	ECDSA key fingerprint is MD5:1b:ad:b4:b1:33:e7:b5:c6:81:0f:3a:82:bf:36:59:e3.
-	Are you sure you want to continue connecting (yes/no)? yes
-	192.168.1.27 | UNREACHABLE! => {
-		"changed": false,
-		"msg": "Failed to connect to the host via ssh: Warning: Permanently added '192.168.1.27' (ECDSA) to the list of known hosts.\r\nPermission denied (publickey,gssapi-keyex,gssapi-with-mic,password).",
-		"unreachable": true
-	}
-
-
-	
-https://www.cnblogs.com/shenjianping/p/11283597.html   vue生命周期
-
-						  
+https://www.cnblogs.com/shenjianping/p/11283597.html   vue生命周期						  
