@@ -5,6 +5,8 @@ https://www.cnblogs.com/shenjianping/p/12232176.html  基于VirtualBox和Vagrant
 https://blog.csdn.net/u013866352/article/details/105413717  Vagrant-新增-root-用户
 
 
+
+
 C:\Users\Administrator\Desktop
 λ vagrant -v
 Vagrant 2.2.6
@@ -12,6 +14,7 @@ Vagrant 2.2.6
 
 
 vagrant box add my-box vagrant-centos-7.box
+vagrant box add my-box vagrant-centos-7.2.box
 
 	E:\centos7
 	λ vagrant box add my-box vagrant-centos-7.box
@@ -133,4 +136,17 @@ vagrant up
 
 
 
-https://www.cnblogs.com/shenjianping/p/11283597.html   vue生命周期						  
+[root@localhost pip-8.0.2]# pip3 install ansible
+
+
+    distutils.errors.DistutilsError: Setup script exited with error: command 'gcc' failed with exit status 1
+    
+	----------------------------------------
+	Command "python setup.py egg_info" failed with error code 1 in /tmp/pip-build-sm694z3n/cryptography
+	You are using pip version 8.0.2, however version 20.2.4 is available.
+	You should consider upgrading via the 'pip install --upgrade pip' command.
+
+
+https://www.cnblogs.com/shenjianping/p/11283597.html   vue生命周期
+
+						  

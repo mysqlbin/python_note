@@ -93,7 +93,7 @@ DATABASES = {
     'NAME': 'zst_mysql_1110',  # 数据库名，先前创建的
     'USER': 'root',  # 用户名，可以自己创建用户
     'PASSWORD': '123456abc',  # 密码
-    'HOST': '192.168.1.27',  # mysql服务所在的主机ip
+    'HOST': '192.168.0.201',  # mysql服务所在的主机ip
     'PORT': '3306',  # mysql服务端口
     }
 }
