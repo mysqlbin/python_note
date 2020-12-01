@@ -1,0 +1,6 @@
+- hosts: test
+  vars: 
+    mysql_port: 80
+  tasks:
+  - name: who am i
+    command: touch /tmp/mysql_{{mysql_port}}.tmp

@@ -1,0 +1,11 @@
+[mysql]
+auto-rehash
+socket =/tmp/mysql.sock
+
+[mysqld]
+user = mysql       
+basedir = {{ mysql_base_dir }}
+datadir = {{ mysql_data_dir_base | default('/database/mysql/data/') }}{{mysql_port}}
+server_id ={{ ansible_all_ipv4_addresses.0 }}    
+port ={{ mysql_port | default(3306)}} 
+

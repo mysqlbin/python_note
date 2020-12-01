@@ -5,6 +5,8 @@ https://www.cnblogs.com/shenjianping/p/12232176.html  基于VirtualBox和Vagrant
 https://blog.csdn.net/u013866352/article/details/105413717  Vagrant-新增-root-用户
 
 
+主控机：192.168.0.44
+被控机：192.168.0.45
 
 
 C:\Users\Administrator\Desktop
@@ -147,6 +149,8 @@ vagrant up
 		You are using pip version 8.0.2, however version 20.2.4 is available.
 		You should consider upgrading via the 'pip install --upgrade pip' command.
 
+		-- pip3 install --upgrade pip
+		
 		
 	出现的错误2：
 	
@@ -155,20 +159,29 @@ vagrant up
 		pip._vendor.requests.packages.urllib3.exceptions.ReadTimeoutError: HTTPSConnectionPool(host='files.pythonhosted.org', port=443): Read timed out.
 
 
-	
 	pip3 --default-timeout=1800 install -i https://pypi.tuna.tsinghua.edu.cn/simple ansible
 
+	自己的电脑
+		[root@localhost Python-3.6.4]#  ansible --version
+		ansible 2.10.3
+		config file = None
+		configured module search path = ['/root/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+		ansible python module location = /usr/local/lib/python3.6/site-packages/ansible
+		executable location = /usr/local/bin/ansible
+		python version = 3.6.4 (default, Nov 29 2020, 15:51:31) [GCC 4.8.5 20150623 (Red Hat 4.8.5-44)]
 
-	[root@localhost Python-3.6.4]#  ansible --version
-	ansible 2.10.3
-	config file = None
-	configured module search path = ['/root/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
-	ansible python module location = /usr/local/lib/python3.6/site-packages/ansible
-	executable location = /usr/local/bin/ansible
-	python version = 3.6.4 (default, Nov 29 2020, 15:51:31) [GCC 4.8.5 20150623 (Red Hat 4.8.5-44)]
-
+	公司的电脑
+		[root@localhost vagrant]# ansible --version
+		ansible 2.10.3
+		  config file = None
+		  configured module search path = ['/root/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+		  ansible python module location = /usr/local/lib/python3.6/site-packages/ansible
+		  executable location = /usr/local/bin/ansible
+		  python version = 3.6.4 (default, Nov 30 2020, 08:52:21) [GCC 4.8.5 20150623 (Red Hat 4.8.5-4)]
 	
+  
 需要配置SSH进行通信	
+	
 	[root@localhost ansible]# vim hosts
 
 	[test]
@@ -186,7 +199,125 @@ vagrant up
 	}
 
 
+
+建立ssh信任机制
+
+	需要切换到vagrant用户
 	
+	在 192.168.0.44 使用 ssh-keygen 生成 key:
+		shell> ssh-keygen # 之后一路回车就行了。最后会在~/.ssh 下面产生： id_rsa id_rsa.pub 两个文件。
+	生成信任文件：
+		shell> cd ~/.ssh/
+		shell> cat id_rsa.pub >authorized_keys
+		shell> chmod 600 *
+	
+	
+		[vagrant@localhost .ssh]$ ll
+		total 16
+		-rw------- 1 vagrant vagrant  389 Nov 30 08:28 authorized_keys
+		-rw------- 1 vagrant vagrant 1679 Dec  1 03:50 id_rsa
+		-rw------- 1 vagrant vagrant  411 Dec  1 03:50 id_rsa.pub
+		-rw-r--r-- 1 vagrant vagrant  174 Dec  1 03:51 known_hosts
+		[vagrant@localhost .ssh]$ chmod 600 *
+		[vagrant@localhost .ssh]$ ll
+		total 16
+		-rw------- 1 vagrant vagrant  389 Nov 30 08:28 authorized_keys
+		-rw------- 1 vagrant vagrant 1679 Dec  1 03:50 id_rsa
+		-rw------- 1 vagrant vagrant  411 Dec  1 03:50 id_rsa.pub
+		-rw------- 1 vagrant vagrant  174 Dec  1 03:51 known_hosts
+	
+	操作 192.168.0.45 的步骤
+		1. 把 id_rsa.pub 上传到 /home/vagrant/.ssh 目录下
+		2. 不小心把 authorized_keys 文件 也删除了
+		3. chmod 600 *
+		4. 接着，执行 cat id_rsa.pub >> authorized_keys 命令	
+		5. chmod 600 *
+		
+	接着在 44 执行	
+		[vagrant@localhost .ssh]$ ssh vagrant@192.168.0.45
+		
+		[vagrant@localhost ~]$ exit
+		logout
+		Connection to 192.168.0.45 closed.
+		[vagrant@localhost .ssh]$ ip addr show
+		1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN 
+			link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+			inet 127.0.0.1/8 scope host lo
+			   valid_lft forever preferred_lft forever
+			inet6 ::1/128 scope host 
+			   valid_lft forever preferred_lft forever
+		2: enp0s3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP qlen 1000
+			link/ether 08:00:27:6c:3e:95 brd ff:ff:ff:ff:ff:ff
+			inet 192.168.0.44/24 brd 192.168.0.255 scope global dynamic enp0s3
+			   valid_lft 609387sec preferred_lft 609387sec
+			inet6 fe80::a00:27ff:fe6c:3e95/64 scope link 
+			   valid_lft forever preferred_lft forever
+		[vagrant@localhost .ssh]$ 
+
+
+		
+	https://www.linuxprobe.com/linux-ssh-keygen.html   Linux下配置SSH免密通信 – "ssh-keygen"的基本用法
+
+
+
+看看主控机是否可以远程操作被控机
+	
+	[vagrant@localhost ansible]$ ansible test -m ping
+	192.168.0.45 | SUCCESS => {
+		"ansible_facts": {
+			"discovered_interpreter_python": "/usr/bin/python"
+		},
+		"changed": false,
+		"ping": "pong"
+	}
+
+
+
+ansible-playbook test.yml
+	
+	[root@localhost ansible]# cat test.yml 
+	# 这个是你选择的主机，对应 hosts 文件中的 [test]
+	- hosts: test  
+	  # 这个是变量
+	  vars: 
+		mysql_port: 80
+	  # 这是要执行的操作
+	  tasks:
+	  - name: who am i
+		command: touch /tmp/mysql_{{mysql_port}}.tmp
+
+	[vagrant@localhost ansible]$ ansible-playbook test.yml
+
+	PLAY [test] ************************************************************************************************************************************************************************************************************************************
+
+	TASK [Gathering Facts] *************************************************************************************************************************************************************************************************************************
+	ok: [192.168.0.45]
+
+	TASK [who am i] ********************************************************************************************************************************************************************************************************************************
+	[WARNING]: Consider using the file module with state=touch rather than running 'touch'.  If you need to use command because file is insufficient you can add 'warn: false' to this command task or set 'command_warnings=False' in ansible.cfg
+	to get rid of this message.
+	changed: [192.168.0.45]
+
+	PLAY RECAP *************************************************************************************************************************************************************************************************************************************
+	192.168.0.45               : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
+
+
+
+
+
+编辑文件用 root 账号，执行 ansible 命令用 vagrant 账号。 
+
+
+https://zhuanlan.zhihu.com/p/33945958   Ansible使用及YAML语法介绍
+https://zhuanlan.zhihu.com/p/162698360  Ansible原理架构及常用模块详解
+
+
+https://fungleo.blog.csdn.net/article/details/50914519    centos7 yum 更新出现 [Errno 14] HTTP Error 404 - Not Found 的解决方法
+
+		
 https://www.cnblogs.com/shenjianping/p/11283597.html   vue生命周期
 
+						  
+						  
+						  
 						  
