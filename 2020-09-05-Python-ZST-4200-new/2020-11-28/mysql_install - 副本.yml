@@ -1,0 +1,117 @@
+---
+- hosts: mysql-master
+  # 我们在playbook的最前面添加 become: True, 整个任务就会以root执行
+  become: True
+  vars:
+    # MySQL 根目录
+    mysql_root_directory: /home/mysql/  
+    
+    # MySQL数据目录
+    mysql_data_dir: /data
+    
+    # MySQL binlog目录
+    mysql_logs_dir: /logs
+    
+    # MySQL tmp目录
+    mysql_tmp_dir: /tmp
+    
+    
+    # 端口号
+    mysql_port: 3306
+    
+    # MySQL二进制包的路径
+    mysql_base_dir: /opt/mysql-8.0.16-linux-glibc2.12-x86_64/
+    
+    # MySQL安装目录
+    mysql_install_dir: /usr/local/
+    
+    install_packages:
+      - vim
+      - unzip
+      
+  tasks:
+    - name: install packages
+      # yum 模块
+      package:
+        name: "{{ install_packages }}"
+        state: present
+
+    - name: create mysql group
+      # group 模块，创建mysql用户组为 mysql 
+      group:
+        name: mysql
+        state: present
+ 
+    - name: create mysql user
+      # user 模块，创建mysql用户为 mysql, 所属组为 mysql，并且设置没有权限登录
+      user:
+        name: mysql
+        group: mysql
+        state: present    # 创建
+        shell: /sbin/nologin
+
+    - name: scp the mysql installer
+      unarchive:
+        src: /opt/mysql-5.7.22-linux-glibc2.12-x86_64.tar.gz
+        dest: "{{ mysql_install_dir }}"
+        owner: mysql
+        group: mysql
+        copy: true    # 默认为true：src为主控机端，dest为被控机端的目标路径，为false：表示src和desc都是在远端。
+    
+    #- name: Move mysql-5.7.22-linux-glibc2.12-x86_64 to mysql
+    #  shell: "mv /usr/local/mysql-5.7.22-linux-glibc2.12-x86_64 /usr/local/mysql"
+    #    owner: mysql
+    #    group: mysql  
+        
+    
+    
+    - name: Add mysql bin dir to $PATH.
+      # copy 模块, 使用content来生成我们要复制到目标的文件内容
+      copy:
+        dest: /etc/profile.d/mysql-path.sh   # 这个 mysql-path.sh 文件从哪里来的？ dest 生成的， 使用content来生成我们要复制到目标的文件内容
+        content: 'PATH=$PATH:{{ mysql_install_dir }}mysql/bin'
+    
+    - name: mkdir root directory
+      # file 模块，创建文件/目录，并且设置所属用户和所属组为 mysql
+      file:
+        path: "{{ mysql_root_directory }} {{ mysql_port }}" 
+        state: directory
+        owner: mysql
+        group: mysql
+        
+    - name: mkdir data directory
+      # file 模块，创建文件/目录，并且设置所属用户和所属组为 mysql
+      file:
+        path: "{{ mysql_root_directory }} {{ mysql_port }} {{ mysql_data_dir }}" 
+        state: directory
+        owner: mysql
+        group: mysql
+
+    - name: mkdir logs directory
+      # file 模块，创建文件/目录，并且设置所属用户和所属组为 mysql
+      file:
+        path: "{{ mysql_root_directory }} {{ mysql_port }} {{ mysql_logs_dir }}" 
+        state: directory
+        owner: mysql
+        group: mysql
+
+    - name: mkdir tmp directory
+      # file 模块，创建文件/目录，并且设置所属用户和所属组为 mysql
+      file:
+        path: "{{ mysql_root_directory }} {{ mysql_port }} {{ mysql_tmp_dir }}" 
+        state: directory
+        owner: mysql
+        group: mysql
+      
+      
+    - name: template my.cnf
+      # 引用模板
+      template:
+        src: my.cnf.tmpl
+        dest: "/etc/my.{{mysql_port}}.cnf"
+        owner: mysql
+        group: mysql
+        backup: yes
+        
+       
+        

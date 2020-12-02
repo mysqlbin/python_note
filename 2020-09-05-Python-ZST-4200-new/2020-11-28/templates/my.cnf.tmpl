@@ -4,8 +4,15 @@ socket =/tmp/mysql.sock
 
 [mysqld]
 user = mysql       
-basedir = {{ mysql_base_dir }}
-datadir = {{ mysql_data_dir_base | default('/database/mysql/data/') }}{{mysql_port}}
-server_id ={{ ansible_all_ipv4_addresses.0 }}    
-port ={{ mysql_port | default(3306)}} 
+basedir = {{ mysql_install_dir }}{{ mysql_filename }}
+datadir = {{ mysql_root_directory }}{{ mysql_port }}{{ mysql_data_dir }}
+server_id = {{ mysql_port | default(3306)}} 
+port = {{ mysql_port | default(3306)}} 
 
+log-bin = /home/mysql/3306/logs/mysql-bin
+
+tmpdir = {{ mysql_tmp_dir }}
+
+socket	= /home/mysql/3306/data/3306.sock
+
+log-error = /home/mysql/3306/data/error.log
