@@ -1,0 +1,31 @@
+---
+- hosts: mysql-master
+  # 我们在playbook的最前面添加 become: True, 整个任务就会以root执行
+  become: True
+  vars:
+    # MySQL安装目录
+    mysql_data_dir_base: /data/mysql/
+    mysql_port: 3306
+    # MySQL二进制包的路径
+    mysql_base_dir: /opt/mysql-8.0.16-linux-glibc2.12-x86_64/
+    install_packages:
+      - vim
+      - unzip
+  tasks:
+    - name: install packages
+      # yum 模块
+      package:
+        name: "{{ install_packages }}"
+        state: present
+
+   
+    - name: scp the mysql installer
+      unarchive:
+        src: /opt/mysql-5.7.22-linux-glibc2.12-x86_64.tar.gz
+        dest: /opt/
+        owner: mysql
+        group: mysql
+        copy: true    # 默认为true：src为主控机端，dest为被控机端的目标路径，为false：表示src和desc都是在远端。
+
+        
+        
