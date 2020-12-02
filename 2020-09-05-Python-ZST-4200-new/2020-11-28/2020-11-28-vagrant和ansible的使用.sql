@@ -318,6 +318,23 @@ https://fungleo.blog.csdn.net/article/details/50914519    centos7 yum 更新出�
 https://www.cnblogs.com/shenjianping/p/11283597.html   vue生命周期
 
 						  
-						  
-						  
-						  
+[root@localhost vagrant]# yum install -y lrzsz						  
+Cannot find a valid baseurl for repo: extras/7/x86_64			  
+				
+
+
+E:\centos7\centos-new
+λ vagrant ssh-config
+Host default
+  HostName 127.0.0.1
+  User vagrant
+  Port 22
+  UserKnownHostsFile /dev/null
+  StrictHostKeyChecking no
+  PasswordAuthentication no
+  IdentityFile E:/centos7/centos-new/.vagrant/machines/default/virtualbox/private_key
+  IdentitiesOnly yes
+  LogLevel FATAL
+
+
+  
