@@ -282,11 +282,74 @@ get
 
 
 
+# 位置：user/views.py
 
+@api_view(['POST'])
+@csrf_exempt
+def django_login(request):
 	
+	print(request.data)
+	serializer = LoginSerializer(data=request.data)
+	# serializer.is_valid(raise_exception=True) 这样则会抛出异常
+	if serializer.is_valid():
+		print(serializer.data)
+		return HttpResponse('valid')
+	else:
+		print(serializer.errors)
+		return HttpResponse('invalid')
+		
 django-admin startapp check
 	
 	
 看项目的代码，自己要理解、思考
 不理解的地方就看视频
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MjM5OTMyODA4Nw==&action=getalbum&album_id=1481676575086608384&scene=173&from_msgid=2247484783&from_itemidx=1&count=3#wechat_redirect #原创DRF教程连载
+
+
+
+https://mp.weixin.qq.com/s/57aoG2aSdhWgCoXPmQd5zQ  Django REST Framework教程(2): 序列化器介绍及以博客为例开发基于函数视图的API
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

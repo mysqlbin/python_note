@@ -24,11 +24,10 @@
     # MySQL安装目录
     mysql_install_dir: /usr/local/
     
-    
     # MySQL解压后的文件名
     mysql_filename: mysql-5.7.22-linux-glibc2.12-x86_64
-
     
+    # 要安装的相关依赖包
     install_packages:
       - vim
       - unzip
@@ -54,13 +53,13 @@
         state: present    # 创建
         shell: /sbin/nologin
 
-    #- name: scp the mysql installer
-    #  unarchive:
-    #    src: /opt/mysql-5.7.22-linux-glibc2.12-x86_64.tar.gz
-    #    dest: "{{ mysql_install_dir }}"
-    #    group: mysql  
-    #    owner: mysql    
-    #    copy: true    # 默认为true：src为主控机端，dest为被控机端的目标路径，为false：表示src和dest都是在远端。
+    - name: scp the mysql installer
+      unarchive:
+        src: /opt/mysql-5.7.22-linux-glibc2.12-x86_64.tar.gz
+        dest: "{{ mysql_install_dir }}"
+        group: mysql  
+        owner: mysql    
+        copy: true    # 默认为true：src为主控机端，dest为被控机端的目标路径，为false：表示src和dest都是在远端。
     
     #- name: Move mysql-5.7.22-linux-glibc2.12-x86_64 to mysql
     #  shell: "mv /usr/local/mysql-5.7.22-linux-glibc2.12-x86_64 /usr/local/mysql"
@@ -71,9 +70,15 @@
     - name: Add mysql bin dir to $PATH.
       # copy 模块, 使用content来生成我们要复制到目标的文件内容
       copy:
-        dest: /etc/profile.d/mysql-path.sh   # 这个 mysql-path.sh 文件从哪里来的？ dest 生成的， 使用content来生成我们要复制到目标的文件内容
+        # 这个 mysql-path.sh 文件从哪里来的？ dest 生成的， 使用content来生成我们要复制到目标的文件内容
+        # 怎么执行这个文件？现在只是把content的内容写入到 mysql-path.sh 文件中
+        #  [root@localhost profile.d]# echo $PATH
+        #　/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/usr/local/mysql-5.7.22-linux-glibc2.12-x86_64/bin:/opt/puppetlabs/bin:/home/vagrant/.local/bin:/home/vagrant/bin:/usr/local/mysql-5.7.22-linux-glibc2.12-x86_64/bin
+
+        dest: /etc/profile.d/mysql-path.sh   
+        
         content: 'PATH=$PATH:{{ mysql_install_dir }}{{ mysql_filename }}/bin'
-    
+        
     - name: mkdir root directory
       # file 模块，创建文件/目录，并且设置所属用户和所属组为 mysql
       file:
@@ -115,7 +120,9 @@
         owner: mysql
         group: mysql
         backup: yes
-        
+      # [root@localhost logs]# ll /etc/my.3306.cnf
+      # -rw-r--r-- 1 mysql mysql 355 Dec  3 03:11 /etc/my.3306.cnf
+      
     # 初始化   
     - name: initialize-insecure for mysql-5.7.22
       shell: "{{ mysql_install_dir }}{{ mysql_filename }}/bin/mysqld --defaults-file=/etc/my.{{mysql_port}}.cnf  --initialize-insecure"    
