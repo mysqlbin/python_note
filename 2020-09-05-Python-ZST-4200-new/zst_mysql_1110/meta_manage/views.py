@@ -88,8 +88,8 @@ class SchemaViewSet(viewsets.ModelViewSet):
         if pk is None is None:
             raise Http404
 
+        # 通过序列化器来做服务端的数据验证
         serializer = KillMySQLProcessSerializer(data=request.data)
-        #
         serializer.is_valid(raise_exception=True)
 
         # if not serializer.is_valid():

@@ -104,8 +104,6 @@
 				def has_permission(self, request, view):
 					return bool(request.user and request.user.is_authenticated)
 
-
-	
 	使用案例
 		
 		from rest_framework.views import APIView
@@ -113,7 +111,7 @@
 		
 		class UserDetailView(APIView):
 
-			# IsAuthenticated：判断有没有登录过
+			# IsAuthenticated ：判断有没有登录过
 			permission_classes = [IsAuthenticated]
 
 			def get(self, request, *args, **kwargs):
@@ -160,11 +158,17 @@
 5. DRF viewsets(视图集合) 
 	
 	使用视图集后，我们需要使用DRF提供的路由router来分发urls，因为一个视图集现在对应多个urls的组合，而不像之前的一个url对应一个视图函数或一个视图类。
-	
+
+	basename
+		首先，在Django中我们可以给一个URL命名
+		其次，viewset的URL是自动生成的
+		basename就是自动生成的URL name的前缀
+		-- 这里还不理解。
+		
 	from rest_framework.routers import DefaultRouter
 
 	router = DefaultRouter()
-	router.register(r'host_view', HostViewSet, basename='host')
+	router.register(r'host_view', HostViewSet, basename='host')    -- basename='host' 改为 basename='host_view'  会怎么样？
 	router.register(r'mysql_schema', SchemaViewSet, basename='mysql_schema')
 
 	"""
@@ -187,7 +191,6 @@
 			http://127.0.0.1:8001/api/meta_manage/mysql_schema/
 				/mysql_schema/ 对应 r'mysql_schema'
 				
-				
 			SchemaViewSet 对应视图类
 
 				class SchemaViewSet(viewsets.ModelViewSet):
@@ -200,15 +203,27 @@
 	
 
 
-	register 用两个参数:
+	register 的3个参数:
 
-		prefix route中url的前缀
-		viewset 对应的viewset类
-		basename 创建url的名字，默认是viewset的queryset，所以如果viewset类中没用queryset属性，必须设置basename
+		prefix  route中url的前缀
+		viewset 对应的viewset类  --理解
+		basename 创建url的名字，默认是viewset的 queryset ，所以如果viewset类中没用queryset属性，必须设置basename
 
 		https://www.cnblogs.com/yuzhenjie/p/10361880.html   Django-rest-framework（四）router
 
 	
+	路由类的源码 
+	class BaseRouter:
+		def __init__(self):
+			self.registry = []
+
+		def register(self, prefix, viewset, basename=None):
+			if basename is None:
+				basename = self.get_default_basename(viewset)
+			self.registry.append((prefix, viewset, basename))
+
+
+		
 6. DRF ModelViewSet
 
 	class SchemaViewSet(viewsets.ModelViewSet):
@@ -282,7 +297,9 @@
 
 8. 小结
 	
-	对DRF越来越清晰了，还继续理解、使用。
+	对DRF越来越清晰了，还需要继续理解、使用。
+		--越看越模糊，也越来越清晰
+	师傅领进门，修行靠个人。
 	
 9. 接口列表相关
 
