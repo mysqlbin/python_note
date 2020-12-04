@@ -459,7 +459,9 @@
 		
 		IP地址去除小数点组成一个大整数，就可以是全世界唯一的了。
 		-- 这个待实现
-	
+		http://docs.jinkan.org/docs/jinja2/templates.html#variables
+		用replace
+		
 	5. 
 	
 12. 小结

@@ -1,16 +1,28 @@
 
+DRF提供的@api_view这个非常重要的装饰器，实现了以下几大功能：
+
+	与Django传统函数视图相区分，强调这是API视图，并限定了可以接受的请求方法。
+
+	拓展了django原来的request对象。
+		新的request对象不仅仅支持request.POST提交的数据，还支持其它请求方式如PUT或PATCH等方式提交的数据，所有的数据都在request.data字典里。这对开发Web API非常有用。
+
+	request.POST  # 只处理表单数据  只适用于'POST'方法
+	request.data  # 处理任意数据  适用于'POST'，'PUT'和'PATCH'方法
+	
+
 1. 自定义序列化器
 2. 基于类的视图
-3. DRF框架-APIView视图类
+3. APIView视图类
 4. GenericAPIView
 5. DRF viewsets(视图集合) 
 6. DRF ModelViewSet
 7. filter过滤
 8. 小结
-9. 接口列表相关
+9. 实验和学习DRF的接口列表
 10. 相关参考
 
 1. 自定义序列化器
+	
 	REST framework提供了Serializer类和ModelSerializer类两种方式供你自定义序列化器
 	前者需手动指定需要序列化和反序列化的字段
 	后者根据模型(model)生成需要序列化和反序列化的字段，可以使代码更简洁。
@@ -39,10 +51,22 @@
 				fields = '__all__'
 				
 
+
+
 2. 基于类的视图
 
-	Django-class based view 表示基于类的视图
-	
+	DRF推荐使用基于类的视图(CBV)来开发API, 并提供了4种开发CBV开发模式，如下
+
+		使用基础APIView类
+		
+		使用Mixins类和GenericAPI类混配
+
+		使用通用视图generics.*类, 比如 generics.ListCreateAPIView
+
+		使用视图集ViewSet和ModelViewSet
+			-- 目前在项目中使用的是这种。
+
+	Django-class based view 表示基于类的视图, 继承view类
 	
 	视图函数的工作机制
 		通过路由设置，一个http请求最终交给视图函数进行处理	
@@ -66,16 +90,16 @@
 			
 		def delete put http methods的方法名
 			
-	* 声明路由的方式有所不同
+	* 基于类的视图，声明路由的方式有所不同，如下
 	path('article_list/', ArticleListView.as_view())
 		
 		
-3. DRF框架-APIView视图类
+3. APIView视图类
 	
 	APIView是DRF提供一个视图类，用法和django的View相似，实际上APIView就是继承了Django的View类，并且在View类的基础上，提供了权限、认证相关的功能
-	
+		-- 理解了。
+		
 	与Django一样，DRF也支持使用基于函数的视图(Functional Based View, FBV)和基于类的视图(Class Based View, CBV)来编写视图(views)。
-	
 	
 	
 	源码
@@ -230,6 +254,7 @@
 
 		queryset = MySQLSchema.objects.all()
 		serializer_class = MySQLSchemaSerializer
+		
 		pagination_class = CustomPagination
 		filter_backends = [DjangoFilterBackend]
 		filterset_fields = ['status', 'schema', 'host_ip', 'port']
@@ -268,7 +293,7 @@
 		FROM `meta_manage_host` WHERE (`meta_manage_host`.`name` = 'hostname-01' AND `meta_manage_host`.`memory` = '4')
 		
 	
-7.2 关键词搜索search_filter	
+7.2 关键词搜索search_filter-模糊查找、等值查找等	
 	
 	http://127.0.0.1:8001/meta_manage/v1/host_list_api/?search=hostname-02
 	
@@ -277,7 +302,8 @@
 		
 			SELECT `meta_manage_host`.`id`, `meta_manage_host`.`gmt_update`, `meta_manage_host`.`gmt_create`, `meta_manage_host`.`name`, `meta_manage_host`.`memory`, `meta_manage_host`.`cpu` 
 			FROM `meta_manage_host` WHERE (`meta_manage_host`.`name` LIKE 'hostname-02%' OR `meta_manage_host`.`memory` LIKE '%hostname-02%')
-
+		
+		----------------------------------------
 		filter_backends = [filters.SearchFilter]
 		search_fields = ['^name', '=memory']
 		
@@ -285,7 +311,8 @@
 			
 			SELECT `meta_manage_host`.`id`, `meta_manage_host`.`gmt_update`, `meta_manage_host`.`gmt_create`, `meta_manage_host`.`name`, `meta_manage_host`.`memory`, `meta_manage_host`.`cpu` 
 			FROM `meta_manage_host` WHERE (`meta_manage_host`.`name` LIKE 'hostname-02%' OR `meta_manage_host`.`memory` LIKE 'hostname-02')
-
+		
+		----------------------------------------
 		filter_backends = [filters.SearchFilter]
 		search_fields = ['^name', '=memory']
 			http://127.0.0.1:8001/meta_manage/v1/host_list_api/?search=hostname-02,4
@@ -298,25 +325,39 @@
 8. 小结
 	
 	对DRF越来越清晰了，还需要继续理解、使用。
-		--越看越模糊，也越来越清晰
+		--越看越模糊，也越来越清晰--继续理解
 	师傅领进门，修行靠个人。
 	
-9. 接口列表相关
+9. 实验和学习DRF的接口列表
 
-get
-	http://127.0.0.1:8001/api/meta_manage/v1/host/1
+	get
+		path('v1/host/', HostView.as_view())
+			http://127.0.0.1:8001/api/meta_manage/v1/host
+			
+		path('v1/host/<int:host_id>/', HostView.as_view())
+			http://127.0.0.1:8001/api/meta_manage/v1/host/1
+		
+		router.register(r'host_view', HostViewSet, basename='host')
+			http://127.0.0.1:8001/api/meta_manage/host_view/
+			
+		path('v1/host_list/', HostListView.as_view())
+			http://127.0.0.1:8001/api/meta_manage/v1/host_list
+		
+		path('v1/host_list_api/', HostListAPIView.as_view())
+			http://127.0.0.1:8001/api/meta_manage/v1/host_list_api/?search=hostname-02,4
+		
+		path('v1/host_list_mixin/', HostList.as_view())
+			http://127.0.0.1:8001/api/meta_manage/v1/host_list_mixin/
 
-	http://127.0.0.1:8001/api/meta_manage/host_view/
 
-	http://127.0.0.1:8001/api/meta_manage/host_view/
+	post
+		router.register(r'host_view', HostViewSet, basename='host')
+			http://127.0.0.1:8001/api/meta_manage/host_view/
+			
+			
 
-	http://127.0.0.1:8001/api/meta_manage/v1/host_list
-
-	http://127.0.0.1:8001/api/meta_manage/v1/host_list_api/?search=hostname-02,4
-
-	http://127.0.0.1:8001/api/meta_manage/v1/host_list_mixin/
-
-
+	
+	
 10. 相关参考
 	相关课件
 		《3-3用户登录与注册1031.pdf》
@@ -328,7 +369,9 @@ get
 		https://mp.weixin.qq.com/s/56mipLa14fHjeLv_KZwiiA  Django REST Framework教程(8): 分页(Pagination)详解
 		https://mp.weixin.qq.com/s/u9BpfRjhjDMh5ybL2plp0Q  Django REST Framework教程(7): 如何使用JWT认证(神文多图)
 		https://mp.weixin.qq.com/s/gEI2ikzeWR4MJ7AVwPIQ7w  Django REST Framework教程(6): 认证详解及如何使用Token认证
-		https://mp.weixin.qq.com/s/57aoG2aSdhWgCoXPmQd5zQ  Django REST Framework教程(2): 序列化器介绍及以博客为例开发基于函数视图的API
+		https://mp.weixin.qq.com/s/J4MnfJkxSvQtno2nz6qjUQ  Django REST Framework教程(5): 认证(Authentication)与权限(Permission)初识
+		https://mp.weixin.qq.com/s/wR6eAPk3wMjqqs18jkoYdg  Django REST Framework教程(4): 玩转序列化器(Serializer)
 		https://mp.weixin.qq.com/s/NFkRg0HG2GQWjfTCotRWfA  Django REST Framework教程(3): 基于类的视图APIView, GenericAPIView和视图集
+		https://mp.weixin.qq.com/s/57aoG2aSdhWgCoXPmQd5zQ  Django REST Framework教程(2): 序列化器介绍及以博客为例开发基于函数视图的API
 		https://mp.weixin.qq.com/s/7HI97hMZST4cBAgh0qGAJw  Django REST Framework教程(1): 为什么要学习DRF, 什么是序列化和RESTful的API
 		

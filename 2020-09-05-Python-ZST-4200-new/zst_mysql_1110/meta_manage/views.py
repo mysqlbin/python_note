@@ -88,7 +88,7 @@ class SchemaViewSet(viewsets.ModelViewSet):
         if pk is None is None:
             raise Http404
 
-        # 通过序列化器来做服务端的数据验证
+        # 通过序列化器来在服务端做参数的数据验证
         serializer = KillMySQLProcessSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
@@ -114,6 +114,7 @@ class SchemaViewSet(viewsets.ModelViewSet):
 
 # 基于APIView来写 get、put、post请示（继承APIView）
 class HostView(APIView):
+
     def get(self, request, host_id=None, *args, **kwargs):
         if host_id is None:
             hosts = Host.objects.all()
@@ -167,6 +168,24 @@ class HostView(APIView):
             
         """
 
+
+# GenericAPIView必须写在最后
+class HostList(mixins.ListModelMixin,
+               mixins.CreateModelMixin,
+               generics.GenericAPIView):
+
+    queryset = Host.objects.all()
+    serializer_class = HostSerializer
+
+    def get(self, request, *args, **kwargs):
+        # 我们不用在get post两个方法中都去ORM调用以及序列化调用 --理解了。 参考 class HostView(APIView):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+
+
 # 继承ListAPIView
 """
 class ListAPIView(mixins.ListModelMixin,GenericAPIView):
@@ -192,29 +211,19 @@ class HostListView(ListAPIView):
 
         # SELECT * FROM `meta_manage_host` WHERE `meta_manage_host`.`name` LIKE BINARY '%hostname%';
 
+    # 使用自带的过滤功能
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['name', 'cpu', 'memory']
 
-# 继承ListAPIView
+
+#继承ListAPIView
+
 class HostListAPIView(ListAPIView):
+
     serializer_class = HostSerializer
     queryset = Host.objects.all()
     filter_backends = [filters.SearchFilter]
     search_fields = ['^name', '=memory']
-
-# GenericAPIView必须写在最后
-class HostList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
-
-    queryset = Host.objects.all()
-    serializer_class = HostSerializer
-
-    def get(self, request, *args, **kwargs):
-        # 我们不用在get post两个方法中都去ORM调用以及序列化调用
-        return self.list(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
-
 
 
 # ModelViewSet
