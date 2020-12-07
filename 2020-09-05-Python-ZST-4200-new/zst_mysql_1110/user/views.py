@@ -17,6 +17,7 @@ def django_ldap_login(request):
     print(1)
 
     print(request.data)
+    print(type(request.data))
     serializer = LoginSerializer(data=request.data)
     # LoginSerializer登录序列化器在这里的作用，做post表单数据的验证，减少代码量
 

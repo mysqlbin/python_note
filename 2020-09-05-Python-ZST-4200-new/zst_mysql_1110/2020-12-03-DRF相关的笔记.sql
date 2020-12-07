@@ -1,4 +1,13 @@
 
+
+
+print(request.data)
+print(type(request.data))
+{'username': 'apple', 'password': '123456abc'}
+<class 'dict'>
+
+
+
 DRF提供的@api_view这个非常重要的装饰器，实现了以下几大功能：
 
 	与Django传统函数视图相区分，强调这是API视图，并限定了可以接受的请求方法。
@@ -24,8 +33,8 @@ DRF提供的@api_view这个非常重要的装饰器，实现了以下几大功�
 1. 自定义序列化器
 	
 	REST framework提供了Serializer类和ModelSerializer类两种方式供你自定义序列化器
-	前者需手动指定需要序列化和反序列化的字段
-	后者根据模型(model)生成需要序列化和反序列化的字段，可以使代码更简洁。
+	Serializer类: 	   需要手动指定需要序列化和反序列化的字段
+	ModelSerializer类: 根据模型(model)生成需要序列化和反序列化的字段，可以使代码更简洁。
 	
 	Serializer类
 		class HostSerializer(serializers.Serializer):
