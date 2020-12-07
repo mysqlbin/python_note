@@ -3,17 +3,73 @@
   # 我们在playbook的最前面添加 become: True, 整个任务就会以root执行
   become: True
   vars:
-    # MySQL安装目录
-    mysql_data_dir_base: /data/mysql/
+  
+    # MySQL 根目录
+    mysql_root_directory: /home/mysql/  
+    
+    # MySQL数据目录
+    mysql_data_dir: /data
+    
     mysql_port: 3306
+    
     # MySQL二进制包的路径
     mysql_base_dir: /opt/mysql-8.0.16-linux-glibc2.12-x86_64/
     install_packages:
       - vim
       - unzip
   tasks:
-    - name: Move abc to def
-      shell: "mv /home/abc /home/def"
-        owner: mysql
-        group: mysql 
+    #- name: install packages
+      # yum 模块
+      #package:
+        #name: "{{ install_packages }}"
+        #state: present
+    
+    
+    - name: who am i
+      command: touch /tmp/mysql_{{mysql_port}}.tmp
+      register: r
+      
+    - debug:
+        var: r
         
+        
+
+[vagrant@localhost ansible]$ ansible-playbook mysql_debug2.yml 
+[WARNING]: Invalid characters were found in group names but not replaced, use -vvvv to see details
+
+PLAY [mysql-master] ****************************************************************************************************************************************************************************************************************************
+
+TASK [Gathering Facts] *************************************************************************************************************************************************************************************************************************
+ok: [192.168.0.45]
+
+TASK [who am i] ********************************************************************************************************************************************************************************************************************************
+[WARNING]: Consider using the file module with state=touch rather than running 'touch'.  If you need to use command because file is insufficient you can add 'warn: false' to this command task or set 'command_warnings=False' in ansible.cfg
+to get rid of this message.
+changed: [192.168.0.45]
+
+TASK [debug] ***********************************************************************************************************************************************************************************************************************************
+ok: [192.168.0.45] => {
+    "r": {
+        "changed": true,
+        "cmd": [
+            "touch",
+            "/tmp/mysql_3306.tmp"
+        ],
+        "delta": "0:00:00.014782",
+        "end": "2020-12-07 03:23:04.464215",
+        "failed": false,
+        "rc": 0,
+        "start": "2020-12-07 03:23:04.449433",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "",
+        "stdout_lines": [],
+        "warnings": [
+            "Consider using the file module with state=touch rather than running 'touch'.  If you need to use command because file is insufficient you can add 'warn: false' to this command task or set 'command_warnings=False' in ansible.cfg to get rid of this message."
+        ]
+    }
+}
+
+PLAY RECAP *************************************************************************************************************************************************************************************************************************************
+192.168.0.45               : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+

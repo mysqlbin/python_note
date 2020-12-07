@@ -452,8 +452,7 @@
 
 
 	4. 参数server_id 使用 IP 的报错
-	
-						  
+					
 		TASK [initialize-insecure for mysql-5.7.22] ****************************************************************************************************************************************************************************************************
 		fatal: [192.168.0.45]: FAILED! => {"changed": true, "cmd": "/usr/local/mysql-5.7.22-linux-glibc2.12-x86_64/bin/mysqld --defaults-file=/etc/my.3306.cnf  --initialize-insecure", "delta": "0:00:00.447044", "end": "2020-12-02 09:33:00.488657", "msg": "non-zero return code", "rc": 1, "start": "2020-12-02 09:33:00.041613", "stderr": "2020-12-02T09:33:00.487598Z 0 [ERROR] Unknown suffix '.' used for variable 'server_id' (value '192.168.0.45')\n2020-12-02T09:33:00.487655Z 0 [ERROR] /usr/local/mysql-5.7.22-linux-glibc2.12-x86_64/bin/mysqld: Error while setting value '192.168.0.45' to 'server_id'\n2020-12-02T09:33:00.487696Z 0 [ERROR] Aborting", "stderr_lines": ["2020-12-02T09:33:00.487598Z 0 [ERROR] Unknown suffix '.' used for variable 'server_id' (value '192.168.0.45')", "2020-12-02T09:33:00.487655Z 0 [ERROR] /usr/local/mysql-5.7.22-linux-glibc2.12-x86_64/bin/mysqld: Error while setting value '192.168.0.45' to 'server_id'", "2020-12-02T09:33:00.487696Z 0 [ERROR] Aborting"], "stdout": "", "stdout_lines": []}
 		
@@ -461,16 +460,43 @@
 		-- 这个待实现
 		http://docs.jinkan.org/docs/jinja2/templates.html#variables
 		用replace
+
+
+		实现了：
+			
+			server_id = {{ ansible_all_ipv4_addresses.0|replace(".", "") }} 
+
+			mysql> show global variables like '%server_id%';
+			+----------------+-----------+
+			| Variable_name  | Value     |
+			+----------------+-----------+
+			| server_id      | 192168045 |
+			| server_id_bits | 32        |
+			+----------------+-----------+
+			2 rows in set (0.00 sec)
 		
-	5. 
+		
+	5. 其它参数整合到 my.cnf.temp文件中
 	
+	
+	
+	6. 重复执行安装，不再需要创建同时的MySQL数据库账号
+		TASK [make mysql secure] ***********************************************************************************************************************************************************************************************************************
+		fatal: [192.168.0.45]: FAILED! => {"changed": true, "cmd": "/usr/local/mysql-5.7.22-linux-glibc2.12-x86_64/bin/mysql -S /home/mysql/3306/data/3306.sock < /tmp/init.sql", 
+		"delta": "0:00:00.006821", "end": "2020-12-07 07:37:36.423625", 
+		"msg": "non-zero return code", "rc": 1, "start": "2020-12-07 07:37:36.416804", 
+		"stderr": "ERROR 1396 (HY000) at line 2: Operation CREATE USER failed for 'root'@'%'", "stderr_lines": ["ERROR 1396 (HY000) at line 2: Operation CREATE USER failed for 'root'@'%'"], "stdout": "", "stdout_lines": []}
+
+		PLAY RECAP *************************************************************************************************************************************************************************************************************************************
+		192.168.0.45               : ok=12   changed=3    unreachable=0    failed=1    skipped=2    rescued=0    ignored=0  
+
 12. 小结
 
 	编辑文件用 root 账号，执行 ansible 命令用 vagrant 账号。 
 	
 	规范化安装MySQL，自动化安装MySQL可以用ansible来安装。
 	
-	
+	用ansible内置的模块执行，当已经执行过了，ansbile就不会再执行，所以尽量不要在 ansbile 中使用shell，如果已经执行再使用shell操作是会重复执行的。
 
 13. 理论相关
 
@@ -595,7 +621,15 @@
 				owner:    模板文件的属主
 				group: 	  模板文件的属组
 				backup:   是否备份原文件，yes/no 
-		
+
+			传输配置文件-template module
+				我们希望一份ansible文件能够帮我们在一台机器上安装多个mysql实例
+				我们可以利用template模块，通过一个配置文件的模板，生成动态的配置文件
+				模板语法http://docs.jinkan.org/docs/jinja2/templates.html#variables
+
+
+			把变量写到模板中
+			
 		--最好能做成表格的形式。
 		
 14. 相关参考	
@@ -616,7 +650,39 @@
 
 	https://www.cnblogs.com/shenjianping/p/11283597.html   vue生命周期
 		
-		
+
+
+15. 模块的返回值
+	• - changed 表示是否对远程主机执行了更改操作
+	• - failed 模块是否执行完成
+	• - msg 消息
+	• - rc 表示return code
+	• - stdout 标准输出
+	• - stderr 错误输出
+
+
+
+
+	
+使用register + when条件实现相关判断
+
+	当when条件成立，则执行shell命令
+
+    - name: check initialize
+      shell: "ls {{ mysql_root_directory }}{{ mysql_port }}{{ mysql_data_dir }} | wc -l"
+      register: data_dir_count
+      tags:
+        - checkInitialize
+        
+    - name: initialize-insecure for mysql-5.7.x
+      shell: "{{ mysql_install_dir }}{{ mysql_filename }}/bin/mysqld --defaults-file=/etc/my.{{mysql_port}}.cnf  --initialize-insecure"  
+      when: data_dir_count.rc == 0 and data_dir_count.stdout = "0"
+
+
+
+
+
+	
 E:\centos7\centos-new
 λ vagrant ssh-config
 Host default

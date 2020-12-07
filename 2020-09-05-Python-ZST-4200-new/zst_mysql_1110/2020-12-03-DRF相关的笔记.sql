@@ -17,7 +17,6 @@ DRF提供的@api_view这个非常重要的装饰器，实现了以下几大功�
 
 	request.POST  # 只处理表单数据  只适用于'POST'方法
 	request.data  # 处理任意数据  适用于'POST'，'PUT'和'PATCH'方法
-	
 
 1. 自定义序列化器
 2. 基于类的视图
@@ -29,6 +28,8 @@ DRF提供的@api_view这个非常重要的装饰器，实现了以下几大功�
 8. 小结
 9. 实验和学习DRF的接口列表
 10. 相关参考
+11. @api_view装饰器
+
 
 1. 自定义序列化器
 	
@@ -384,3 +385,14 @@ DRF提供的@api_view这个非常重要的装饰器，实现了以下几大功�
 		https://mp.weixin.qq.com/s/57aoG2aSdhWgCoXPmQd5zQ  Django REST Framework教程(2): 序列化器介绍及以博客为例开发基于函数视图的API
 		https://mp.weixin.qq.com/s/7HI97hMZST4cBAgh0qGAJw  Django REST Framework教程(1): 为什么要学习DRF, 什么是序列化和RESTful的API
 		
+
+11. @api_view装饰器
+	DRF提供的@api_view这个非常重要的装饰器，实现了以下几大功能：
+
+		1. 与Django传统函数视图相区分，强调这是API视图，并限定了可以接受的请求方法。
+
+		2. 拓展了django原来的request对象。
+			新的request对象不仅仅支持request.POST提交的数据，还支持其它请求方式如PUT或PATCH等方式提交的数据，所有request.POST提交的数据都在request.data字典里。这对开发Web API非常有用。
+
+			request.POST  # 只处理表单数据  只适用于'POST'方法
+			request.data  # 处理任意数据  适用于'POST'，'PUT'和'PATCH'方法

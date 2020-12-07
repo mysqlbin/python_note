@@ -1,18 +1,21 @@
 [mysql]
 auto-rehash
-socket	= {{ mysql_root_directory }}{{ mysql_port }}{{ mysql_data_dir }}/3306.sock
+socket	= {{ mysql_root_directory }}{{ mysql_port }}{{ mysql_data_dir }}/{{ mysql_port }}.sock
 
 [mysqld]
 user = mysql       
 basedir = {{ mysql_install_dir }}{{ mysql_filename }}
+
 datadir = {{ mysql_root_directory }}{{ mysql_port }}{{ mysql_data_dir }}
-server_id = {{ mysql_port }} 
+
+server_id = {{ ansible_all_ipv4_addresses.0|replace(".", "") }} 
+
 port = {{ mysql_port }} 
 
 log-bin = {{ mysql_root_directory }}{{ mysql_port }}{{ mysql_logs_dir }}/mysql-bin
 
 tmpdir = {{ mysql_tmp_dir }}
 
-socket	= {{ mysql_root_directory }}{{ mysql_port }}{{ mysql_data_dir }}/3306.sock
+socket	= {{ mysql_root_directory }}{{ mysql_port }}{{ mysql_data_dir }}/{{ mysql_port }}.sock
 
 log-error = {{ mysql_root_directory }}{{ mysql_port }}{{ mysql_data_dir }}/error.log
