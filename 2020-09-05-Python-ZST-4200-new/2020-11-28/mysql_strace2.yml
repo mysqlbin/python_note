@@ -1,0 +1,19 @@
+---
+- hosts: mysql-master
+  # 我们在playbook的最前面添加 become: True, 整个任务就会以root执行
+  become: True
+  vars:
+    # MySQL安装目录
+    mysql_data_dir_base: /data/mysql/
+    mysql_port: 3306
+    # MySQL二进制包的路径
+    mysql_base_dir: /opt/mysql-8.0.16-linux-glibc2.12-x86_64/
+    install_packages:
+      - vim
+      - unzip
+  tasks:
+    - name: Move abc to def
+      shell: "mv /home/abc /home/def"
+        owner: mysql
+        group: mysql 
+        

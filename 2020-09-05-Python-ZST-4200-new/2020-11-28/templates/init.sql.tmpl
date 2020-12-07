@@ -1,0 +1,4 @@
+
+create user 'root'@'%' identified by '{{ mysql_root_password }}';
+grant all privileges on *.* to 'root'@'%' with grant option;
+

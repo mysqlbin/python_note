@@ -27,18 +27,25 @@
     # MySQL解压后的文件名
     mysql_filename: mysql-5.7.22-linux-glibc2.12-x86_64
     
+    mysql_root_password: "123456abc"
+    
     # 要安装的相关依赖包
     install_packages:
       - vim
       - unzip
       
   tasks:
-    - name: install packages
+    - set_fact:
+        instance_dir: "{{ mysql_root_directory }}{{ mysql_port }}"
+        
+    #- name: install packages
       # yum 模块
-      package:
-        name: "{{ install_packages }}"
-        state: present
-
+    #  package:
+    #    name: "{{ install_packages }}"
+    #    state: present
+    
+    # 通过set_fact命令动态地来设定变量
+    
     - name: create mysql group
       # group 模块，创建mysql用户组为 mysql 
       group:
@@ -52,14 +59,15 @@
         group: mysql
         state: present    # 创建
         shell: /sbin/nologin
-
-    - name: scp the mysql installer
-      unarchive:
-        src: /opt/mysql-5.7.22-linux-glibc2.12-x86_64.tar.gz
-        dest: "{{ mysql_install_dir }}"
-        group: mysql  
-        owner: mysql    
-        copy: true    # 默认为true：src为主控机端，dest为被控机端的目标路径，为false：表示src和dest都是在远端。
+    
+    
+    #- name: scp the mysql installer
+    #  unarchive:
+    #    src: /opt/mysql-5.7.22-linux-glibc2.12-x86_64.tar.gz
+    #    dest: "{{ mysql_install_dir }}"    # 变量mysql_install_dir的值为 /usr/local/
+    #    group: mysql  
+    #    owner: mysql    
+    #    copy: true    # 默认为true：src为主控机端，dest为被控机端的目标路径，为false：表示src和dest都是在远端。
     
     #- name: Move mysql-5.7.22-linux-glibc2.12-x86_64 to mysql
     #  shell: "mv /usr/local/mysql-5.7.22-linux-glibc2.12-x86_64 /usr/local/mysql"
@@ -82,7 +90,7 @@
     - name: mkdir root directory
       # file 模块，创建文件/目录，并且设置所属用户和所属组为 mysql
       file:
-        path: "{{ mysql_root_directory }}{{ mysql_port }}" 
+        path: "{{ instance_dir }}" 
         state: directory
         owner: mysql
         group: mysql
@@ -90,7 +98,7 @@
     - name: mkdir data directory
       # file 模块，创建文件/目录，并且设置所属用户和所属组为 mysql
       file:
-        path: "{{ mysql_root_directory }}{{ mysql_port }}{{ mysql_data_dir }}" 
+        path: "{{ instance_dir }}{{ mysql_data_dir }}" 
         state: directory
         owner: mysql
         group: mysql
@@ -98,7 +106,7 @@
     - name: mkdir logs directory
       # file 模块，创建文件/目录，并且设置所属用户和所属组为 mysql
       file:
-        path: "{{ mysql_root_directory }}{{ mysql_port }}{{ mysql_logs_dir }}" 
+        path: "{{ instance_dir }}{{ mysql_logs_dir }}" 
         state: directory
         owner: mysql
         group: mysql
@@ -106,7 +114,7 @@
     - name: mkdir tmp directory
       # file 模块，创建文件/目录，并且设置所属用户和所属组为 mysql
       file:
-        path: "{{ mysql_root_directory }}{{ mysql_port }}{{ mysql_tmp_dir }}" 
+        path: "{{ instance_dir }}{{ mysql_tmp_dir }}" 
         state: directory
         owner: mysql
         group: mysql
@@ -124,12 +132,48 @@
       # -rw-r--r-- 1 mysql mysql 355 Dec  3 03:11 /etc/my.3306.cnf
       
     # 初始化   
-    - name: initialize-insecure for mysql-5.7.22
-      shell: "{{ mysql_install_dir }}{{ mysql_filename }}/bin/mysqld --defaults-file=/etc/my.{{mysql_port}}.cnf  --initialize-insecure"    
+    #- name: initialize-insecure for mysql-5.7.22
+      #shell: "{{ mysql_install_dir }}{{ mysql_filename }}/bin/mysqld --defaults-file=/etc/my.{{mysql_port}}.cnf  --initialize-insecure"    
       
-    # 启动, 同时会生成 .sock 文件 
+    - name: check initialize
+      shell: "ls {{ instance_dir }}{{ mysql_data_dir }} | wc -l"
+      register: data_dir_count
+      tags:
+        - checkInitialize
+        
+    - name: initialize-insecure for mysql-5.7.x
+      shell: "{{ mysql_install_dir }}{{ mysql_filename }}/bin/mysqld --defaults-file=/etc/my.{{mysql_port}}.cnf  --initialize-insecure"  
+      when: data_dir_count.rc == 0 and data_dir_count.stdout == "0"
+
+        
+    - name: check start
+      shell: "netstat -tunlp|grep {{ mysql_port }} | wc -l"
+      register: port_count
+      tags:
+        - checkStart
+    
+    # 如果进程不存在，就启动MySQL, 同时会生成 .sock 文件 
     - name: start mysql
       shell: "{{ mysql_install_dir }}{{ mysql_filename }}/bin/mysqld --defaults-file=/etc/my.{{mysql_port}}.cnf &"
-      
+      when: port_count.rc == 0 and data_dir_count.stdout == "0"
+    
+    
+    # 创建MySQL数据库账号
+    - name: secure mysql
+      template:
+        src: init.sql.tmpl
+        dest: /tmp/init.sql
+        owner: mysql
+        group: mysql
+        
+    - name: make mysql secure
+      shell: "{{ mysql_install_dir }}{{ mysql_filename }}/bin/mysql -S {{ instance_dir }}{{ mysql_data_dir }}/{{ mysql_port }}.sock < /tmp/init.sql"  
+
+    - name: remove temp file /tmp/make_mysql_secure.sql
+      file:
+        dest: /tmp/init.sql
+        state: absent 
+        
+       
       
       
