@@ -4,7 +4,7 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 
 from django.http.response import HttpResponse
-import ldap
+# import ldap
 from django.contrib.auth import logout, login, authenticate, get_user_model
 from .serializers import LoginSerializer, UserDetailSerializer
 from zst_mysql_1110.response import MyJsonResponse
@@ -59,46 +59,46 @@ You should either call `.is_valid()` first, or access `.initial_data` instead.
     '''
 
 
-def ldap_login_debug(request):
-    # try:
-    #     con = ldap.initialize('ldap://127.0.0.1:10389')
-    #     username = "uid=apple,o=zst_k8s,dc=example,dc=com"
-    #     password = "123456abc"
-    #     con.simple_bind_s(username, password)
-    #     return HttpResponse("success")
-    # except ldap.LDAPError as e:
-    #     return HttpResponse("failed")
-    #
-    #
-
-    try:
-        con = ldap.initialize('ldap://127.0.0.1:10389')
-        username = "apple"
-        password = "123456abc"
-
-        # 验证管理员账号admin的密码
-        con.simple_bind_s('uid=admin,ou=system', 'secret')
-
-        results = con.search_s('o=zst_k8s,dc=example,dc=com', ldap.SCOPE_SUBTREE, "uid=%s" % username)
-        if results is not None and len(results) == 1:
-            user = results[0]
-            user_dn = user[0]
-            # 验证账号和密码
-            con.simple_bind_s(user_dn, password)
-        else:
-            return HttpResponse('user not exists')
-        return HttpResponse('login success')
-
-    except ldap.LDAPError as e:
-
-        return HttpResponse('login failed', str(e))
-
+# def ldap_login_debug(request):
+#     # try:
+#     #     con = ldap.initialize('ldap://127.0.0.1:10389')
+#     #     username = "uid=apple,o=zst_k8s,dc=example,dc=com"
+#     #     password = "123456abc"
+#     #     con.simple_bind_s(username, password)
+#     #     return HttpResponse("success")
+#     # except ldap.LDAPError as e:
+#     #     return HttpResponse("failed")
+#     #
+#     #
+#
+#     try:
+#         con = ldap.initialize('ldap://127.0.0.1:10389')
+#         username = "apple"
+#         password = "123456abc"
+#
+#         # 验证管理员账号admin的密码
+#         con.simple_bind_s('uid=admin,ou=system', 'secret')
+#
+#         results = con.search_s('o=zst_k8s,dc=example,dc=com', ldap.SCOPE_SUBTREE, "uid=%s" % username)
+#         if results is not None and len(results) == 1:
+#             user = results[0]
+#             user_dn = user[0]
+#             # 验证账号和密码
+#             con.simple_bind_s(user_dn, password)
+#         else:
+#             return HttpResponse('user not exists')
+#         return HttpResponse('login success')
+#
+#     except ldap.LDAPError as e:
+#
+#         return HttpResponse('login failed', str(e))
+#
 
 
 class UserDetailView(APIView):
 
     # IsAuthenticated：判断有没有登录过
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
         # 获取当前登录的用户，返回用户名

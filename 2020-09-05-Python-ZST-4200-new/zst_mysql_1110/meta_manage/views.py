@@ -19,10 +19,22 @@ from meta_manage.serializers import MySQLSchemaSerializer, KillMySQLProcessSeria
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
+from meta_manage import tasks
 import MySQLdb
 
 from rest_framework.decorators import api_view
 
+@api_view(['GET'])
+def celery_debug(request):
+
+    res = tasks.add.delay(1, 3)
+    #任务逻辑
+    # return JsonResponse({'status':'successful','task_id':res.task_id})
+
+    # print(res.task_id)
+    print(res)
+
+    return MyJsonResponse(message="success")
 
 class CustomPagination(PageNumberPagination):
 
