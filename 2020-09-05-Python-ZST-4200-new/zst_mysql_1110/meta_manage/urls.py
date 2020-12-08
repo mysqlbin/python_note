@@ -26,5 +26,6 @@ urlpatterns = [
     path('v1/host_list/', HostListView.as_view()),
     path('v1/host_list_api/', HostListAPIView.as_view()),
     path('v1/host_list_mixin/', HostList.as_view()),
+    path('v1/celery_debug/', celery_debug),
     *router.urls
 ]
