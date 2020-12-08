@@ -38,11 +38,11 @@
     - set_fact:
         instance_dir: "{{ mysql_root_directory }}{{ mysql_port }}"
         
-    - name: install packages
+    #- name: install packages
       # yum 模块
-      package:
-        name: "{{ install_packages }}"
-        state: present
+      #package:
+        #name: "{{ install_packages }}"
+        #state: present
     
     # 通过set_fact命令动态地来设定变量
     
@@ -63,7 +63,8 @@
     
     - name: scp the mysql installer
       unarchive:
-        src: /opt/mysql-5.7.19-linux-glibc2.12-x86_64.tar.gz
+        #src: /opt/mysql-5.7.19-linux-glibc2.12-x86_64.tar.gz
+        src: /opt/mysql-5.7.22-linux-glibc2.12-x86_64.tar.gz
         dest: "{{ mysql_install_dir }}"    # 变量mysql_install_dir的值为 /usr/local/
         group: mysql  
         owner: mysql    

@@ -489,7 +489,8 @@
 
 		PLAY RECAP *************************************************************************************************************************************************************************************************************************************
 		192.168.0.45               : ok=12   changed=3    unreachable=0    failed=1    skipped=2    rescued=0    ignored=0  
-
+		
+		
 12. 小结
 
 	编辑文件用 root 账号，执行 ansible 命令用 vagrant 账号。 
@@ -681,7 +682,6 @@
 
 
 
-
 	
 E:\centos7\centos-new
 λ vagrant ssh-config
@@ -697,7 +697,7 @@ Host default
   LogLevel FATAL
 
 
-  
-
-
+	
+[root@localhost mysql-5.7.22-linux-glibc2.12-x86_64]# cat /etc/centos-release
+CentOS Linux release 7.2.1511 (Core) 
 	

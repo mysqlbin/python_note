@@ -1,15 +1,4 @@
-
-
-vagrant box add my-box3 vagrant-centos-7.2.box
-
-mkdir centos-new3 && cd centos-new3
-
-
-vagrant init my-box3
-
-
-vagrant up				
-
+https://blog.csdn.net/sdwang198912/article/details/86738452   Django开发总结-（一）Vagrant虚拟环境搭建
 
 
 
@@ -65,4 +54,41 @@ vagrant up
 		default: /home/vagrant/software => E:/centos/centos-new4/data/software
 
 vagrant ssh
+
+
+
+
+sudo passwd root
+
+
+安装Python3
+
+Linux 安装pipenv
+
+	pip3 install pipenv -i https://pypi.tuna.tsinghua.edu.cn/simple
+	
+安装ansible
+	pip3 --default-timeout=1800 install -i https://pypi.tuna.tsinghua.edu.cn/simple ansible
+
+	[root@localhost Python-3.6.4]# ansible --version
+	ansible 2.10.3
+	  config file = None
+	  configured module search path = ['/root/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+	  ansible python module location = /usr/local/lib/python3.6/site-packages/ansible
+	  executable location = /usr/local/bin/ansible
+	  python version = 3.6.4 (default, Dec  8 2020, 03:48:34) [GCC 4.8.5 20150623 (Red Hat 4.8.5-44)]
+	  
+	 
+
+
+
+
+
+
+
+
+
+
+
+
 
