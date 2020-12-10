@@ -12,9 +12,11 @@ mysqlclient = "*"
 djangorestframework = "*"
 django-filter = "*"
 django-cors-headers = "*"
-celery = "*"
-redis = "*"
+update = "*"
+kombu = "*"
+celery = "==5.0.3"
 celery-with-redis = "*"
+redis = "*"
 
 [requires]
 python_version = "3.6"

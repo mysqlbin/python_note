@@ -25,7 +25,7 @@ SECRET_KEY = 'f-m5=u@hh0l@w&2ki&ni0u*y4wh^$#k3ta4q!w-kwj0z4v=0rb'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.0.51', '127.0.0.1']
+ALLOWED_HOSTS = ['192.168.0.45', '127.0.0.1']
 
 
 # Application definition
@@ -93,6 +93,7 @@ DATABASES = {
     'NAME': 'zst_mysql_1110',  # 数据库名，先前创建的
     'USER': 'root',  # 用户名，可以自己创建用户
     'PASSWORD': '123456abc',  # 密码
+    #'HOST': '192.168.1.201',  # mysql服务所在的主机ip
     'HOST': '192.168.0.201',  # mysql服务所在的主机ip
     'PORT': '3306',  # mysql服务端口
     }
@@ -162,9 +163,9 @@ REST_FRAMEWORK = {
 
 
 
-CELERY_BROKER_URL = 'redis://:niuniu_redis@192.168.0.252:6379/8' # Broker配置，使用Redis作为消息中间件
+CELERY_BROKER_URL = 'redis://:niuniu_redis@192.168.0.252:6379/8'       # Broker配置，使用Redis作为消息中间件
 
-CELERY_RESULT_BACKEND = 'redis://:niuniu_redis@192.168.0.252:6379/8'  # BACKEND配置，这里使用redis
+CELERY_RESULT_BACKEND = 'redis://:niuniu_redis@192.168.0.252:6379/8'   # BACKEND配置，这里使用redis
 
 CELERY_RESULT_SERIALIZER = 'json'  # 结果序列化方案
 
