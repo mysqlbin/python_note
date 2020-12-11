@@ -101,6 +101,7 @@ pipenv shell
 
 
 pipenv install -i https://pypi.tuna.tsinghua.edu.cn/simple django==3.1.3 
+pipenv install  django==3.1.3 
 
 pipenv install mysqlclient
 
@@ -131,17 +132,19 @@ pipenv install mysqlclient
 	ERROR: Command errored out with exit status 1: python setup.py egg_info Check the logs for full command output.
 
 	✘ Installation Failed 
-
-	yum install mysql-devel gcc gcc-devel python-devel
+	
+	# 用 root 安装，不需要装 pipenv 环境下
+	yum install mysql-devel gcc gcc-devel python-devel   
 	
 	https://blog.csdn.net/weixin_30416871/article/details/98711474  OSError: mysql_config not found
 
 
-python manage.py runserver 192.168.0.51:8001
+python manage.py runserver 192.168.0.45:8001
 
 
+pipenv install  celery==5.0.3 
 
-pipenv install celery
+-- pipenv install celery
 		
 	(zst_mysql_1110) [vagrant@localhost zst_mysql_1110]$ pipenv install celery
 	Installing celery...
@@ -163,6 +166,84 @@ pipenv install celery-with-redis
 
 
 
+==> default: Available bridged network interfaces:
+1) Realtek PCIe GBE Family Controller
+2) Npcap Loopback Adapter
+==> default: When choosing an interface, it is usually the one that is
+==> default: being used to connect to the internet.
+==> default:
+    default: Which interface should the network bridge to? y
+    default: Which interface should the network bridge to? y
+    default: Which interface should the network bridge to? YES
+    default: Which interface should the network bridge to? 1
+==> default: Preparing network interfaces based on configuration...
+    default: Adapter 1: nat
+    default: Adapter 2: hostonly
+    default: Adapter 3: bridged
+==> default: Forwarding ports...
+    default: 22 (guest) => 2222 (host) (adapter 1)
+==> default: Booting VM...
+==> default: Waiting for machine to boot. This may take a few minutes...
+    default: SSH address: 127.0.0.1:2222
+    default: SSH username: vagrant
+    default: SSH auth method: private key
+
+-----------------------------------------
+
+E:\centos\centos-new4                                                                          
+λ vagrant reload                                                                               
+==> default: You assigned a static IP ending in ".1" to this machine.                          
+==> default: This is very often used by the router and can cause the                           
+==> default: network to not work properly. If the network doesn't work                         
+==> default: properly, try changing this IP.                                                   
+==> default: Attempting graceful shutdown of VM...                                             
+==> default: You assigned a static IP ending in ".1" to this machine.                          
+==> default: This is very often used by the router and can cause the                           
+==> default: network to not work properly. If the network doesn't work                         
+==> default: properly, try changing this IP.                                                   
+==> default: Clearing any previously set forwarded ports...                                    
+==> default: Clearing any previously set network interfaces...                                 
+==> default: Available bridged network interfaces:                                             
+1) Realtek PCIe GBE Family Controller                                                          
+2) Npcap Loopback Adapter                                                                      
+==> default: When choosing an interface, it is usually the one that is                         
+==> default: being used to connect to the internet.                                            
+==> default:                                                                                   
+    default: Which interface should the network bridge to? 3                                   
+    default: Which interface should the network bridge to? 1                                   
+==> default: Preparing network interfaces based on configuration...                            
+    default: Adapter 1: nat                                                                    
+    default: Adapter 2: hostonly                                                               
+    default: Adapter 3: bridged                                                                
+==> default: Forwarding ports...                                                               
+    default: 22 (guest) => 2222 (host) (adapter 1)                                             
+==> default: Booting VM...                                                                     
+==> default: Waiting for machine to boot. This may take a few minutes...                       
+    default: SSH address: 127.0.0.1:2222                                                       
+    default: SSH username: vagrant                                                             
+    default: SSH auth method: private key                                                      
+    default: Warning: Connection reset. Retrying...                                            
+    default: Warning: Connection aborted. Retrying...                                          
+    default: Warning: Remote connection disconnect. Retrying...                                
+==> default: Machine booted and ready!                                                         
+==> default: Checking for guest additions in VM...                                             
+    default: The guest additions on this VM do not match the installed version of              
+    default: VirtualBox! In most cases this is fine, but in rare cases it can                  
+    default: prevent things such as shared folders from working properly. If you see           
+    default: shared folder errors, please make sure the guest additions within the             
+    default: virtual machine match the version of VirtualBox you have installed on             
+    default: your host and reload your VM.                                                     
+    default:                                                                                   
+    default: Guest Additions Version: 4.3.30                                                   
+    default: VirtualBox Version: 5.2                                                           
+==> default: Configuring and enabling network interfaces...                                    
+==> default: Mounting shared folders...                                                        
+    default: /home/vagrant/src => E:/centos/centos-new4/data/src                               
+    default: /home/vagrant/software => E:/centos/centos-new4/data/software                     
+==> default: Machine already provisioned. Run `vagrant provision` or use the `--provision`     
+==> default: flag to force provisioning. Provisioners marked to run always will still run.     
+=======
+
 进入项目的taskproj目录启动worker：
 
 -- celery worker -A zst_mysql_1110 -l debug
@@ -178,6 +259,7 @@ https://www.cnblogs.com/wdliu/p/9530219.html    Django中使用Celery
 https://docs.celeryproject.org/en/latest/django/first-steps-with-django.html
 
 
+<<<<<<< HEAD
 晚上回去折腾了这个目录分享的环境，感觉版本的问题，还是用现在成功的环境的来做，在自己的电脑也把有问题的环境卸载了，用成功环境的包来安装、操作。
 
 
@@ -229,3 +311,49 @@ group by c.nPlayerID  HAVING count(c.nPlayerID) < 4
 	
 	
 
+=======
+
+
+
+
+(zst_mysql_1110) [vagrant@localhost zst_mysql_1110]$ pipenv install celery==5.0.3                                                       
+Installing celery==5.0.3...                                                                                                             
+Adding celery to Pipfile's [packages]...                                                                                                
+✔ Installation Succeeded                                                                                                                
+Pipfile.lock (26cf74) out of date, updating to (9f38e0)...                                                                              
+Locking [dev-packages] dependencies...                                                                                                  
+Locking [packages] dependencies...                                                                                                      
+Building requirements...                                                                                                                
+Resolving dependencies...                                                                                                               
+✘ Locking Failed!                                                                                                                       
+[ResolutionFailure]:   File "/usr/local/lib/python3.6/site-packages/pipenv/resolver.py", line 741, in _main                             
+[ResolutionFailure]:       resolve_packages(pre, clear, verbose, system, write, requirements_dir, packages, dev)                        
+[ResolutionFailure]:   File "/usr/local/lib/python3.6/site-packages/pipenv/resolver.py", line 709, in resolve_packages                  
+[ResolutionFailure]:       requirements_dir=requirements_dir,                                                                           
+[ResolutionFailure]:   File "/usr/local/lib/python3.6/site-packages/pipenv/resolver.py", line 692, in resolve                           
+[ResolutionFailure]:       req_dir=requirements_dir                                                                                     
+[ResolutionFailure]:   File "/usr/local/lib/python3.6/site-packages/pipenv/utils.py", line 1403, in resolve_deps                        
+[ResolutionFailure]:       req_dir=req_dir,                                                                                             
+[ResolutionFailure]:   File "/usr/local/lib/python3.6/site-packages/pipenv/utils.py", line 1108, in actually_resolve_deps               
+[ResolutionFailure]:       resolver.resolve()                                                                                           
+[ResolutionFailure]:   File "/usr/local/lib/python3.6/site-packages/pipenv/utils.py", line 833, in resolve                              
+[ResolutionFailure]:       raise ResolutionFailure(message=str(e))                                                                      
+[pipenv.exceptions.ResolutionFailure]: Warning: Your dependencies could not be resolved. You likely have a mismatch in your sub-dependen
+  First try clearing your dependency cache with $ pipenv lock --clear, then try the original command again.                             
+ Alternatively, you can use $ pipenv install --skip-lock to bypass this mechanism, then run $ pipenv graph to inspect the situation.    
+  Hint: try $ pipenv lock --pre if it is a pre-release dependency.                                                                      
+ERROR: Could not find a version that matches celery<4.0,==5.0.3,>=3.0 (from -r /tmp/pipenvjwcc2pwdrequirements/pipenv-me6oudav-constrain
+Tried: 0.1.2, 0.1.4, 0.1.6, 0.1.7, 0.1.8, 0.1.10, 0.1.11, 0.1.12, 0.1.13, 0.1.14, 0.1.15, 0.2.0, 0.3.0, 0.3.7, 0.3.20, 0.4.0, 0.4.1, 0.6
+2.0.2, 2.0.3, 2.1.0, 2.1.1, 2.1.2, 2.1.3, 2.1.4, 2.2.0, 2.2.0, 2.2.0, 2.2.1, 2.2.1, 2.2.1, 2.2.2, 2.2.2, 2.2.2, 2.2.3, 2.2.3, 2.2.3, 2.2
+ 2.4.2, 2.4.3, 2.4.4, 2.4.5, 2.4.6, 2.4.7, 2.5.0, 2.5.1, 2.5.2, 2.5.3, 2.5.5, 3.0.0, 3.0.1, 3.0.2, 3.0.3, 3.0.4, 3.0.5, 3.0.6, 3.0.7, 3.
+0.21, 3.0.22, 3.0.23, 3.0.24, 3.0.25, 3.1.0, 3.1.1, 3.1.2, 3.1.3, 3.1.3, 3.1.4, 3.1.5, 3.1.6, 3.1.7, 3.1.8, 3.1.9, 3.1.10, 3.1.11, 3.1.1
+.18, 3.1.19, 3.1.19, 3.1.20, 3.1.20, 3.1.21, 3.1.21, 3.1.22, 3.1.22, 3.1.23, 3.1.23, 3.1.24, 3.1.24, 3.1.25, 3.1.25, 3.1.26.post1, 3.1.2
+1.1, 4.2.0, 4.2.0, 4.2.1, 4.2.1, 4.2.2, 4.2.2, 4.3.0, 4.3.0, 4.3.1, 4.3.1, 4.4.0, 4.4.0, 4.4.1, 4.4.1, 4.4.2, 4.4.2, 4.4.3, 4.4.3, 4.4.4
+0.3, 5.0.4, 5.0.4                                                                                                                       
+Skipped pre-versions: 4.0.0rc3, 4.0.0rc3, 4.0.0rc4, 4.0.0rc4, 4.0.0rc5, 4.0.0rc5, 4.0.0rc6, 4.0.0rc6, 4.0.0rc7, 4.0.0rc7, 4.2.0rc1, 4.2.
+c2, 4.3.0rc3, 4.3.0rc3, 4.4.0rc1, 4.4.0rc1, 4.4.0rc2, 4.4.0rc2, 4.4.0rc3, 4.4.0rc3, 4.4.0rc4, 4.4.0rc4, 4.4.0rc5, 4.4.0rc5, 5.0.0a1, 5.0
+There are incompatible versions in the resolved dependencies:                                                                           
+  celery==5.0.3 (from -r /tmp/pipenvjwcc2pwdrequirements/pipenv-me6oudav-constraints.txt (line 7))                                      
+  celery<4.0,>=3.0 (from celery-with-redis==3.0->-r /tmp/pipenvjwcc2pwdrequirements/pipenv-me6oudav-constraints.txt (line 4))           
+                                                                                                                                        
+>>>>>>> 04ddfa962dbef058935f484882d8093653fd1582

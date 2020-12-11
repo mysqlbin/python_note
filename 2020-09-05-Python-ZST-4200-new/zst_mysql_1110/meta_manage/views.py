@@ -20,6 +20,9 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from meta_manage import tasks
+from celery.result import AsyncResult
+from zst_mysql_1110.celery import app
+
 import MySQLdb
 
 from rest_framework.decorators import api_view
@@ -34,6 +37,17 @@ def celery_debug(request):
     # print(res.task_id)
     print(res)
 
+    return MyJsonResponse(message="success")
+
+@api_view(['GET'])
+def celery_result(request):
+
+    # 使用 AsyncResult 方式获取执行结果.
+    # AsyncResult 主要用来存储任务执行信息与执行结果(类似 js 中的 Promise 对象)
+
+    result = AsyncResult(id="afb720ba-1147-464a-ae69-0af6ced80ad8", app=app)
+    # print(result)
+    print(result.state)
     return MyJsonResponse(message="success")
 
 class CustomPagination(PageNumberPagination):
