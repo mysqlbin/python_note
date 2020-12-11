@@ -2,12 +2,12 @@ https://blog.csdn.net/sdwang198912/article/details/86738452   Django开发总结
 
 
 
-vagrant box add my-box4 vagrant-centos-7.2.box
+vagrant box add my-box1 vagrant-centos-7.2.box
 
-mkdir centos-new4 && cd centos-new4
+mkdir centos-new1 && cd centos-new1
 
 
-vagrant init my-box4
+vagrant init my-box1
 
 
 vagrant up				
@@ -100,7 +100,13 @@ pipenv shell
 	[root@localhost zst_mysql_1110]#  . /root/.local/share/virtualenvs/zst_mysql_1110-XKCR2RrO/bin/activate
 
 
-pipenv install -i https://pypi.tuna.tsinghua.edu.cn/simple django==3.1.3 
+pipenv  install -i https://pypi.tuna.tsinghua.edu.cn/simple django==3.1.3 
+pipenv  install -i https://pypi.douban.com/simple django==3.1.3 
+
+
+pipenv  install django==3.1.3 
+
+
 
 pipenv install mysqlclient
 
@@ -112,7 +118,7 @@ pipenv install mysqlclient
 	  Using cached https://pypi.doubanio.com/packages/a5/e1/e5f2b231c05dc51d9d87fa5066f90d1405345c54b14b0b11a1c859020f21/mysqlclient-2.0.1.tar.gz (87 kB)
 
 		ERROR: Command errored out with exit status 1:
-		 command: /root/.local/share/virtualenvs/zst_mysql_1110-XKCR2RrO/bin/python -c 'import sys, setuptools, tokenize; sys.argv[0] = '"'"'/tmp/pip-install-0jek6be_/mysqlclient_daa3e2400a8448d5b08a4dc72ace013b/setup.py'"'"'; __file__='"'"'/tmp/pip-install-0jek6be_/mysqlclient_daa3e2400a8448d5b08a4dc72ace013b/setup.py'"'"';f=getattr(tokenize, '"'"'open'"'"', open)(__file__);code=f.read().replace('"'"'\r\n'"'"', '"'"'\n'"'"');f.close();exec(compile(code, __file__, '"'"'exec'"'"'))' egg_info --egg-base /tmp/pip-pip-egg-info-dt2tl8ao
+		 command: /root/.local/share/virtualenvs/zst_mysql_1110-XKCR2RrO/bin/python -c import sys, setuptools, tokenize; sys.argv[0] = '"'"'/tmp/pip-install-0jek6be_/mysqlclient_daa3e2400a8448d5b08a4dc72ace013b/setup.py'"'"'; __file__='"'"'/tmp/pip-install-0jek6be_/mysqlclient_daa3e2400a8448d5b08a4dc72ace013b/setup.py'"'"';f=getattr(tokenize, '"'"'open'"'"', open)(__file__);code=f.read().replace('"'"'\r\n'"'"', '"'"'\n'"'"');f.close();exec(compile(code, __file__, '"'"'exec'"'"')) egg_info --egg-base /tmp/pip-pip-egg-info-dt2tl8ao
 			 cwd: /tmp/pip-install-0jek6be_/mysqlclient_daa3e2400a8448d5b08a4dc72ace013b/
 		Complete output (12 lines):
 		/bin/sh: mysql_config: command not found
@@ -177,3 +183,149 @@ https://www.cnblogs.com/wdliu/p/9530219.html    Django中使用Celery
 
 https://docs.celeryproject.org/en/latest/django/first-steps-with-django.html
 
+
+
+启动错误1
+	vagrant up
+
+	default: /home/vagrant/src => E:/centos7/centos-new5/data/src
+	Vagrant was unable to mount VirtualBox shared folders. This is usually
+	because the filesystem "vboxsf" is not available. This filesystem is
+	made available via the VirtualBox Guest Additions and kernel module.
+	Please verify that these guest additions are properly installed in the
+	guest. This is not a bug in Vagrant and is usually caused by a faulty
+	Vagrant box. For context, the command attempted was:
+
+	mount -t vboxsf -o uid=1000,gid=1000 home_vagrant_src /home/vagrant/src
+
+	The error output from the command was:
+
+	mount: unknown filesystem type 'vboxsf'
+
+
+		-- vagrant plugin install vagrant-vbguest
+
+
+启动错误2
+
+	E:\centos7\centos-new6
+	λ vagrant up
+	Bringing machine 'default' up with 'virtualbox' provider...
+	==> default: Importing base box 'my-box6'...
+	==> default: Matching MAC address for NAT networking...
+	==> default: Setting the name of the VM: centos-new6_default_1607439205280_89955
+	==> default: Vagrant has detected a configuration issue which exposes a
+	==> default: vulnerability with the installed version of VirtualBox. The
+	==> default: current guest is configured to use an E1000 NIC type for a
+	==> default: network adapter which is vulnerable in this version of VirtualBox.
+	==> default: Ensure the guest is trusted to use this configuration or update
+	==> default: the NIC type using one of the methods below:
+	==> default:
+	==> default:   https://www.vagrantup.com/docs/virtualbox/configuration.html#default-nic-type
+	==> default:   https://www.vagrantup.com/docs/virtualbox/networking.html#virtualbox-nic-type
+	==> default: Clearing any previously set network interfaces...
+	==> default: Preparing network interfaces based on configuration...
+		default: Adapter 1: nat
+	==> default: Forwarding ports...
+		default: 22 (guest) => 2222 (host) (adapter 1)
+	==> default: Booting VM...
+	==> default: Waiting for machine to boot. This may take a few minutes...
+		default: SSH address: 127.0.0.1:2222
+		default: SSH username: vagrant
+		default: SSH auth method: private key
+		default:
+		default: Vagrant insecure key detected. Vagrant will automatically replace
+		default: this with a newly generated keypair for better security.
+		default:
+		default: Inserting generated public key within guest...
+		default: Removing insecure key from the guest if it's present...
+		default: Key inserted! Disconnecting and reconnecting using new SSH key...
+	==> default: Machine booted and ready!
+	[default] No Virtualbox Guest Additions installation found.
+	Loaded plugins: fastestmirror
+	Loading mirror speeds from cached hostfile
+	 * base: mirrors.ustc.edu.cn
+	 * extras: mirrors.aliyun.com
+	 * updates: mirrors.aliyun.com
+	Resolving Dependencies
+	--> Running transaction check
+	---> Package centos-release.x86_64 0:7-4.1708.el7.centos will be updated
+	---> Package centos-release.x86_64 0:7-9.2009.1.el7.centos will be an update
+	--> Finished Dependency Resolution
+
+	Dependencies Resolved
+
+	================================================================================
+	 Package             Arch        Version                     Repository    Size
+	================================================================================
+	Updating:
+	 centos-release      x86_64      7-9.2009.1.el7.centos       updates       27 k
+
+	Transaction Summary
+	================================================================================
+	Upgrade  1 Package
+
+	Total download size: 27 k
+	Downloading packages:
+	No Presto metadata available for updates
+	Public key for centos-release-7-9.2009.1.el7.centos.x86_64.rpm is not installed
+	warning: /var/cache/yum/x86_64/7/updates/packages/centos-release-7-9.2009.1.el7.centos.x86_64.rpm: Header V3 RSA/SHA256
+	Signature, key ID f4a80eb5: NOKEY
+	Retrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+	Importing GPG key 0xF4A80EB5:
+	 Userid     : "CentOS-7 Key (CentOS 7 Official Signing Key) <security@centos.org>"
+	 Fingerprint: 6341 ab27 53d7 8a78 a7c2 7bb1 24c6 a8a7 f4a8 0eb5
+	 Package    : centos-release-7-4.1708.el7.centos.x86_64 (@anaconda)
+	 From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+	Running transaction check
+	Running transaction test
+	Transaction test succeeded
+	Running transaction
+	  Updating   : centos-release-7-9.2009.1.el7.centos.x86_64                  1/2
+	  Cleanup    : centos-release-7-4.1708.el7.centos.x86_64                    2/2
+	  Verifying  : centos-release-7-9.2009.1.el7.centos.x86_64                  1/2
+	  Verifying  : centos-release-7-4.1708.el7.centos.x86_64                    2/2
+
+	Updated:
+	  centos-release.x86_64 0:7-9.2009.1.el7.centos
+
+	Complete!
+	Loaded plugins: fastestmirror
+	Loading mirror speeds from cached hostfile
+	 * base: mirrors.ustc.edu.cn
+	 * extras: mirrors.aliyun.com
+	 * updates: mirrors.aliyun.com
+	No package kernel-devel-3.10.0-693.5.2.el7.x86_64 available.
+	Error: Nothing to do
+	Unmounting Virtualbox Guest Additions ISO from: /mnt
+	umount: /mnt: not mounted
+	==> default: Checking for guest additions in VM...
+		default: No guest additions were detected on the base box for this VM! Guest
+		default: additions are required for forwarded ports, shared folders, host only
+		default: networking, and more. If SSH fails on this machine, please install
+		default: the guest additions and repackage the box to continue.
+		default:
+		default: This is not an error message; everything may continue to work properly,
+		default: in which case you may ignore this message.
+	The following SSH command responded with a non-zero exit status.
+	Vagrant assumes that this means the command failed!
+
+	umount /mnt
+
+	Stdout from the command:
+
+
+
+	Stderr from the command:
+
+	umount: /mnt: not mounted
+
+
+	
+mkdir /home/redis/6379/data -pv
+cd /home/redis/6379
+mkdir conf 
+cp  /usr/local/redis-4.0.9/redis.conf /home/redis/6379/conf
+
+
+	
