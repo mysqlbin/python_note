@@ -1,17 +1,18 @@
 <template>
     <div>
-         <el-form :inline="true" :model="searchBar" class="demo-form-inline">
+        <el-row type="flex" class="row-bg" justify="space-between">
+            <el-form :inline="true" :model="searchBar" class="demo-form-inline">
                 
-            <el-form-item label="schema: ">
+                <el-form-item label="schema: ">
 
-                <el-autocomplete
-                        class="inline-input"
-                        v-model="searchBar.schema"
-                        :fetch-suggestions="querySearch"
-                        placeholder="请输入库名"
-                ></el-autocomplete>
+                    <el-autocomplete
+                            class="inline-input"
+                            v-model="searchBar.schema"
+                            :fetch-suggestions="querySearch"
+                            placeholder="请输入库名"
+                    ></el-autocomplete>
 
-            </el-form-item>
+                </el-form-item>
 
             <!-- <el-form-item label="状态">
                 <el-select v-model="searchBar.status" placeholder="实例状态" clearable>
@@ -21,13 +22,17 @@
                 </el-select>
             </el-form-item> -->
 
-            <el-form-item>
-                <el-button type="primary" @click="doSearch">查询</el-button>
-            </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="doSearch">查询</el-button>
+                </el-form-item>
 
-        </el-form>
-        
-        <el-table v-loading="tableLoading" :data="tableData" style="width: 100%">
+            </el-form>
+            <div>
+                <el-button type="primary" @click="installMySQL">安装MySQL</el-button>
+            </div>
+        </el-row>
+
+        <el-table v-loading="tableLoading" :data="tableData" border style="width: 100%">
             <el-table-column
                     prop="schema"
                     label="库名"
@@ -60,7 +65,7 @@
 
              <el-table-column
                 label="操作"
-                width="100">
+                >
                 <template slot-scope="scope">
                     <el-button @click="showProcessList(scope.row)" type="text" size="small">查看process list</el-button>
                 </template>
@@ -76,18 +81,20 @@
             layout="total, sizes, prev, pager, next, jumper"
             :total="total">
         </el-pagination>
-         <ProcessListDialog ref="process_list_dialog"></ProcessListDialog>
-         
-        </div>
+        <ProcessListDialog ref="process_list_dialog"></ProcessListDialog>
+        <InstallMysqlDialog ref="install_mysql_dialog"></InstallMysqlDialog>
+
+    </div>
 </template>
 
 <script>
 
     import {getSchemaNameList, getSchemaList} from '../../api/schema_info'
     import ProcessListDialog from './process_list'
+    import InstallMysqlDialog from './install_mysql'
     export default {
         name: "index",
-        components: {ProcessListDialog},
+        components: {ProcessListDialog, InstallMysqlDialog},
         data() {
             return {
                 searchBar: {
@@ -193,6 +200,9 @@
                     query: query
                 }).catch(err => {})
             },
+            installMySQL(){
+               this.$refs.install_mysql_dialog.show()
+            }
 
         },
 
@@ -200,5 +210,7 @@
 </script>
 
 <style lang="scss" scoped>
-
+    .demo-form-inline {
+        float: left;
+    }
 </style>

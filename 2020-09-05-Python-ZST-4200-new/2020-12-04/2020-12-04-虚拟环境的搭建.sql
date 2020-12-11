@@ -177,3 +177,55 @@ https://www.cnblogs.com/wdliu/p/9530219.html    Django中使用Celery
 
 https://docs.celeryproject.org/en/latest/django/first-steps-with-django.html
 
+
+晚上回去折腾了这个目录分享的环境，感觉版本的问题，还是用现在成功的环境的来做，在自己的电脑也把有问题的环境卸载了，用成功环境的包来安装、操作。
+
+
+
+vagrant常用命令
+	# 启动虚拟机
+	vagrant up
+	# SSH登陆虚拟机
+	vagrant ssh
+	# 挂起虚拟机
+	vagrant suspend
+	# 唤醒挂起的虚拟机
+	vagrant resume
+	# 关闭虚拟机
+	vagrant halt
+	# 重启虚拟机
+	vagrant reload
+	# 打包虚拟机
+	vagrant package --base vagrant --out ./xxxx.box
+	# 删除虚拟机
+	vagrant destroy
+	
+	-- 要用这些命令行操作，当用管理器来开启虚拟机，会找不到挂载的目录。
+	
+select temp.nPlayerID from (
+	SELECT
+			10,
+			tleague.nPlayerID,
+			tuser.szNickName,
+			NOW()
+	FROM
+				table_league_club_application tleague
+	INNER JOIN table_user tuser ON tleague.nPlayerID = tuser.nPlayerID
+	WHERE
+		tleague.nClubID = 10
+	AND tleague.nStatus = 1
+	AND tleague.CreateTime > DATE_SUB(NOW(), INTERVAL 1 DAY)
+	group by tleague.nPlayerID
+) temp 
+inner join table_league_club_member c on temp.nPlayerID=c.nPlayerID
+where c.`nStatus` = 1
+group by c.nPlayerID  HAVING count(c.nPlayerID) < 4
+
+
+
+
+
+
+	
+	
+
