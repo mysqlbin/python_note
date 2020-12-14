@@ -1,0 +1,1009 @@
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+# Time: 2020-09-28T15:58:07.582367Z
+# User@Host: root[root] @ localhost []  Id:     5
+# Query_time: 0.051538  Lock_time: 0.000032 Rows_sent: 643  Rows_examined: 643
+use mysql;
+SET timestamp=1601308687;
+SELECT /*!40001 SQL_NO_CACHE */ * FROM `help_topic`;
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+# Time: 2020-09-29T19:16:26.439600Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    10
+# Query_time: 0.000704  Lock_time: 0.000103 Rows_sent: 9  Rows_examined: 151
+use test_db;
+SET timestamp=1601406986;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-09-29T19:16:26.471357Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    10
+# Query_time: 0.000894  Lock_time: 0.000180 Rows_sent: 9  Rows_examined: 174
+SET timestamp=1601406986;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.032247*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=8 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-09-29T19:16:37.880573Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    10
+# Query_time: 0.001077  Lock_time: 0.000094 Rows_sent: 15  Rows_examined: 252
+SET timestamp=1601406997;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-09-29T19:16:37.882233Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    10
+# Query_time: 0.001181  Lock_time: 0.000116 Rows_sent: 8  Rows_examined: 233
+SET timestamp=1601406997;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.004078*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=16 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-09-29T19:18:45.142711Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    12
+# Query_time: 0.001477  Lock_time: 0.000067 Rows_sent: 1000  Rows_examined: 1000
+SET timestamp=1601407125;
+SELECT * FROM `t` LIMIT 0, 1000;
+# Time: 2020-09-29T19:19:30.457265Z
+# User@Host: root[root] @ localhost []  Id:     4
+# Query_time: 7.718791  Lock_time: 0.000127 Rows_sent: 0  Rows_examined: 398576
+SET timestamp=1601407170;
+insert into _t_new(id,c,d) select t.id,t.c,t.d from t inner join t1 on t.id=t1.id;
+# Time: 2020-09-29T19:20:09.051204Z
+# User@Host: root[root] @ localhost []  Id:    15
+# Query_time: 9.000839  Lock_time: 0.000107 Rows_sent: 0  Rows_examined: 1000000
+SET timestamp=1601407209;
+insert into _t_new(id,c,d) select t.id,t.c,t.d from t inner join t1 on t.id=t1.id;
+# Time: 2020-09-29T19:20:51.508484Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    17
+# Query_time: 0.002825  Lock_time: 0.000059 Rows_sent: 1000  Rows_examined: 1000
+SET timestamp=1601407251;
+SELECT * FROM `_t_new` LIMIT 0, 1000;
+# Time: 2020-09-29T19:21:04.187304Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    19
+# Query_time: 0.029045  Lock_time: 0.028610 Rows_sent: 8  Rows_examined: 112
+SET timestamp=1601407264;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.089089*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=3 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-09-29T19:23:26.091574Z
+# User@Host: root[root] @ localhost []  Id:    15
+# Query_time: 8.799421  Lock_time: 0.000138 Rows_sent: 0  Rows_examined: 1000000
+SET timestamp=1601407406;
+insert into _t_new(id,c,d) select t.id,t.c,t.d from t inner join t1 on t.id=t1.id;
+# Time: 2020-09-29T19:25:16.871678Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    19
+# Query_time: 0.000746  Lock_time: 0.000089 Rows_sent: 11  Rows_examined: 221
+SET timestamp=1601407516;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-09-29T19:25:16.872965Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    19
+# Query_time: 0.000824  Lock_time: 0.000109 Rows_sent: 8  Rows_examined: 238
+SET timestamp=1601407516;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.071685*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=10 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-09-29T19:26:33.083672Z
+# User@Host: root[root] @ localhost []  Id:    15
+# Query_time: 7.769713  Lock_time: 0.000149 Rows_sent: 0  Rows_examined: 1000000
+SET timestamp=1601407593;
+insert into _t_new(id,c,d) select t.id,t.c,t.d from t inner join t1 on t.id=t1.id;
+# Time: 2020-10-02T15:42:16.167832Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    29
+# Query_time: 0.039547  Lock_time: 0.000068 Rows_sent: 1000  Rows_examined: 1000
+SET timestamp=1601653336;
+SELECT * FROM `t` LIMIT 0, 1000;
+# Time: 2020-10-02T15:42:20.325576Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    30
+# Query_time: 0.004561  Lock_time: 0.000079 Rows_sent: 1000  Rows_examined: 1000
+SET timestamp=1601653340;
+SELECT * FROM `t1` LIMIT 0, 1000;
+# Time: 2020-10-02T15:42:22.451726Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    31
+# Query_time: 0.006668  Lock_time: 0.000069 Rows_sent: 1000  Rows_examined: 1000
+SET timestamp=1601653342;
+SELECT * FROM `_t_new` LIMIT 0, 1000;
+# Time: 2020-10-02T15:43:05.866995Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    33
+# Query_time: 0.000673  Lock_time: 0.000162 Rows_sent: 7  Rows_examined: 104
+SET timestamp=1601653385;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-10-02T15:43:05.912637Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    33
+# Query_time: 0.045243  Lock_time: 0.043559 Rows_sent: 6  Rows_examined: 125
+SET timestamp=1601653385;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.020477*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=6 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-10-02T15:45:20.563788Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    35
+# Query_time: 0.000744  Lock_time: 0.000095 Rows_sent: 13  Rows_examined: 212
+SET timestamp=1601653520;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-10-02T15:45:20.564797Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    35
+# Query_time: 0.000710  Lock_time: 0.000109 Rows_sent: 11  Rows_examined: 231
+SET timestamp=1601653520;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.006803*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=12 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-10-02T18:44:52.905235Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    45
+# Query_time: 0.000802  Lock_time: 0.000202 Rows_sent: 16  Rows_examined: 140
+SET timestamp=1601664292;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.005095*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=3 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-10-02T18:45:20.494008Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    45
+# Query_time: 0.001106  Lock_time: 0.000130 Rows_sent: 11  Rows_examined: 245
+SET timestamp=1601664320;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-10-02T18:45:20.495390Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    45
+# Query_time: 0.000996  Lock_time: 0.000149 Rows_sent: 16  Rows_examined: 278
+SET timestamp=1601664320;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.004518*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=10 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-10-02T18:45:58.231228Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    45
+# Query_time: 0.001378  Lock_time: 0.000172 Rows_sent: 15  Rows_examined: 327
+SET timestamp=1601664358;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-10-02T18:45:58.233012Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    45
+# Query_time: 0.001320  Lock_time: 0.000373 Rows_sent: 16  Rows_examined: 330
+SET timestamp=1601664358;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.003630*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=17 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-10-02T18:46:02.877124Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    45
+# Query_time: 0.001242  Lock_time: 0.000145 Rows_sent: 15  Rows_examined: 328
+SET timestamp=1601664362;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-10-02T18:46:02.879591Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    45
+# Query_time: 0.001885  Lock_time: 0.000202 Rows_sent: 16  Rows_examined: 331
+SET timestamp=1601664362;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.002703*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=24 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-10-02T18:46:10.725098Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    45
+# Query_time: 0.001664  Lock_time: 0.000328 Rows_sent: 15  Rows_examined: 328
+SET timestamp=1601664370;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-10-02T18:46:10.726866Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    45
+# Query_time: 0.001357  Lock_time: 0.000196 Rows_sent: 16  Rows_examined: 331
+SET timestamp=1601664370;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.003688*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=31 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-10-02T18:49:47.542088Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    45
+# Query_time: 0.001710  Lock_time: 0.000457 Rows_sent: 15  Rows_examined: 328
+SET timestamp=1601664587;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-10-02T18:49:47.544019Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    45
+# Query_time: 0.001282  Lock_time: 0.000174 Rows_sent: 16  Rows_examined: 331
+SET timestamp=1601664587;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.003601*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=38 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-10-02T18:50:12.342466Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    45
+# Query_time: 0.001196  Lock_time: 0.000138 Rows_sent: 15  Rows_examined: 328
+SET timestamp=1601664612;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-10-02T18:50:12.344051Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    45
+# Query_time: 0.001182  Lock_time: 0.000176 Rows_sent: 16  Rows_examined: 331
+SET timestamp=1601664612;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.004504*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=45 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-10-02T18:52:37.422373Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    45
+# Query_time: 0.001125  Lock_time: 0.000145 Rows_sent: 15  Rows_examined: 310
+SET timestamp=1601664757;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-10-02T18:52:37.424478Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    45
+# Query_time: 0.001624  Lock_time: 0.000191 Rows_sent: 16  Rows_examined: 313
+SET timestamp=1601664757;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.004157*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=56 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-10-02T18:55:12.051223Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    45
+# Query_time: 0.001362  Lock_time: 0.000226 Rows_sent: 15  Rows_examined: 305
+SET timestamp=1601664912;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-10-02T18:55:12.052885Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    45
+# Query_time: 0.001120  Lock_time: 0.000151 Rows_sent: 15  Rows_examined: 306
+SET timestamp=1601664912;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000424*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=63 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-10-02T18:56:16.710071Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    45
+# Query_time: 0.002471  Lock_time: 0.000468 Rows_sent: 15  Rows_examined: 324
+SET timestamp=1601664976;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-10-02T18:56:16.711625Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    45
+# Query_time: 0.001200  Lock_time: 0.000262 Rows_sent: 15  Rows_examined: 324
+SET timestamp=1601664976;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000479*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=72 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-10-02T18:56:19.964694Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    45
+# Query_time: 0.001256  Lock_time: 0.000150 Rows_sent: 15  Rows_examined: 340
+SET timestamp=1601664979;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-10-02T18:56:19.966384Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    45
+# Query_time: 0.001223  Lock_time: 0.000218 Rows_sent: 15  Rows_examined: 324
+SET timestamp=1601664979;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000418*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=81 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-10-02T18:56:26.453345Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    45
+# Query_time: 0.001312  Lock_time: 0.000170 Rows_sent: 15  Rows_examined: 340
+SET timestamp=1601664986;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-10-02T18:56:26.454775Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    45
+# Query_time: 0.000932  Lock_time: 0.000166 Rows_sent: 15  Rows_examined: 324
+SET timestamp=1601664986;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000398*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=90 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-10-02T18:56:36.954972Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    45
+# Query_time: 0.001328  Lock_time: 0.000231 Rows_sent: 15  Rows_examined: 340
+SET timestamp=1601664996;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-10-02T18:56:36.958299Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    45
+# Query_time: 0.002776  Lock_time: 0.000181 Rows_sent: 15  Rows_examined: 324
+SET timestamp=1601664996;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000389*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=99 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-10-02T18:57:14.543862Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    45
+# Query_time: 0.001233  Lock_time: 0.000185 Rows_sent: 15  Rows_examined: 337
+SET timestamp=1601665034;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-10-02T18:57:14.545295Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    45
+# Query_time: 0.000940  Lock_time: 0.000143 Rows_sent: 12  Rows_examined: 315
+SET timestamp=1601665034;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.004070*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=108 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-10-02T18:57:29.846224Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    45
+# Query_time: 0.001323  Lock_time: 0.000174 Rows_sent: 15  Rows_examined: 321
+SET timestamp=1601665049;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-10-02T18:57:29.848233Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    45
+# Query_time: 0.001364  Lock_time: 0.000237 Rows_sent: 15  Rows_examined: 321
+SET timestamp=1601665049;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000525*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=115 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-10-02T19:28:37.553595Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    52
+# Query_time: 0.001135  Lock_time: 0.000260 Rows_sent: 9  Rows_examined: 152
+SET timestamp=1601666917;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-10-02T19:28:37.555168Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    52
+# Query_time: 0.001016  Lock_time: 0.000316 Rows_sent: 8  Rows_examined: 173
+SET timestamp=1601666917;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.003902*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=8 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-10-02T19:28:45.904893Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    52
+# Query_time: 0.001316  Lock_time: 0.000173 Rows_sent: 15  Rows_examined: 260
+SET timestamp=1601666925;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-10-02T19:28:45.907128Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    52
+# Query_time: 0.001545  Lock_time: 0.000481 Rows_sent: 9  Rows_examined: 268
+SET timestamp=1601666925;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.015395*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=16 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-10-03T20:47:43.793008Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    59
+# Query_time: 0.000683  Lock_time: 0.000139 Rows_sent: 16  Rows_examined: 142
+SET timestamp=1601758063;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.002990*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=3 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-10-04T05:44:55.426832Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    67
+# Query_time: 0.000462  Lock_time: 0.000096 Rows_sent: 9  Rows_examined: 115
+SET timestamp=1601790295;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.087921*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=3 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-10-04T05:45:22.244007Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    69
+# Query_time: 0.000690  Lock_time: 0.000226 Rows_sent: 6  Rows_examined: 112
+SET timestamp=1601790322;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000186*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=4 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-10-04T05:46:01.746455Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    71
+# Query_time: 0.000454  Lock_time: 0.000099 Rows_sent: 8  Rows_examined: 119
+SET timestamp=1601790361;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.101948*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=4 GROUP BY STATE ORDER BY SEQ;
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+# Time: 2020-10-04T06:16:36.125301Z
+# User@Host: root[root] @  [192.168.0.218]  Id:     6
+# Query_time: 0.052640  Lock_time: 0.000064 Rows_sent: 1000  Rows_examined: 1000
+use test_db;
+SET timestamp=1601792196;
+SELECT * FROM `t_20201021` LIMIT 0, 1000;
+# Time: 2020-10-04T06:17:19.939537Z
+# User@Host: root[root] @  [192.168.0.218]  Id:     8
+# Query_time: 0.000889  Lock_time: 0.000158 Rows_sent: 8  Rows_examined: 121
+SET timestamp=1601792239;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.015340*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=4 GROUP BY STATE ORDER BY SEQ;
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+# Time: 2020-10-22T08:56:36.400739Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    21
+# Query_time: 0.801582  Lock_time: 0.044207 Rows_sent: 1000  Rows_examined: 1000
+use test_db;
+SET timestamp=1603356996;
+SELECT * FROM `t_20201021` LIMIT 0, 1000;
+# Time: 2020-10-22T08:59:52.528780Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    21
+# Query_time: 1.330001  Lock_time: 0.000068 Rows_sent: 1000  Rows_examined: 1000
+SET timestamp=1603357192;
+SELECT * FROM `t_20201021` ORDER BY `id` DESC LIMIT 0, 1000;
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+# Time: 2020-10-22T10:43:31.695141Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    26
+# Query_time: 0.038470  Lock_time: 0.037532 Rows_sent: 11  Rows_examined: 173
+use test_db;
+SET timestamp=1603363411;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-10-22T10:43:31.707827Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    26
+# Query_time: 0.001227  Lock_time: 0.000140 Rows_sent: 8  Rows_examined: 190
+SET timestamp=1603363411;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.013398*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=10 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-10-22T11:01:20.522843Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    30
+# Query_time: 0.045003  Lock_time: 0.000164 Rows_sent: 8  Rows_examined: 141
+SET timestamp=1603364480;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-10-22T11:01:20.629510Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    30
+# Query_time: 0.090618  Lock_time: 0.089968 Rows_sent: 6  Rows_examined: 160
+SET timestamp=1603364480;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.042083*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=7 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-10-22T12:05:06.494847Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    88
+# Query_time: 0.004038  Lock_time: 0.000310 Rows_sent: 8  Rows_examined: 112
+use zst_server;
+SET timestamp=1603368306;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.142858*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=3 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-10-22T12:15:32.830963Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    88
+# Query_time: 0.032239  Lock_time: 0.000105 Rows_sent: 11  Rows_examined: 221
+SET timestamp=1603368932;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-10-22T12:15:32.834327Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    88
+# Query_time: 0.002899  Lock_time: 0.000139 Rows_sent: 8  Rows_examined: 238
+SET timestamp=1603368932;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.046452*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=10 GROUP BY STATE ORDER BY SEQ;
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+# Time: 2020-10-26T07:16:05.698460Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    11
+# Query_time: 0.000546  Lock_time: 0.000114 Rows_sent: 8  Rows_examined: 112
+use zst_server;
+SET timestamp=1603696565;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.048854*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=3 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-10-26T07:40:38.478977Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    34
+# Query_time: 0.001227  Lock_time: 0.000132 Rows_sent: 13  Rows_examined: 224
+SET timestamp=1603698038;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-10-26T07:40:38.480335Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    34
+# Query_time: 0.000910  Lock_time: 0.000189 Rows_sent: 8  Rows_examined: 237
+SET timestamp=1603698038;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.038776*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=12 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-10-26T07:41:07.662584Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    34
+# Query_time: 0.001446  Lock_time: 0.000277 Rows_sent: 15  Rows_examined: 275
+SET timestamp=1603698067;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-10-26T07:41:07.663905Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    34
+# Query_time: 0.000966  Lock_time: 0.000166 Rows_sent: 11  Rows_examined: 267
+SET timestamp=1603698067;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.008592*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=27 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-10-26T07:53:49.133842Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    34
+# Query_time: 0.001591  Lock_time: 0.000174 Rows_sent: 15  Rows_examined: 298
+SET timestamp=1603698829;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-10-26T07:53:49.135565Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    34
+# Query_time: 0.001229  Lock_time: 0.000306 Rows_sent: 15  Rows_examined: 299
+SET timestamp=1603698829;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000352*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=34 GROUP BY STATE ORDER BY SEQ;
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+# Time: 2020-10-30T04:14:03.925388Z
+# User@Host: root[root] @  [192.168.0.218]  Id:     6
+# Query_time: 0.038415  Lock_time: 0.000230 Rows_sent: 12  Rows_examined: 181
+use test_db;
+SET timestamp=1604031243;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-10-30T04:14:03.926867Z
+# User@Host: root[root] @  [192.168.0.218]  Id:     6
+# Query_time: 0.001344  Lock_time: 0.000172 Rows_sent: 8  Rows_examined: 196
+SET timestamp=1604031243;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.012254*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=11 GROUP BY STATE ORDER BY SEQ;
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+# Time: 2020-10-30T04:22:13.500695Z
+# User@Host: root[root] @  [192.168.0.218]  Id:     9
+# Query_time: 1.371346  Lock_time: 0.000153 Rows_sent: 1000  Rows_examined: 1000
+use test_db;
+SET timestamp=1604031733;
+SELECT * FROM `t_20201030` LIMIT 0, 1000;
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+# Time: 2020-10-30T04:27:23.461136Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    11
+# Query_time: 0.001223  Lock_time: 0.000125 Rows_sent: 7  Rows_examined: 112
+use test_db;
+SET timestamp=1604032043;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-10-30T04:27:23.462386Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    11
+# Query_time: 0.000826  Lock_time: 0.000186 Rows_sent: 8  Rows_examined: 137
+SET timestamp=1604032043;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000746*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=6 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-10-30T06:07:59.074616Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    11
+# Query_time: 0.050047  Lock_time: 0.023022 Rows_sent: 15  Rows_examined: 263
+SET timestamp=1604038079;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-10-30T06:07:59.112793Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    11
+# Query_time: 0.002222  Lock_time: 0.001142 Rows_sent: 8  Rows_examined: 250
+SET timestamp=1604038079;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000699*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=14 GROUP BY STATE ORDER BY SEQ;
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+# Time: 2020-10-30T06:20:49.784625Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    11
+# Query_time: 0.001109  Lock_time: 0.000127 Rows_sent: 15  Rows_examined: 261
+use test_db;
+SET timestamp=1604038849;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-10-30T06:20:49.786105Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    11
+# Query_time: 0.000971  Lock_time: 0.000169 Rows_sent: 8  Rows_examined: 248
+SET timestamp=1604038849;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000545*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=24 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-10-30T06:21:25.751639Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    11
+# Query_time: 0.001179  Lock_time: 0.000107 Rows_sent: 15  Rows_examined: 232
+SET timestamp=1604038885;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-10-30T06:21:25.753203Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    11
+# Query_time: 0.001031  Lock_time: 0.000177 Rows_sent: 8  Rows_examined: 219
+SET timestamp=1604038885;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000494*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=38 GROUP BY STATE ORDER BY SEQ;
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+# Time: 2020-10-30T07:10:24.454964Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    13
+# Query_time: 0.139509  Lock_time: 0.000096 Rows_sent: 1000  Rows_examined: 1000
+use test_db;
+SET timestamp=1604041824;
+SELECT * FROM `t_20201021` LIMIT 0, 1000;
+# Time: 2020-10-30T07:10:55.016784Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    15
+# Query_time: 0.000970  Lock_time: 0.000232 Rows_sent: 11  Rows_examined: 121
+SET timestamp=1604041855;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.051597*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=3 GROUP BY STATE ORDER BY SEQ;
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+# Time: 2020-10-30T07:15:29.875162Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    16
+# Query_time: 0.015251  Lock_time: 0.000259 Rows_sent: 1000  Rows_examined: 1000
+use test_db;
+SET timestamp=1604042129;
+SELECT * FROM `t_20201031` LIMIT 0, 1000;
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+# Time: 2020-10-30T07:51:46.575236Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    19
+# Query_time: 0.000631  Lock_time: 0.000138 Rows_sent: 11  Rows_examined: 121
+use test_db;
+SET timestamp=1604044306;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000266*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=3 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-10-30T08:47:40.398075Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    26
+# Query_time: 0.001030  Lock_time: 0.000395 Rows_sent: 11  Rows_examined: 130
+SET timestamp=1604047660;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.222860*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=4 GROUP BY STATE ORDER BY SEQ;
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+# Time: 2020-10-30T10:37:22.204669Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    35
+# Query_time: 0.000836  Lock_time: 0.000260 Rows_sent: 6  Rows_examined: 106
+SET timestamp=1604054242;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000533*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=3 GROUP BY STATE ORDER BY SEQ;
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+# Time: 2020-11-10T11:11:49.526850Z
+# User@Host: root[root] @  [192.168.0.218]  Id:   220
+# Query_time: 0.002298  Lock_time: 0.000326 Rows_sent: 11  Rows_examined: 121
+use zst_mysql_1110;
+SET timestamp=1605006709;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.001205*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=3 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-10T21:34:07.348497Z
+# User@Host: root[root] @  [192.168.0.218]  Id:   492
+# Query_time: 0.000920  Lock_time: 0.000326 Rows_sent: 15  Rows_examined: 133
+SET timestamp=1605044047;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000369*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=3 GROUP BY STATE ORDER BY SEQ;
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+# Time: 2020-11-16T02:25:46.166432Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    15
+# Query_time: 0.000640  Lock_time: 0.000105 Rows_sent: 8  Rows_examined: 152
+use test_db;
+SET timestamp=1605493546;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-11-16T02:25:46.167594Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    15
+# Query_time: 0.000767  Lock_time: 0.000103 Rows_sent: 11  Rows_examined: 181
+SET timestamp=1605493546;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000144*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=7 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-16T10:25:20.737541Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    24
+# Query_time: 0.000674  Lock_time: 0.000090 Rows_sent: 8  Rows_examined: 144
+SET timestamp=1605522320;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-11-16T10:25:20.738749Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    24
+# Query_time: 0.000700  Lock_time: 0.000140 Rows_sent: 9  Rows_examined: 169
+SET timestamp=1605522320;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.019203*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=7 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-17T04:04:22.286268Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    36
+# Query_time: 0.001112  Lock_time: 0.000148 Rows_sent: 10  Rows_examined: 166
+SET timestamp=1605585862;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-11-17T04:04:22.287698Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    36
+# Query_time: 0.000789  Lock_time: 0.000173 Rows_sent: 9  Rows_examined: 187
+SET timestamp=1605585862;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.106974*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=9 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-17T04:06:03.674349Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    36
+# Query_time: 0.001081  Lock_time: 0.000128 Rows_sent: 15  Rows_examined: 261
+SET timestamp=1605585963;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-11-17T04:06:03.675631Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    36
+# Query_time: 0.000784  Lock_time: 0.000122 Rows_sent: 11  Rows_examined: 270
+SET timestamp=1605585963;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000134*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=21 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-17T06:30:43.669949Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    38
+# Query_time: 0.000858  Lock_time: 0.000153 Rows_sent: 9  Rows_examined: 157
+SET timestamp=1605594643;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-11-17T06:30:43.670909Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    38
+# Query_time: 0.000618  Lock_time: 0.000103 Rows_sent: 9  Rows_examined: 180
+SET timestamp=1605594643;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.036602*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=8 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-17T06:31:38.232884Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    38
+# Query_time: 0.001079  Lock_time: 0.000109 Rows_sent: 15  Rows_examined: 241
+SET timestamp=1605594698;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-11-17T06:31:38.234287Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    38
+# Query_time: 0.001008  Lock_time: 0.000164 Rows_sent: 9  Rows_examined: 230
+SET timestamp=1605594698;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.036346*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=26 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-17T06:32:29.696922Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    38
+# Query_time: 0.000869  Lock_time: 0.000113 Rows_sent: 15  Rows_examined: 261
+SET timestamp=1605594749;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-11-17T06:32:29.698112Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    38
+# Query_time: 0.000792  Lock_time: 0.000114 Rows_sent: 11  Rows_examined: 270
+SET timestamp=1605594749;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000155*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=33 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-17T06:32:34.363414Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    38
+# Query_time: 0.001212  Lock_time: 0.000147 Rows_sent: 15  Rows_examined: 310
+SET timestamp=1605594754;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-11-17T06:32:34.364904Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    38
+# Query_time: 0.001057  Lock_time: 0.000125 Rows_sent: 11  Rows_examined: 303
+SET timestamp=1605594754;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000150*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=40 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-17T06:32:52.243995Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    38
+# Query_time: 0.001369  Lock_time: 0.000276 Rows_sent: 15  Rows_examined: 310
+SET timestamp=1605594772;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-11-17T06:32:52.245325Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    38
+# Query_time: 0.000857  Lock_time: 0.000119 Rows_sent: 11  Rows_examined: 303
+SET timestamp=1605594772;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000167*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=47 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-17T06:57:17.236109Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    38
+# Query_time: 0.000967  Lock_time: 0.000106 Rows_sent: 15  Rows_examined: 292
+SET timestamp=1605596237;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-11-17T06:57:17.237702Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    38
+# Query_time: 0.001172  Lock_time: 0.000227 Rows_sent: 9  Rows_examined: 280
+SET timestamp=1605596237;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.030457*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=55 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-17T07:38:11.566543Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    38
+# Query_time: 0.001079  Lock_time: 0.000117 Rows_sent: 15  Rows_examined: 261
+SET timestamp=1605598691;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-11-17T07:38:11.567755Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    38
+# Query_time: 0.000763  Lock_time: 0.000106 Rows_sent: 11  Rows_examined: 270
+SET timestamp=1605598691;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000192*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=67 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-17T07:38:15.832040Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    38
+# Query_time: 0.001157  Lock_time: 0.000133 Rows_sent: 15  Rows_examined: 279
+SET timestamp=1605598695;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-11-17T07:38:15.833355Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    38
+# Query_time: 0.000871  Lock_time: 0.000203 Rows_sent: 11  Rows_examined: 272
+SET timestamp=1605598695;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000161*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=74 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-17T07:38:32.195468Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    38
+# Query_time: 0.000977  Lock_time: 0.000104 Rows_sent: 15  Rows_examined: 265
+SET timestamp=1605598712;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-11-17T07:38:32.197499Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    38
+# Query_time: 0.001042  Lock_time: 0.000152 Rows_sent: 11  Rows_examined: 257
+SET timestamp=1605598712;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000216*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=89 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-17T10:33:57.480366Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    42
+# Query_time: 0.000665  Lock_time: 0.000102 Rows_sent: 15  Rows_examined: 172
+SET timestamp=1605609237;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-11-17T10:33:57.482558Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    42
+# Query_time: 0.000735  Lock_time: 0.000187 Rows_sent: 3  Rows_examined: 162
+SET timestamp=1605609237;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.012142*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=2007 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-17T10:34:37.472147Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    42
+# Query_time: 0.001076  Lock_time: 0.000113 Rows_sent: 15  Rows_examined: 275
+SET timestamp=1605609277;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-11-17T10:34:37.473347Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    42
+# Query_time: 0.000736  Lock_time: 0.000105 Rows_sent: 15  Rows_examined: 275
+SET timestamp=1605609277;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000417*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=2022 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-17T10:35:19.335852Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    42
+# Query_time: 0.001983  Lock_time: 0.000211 Rows_sent: 15  Rows_examined: 303
+SET timestamp=1605609319;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-11-17T10:35:19.337374Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    42
+# Query_time: 0.001228  Lock_time: 0.000287 Rows_sent: 15  Rows_examined: 304
+SET timestamp=1605609319;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000379*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=2029 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-17T10:35:33.292960Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    42
+# Query_time: 0.001447  Lock_time: 0.000164 Rows_sent: 15  Rows_examined: 297
+SET timestamp=1605609333;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-11-17T10:35:33.294385Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    42
+# Query_time: 0.000935  Lock_time: 0.000120 Rows_sent: 15  Rows_examined: 298
+SET timestamp=1605609333;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000458*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=2040 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-17T10:36:55.046127Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    42
+# Query_time: 0.000978  Lock_time: 0.000101 Rows_sent: 15  Rows_examined: 222
+SET timestamp=1605609415;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-11-17T10:36:55.047421Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    42
+# Query_time: 0.000753  Lock_time: 0.000117 Rows_sent: 9  Rows_examined: 211
+SET timestamp=1605609415;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.022185*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=2064 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-18T01:57:49.963063Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    49
+# Query_time: 0.000576  Lock_time: 0.000100 Rows_sent: 15  Rows_examined: 133
+SET timestamp=1605664669;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.024970*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=3 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-18T01:57:56.885987Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    49
+# Query_time: 0.000853  Lock_time: 0.000087 Rows_sent: 11  Rows_examined: 235
+SET timestamp=1605664676;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-11-18T01:57:56.887114Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    49
+# Query_time: 0.000753  Lock_time: 0.000135 Rows_sent: 15  Rows_examined: 266
+SET timestamp=1605664676;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000412*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=10 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-18T01:58:10.727594Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    49
+# Query_time: 0.001475  Lock_time: 0.000170 Rows_sent: 15  Rows_examined: 317
+SET timestamp=1605664690;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-11-18T01:58:10.729319Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    49
+# Query_time: 0.001253  Lock_time: 0.000176 Rows_sent: 15  Rows_examined: 318
+SET timestamp=1605664690;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000448*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=17 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-18T01:58:26.157380Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    49
+# Query_time: 0.000970  Lock_time: 0.000075 Rows_sent: 15  Rows_examined: 318
+SET timestamp=1605664706;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-11-18T01:58:26.158630Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    49
+# Query_time: 0.000815  Lock_time: 0.000093 Rows_sent: 15  Rows_examined: 319
+SET timestamp=1605664706;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000340*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=24 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-18T01:59:28.222602Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    49
+# Query_time: 0.000948  Lock_time: 0.000092 Rows_sent: 15  Rows_examined: 296
+SET timestamp=1605664768;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-11-18T01:59:28.223667Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    49
+# Query_time: 0.000733  Lock_time: 0.000101 Rows_sent: 9  Rows_examined: 284
+SET timestamp=1605664768;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.039072*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=32 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-18T02:01:47.866211Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    49
+# Query_time: 0.001635  Lock_time: 0.000159 Rows_sent: 15  Rows_examined: 296
+SET timestamp=1605664907;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-11-18T02:01:47.867791Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    49
+# Query_time: 0.000900  Lock_time: 0.000171 Rows_sent: 15  Rows_examined: 296
+SET timestamp=1605664907;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000554*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=39 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-18T02:08:48.037196Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    53
+# Query_time: 0.000676  Lock_time: 0.000119 Rows_sent: 9  Rows_examined: 121
+SET timestamp=1605665328;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.031296*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=4 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-18T07:11:36.216362Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    58
+# Query_time: 0.000692  Lock_time: 0.000115 Rows_sent: 9  Rows_examined: 115
+SET timestamp=1605683496;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.016384*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=3 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-18T07:12:01.344059Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    58
+# Query_time: 0.000821  Lock_time: 0.000090 Rows_sent: 11  Rows_examined: 226
+SET timestamp=1605683521;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-11-18T07:12:01.345395Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    58
+# Query_time: 0.000921  Lock_time: 0.000150 Rows_sent: 12  Rows_examined: 251
+SET timestamp=1605683521;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.001716*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=10 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-18T09:09:07.196077Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    60
+# Query_time: 0.021707  Lock_time: 0.000252 Rows_sent: 10  Rows_examined: 173
+SET timestamp=1605690547;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-11-18T09:09:07.202445Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    60
+# Query_time: 0.001180  Lock_time: 0.000210 Rows_sent: 11  Rows_examined: 198
+SET timestamp=1605690547;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000221*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=9 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-18T09:10:13.221881Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    60
+# Query_time: 0.001031  Lock_time: 0.000100 Rows_sent: 15  Rows_examined: 268
+SET timestamp=1605690613;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-11-18T09:10:13.223161Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    60
+# Query_time: 0.000827  Lock_time: 0.000135 Rows_sent: 11  Rows_examined: 277
+SET timestamp=1605690613;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000200*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=16 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-18T10:21:41.593728Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    67
+# Query_time: 0.204933  Lock_time: 0.098966 Rows_sent: 315  Rows_examined: 315
+use information_schema;
+SET timestamp=1605694901;
+SELECT * FROM `TABLES` LIMIT 0, 1000;
+# Time: 2020-11-18T10:23:00.580279Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    70
+# Query_time: 0.000845  Lock_time: 0.000187 Rows_sent: 16  Rows_examined: 139
+SET timestamp=1605694980;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000464*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=3 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-18T10:23:06.169432Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    70
+# Query_time: 0.000933  Lock_time: 0.000092 Rows_sent: 11  Rows_examined: 243
+SET timestamp=1605694986;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-11-18T10:23:06.170840Z
+# User@Host: root[root] @  [192.168.0.218]  Id:    70
+# Query_time: 0.000946  Lock_time: 0.000131 Rows_sent: 16  Rows_examined: 276
+SET timestamp=1605694986;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000432*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=10 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-23T09:22:57.608147Z
+# User@Host: root[root] @  [192.168.0.218]  Id:   510
+# Query_time: 0.000600  Lock_time: 0.000129 Rows_sent: 11  Rows_examined: 121
+use zst_mysql_1110;
+SET timestamp=1606123377;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000343*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=3 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-23T09:23:01.574541Z
+# User@Host: root[root] @  [192.168.0.218]  Id:   510
+# Query_time: 0.000841  Lock_time: 0.000095 Rows_sent: 11  Rows_examined: 227
+SET timestamp=1606123381;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-11-23T09:23:01.575743Z
+# User@Host: root[root] @  [192.168.0.218]  Id:   510
+# Query_time: 0.000808  Lock_time: 0.000115 Rows_sent: 11  Rows_examined: 250
+SET timestamp=1606123381;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000327*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=10 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-23T09:23:05.697631Z
+# User@Host: root[root] @  [192.168.0.218]  Id:   510
+# Query_time: 0.001098  Lock_time: 0.000142 Rows_sent: 15  Rows_examined: 309
+SET timestamp=1606123385;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-11-23T09:23:05.699046Z
+# User@Host: root[root] @  [192.168.0.218]  Id:   510
+# Query_time: 0.000914  Lock_time: 0.000118 Rows_sent: 11  Rows_examined: 302
+SET timestamp=1606123385;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000546*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=17 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-23T09:23:11.020706Z
+# User@Host: root[root] @  [192.168.0.218]  Id:   510
+# Query_time: 0.000985  Lock_time: 0.000103 Rows_sent: 15  Rows_examined: 310
+SET timestamp=1606123391;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-11-23T09:23:11.021949Z
+# User@Host: root[root] @  [192.168.0.218]  Id:   510
+# Query_time: 0.000840  Lock_time: 0.000096 Rows_sent: 11  Rows_examined: 303
+SET timestamp=1606123391;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000338*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=24 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-23T09:25:41.948612Z
+# User@Host: root[root] @  [192.168.0.218]  Id:   512
+# Query_time: 0.000752  Lock_time: 0.000104 Rows_sent: 11  Rows_examined: 173
+SET timestamp=1606123541;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-11-23T09:25:41.949769Z
+# User@Host: root[root] @  [192.168.0.218]  Id:   512
+# Query_time: 0.000683  Lock_time: 0.000136 Rows_sent: 8  Rows_examined: 190
+SET timestamp=1606123541;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000429*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=10 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-23T14:05:12.359289Z
+# User@Host: root[root] @  [192.168.0.218]  Id:   689
+# Query_time: 0.000753  Lock_time: 0.000184 Rows_sent: 9  Rows_examined: 115
+use test_db;
+SET timestamp=1606140312;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.111977*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=3 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-23T14:05:57.445507Z
+# User@Host: root[root] @  [192.168.0.218]  Id:   691
+# Query_time: 0.000838  Lock_time: 0.000142 Rows_sent: 8  Rows_examined: 150
+SET timestamp=1606140357;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-11-23T14:05:57.446929Z
+# User@Host: root[root] @  [192.168.0.218]  Id:   691
+# Query_time: 0.000912  Lock_time: 0.000251 Rows_sent: 11  Rows_examined: 179
+SET timestamp=1606140357;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.001064*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=7 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-11-24T22:30:23.010017Z
+# User@Host: root[root] @  [192.168.0.218]  Id:  1681
+# Query_time: 0.000651  Lock_time: 0.000177 Rows_sent: 9  Rows_examined: 115
+SET timestamp=1606257023;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.081928*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=3 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-12-03T20:29:19.690526Z
+# User@Host: root[root] @  [192.168.0.218]  Id:  2056
+# Query_time: 0.000951  Lock_time: 0.000207 Rows_sent: 12  Rows_examined: 175
+SET timestamp=1607027359;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-12-03T20:29:19.699434Z
+# User@Host: root[root] @  [192.168.0.218]  Id:  2056
+# Query_time: 0.000937  Lock_time: 0.000210 Rows_sent: 8  Rows_examined: 190
+SET timestamp=1607027359;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.014985*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=11 GROUP BY STATE ORDER BY SEQ;
+/usr/local/mysql/bin/mysqld, Version: 5.7.22-log (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /home/mysql/3306/data/3306.sock
+Time                 Id Command    Argument
+# Time: 2020-12-10T15:49:34.615550Z
+# User@Host: root[root] @  [192.168.0.218]  Id:   214
+# Query_time: 0.000754  Lock_time: 0.000129 Rows_sent: 8  Rows_examined: 147
+use zst_mysql_1110;
+SET timestamp=1607615374;
+SELECT QUERY_ID, SUM(DURATION) AS SUM_DURATION FROM INFORMATION_SCHEMA.PROFILING GROUP BY QUERY_ID;
+# Time: 2020-12-10T15:49:34.617194Z
+# User@Host: root[root] @  [192.168.0.218]  Id:   214
+# Query_time: 0.000925  Lock_time: 0.000186 Rows_sent: 8  Rows_examined: 170
+SET timestamp=1607615374;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000619*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=7 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-12-10T15:53:02.303699Z
+# User@Host: root[root] @  [192.168.0.218]  Id:   216
+# Query_time: 0.000680  Lock_time: 0.000192 Rows_sent: 8  Rows_examined: 121
+SET timestamp=1607615582;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000979*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=4 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-12-10T16:53:18.207272Z
+# User@Host: root[root] @  [192.168.0.218]  Id:   317
+# Query_time: 0.000614  Lock_time: 0.000149 Rows_sent: 8  Rows_examined: 112
+SET timestamp=1607619198;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.014367*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=3 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-12-10T16:56:00.722335Z
+# User@Host: root[root] @  [192.168.0.218]  Id:   319
+# Query_time: 0.000709  Lock_time: 0.000180 Rows_sent: 8  Rows_examined: 121
+SET timestamp=1607619360;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.000463*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=4 GROUP BY STATE ORDER BY SEQ;
+# Time: 2020-12-13T17:02:56.935943Z
+# User@Host: root[root] @  [192.168.0.218]  Id:   516
+# Query_time: 0.001012  Lock_time: 0.000324 Rows_sent: 16  Rows_examined: 142
+SET timestamp=1607878976;
+SELECT STATE AS `状态`, ROUND(SUM(DURATION),7) AS `期间`, CONCAT(ROUND(SUM(DURATION)/0.002145*100,3), '%') AS `百分比` FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=3 GROUP BY STATE ORDER BY SEQ;

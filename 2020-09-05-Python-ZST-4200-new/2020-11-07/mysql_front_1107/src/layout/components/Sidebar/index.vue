@@ -1,7 +1,7 @@
 <template>
     <div class="sidebar-container">
         <el-scrollbar wrap-class="scrollbar-wrapper">
-            <el-menu :default-active="routePath" class="el-menu-vertical-demo" background-color="rgb(48, 65, 86)" text-color="#fff" active-text-color="red" @select="handleSelect" router>
+            <el-menu :default-active="routePath" class="el-menu-vertical-demo" background-color="rgb(48, 65, 86)" text-color="#fff" active-text-color="red" router>
 
                  <div v-for="(submenu, key) in menuRouts" :key="key">
                     <template v-if="!submenu.children || submenu.children.length == 0">
@@ -19,8 +19,8 @@
                             </template>
 
                             <el-menu-item-group>
-                                <el-menu-item v-for="(child, cKey) in submenu.children" :key="cKey">
-                                    <router-link :to="child.path">{{routeName(child)}}</router-link>
+                                <el-menu-item v-for="(child, cKey) in submenu.children" :key="cKey" :index="resolvePath(submenu.path, child.path)">
+                                    {{routeName(child)}}
                                 </el-menu-item>
                             </el-menu-item-group>
 
@@ -48,7 +48,7 @@
         },
         watch: {
             $route() {
-                this.handleSelect(this.activeIndex)
+                console.log(1)
             }
         },
         created(){
@@ -61,7 +61,7 @@
         computed: {
              routePath() {
                 // 获取当前页面的 path
-                return this.$route.path
+                return this.$route.path;
             },
         },
         methods: {
@@ -71,10 +71,7 @@
             routeName(route) {
                 return route.meta ? route.meta.title : route.name
             },
-            handleSelect(index){
-                console.log("index: ", index)
-                this.activeIndex = index
-            }
+            
         }   
     }
 </script>
