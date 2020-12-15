@@ -1,55 +1,9 @@
 
-
-
-[2020-12-15T03:38:54,811][ERROR][o.e.b.Bootstrap          ] [localhost.localdomain] node validation exception
-[3] bootstrap checks failed
-[1]: max file descriptors [4096] for elasticsearch process is too low, increase to at least [65535]
-[2]: max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
-[3]: the default discovery settings are unsuitable for production use; at least one of [discovery.seed_hosts, discovery.seed_providers, cluster.initial_master_nodes] must be configured
-
-ulimit -a
-
-https://blog.csdn.net/qq_38636133/article/details/105621876
-
-https://blog.csdn.net/tl1242616458/article/details/105602361/
-
-[vagrant@localhost ~]$ ulimit -a
-core file size          (blocks, -c) 0
-data seg size           (kbytes, -d) unlimited
-scheduling priority             (-e) 0
-file size               (blocks, -f) unlimited
-pending signals                 (-i) 15090
-max locked memory       (kbytes, -l) 64
-max memory size         (kbytes, -m) unlimited
-open files                      (-n) 65536
-pipe size            (512 bytes, -p) 8
-POSIX message queues     (bytes, -q) 819200
-real-time priority              (-r) 0
-stack size              (kbytes, -s) 8192
-cpu time               (seconds, -t) unlimited
-max user processes              (-u) 4096
-virtual memory          (kbytes, -v) unlimited
-file locks                      (-x) unlimited
-
-
 -------------------
 
 
 filebeat所在机器：192.168.0.201 
 ES 所在机器：     192.168.0.45
-
-FATAL  Error: Port 5601 is already in use. Another instance of Kibana may be running!
-
-[vagrant@localhost kibana-7.10.1-linux-x86_64]$ netstat -anltp|grep 5601
-(Not all processes could be identified, non-owned process info
- will not be shown, you would have to be root to see it all.)
-tcp        0      0 192.168.0.45:5601       0.0.0.0:*               LISTEN      5112/./bin/../node/ 
-tcp        0      0 192.168.0.45:5601       192.168.0.218:54108     ESTABLISHED 5112/./bin/../node/ 
-tcp        0      0 192.168.0.45:5601       192.168.0.218:54070     ESTABLISHED 5112/./bin/../node/ 
-tcp        0      0 192.168.0.45:5601       192.168.0.218:54106     ESTABLISHED 5112/./bin/../node/ 
-tcp        0      0 192.168.0.45:5601       192.168.0.218:54064     ESTABLISHED 5112/./bin/../node/ 
-[vagrant@localhost kibana-7.10.1-linux-x86_64]$ 
-
 
 
 
@@ -83,7 +37,14 @@ es做全文搜索
 	要用同一个版本
 	
 	
-filebeat
+1. filebeat
+2. 安装elasticsearch
+3. 安装kafka 
+4. 安装和配置Logstash	
+
+相关参考
+	
+1. filebeat
 
 	--安装好简单
 	
@@ -123,6 +84,19 @@ filebeat
 	-- 会生成文件： -rw-------.  1 root root  1181058 12月 14 01:10 nohup.out
 
 
+	
+	# enable mysql模块
+		./filebeat modules enable mysql
+		
+		[root@localhost filebeat-7.10.1-linux-x86_64]# ./filebeat modules enable mysql
+		Enabled mysql
+
+
+	# 设置mysql slow log的路径
+		vim ./modules.d/mysql.yml
+		slowlog:
+		  enabled: true
+		  var.paths: ['/home/mysql/3306/data/slow.log']
 
 
 
@@ -133,18 +107,7 @@ filebeat
 	select * from test_db.t_20201031;
 
 
-https://www.elastic.co/cn/downloads/beats/filebeat
-https://www.elastic.co/guide/en/beats/filebeat/1.0.1/configuration-output.html
-
-
-https://www.jianshu.com/p/1adfde642cf2
-https://www.elastic.co/cn/support/matrix#matrix_jvm  JDK对应关系
-
-https://blog.csdn.net/loveshunyi/article/details/109785488   Centos7 安装 Elasticsearch7.10
-https://cloud.tencent.com/developer/article/1349125  如何在CentOS 7上安装和配置Elasticsearch
-
-
-安装elasticsearch
+2. 安装elasticsearch
 
 	yum install java-1.8.0-openjdk.x86_64
 
@@ -195,7 +158,7 @@ https://cloud.tencent.com/developer/article/1349125  如何在CentOS 7上安装�
 	
 
 
-kafka 
+3. 安装kafka 
 	kafka 是一个消息队列
 	./bin/zookeeper-server-start.sh -daemon config/zookeeper.properties
 		-- ps aux|grep  zookeeper
@@ -230,28 +193,22 @@ kafka
 		tcp6       1      0 127.0.0.1:42632         127.0.0.1:9092          CLOSE_WAIT  6086/java           
 		tcp6       0      0 127.0.0.1:42690         127.0.0.1:9092          ESTABLISHED 9937/java 
 
+4. 安装和配置Logstash	
 	
-	下面的配置是写在哪里	
-		output {
-		  kafka {
-			bootstrap_servers => '192.168.0.45:9092'
-			topic_id => 'slow_query_log'
-			codec => json
-		  }
-		  stdout {}
-		}	
-		
 		[vagrant@localhost config]$ pwd
 		/home/vagrant/src/logstash-7.10.1/config
-
-		[vagrant@localhost config]$ cat mysql_slow.conf 
+		[vagrant@localhost config]$ cat mysql_slow.conf
+		输入配置
+		-- 从Filebeat中读取数据，需要声明监听的地址和端口，filebeat那边则需要修改output		
 		input {
 		  beats {
 			port => 5044
 			host => "192.168.0.45"
 		  } 
 		}
-		output {
+		输出配置
+		-- kafka配置
+		output { 
 		  kafka {
 			bootstrap_servers => '192.168.0.45:9092'
 			topic_id => 'slow_query_log'
@@ -289,23 +246,11 @@ kafka
 
 	./bin/kafka-console-consumer.sh --bootstrap-server 192.168.0.45:9092 --topic slow_query_log 
 
-	
-# enable mysql模块
-	./filebeat modules enable mysql
-	
-	[root@localhost filebeat-7.10.1-linux-x86_64]# ./filebeat modules enable mysql
-	Enabled mysql
 
 
-# 设置mysql slow log的路径
-	vim ./modules.d/mysql.yml
-	slowlog:
-	  enabled: true
-	  var.paths: ['/home/mysql/3306/data/slow.log']
+问题和解决
 
-
-
-内存不足	
+1. 内存不足	
 	[vagrant@localhost elasticsearch-7.10.1]$ curl http://localhost:9200/
 	OpenJDK 64-Bit Server VM warning: INFO: os::commit_memory(0x00007f1370930000, 262144, 0) failed; error='Not enough space' (errno=12)
 	#
@@ -343,6 +288,66 @@ kafka
 	Mem:           615M        181M        375M        904K         57M        358M
 	Swap:          999M        136M        863M
 
+
+2. 文件描述符大小不足
+
+	[2020-12-15T03:38:54,811][ERROR][o.e.b.Bootstrap          ] [localhost.localdomain] node validation exception
+	[3] bootstrap checks failed
+	[1]: max file descriptors [4096] for elasticsearch process is too low, increase to at least [65535]
+	[2]: max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
+	[3]: the default discovery settings are unsuitable for production use; at least one of [discovery.seed_hosts, discovery.seed_providers, cluster.initial_master_nodes] must be configured
+
+	ulimit -a
+
+	https://blog.csdn.net/qq_38636133/article/details/105621876
+
+	https://blog.csdn.net/tl1242616458/article/details/105602361/
+
+	[vagrant@localhost ~]$ ulimit -a
+	core file size          (blocks, -c) 0
+	data seg size           (kbytes, -d) unlimited
+	scheduling priority             (-e) 0
+	file size               (blocks, -f) unlimited
+	pending signals                 (-i) 15090
+	max locked memory       (kbytes, -l) 64
+	max memory size         (kbytes, -m) unlimited
+	open files                      (-n) 65536
+	pipe size            (512 bytes, -p) 8
+	POSIX message queues     (bytes, -q) 819200
+	real-time priority              (-r) 0
+	stack size              (kbytes, -s) 8192
+	cpu time               (seconds, -t) unlimited
+	max user processes              (-u) 4096
+	virtual memory          (kbytes, -v) unlimited
+	file locks                      (-x) unlimited
+
+3. Kibana 5601端口已经被占用
+	FATAL  Error: Port 5601 is already in use. Another instance of Kibana may be running!
+
+	[vagrant@localhost kibana-7.10.1-linux-x86_64]$ netstat -anltp|grep 5601
+	(Not all processes could be identified, non-owned process info
+	 will not be shown, you would have to be root to see it all.)
+	tcp        0      0 192.168.0.45:5601       0.0.0.0:*               LISTEN      5112/./bin/../node/ 
+	tcp        0      0 192.168.0.45:5601       192.168.0.218:54108     ESTABLISHED 5112/./bin/../node/ 
+	tcp        0      0 192.168.0.45:5601       192.168.0.218:54070     ESTABLISHED 5112/./bin/../node/ 
+	tcp        0      0 192.168.0.45:5601       192.168.0.218:54106     ESTABLISHED 5112/./bin/../node/ 
+	tcp        0      0 192.168.0.45:5601       192.168.0.218:54064     ESTABLISHED 5112/./bin/../node/ 
+	[vagrant@localhost kibana-7.10.1-linux-x86_64]$ 
+
+
+
+
+
+相关参考 
+	https://www.elastic.co/cn/downloads/beats/filebeat
+	https://www.elastic.co/guide/en/beats/filebeat/1.0.1/configuration-output.html
+
+
+	https://www.jianshu.com/p/1adfde642cf2
+	https://www.elastic.co/cn/support/matrix#matrix_jvm  JDK对应关系
+
+	https://blog.csdn.net/loveshunyi/article/details/109785488   Centos7 安装 Elasticsearch7.10
+	https://cloud.tencent.com/developer/article/1349125  如何在CentOS 7上安装和配置Elasticsearch
 
 
 GET zst_test_20201215/_search
