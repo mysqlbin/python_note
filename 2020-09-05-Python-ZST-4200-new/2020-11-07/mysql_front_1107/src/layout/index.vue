@@ -62,8 +62,7 @@
         color: #333;
     }
   
-    .username:hover{
-        cursor: pointer;
-    }
+
+
 </style>
 

@@ -4,7 +4,7 @@
 
             <el-dropdown >
               
-                <span class="el-dropdown-link">
+                <span class="el-dropdown-link username">
                     {{username}}<i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
 
@@ -67,7 +67,7 @@
         overflow: hidden;
         line-height: 60px;
     }
-    .el-dropdown-link:hover{
+    .username:hover{
         cursor: pointer;
     }
 
