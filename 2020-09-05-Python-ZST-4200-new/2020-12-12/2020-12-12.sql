@@ -213,7 +213,6 @@ kafka
 	
 	
 	./bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test
-	
 	./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test
 	
 	
@@ -235,13 +234,62 @@ kafka
 	下面的配置是写在哪里	
 		output {
 		  kafka {
-			bootstrap_servers => 'localhost:9092'
+			bootstrap_servers => '192.168.0.45:9092'
 			topic_id => 'slow_query_log'
 			codec => json
 		  }
 		  stdout {}
 		}	
 		
+		[vagrant@localhost config]$ pwd
+		/home/vagrant/src/logstash-7.10.1/config
+
+		[vagrant@localhost config]$ cat mysql_slow.conf 
+		input {
+		  beats {
+			port => 5044
+			host => "192.168.0.45"
+		  } 
+		}
+		output {
+		  kafka {
+			bootstrap_servers => '192.168.0.45:9092'
+			topic_id => 'slow_query_log'
+			codec => json
+		  }
+		  stdout {}
+		}
+			
+		
+		 ./bin/logstash -f ./config/mysql_slow.conf
+		 -- 启动 logstash 需要一定的时间
+			-- 不是指定mysql.conf
+			[vagrant@localhost logstash-7.10.1]$ ./bin/logstash -f ./config/mysql.conf
+			Using bundled JDK: /home/vagrant/src/logstash-7.10.1/jdk
+			OpenJDK 64-Bit Server VM warning: Option UseConcMarkSweepGC was deprecated in version 9.0 and will likely be removed in a future release.
+
+
+			WARNING: An illegal reflective access operation has occurred
+			WARNING: Illegal reflective access by org.jruby.ext.openssl.SecurityHelper (file:/tmp/jruby-12895/jruby4345788481473972456jopenssl.jar) to field java.security.MessageDigest.provider
+			WARNING: Please consider reporting this to the maintainers of org.jruby.ext.openssl.SecurityHelper
+			WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+			WARNING: All illegal access operations will be denied in a future release
+			Sending Logstash logs to /home/vagrant/src/logstash-7.10.1/logs which is now configured via log4j2.properties
+			[2020-12-15T14:13:03,521][INFO ][logstash.runner          ] Starting Logstash {"logstash.version"=>"7.10.1", "jruby.version"=>"jruby 9.2.13.0 (2.5.7) 2020-08-03 9a89c94bcc OpenJDK 64-Bit Server VM 11.0.8+10 on 11.0.8+10 +indy +jit [linux-x86_64]"}
+			[2020-12-15T14:13:03,880][INFO ][logstash.setting.writabledirectory] Creating directory {:setting=>"path.queue", :path=>"/home/vagrant/src/logstash-7.10.1/data/queue"}
+			[2020-12-15T14:13:03,924][INFO ][logstash.setting.writabledirectory] Creating directory {:setting=>"path.dead_letter_queue", :path=>"/home/vagrant/src/logstash-7.10.1/data/dead_letter_queue"}
+			[2020-12-15T14:13:09,170][WARN ][logstash.config.source.multilocal] Ignoring the 'pipelines.yml' file because modules or command line options are specified
+			[2020-12-15T14:13:09,232][INFO ][logstash.agent           ] No persistent UUID file found. Generating new UUID {:uuid=>"ea1278a7-806b-441e-9dd2-0f5c15cf753d", :path=>"/home/vagrant/src/logstash-7.10.1/data/uuid"}
+			[2020-12-15T14:13:10,201][INFO ][logstash.config.source.local.configpathloader] No config files found in path {:path=>"/home/vagrant/src/logstash-7.10.1/config/mysql.conf"}
+			[2020-12-15T14:13:10,271][ERROR][logstash.config.sourceloader] No configuration found in the configured sources.
+			[2020-12-15T14:13:13,120][INFO ][logstash.agent           ] Successfully started Logstash API endpoint {:port=>9600}
+			[2020-12-15T14:13:15,444][INFO ][logstash.runner          ] Logstash shut down.
+			[2020-12-15T14:13:15,499][ERROR][org.logstash.Logstash    ] java.lang.IllegalStateException: Logstash stopped processing because of an error: (SystemExit) exit
+		
+
+	./bin/kafka-console-consumer.sh --bootstrap-server 192.168.0.45:9092 --topic slow_query_log 
+
+	
 # enable mysql模块
 	./filebeat modules enable mysql
 	
