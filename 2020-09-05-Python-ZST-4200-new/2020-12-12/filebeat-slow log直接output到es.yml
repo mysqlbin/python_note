@@ -180,10 +180,10 @@ setup.kibana:
   # Array of hosts to connect to.
   #hosts: ["192.168.0.45:9200"]
 
-#output.elasticsearch:
+output.elasticsearch:
   # Array of hosts to connect to.
-  #hosts: ["192.168.0.45:9200"]
-  #index: "zst_test_20201215"
+  hosts: ["192.168.0.45:9200"]
+  index: "zst_test_20201215"
 
 #output.console: 
   #pretty: true
@@ -200,10 +200,6 @@ setup.kibana:
   # The Logstash hosts
   #hosts: ["localhost:5044"]
 
-output.logstash:
-  # The Logstash hosts
-  hosts: ["192.168.0.45:5044"]
-  
   # Optional SSL. By default is off.
   # List of root certificates for HTTPS server verifications
   #ssl.certificate_authorities: ["/etc/pki/root/ca.pem"]
