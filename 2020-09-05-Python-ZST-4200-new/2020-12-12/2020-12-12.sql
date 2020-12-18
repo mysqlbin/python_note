@@ -12,9 +12,6 @@ ES 所在机器：     192.168.0.45
 kibana      http://192.168.0.45:5601/
 elasticsearch.hosts: ["http://192.168.0.45:9200"]
 
-filebeat写入完日志到ES后，接下来通过kibana查看
-
-使用logstash收集完日志后，接下来通过kibana查看
 
 
 filebeat
@@ -25,11 +22,10 @@ kafka
 	配置zookeeper
 基于soar，用go获取指纹
 python读取kafka
-
-
 logstash、kibana的关系
-
-
+	filebeat写入完日志到ES后，接下来通过kibana查看
+	使用logstash收集完日志后，接下来通过kibana查看
+	
 es做全文搜索
 
 
@@ -41,9 +37,13 @@ es做全文搜索
 2. 安装elasticsearch
 3. 安装kafka 
 4. 安装和配置Logstash	
-
-相关参考
+5. 问题和解决
+6. 相关参考
+7. 小结
+8. 安装go
+9. Linux安装soar
 	
+
 1. filebeat
 
 	--安装好简单
@@ -126,7 +126,7 @@ es做全文搜索
 	tar: elasticsearch-7.10.1/jdk/legal/jdk.internal.ed/LICENSE: Cannot create symlink to `../java.base/LICENSE': Protocol error
 
 
-
+	
 	./bin/elasticsearch -d
 	 
 	 
@@ -192,9 +192,21 @@ es做全文搜索
 		tcp6       0      0 127.0.0.1:9092          127.0.0.1:42690         ESTABLISHED 6086/java           
 		tcp6       1      0 127.0.0.1:42632         127.0.0.1:9092          CLOSE_WAIT  6086/java           
 		tcp6       0      0 127.0.0.1:42690         127.0.0.1:9092          ESTABLISHED 9937/java 
+	
+	
+	[vagrant@localhost kafka_2.12-2.6.0]$ cat config/server.properties 
+	############################# Socket Server Settings #############################
 
+	listeners=PLAINTEXT://192.168.0.45:9092
+
+	advertised.listeners=PLAINTEXT://192.168.0.45:9092
+
+	pip install kafka-python
+	
+	
 4. 安装和配置Logstash	
 	
+	4.1 输入配置和输出配置
 		[vagrant@localhost config]$ pwd
 		/home/vagrant/src/logstash-7.10.1/config
 		[vagrant@localhost config]$ cat mysql_slow.conf
@@ -243,102 +255,179 @@ es做全文搜索
 			[2020-12-15T14:13:15,444][INFO ][logstash.runner          ] Logstash shut down.
 			[2020-12-15T14:13:15,499][ERROR][org.logstash.Logstash    ] java.lang.IllegalStateException: Logstash stopped processing because of an error: (SystemExit) exit
 		
+	4.2 查看kafka消费慢查询日志的情况 
+		./bin/kafka-console-consumer.sh --bootstrap-server 192.168.0.45:9092 --topic slow_query_log 
+		{"ecs":{"version":"1.6.0"},"agent":{"hostname":"localhost.localdomain","ephemeral_id":"42e578f9-e2c6-42a8-825f-89bf2ea78360","type":"filebeat","name":"localhost.localdomain","id":"11cfd0c3-ef60-4be0-815c-5bbbd9bb3de4","version":"7.10.1"},"tags":["beats_input_codec_plain_applied"],"@version":"1","@timestamp":"2020-12-15T10:27:35.068Z","log":{"file":{"path":"/home/mysql/3306/data/slow.log"},"offset":2243},"input":{"type":"log"},"message":"# Time: 2020-12-15T10:27:33.810174Z","host":{"ip":["192.168.0.201","fe80::a00:27ff:fe1b:f591"],"hostname":"localhost.localdomain","mac":["08:00:27:1b:f5:91"],"name":"localhost.localdomain","containerized":false,"id":"454d1892be164150bed44d3c246cd641","architecture":"x86_64","os":{"platform":"centos","name":"CentOS Linux","family":"redhat","kernel":"3.10.0-514.el7.x86_64","version":"7 (Core)","codename":"Core"}}}
+		{"ecs":{"version":"1.6.0"},"agent":{"hostname":"localhost.localdomain","ephemeral_id":"42e578f9-e2c6-42a8-825f-89bf2ea78360","type":"filebeat","name":"localhost.localdomain","id":"11cfd0c3-ef60-4be0-815c-5bbbd9bb3de4","version":"7.10.1"},"tags":["beats_input_codec_plain_applied"],"@version":"1","@timestamp":"2020-12-15T10:27:35.070Z","log":{"file":{"path":"/home/mysql/3306/data/slow.log"},"offset":2279},"input":{"type":"log"},"message":"# User@Host: root[root] @ localhost []  Id:     4","host":{"ip":["192.168.0.201","fe80::a00:27ff:fe1b:f591"],"hostname":"localhost.localdomain","mac":["08:00:27:1b:f5:91"],"name":"localhost.localdomain","containerized":false,"id":"454d1892be164150bed44d3c246cd641","architecture":"x86_64","os":{"platform":"centos","name":"CentOS Linux","kernel":"3.10.0-514.el7.x86_64","family":"redhat","version":"7 (Core)","codename":"Core"}}}
+		{"ecs":{"version":"1.6.0"},"agent":{"ephemeral_id":"42e578f9-e2c6-42a8-825f-89bf2ea78360","hostname":"localhost.localdomain","type":"filebeat","name":"localhost.localdomain","id":"11cfd0c3-ef60-4be0-815c-5bbbd9bb3de4","version":"7.10.1"},"tags":["beats_input_codec_plain_applied"],"@version":"1","@timestamp":"2020-12-15T10:27:35.071Z","log":{"file":{"path":"/home/mysql/3306/data/slow.log"},"offset":2329},"input":{"type":"log"},"message":"# Query_time: 0.313522  Lock_time: 0.000073 Rows_sent: 4000  Rows_examined: 504000","host":{"ip":["192.168.0.201","fe80::a00:27ff:fe1b:f591"],"hostname":"localhost.localdomain","mac":["08:00:27:1b:f5:91"],"name":"localhost.localdomain","containerized":false,"id":"454d1892be164150bed44d3c246cd641","architecture":"x86_64","os":{"platform":"centos","name":"CentOS Linux","kernel":"3.10.0-514.el7.x86_64","family":"redhat","version":"7 (Core)","codename":"Core"}}}
+		{"ecs":{"version":"1.6.0"},"agent":{"hostname":"localhost.localdomain","ephemeral_id":"42e578f9-e2c6-42a8-825f-89bf2ea78360","type":"filebeat","name":"localhost.localdomain","id":"11cfd0c3-ef60-4be0-815c-5bbbd9bb3de4","version":"7.10.1"},"tags":["beats_input_codec_plain_applied"],"@version":"1","@timestamp":"2020-12-15T10:27:35.071Z","log":{"file":{"path":"/home/mysql/3306/data/slow.log"},"offset":2412},"input":{"type":"log"},"message":"SET timestamp=1608028053;","host":{"ip":["192.168.0.201","fe80::a00:27ff:fe1b:f591"],"hostname":"localhost.localdomain","mac":["08:00:27:1b:f5:91"],"name":"localhost.localdomain","containerized":false,"id":"454d1892be164150bed44d3c246cd641","architecture":"x86_64","os":{"platform":"centos","name":"CentOS Linux","kernel":"3.10.0-514.el7.x86_64","family":"redhat","version":"7 (Core)","codename":"Core"}}}
+		{"ecs":{"version":"1.6.0"},"agent":{"hostname":"localhost.localdomain","ephemeral_id":"42e578f9-e2c6-42a8-825f-89bf2ea78360","type":"filebeat","name":"localhost.localdomain","id":"11cfd0c3-ef60-4be0-815c-5bbbd9bb3de4","version":"7.10.1"},"tags":["beats_input_codec_plain_applied"],"@version":"1","@timestamp":"2020-12-15T10:27:35.071Z","log":{"file":{"path":"/home/mysql/3306/data/slow.log"},"offset":2438},"input":{"type":"log"},"message":"select * from test_db.t_20201031 order by ismale desc limit 4000;","host":{"ip":["192.168.0.201","fe80::a00:27ff:fe1b:f591"],"hostname":"localhost.localdomain","mac":["08:00:27:1b:f5:91"],"name":"localhost.localdomain","containerized":false,"id":"454d1892be164150bed44d3c246cd641","architecture":"x86_64","os":{"platform":"centos","name":"CentOS Linux","family":"redhat","kernel":"3.10.0-514.el7.x86_64","version":"7 (Core)","codename":"Core"}}}
+		{"fileset":{"name":"slowlog"},"tags":["beats_input_codec_plain_applied"],"service":{"type":"mysql"},"message":"# User@Host: root[root] @ localhost []  Id:     4\n# Query_time: 0.313522  Lock_time: 0.000073 Rows_sent: 4000  Rows_examined: 504000\nSET timestamp=1608028053;\nselect * from test_db.t_20201031 order by ismale desc limit 4000;","ecs":{"version":"1.5.0"},"agent":{"hostname":"localhost.localdomain","ephemeral_id":"42e578f9-e2c6-42a8-825f-89bf2ea78360","type":"filebeat","name":"localhost.localdomain","id":"11cfd0c3-ef60-4be0-815c-5bbbd9bb3de4","version":"7.10.1"},"event":{"dataset":"mysql.slowlog","module":"mysql"},"@version":"1","@timestamp":"2020-12-15T10:27:35.092Z","log":{"flags":["multiline"],"file":{"path":"/home/mysql/3306/data/slow.log"},"offset":2279},"input":{"type":"log"},"host":{"ip":["192.168.0.201","fe80::a00:27ff:fe1b:f591"],"hostname":"localhost.localdomain","mac":["08:00:27:1b:f5:91"],"name":"localhost.localdomain","containerized":false,"id":"454d1892be164150bed44d3c246cd641","architecture":"x86_64","os":{"platform":"centos","name":"CentOS Linux","kernel":"3.10.0-514.el7.x86_64","family":"redhat","version":"7 (Core)","codename":"Core"}}}
+		
 
-	./bin/kafka-console-consumer.sh --bootstrap-server 192.168.0.45:9092 --topic slow_query_log 
+		--对应的慢查询日志
+		# Time: 2020-12-15T10:27:33.810174Z
+		# User@Host: root[root] @ localhost []  Id:     4
+		# Query_time: 0.313522  Lock_time: 0.000073 Rows_sent: 4000  Rows_examined: 504000
+		SET timestamp=1608028053;
+		select * from test_db.t_20201031 order by ismale desc limit 4000;
+		
+		
+	4.3 Filter配置--grok
+		
+		http://doc.yonyoucloud.com/doc/logstash-best-practice-cn/filter/grok.html
+		https://github.com/elastic/logstash/blob/v1.4.2/patterns/grok-patterns
+		
+		USERNAME [a-zA-Z0-9._-]+
+		USER %{USERNAME}
+		USER 是 USERNAME的1个别名，也就是grok预定义表达式的一个名称 
+		
+		示例
+			sample data		
+				# Time: 2020-12-15T10:27:33.810174Z
+				# User1@Host: root1[root2] @ localhost []  Id:     4
+				# Query_time: 0.313522  Lock_time: 0.000073 Rows_sent: 4000  Rows_examined: 504000
+				SET timestamp=1608028053;
+				select * from test_db.t_20201031 order by ismale desc limit 4000;
+				
+			Grok Pattern
+				^# User1@Host: %{USER:slowlog1.user}
 
+			Structured Data
+				{
+				  "slowlog1": {
+					"user": "root"
+				  }
+				}
+			
+			Grok Pattern
+				^# User1@Host: %{USERNAME:slowlog1.user}
+			
+			Structured Data
+				{
+				  "slowlog1": {
+					"user": "root1"
+				  }
+				}			
+			
+			-------------------------------------	
+			
+			Grok Pattern	
+				%{NUMBER:slowlog.query_time.sec}
+				
+			Structured Data
+				{
+				  "slowlog": {
+					"query_time": {
+					  "sec": "0.313522"
+					}
+				  }
+				}
+				
+			-------------------------------------	
+			Grok Pattern
+				^# User1@Host: %{USER:slowlog1_user}
 
+			Structured Data
+				{
+				  "slowlog1_user": "root1"
+				}
+				
+5. 问题和解决
 
-问题和解决
-
-1. 内存不足	
-	[vagrant@localhost elasticsearch-7.10.1]$ curl http://localhost:9200/
-	OpenJDK 64-Bit Server VM warning: INFO: os::commit_memory(0x00007f1370930000, 262144, 0) failed; error='Not enough space' (errno=12)
-	#
-	# There is insufficient memory for the Java Runtime Environment to continue.
-	# Native memory allocation (mmap) failed to map 262144 bytes for committing reserved memory.
-	# An error report file with more information is saved as:
-	# logs/hs_err_pid10966.log
-	[144.859s][warning][os,thread] Failed to start thread - pthread_create failed (EAGAIN) for attributes: stacksize: 1024k, guardsize: 0k, detached.
-	curl: (7) Failed connect to localhost:9200; Connection refused
-
-
-	[root@localhost elasticsearch-7.10.1]# free -h
-				  total        used        free      shared  buff/cache   available
-	Mem:           615M         65M        495M        744K         53M        476M
-	Swap:          999M        201M        798M
-
-
-	curl: (7) Failed connect to localhost:9200; Connection refused
-	[vagrant@localhost elasticsearch-7.10.1]$ su root
-	Password: 
-	[root@localhost elasticsearch-7.10.1]#  dd  if=/dev/zero  of=swapfile  bs=1024  count=500000  
-	500000+0 records in
-	500000+0 records out
-	512000000 bytes (512 MB) copied, 44.0432 s, 11.6 MB/s
-	[root@localhost elasticsearch-7.10.1]# mkswap swapfile
-	Setting up swapspace version 1, size = 499996 KiB
-	no label, UUID=9ec41d63-bf97-4896-9309-e299110c5d4d
-	[root@localhost elasticsearch-7.10.1]# swapon  swapfile 
-	swapon: /home/vagrant/src/elasticsearch-7.10.1/swapfile: insecure permissions 0777, 0600 suggested.
-	swapon: /home/vagrant/src/elasticsearch-7.10.1/swapfile: insecure file owner 1000, 0 (root) suggested.
-	swapon: swapfile: swapon failed: Invalid argument
-
-	[root@localhost elasticsearch-7.10.1]# free -h
-				  total        used        free      shared  buff/cache   available
-	Mem:           615M        181M        375M        904K         57M        358M
-	Swap:          999M        136M        863M
-
-
-2. 文件描述符大小不足
-
-	[2020-12-15T03:38:54,811][ERROR][o.e.b.Bootstrap          ] [localhost.localdomain] node validation exception
-	[3] bootstrap checks failed
-	[1]: max file descriptors [4096] for elasticsearch process is too low, increase to at least [65535]
-	[2]: max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
-	[3]: the default discovery settings are unsuitable for production use; at least one of [discovery.seed_hosts, discovery.seed_providers, cluster.initial_master_nodes] must be configured
-
-	ulimit -a
-
-	https://blog.csdn.net/qq_38636133/article/details/105621876
-
-	https://blog.csdn.net/tl1242616458/article/details/105602361/
-
-	[vagrant@localhost ~]$ ulimit -a
-	core file size          (blocks, -c) 0
-	data seg size           (kbytes, -d) unlimited
-	scheduling priority             (-e) 0
-	file size               (blocks, -f) unlimited
-	pending signals                 (-i) 15090
-	max locked memory       (kbytes, -l) 64
-	max memory size         (kbytes, -m) unlimited
-	open files                      (-n) 65536
-	pipe size            (512 bytes, -p) 8
-	POSIX message queues     (bytes, -q) 819200
-	real-time priority              (-r) 0
-	stack size              (kbytes, -s) 8192
-	cpu time               (seconds, -t) unlimited
-	max user processes              (-u) 4096
-	virtual memory          (kbytes, -v) unlimited
-	file locks                      (-x) unlimited
-
-3. Kibana 5601端口已经被占用
-	FATAL  Error: Port 5601 is already in use. Another instance of Kibana may be running!
-
-	[vagrant@localhost kibana-7.10.1-linux-x86_64]$ netstat -anltp|grep 5601
-	(Not all processes could be identified, non-owned process info
-	 will not be shown, you would have to be root to see it all.)
-	tcp        0      0 192.168.0.45:5601       0.0.0.0:*               LISTEN      5112/./bin/../node/ 
-	tcp        0      0 192.168.0.45:5601       192.168.0.218:54108     ESTABLISHED 5112/./bin/../node/ 
-	tcp        0      0 192.168.0.45:5601       192.168.0.218:54070     ESTABLISHED 5112/./bin/../node/ 
-	tcp        0      0 192.168.0.45:5601       192.168.0.218:54106     ESTABLISHED 5112/./bin/../node/ 
-	tcp        0      0 192.168.0.45:5601       192.168.0.218:54064     ESTABLISHED 5112/./bin/../node/ 
-	[vagrant@localhost kibana-7.10.1-linux-x86_64]$ 
-
-
+	1. 内存不足	
+		[vagrant@localhost elasticsearch-7.10.1]$ curl http://localhost:9200/
+		OpenJDK 64-Bit Server VM warning: INFO: os::commit_memory(0x00007f1370930000, 262144, 0) failed; error='Not enough space' (errno=12)
+		#
+		# There is insufficient memory for the Java Runtime Environment to continue.
+		# Native memory allocation (mmap) failed to map 262144 bytes for committing reserved memory.
+		# An error report file with more information is saved as:
+		# logs/hs_err_pid10966.log
+		[144.859s][warning][os,thread] Failed to start thread - pthread_create failed (EAGAIN) for attributes: stacksize: 1024k, guardsize: 0k, detached.
+		curl: (7) Failed connect to localhost:9200; Connection refused
 
 
+		[root@localhost elasticsearch-7.10.1]# free -h
+					  total        used        free      shared  buff/cache   available
+		Mem:           615M         65M        495M        744K         53M        476M
+		Swap:          999M        201M        798M
 
-相关参考 
+
+		curl: (7) Failed connect to localhost:9200; Connection refused
+		[vagrant@localhost elasticsearch-7.10.1]$ su root
+		Password: 
+		[root@localhost elasticsearch-7.10.1]#  dd  if=/dev/zero  of=swapfile  bs=1024  count=500000  
+		500000+0 records in
+		500000+0 records out
+		512000000 bytes (512 MB) copied, 44.0432 s, 11.6 MB/s
+		[root@localhost elasticsearch-7.10.1]# mkswap swapfile
+		Setting up swapspace version 1, size = 499996 KiB
+		no label, UUID=9ec41d63-bf97-4896-9309-e299110c5d4d
+		[root@localhost elasticsearch-7.10.1]# swapon  swapfile 
+		swapon: /home/vagrant/src/elasticsearch-7.10.1/swapfile: insecure permissions 0777, 0600 suggested.
+		swapon: /home/vagrant/src/elasticsearch-7.10.1/swapfile: insecure file owner 1000, 0 (root) suggested.
+		swapon: swapfile: swapon failed: Invalid argument
+
+		[root@localhost elasticsearch-7.10.1]# free -h
+					  total        used        free      shared  buff/cache   available
+		Mem:           615M        181M        375M        904K         57M        358M
+		Swap:          999M        136M        863M
+
+
+	2. 文件描述符大小不足
+
+		[2020-12-15T03:38:54,811][ERROR][o.e.b.Bootstrap          ] [localhost.localdomain] node validation exception
+		[3] bootstrap checks failed
+		[1]: max file descriptors [4096] for elasticsearch process is too low, increase to at least [65535]
+		[2]: max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
+		[3]: the default discovery settings are unsuitable for production use; at least one of [discovery.seed_hosts, discovery.seed_providers, cluster.initial_master_nodes] must be configured
+
+		ulimit -a
+
+		https://blog.csdn.net/qq_38636133/article/details/105621876
+
+		https://blog.csdn.net/tl1242616458/article/details/105602361/
+
+		[vagrant@localhost ~]$ ulimit -a
+		core file size          (blocks, -c) 0
+		data seg size           (kbytes, -d) unlimited
+		scheduling priority             (-e) 0
+		file size               (blocks, -f) unlimited
+		pending signals                 (-i) 15090
+		max locked memory       (kbytes, -l) 64
+		max memory size         (kbytes, -m) unlimited
+		open files                      (-n) 65536
+		pipe size            (512 bytes, -p) 8
+		POSIX message queues     (bytes, -q) 819200
+		real-time priority              (-r) 0
+		stack size              (kbytes, -s) 8192
+		cpu time               (seconds, -t) unlimited
+		max user processes              (-u) 4096
+		virtual memory          (kbytes, -v) unlimited
+		file locks                      (-x) unlimited
+
+	3. Kibana 5601端口已经被占用
+		FATAL  Error: Port 5601 is already in use. Another instance of Kibana may be running!
+
+		[vagrant@localhost kibana-7.10.1-linux-x86_64]$ netstat -anltp|grep 5601
+		(Not all processes could be identified, non-owned process info
+		 will not be shown, you would have to be root to see it all.)
+		tcp        0      0 192.168.0.45:5601       0.0.0.0:*               LISTEN      5112/./bin/../node/ 
+		tcp        0      0 192.168.0.45:5601       192.168.0.218:54108     ESTABLISHED 5112/./bin/../node/ 
+		tcp        0      0 192.168.0.45:5601       192.168.0.218:54070     ESTABLISHED 5112/./bin/../node/ 
+		tcp        0      0 192.168.0.45:5601       192.168.0.218:54106     ESTABLISHED 5112/./bin/../node/ 
+		tcp        0      0 192.168.0.45:5601       192.168.0.218:54064     ESTABLISHED 5112/./bin/../node/ 
+		[vagrant@localhost kibana-7.10.1-linux-x86_64]$ 
+
+
+
+kibana
+
+	nohup ./bin/kibana 1>/dev/null 2>&1 &
+
+
+
+6. 相关参考 
 	https://www.elastic.co/cn/downloads/beats/filebeat
 	https://www.elastic.co/guide/en/beats/filebeat/1.0.1/configuration-output.html
 
@@ -348,6 +437,125 @@ es做全文搜索
 
 	https://blog.csdn.net/loveshunyi/article/details/109785488   Centos7 安装 Elasticsearch7.10
 	https://cloud.tencent.com/developer/article/1349125  如何在CentOS 7上安装和配置Elasticsearch
+	
+	
+	http://doc.yonyoucloud.com/doc/logstash-best-practice-cn/filter/grok.html
+	https://github.com/elastic/logstash/blob/v1.4.2/patterns/grok-patterns
+	
+7. 小结
+	启动 logstash 需要一定的时间，不要操之过急
+	
+	
+8. 安装go
+
+	tar -C /usr/local -xzf go1.15.6.linux-amd64.tar.gz
+	
+	vim /etc/profile
+	export GOROOT=/usr/local/go
+	export GOPATH=/home/vagrant/src/go
+	export PATH=$PATH:/usr/local/go/bin
+	source /etc/profile
+	
+	[root@localhost soar]# go version
+	go version go1.15.6 linux/amd64
+
+
+	https://blog.csdn.net/qq_33398607/article/details/106099939  Goland使用Go Modules创建/管理项目
+	
+	/home/vagrant/src/go/my_test
+
+9. Linux安装soar
+	
+	相关参考
+
+		https://www.cnblogs.com/-pengfei/articles/11580315.html
+		https://github.com/XiaoMi/soar/blob/master/doc/install.md
+		https://www.cnblogs.com/brady-wang/p/12980463.html
+
+
+	基本路径
+		[vagrant@localhost src]$ echo $GOPATH
+		/home/vagrant/src/go
+
+			
+		[vagrant@localhost src]$ pwd
+		/home/vagrant/src/go/src
+
+
+	生成二进制文件
+		go get -d github.com/XiaoMi/soar
+
+		cd ${GOPATH}/src/github.com/XiaoMi/soar && make
+
+		[vagrant@localhost src]$ cd ${GOPATH}/src/github.com/XiaoMi/soar && make
+		Go version check ...
+		go version 1.12+ required, found: go version go1.11.11 linux/amd64
+		make: *** [go_version_check] Error 1
+		[vagrant@localhost soar]$ cd ${GOPATH}/src/github.com/XiaoMi/soar && make
+		Go version check ...
+		go version check pass
+		Run gofmt on all source files ...
+		gofmt -l -s -w ...
+		/home/vagrant/src/go/src/github.com/XiaoMi/soar/ast/token_test.go
+		Building ...
+		build Success!
+
+		
+		------------------------------------------------------------------------
+
+		[vagrant@localhost src]$ cd ${GOPATH}/src/github.com/XiaoMi/soar && make
+		Go version check ...
+		go version 1.12+ required, found: go version go1.11.11 linux/amd64
+		make: *** [go_version_check] Error 1
+
+	安装后的目录
+	
+		[vagrant@localhost bin]$ pwd
+		/home/vagrant/src/go/src/github.com/XiaoMi/soar/bin
+
+		
+
+	创建软连接到/usr/local/bin/   目录
+		[root@localhost soar]# ln -s /home/vagrant/src/go/src/github.com/XiaoMi/soar/bin/soar /usr/local/bin/soar
+		[root@localhost soar]# soar
+		Args format error, use --help see how to use it!
+	
+	验证soar是否可用
+		[root@localhost soar]# echo 'select * from film' | soar
+		# Query: 687D590364E29465
+
+		★ ★ ★ ☆ ☆ 75分
+
+		```sql
+
+		SELECT  
+		  * 
+		FROM  
+		  film
+		```
+
+		## 最外层 SELECT 未指定 WHERE 条件
+
+		* **Item:**  CLA.001
+
+		* **Severity:**  L4
+
+		* **Content:**  SELECT 语句没有 WHERE 子句，可能检查比预期更多的行(全表扫描)。对于 SELECT COUNT(\*) 类型的请求如果不要求精度，建议使用 SHOW TABLE STATUS 或 EXPLAIN 替代。
+
+		## 不建议使用 SELECT * 类型查询
+
+		* **Item:**  COL.001
+
+		* **Severity:**  L1
+
+		* **Content:**  当表结构变更时，使用 \* 通配符选择所有列将导致查询的含义和行为会发生更改，可能导致查询返回更多的数据。
+
+
+
+
+	golang启动一个简单的http服务
+		[vagrant@localhost server]$ go run server.go 
+
 
 
 GET zst_test_20201215/_search

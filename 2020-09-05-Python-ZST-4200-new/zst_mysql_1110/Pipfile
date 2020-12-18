@@ -17,6 +17,7 @@ kombu = "*"
 celery = "==5.0.3"
 celery-with-redis = "*"
 redis = "*"
+kafka-python = "*"
 
 [requires]
 python_version = "3.6"
