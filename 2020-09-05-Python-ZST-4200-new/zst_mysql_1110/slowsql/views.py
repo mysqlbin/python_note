@@ -35,6 +35,26 @@ class SlowSqlViewSet(viewsets.ViewSet):
             s = s.filter('range', **{'@timestamp': options})
         s = s.sort('-@timestamp')
 
+
+        timeAggs = A('date_histogram', field='@timestamp',
+                     fixed_interval="hour")
+
+        schemaAggs = A('terms', field='schema.keyword')
+        # fingerAggs = A('terms', field='slowlog_query_fingprint.keyword')
+        rowsExaminedAvg = A('avg', field='rows_examined')
+        queryTimeAvg = A('avg', field='query_time_sec')
+
+        s.aggs.bucket('date', timeAggs)\
+            .bucket('schema', schemaAggs)\
+            .metric('rowsExaminedAvg',rowsExaminedAvg)\
+            .metric('queryTimeAvg', queryTimeAvg)
+
+        aggs = s.execute().aggregations
+        for date_item in aggs['date'].buckets:
+            print(date_item)
+            print(date_item.finger)
+
+
         paginator = CustomPagination()
 
     # def list(self, request):
@@ -77,13 +97,19 @@ class SlowSqlViewSet(viewsets.ViewSet):
 
         """
         # 一层聚合数据: 简单的一个根据日期聚合的
+        
+        # 执行查询
         timeAggs = A('date_histogram', field='@timestamp', fixed_interval="10m")
 
         # 'date' 为分组的名称
         s.aggs.bucket('date', timeAggs)
-
+        
+        # 获取数据
         aggs = s.execute().aggregations
-
+        
+        # 这里要 debugger 一下，然后才知道怎么取数据 
+        print(aggs)
+        
         for date_item in aggs['date'].buckets:
             print(date_item)
 

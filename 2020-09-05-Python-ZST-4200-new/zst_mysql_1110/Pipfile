@@ -18,16 +18,10 @@ celery = "==5.0.3"
 celery-with-redis = "*"
 redis = "*"
 kafka-python = "*"
-<<<<<<< HEAD
 tqdm = "*"
 requests = "*"
 elasticsearch-dsl = "*"
 elasticsearch = "*"
-=======
-elasticsearch = "*"
-tqdm = "*"
-requests = "*"
->>>>>>> 651e86a805ba73cf6948624c53f095d9767b1b81
 
 [requires]
 python_version = "3.6"
