@@ -16,16 +16,16 @@ export const menuRouts = [
     meta: { title: 'Dashboard' },
     children: [
       {
-        path: 'Home',
+        path: 'home',
         name: 'Home',
         meta: { title: 'Home' },
         component: Home
       },
       {
-        path: '/about',
+        path: 'about',
         name: 'About',
         meta: { title: 'About' },
-        component: () => import('../views/About.vue')
+        component: () => import('@/views/About.vue')
       },
 
     ]
@@ -36,13 +36,26 @@ export const menuRouts = [
     component: () => import('@/layout/index'),
     children: [
         {
-            path: '/mysql',
+            path: 'mysql',
             name: 'MySQLManage',
             meta: { title: 'mysql实例' },
-            component: () => import('../views/schema_manage/mysql.vue')
+            component: () => import('@/views/schema_manage/mysql')
         }
     ]
-  }
+  },
+  {
+    path: '/slowsql',
+    meta: { title: '慢SQL管理' },
+    component: () => import('@/layout/index'),
+    children: [
+        {
+            path: 'index',
+            meta: { title: '列表' },
+            component: () => import('@/views/slowsql/index')
+        }
+    ]
+  },
+
 ]
 
 
