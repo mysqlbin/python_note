@@ -27,9 +27,11 @@
                 </el-form-item>
 
             </el-form>
+
             <div>
                 <el-button type="primary" @click="installMySQL">安装MySQL</el-button>
             </div>
+            
         </el-row>
 
         <el-table v-loading="tableLoading" :data="tableData" border style="width: 100%">
