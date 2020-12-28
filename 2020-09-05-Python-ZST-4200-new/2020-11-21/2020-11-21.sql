@@ -8,7 +8,7 @@
 	element-ui的相关参考
 	一些报错
 	小结
-	自己完成的2个功能
+	自己完成的小功能
 
 element-ui安装
 
@@ -63,7 +63,7 @@ element-ui安装
 		
 		https://www.cnblogs.com/hahahakc/p/12790463.html  使用Vuex实现登陆成功后展示登录用户的信息
 			state里的username, 但是一定要用computed，因为页面展示完了可能值还没有取到，就导致无法显示登录人的username
-
+			
 		
 	7. 访问路由不生效
 		http://127.0.0.1:8080/mysql
@@ -450,10 +450,12 @@ element-ui的相关参考
 	git clone -b  11_21 https://github.com/textworld/mysql_front.git
 
 
-自己完成的2个功能
+自己完成的小功能
 	1. 二次确认
 	2. 页面一加载就把表格数据展示出来
 	3. 小功能：登录表单验证不通过，不能提交。 --2020-11-27
+	4. 获取登录的用户名并显示出来
+	
 	
 import path from 'path'
 console.log("path: ", path)

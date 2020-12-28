@@ -17,6 +17,11 @@ kombu = "*"
 celery = "==5.0.3"
 celery-with-redis = "*"
 redis = "*"
+kafka-python = "*"
+tqdm = "*"
+requests = "*"
+elasticsearch-dsl = "*"
+elasticsearch = "*"
 
 [requires]
 python_version = "3.6"

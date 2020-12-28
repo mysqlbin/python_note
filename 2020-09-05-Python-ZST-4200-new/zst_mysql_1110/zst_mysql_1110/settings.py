@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from elasticsearch_dsl import connections
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     'meta_manage.apps.MetaManageConfig',
     'user.apps.UserConfig',
     'check.apps.CheckConfig',
+    'slowsql.apps.SlowsqlConfig',
     'django_filters',
     # 'corsheaders',
 ]
@@ -169,3 +171,4 @@ CELERY_RESULT_BACKEND = 'redis://:niuniu_redis@192.168.0.252:6379/8'   # BACKEND
 
 CELERY_RESULT_SERIALIZER = 'json'  # 结果序列化方案
 
+connections.create_connection(hosts=['192.168.0.45:9200'], timeout=60)
