@@ -1,72 +1,81 @@
 
 
-未完成：
-	点击可以查看SQL的详情
-	
-	或者参考： https://demo.archerydms.com/slowquery/  分2个tab来做，1个是慢日志统计，另1个是慢日志明细
-		
-	聚合显示的 sql指纹、不聚合显示sql语句
-	
-pipenv install elasticsearch-dsl
-pipenv install elasticsearch
-pipenv install tqdm
-pipenv install requests
 
-curl http://192.168.0.45:9200/
-
+1. 需要安装的包
+2. 父子组件的传值和修改
+3. 新建app slowsql 
+4. ES数据结构
+5. 现有数据和查询方式
+	5.1 现有数据
+	5.2 查询方式
+	5.3 数据排序
+	5.4 聚合查询
+6. 未解决和未完成
+7. 从kibana上的查询结果跟界面的统计数据对比
 
 
 
+1. 需要安装的包	
+	pipenv install elasticsearch-dsl
+	pipenv install elasticsearch
+	pipenv install tqdm
+	pipenv install requests
 
-
-从父组件传进来的值，子组件默认不能对它进行修改   -- 新版本可以
-因此需要一个监听事件，监听值的变化，通过 this.$emit() 在子组件向父组件传递数据
-父组件需要这个值，因为搜索的时候需要用到  -- 明白了
-
-父子组件的关系都没搞懂
-
-
-https://www.cnblogs.com/vickylinj/p/10877765.html  [Vue]子组件与父组件之间传值
+	curl http://192.168.0.45:9200/
 
 
 
-django-admin startapp slowsql
 
 
-ES数据结构
+2. 父子组件的传值和修改
+	从父组件传进来的值，子组件默认不能对它进行修改   -- 新版本可以
+	因此需要一个监听事件，监听值的变化，通过 this.$emit() 在子组件向父组件传递数据
+	父组件需要这个值，因为搜索的时候需要用到  -- 明白了
 
-{
-  "mappings": {
-    "_doc": {
-      "properties": {
-        "@timestamp": {
-          "type": "date"
-        },
-        "finger": {
-          "type": "text",    -- 使用的是ES的排序索引 
-          "fields": {
-            "keyword": {
-              "type": "keyword",  -- 
-              "ignore_above": 256
-            }
-          }
-        },
-		"schema": {
-          "type": "text",
-          "fields": {
-            "keyword": {
-              "type": "keyword",
-              "ignore_above": 256
-            }
-          }
-        },
-		
-		
-	"type": "text",     -- 使用的是ES的倒排索引， 不能使用 schema.type=text 字段进行分组，因为它使用的是倒排索引
-	"type": "keyword",  -- 是一个整体，可以用  schema.fields.keyword.type=keyword 字段进行分组
+	父子组件的关系都没搞懂
 
-现有数据和查询方式
-现有数据	
+
+	https://www.cnblogs.com/vickylinj/p/10877765.html  [Vue]子组件与父组件之间传值
+
+
+3. 新建app slowsql 
+	django-admin startapp slowsql
+
+
+4. ES数据结构
+
+	{
+	  "mappings": {
+		"_doc": {
+		  "properties": {
+			"@timestamp": {
+			  "type": "date"
+			},
+			"finger": {
+			  "type": "text",    -- 使用的是ES的排序索引 
+			  "fields": {
+				"keyword": {
+				  "type": "keyword",  -- 
+				  "ignore_above": 256
+				}
+			  }
+			},
+			"schema": {
+			  "type": "text",
+			  "fields": {
+				"keyword": {
+				  "type": "keyword",
+				  "ignore_above": 256
+				}
+			  }
+			},
+			
+			
+		"type": "text",     -- 使用的是ES的倒排索引， 不能使用 schema.type=text 字段进行分组，因为它使用的是倒排索引
+		"type": "keyword",  -- 是一个整体，可以用  schema.fields.keyword.type=keyword 字段进行分组
+
+5. 现有数据和查询方式
+5.1 现有数据	
 	to_dict()
 		{'query_sql': 'select * from T_bill where c like rythdonaj and b = adqjz;', '@timestamp': '2020-11-10T19:50:07.209914', 'query_time': 14.943350414676974, 'lock_time': 10.879396000451333, 'rows_sent': 20910, 'rows_examined': 39904, 'user': 'Guillermo_mysql', 'schema': 'Guillermo', 'host': '192.168.31.55', 'finger': 'select * from t_bill where c like rythdonaj and b = adqjz;', 'hash': '16430c5b25ec59743ac6b3ddae0b247f'}
 		{'query_sql': 'select * from T_money where d = gqfeyhtnr or a = hryx or d like qtva or c = ca;', '@timestamp': '2020-11-10T16:27:02.226322', 'query_time': 18.634818252440706, 'lock_time': 17.689638668934744, 'rows_sent': 90344, 'rows_examined': 55708, 'user': 'Ena_mysql', 'schema': 'Ena', 'host': '192.168.31.55', 'finger': 'select * from t_money where d = gqfeyhtnr or a = hryx or d like qtva or c = ca;', 'hash': '173688de13e88604ea67f3b4dbc13916'}
@@ -109,7 +118,7 @@ ES数据结构
 		{'query_sql': 'select * from T_computer where e like r or a = wqcg and b = myfpxthr or e = vm;', '@timestamp': '2020-11-10T10:08:16.956766', 'query_time': 4.8248480174282, 'lock_time': 2.392421647722515, 'rows_sent': 2700, 'rows_examined': 75794, 'user': 'Talia_dev2', 'schema': 'Talia', 'host': '192.168.31.55', 'finger': 'select * from t_computer where e like r or a = wqcg and b = myfpxthr or e = vm;', 'hash': 'c6d6b77b9b77826b91eeef427a10caad'}
 
 	
-查询方式
+5.2 查询方式
 	
 	term等值查询
 		
@@ -235,11 +244,7 @@ ES数据结构
 		{'query_sql': 'select * from T_computer where a like abxjfmse;', '@timestamp': '2020-11-24T06:24:04.544331', 'query_time': 13.709106739168334, 'lock_time': 9.06695650999721, 'rows_sent': 14643, 'rows_examined': 22924, 'user': 'Talia_dev1', 'schema': 'Talia', 'host': '192.168.31.55', 'finger': 'select * from t_computer where a like abxjfmse;', 'hash': '3f88af7b129859beacfe0e16c5e29075'}
 				
 
-
-
-
-
-	数据排序
+5.3 数据排序
 		# 时间倒序
 		search = search.sort('-@timestamp')
 		
@@ -260,9 +265,20 @@ ES数据结构
 
 	
 	
-	
-	聚合数据
-		
+5.4 聚合查询
+	一层聚合
+		GET mysql-slowsql-test-2020-11-10/_search
+		{
+		  "aggs": {
+			"date": {
+			  "date_histogram": {
+				"field": "@timestamp",
+				"interval": "hour"
+			  }
+			} 
+		  }
+		}
+
 		{'key_as_string': '2020-11-10T10:00:00.000Z', 'key': 1605002...}
 		{'key_as_string': '2020-11-10T10:10:00.000Z', 'key': 1605003...}
 		{'key_as_string': '2020-11-10T10:20:00.000Z', 'key': 1605003...}
@@ -276,75 +292,9 @@ ES数据结构
 		{'key_as_string': '2020-11-10T13:10:00.000Z', 'key': 1605013...}
 		{'key_as_string': '2020-11-10T13:20:00.000Z', 'key': 1605014...}
 		...............................................................
-
-
-		GET mysql-slowsql-test-2020-11-10/_search
-		{
-		  "aggs": {
-			"date": {
-			  "date_histogram": {
-				"field": "@timestamp",
-				"interval": "hour"
-			  }
-			} 
-		  }
-		}
-	
-
-未解决：
-	
-	1. 如何查询指定字段的值
-	
-	2. slowlog 是指哪个字段
-		s = s.filter('match', slowlog_query='select').scan()
-		-- slowlog_query 是1个字段名称
-	
-	
-	3. text 、 keyword
-	
-	4. .bucket 和 .metric 的区别
-	
-	
-
-数据结构
-  {
-	"_index" : "mysql-slowsql-test-2020-11-11",
-	"_type" : "_doc",
-	"_id" : "zhogg3YBQ5LDcFvTyUmN",
-	"_score" : 0.0,
-	"_source" : {
-	  "query_sql" : "select * from T_money where e like npcbdvftqw and a = lskgatph or b like ert;",
-	  "@timestamp" : "2020-11-11T11:17:25.176468",
-	  "query_time" : 4.208698476839378,
-	  "lock_time" : 8.188964490889036,
-	  "rows_sent" : 3488,
-	  "rows_examined" : 40718,
-	  "user" : "Arnoldo_dev2",
-	  "schema" : "Arnoldo",
-	  "host" : "192.168.31.55",
-	  "finger" : "select * from t_money where e like npcbdvftqw and a = lskgatph or b like ert;",
-	  "hash" : "e3f8eb8f1566a802615974b7e68bddda"  --这个是什么？ "hash": hashlib.md5(finger_print.encode('utf-8')).hexdigest() 即 sql指纹md5+hash过后的值
-	}
-  },
-  
- 
-print(aggs)
-{'date': {'buckets': [{'key_as_string': '2020-11-01T00:00:00...'}
-
- 
-print(aggs.date)
-{'buckets': [{'key_as_string': '2020-11-01T00:00:00.000Z', '...'}
-
-print(aggs['date'])
-
-{'buckets': [{'key_as_string': '2020-11-01T00:00:00.000Z', '...'}
-
-
-不聚合，就不需要做 group by，显示的结果就是慢查询记录一行行的展示
- 
-	
-多层（嵌套）聚合
-
+		
+	多层聚合 
+		
 	需求
 		一段时间范围内，根据schema、指纹为维度每隔1个小时做分组
 		先查询一段时间范围内的数据，每隔1个小时做一次分组(分为一桶)：根据schema、指纹为维度
@@ -462,46 +412,72 @@ print(aggs['date'])
 					"buckets" : [ ]
 				  }
 				},
+
+
+6. 未解决和未完成
+	
+	1. 如何查询指定字段的值
+	
+	2. slowlog 是指哪个字段
+		s = s.filter('match', slowlog_query='select').scan()
+		-- slowlog_query 是1个字段名称
+	
+	
+	3. text 、 keyword
+	
+	4. .bucket 和 .metric 的区别
+	
+	5. 点击某个地方可以查看SQL的详情
+	
+		或者参考： https://demo.archerydms.com/slowquery/  分2个tab来做，1个是慢日志统计，另1个是慢日志明细
+		
+		聚合显示的 sql指纹、不聚合显示sql语句	
+		sql指纹、SQL语句太长怎么处理？
+		添加1列，两个按钮：按钮1为查看完成的指纹、按钮2为查看语句的详情
+			
+
+	6. 默认不聚合，就不需要做 group by，显示的结果就是慢查询记录一行行的展示
+ 
+	
 				
+7. 从kibana上的查询结果跟界面的统计数据对比
 
-插入数据	
-	
-	https://blog.csdn.net/apple_wolf/article/details/109404820
-	
-	
-	POST mysql-slowsql-test-2020-11-10/_doc
-	{
-		"@timestamp": "2020-12-18T07:25:03.881083",
-		"finger": "select * from t_user where a = o and d like ljuz;",
-		"hash": "c2e50534cba2678374afc4bcf74551a1",
-		"host": "192.168.31.55",
-		"lock_time": 3.544714736293374,
-		"query_sql": "select * from T_user where a = o and d like ljuz;",
-		"query_time": 5.1313155923716858,
-		"rows_examined": 750,
-		"rows_sent": 1000,
-		"schema": "Ana",
-		"user": "Ana_dev3"
-	}			
+	插入数据	
+		
+		https://blog.csdn.net/apple_wolf/article/details/109404820
+		
+		
+		POST mysql-slowsql-test-2020-11-10/_doc
+		{
+			"@timestamp": "2020-12-18T07:25:03.881083",
+			"finger": "select * from t_user where a = o and d like ljuz;",
+			"hash": "c2e50534cba2678374afc4bcf74551a1",
+			"host": "192.168.31.55",
+			"lock_time": 3.544714736293374,
+			"query_sql": "select * from T_user where a = o and d like ljuz;",
+			"query_time": 5.1313155923716858,
+			"rows_examined": 750,
+			"rows_sent": 1000,
+			"schema": "Ana",
+			"user": "Ana_dev3"
+		}			
 
-	POST mysql-slowsql-test-2020-11-10/_doc
-	{
-		"@timestamp": "2020-12-18T07:25:03.881083",
-		"finger": "select * from t_user where a = o and d like ljuz;",
-		"hash": "c2e50534cba2678374afc4bcf74551a1",
-		"host": "192.168.31.55",
-		"lock_time": 3.544714736293374,
-		"query_sql": "select * from T_user where a = o and d like ljuz;",
-		"query_time": 1.1313155923716858,
-		"rows_examined": 750,
-		"rows_sent": 1000,
-		"schema": "Ana",
-		"user": "Ana_dev3"
-	}	
+		POST mysql-slowsql-test-2020-11-10/_doc
+		{
+			"@timestamp": "2020-12-18T07:25:03.881083",
+			"finger": "select * from t_user where a = o and d like ljuz;",
+			"hash": "c2e50534cba2678374afc4bcf74551a1",
+			"host": "192.168.31.55",
+			"lock_time": 3.544714736293374,
+			"query_sql": "select * from T_user where a = o and d like ljuz;",
+			"query_time": 1.1313155923716858,
+			"rows_examined": 750,
+			"rows_sent": 1000,
+			"schema": "Ana",
+			"user": "Ana_dev3"
+		}	
 
-rowsExamineAvg
 
-	result = s.filter('term', schema__keyword='Ena').scan()
 	
 	
 	GET mysql-slowsql-test-*/_search
@@ -526,7 +502,7 @@ rowsExamineAvg
 	  }
 	}	
 	
-	从 kibana 的查询结果跟界面的数据对得上
+	
 	"hash" : "c2e50534cba2678374afc4bcf74551a1",
 	"query_time" : 5.131315592371686,
 	"rows_examined" : 70513,
@@ -553,5 +529,39 @@ rowsExamineAvg
 
 es 在kibana上做查询还有待加强，需要系统学习下
 
+
+		
+数据结构
+  {
+	"_index" : "mysql-slowsql-test-2020-11-11",
+	"_type" : "_doc",
+	"_id" : "zhogg3YBQ5LDcFvTyUmN",
+	"_score" : 0.0,
+	"_source" : {
+	  "query_sql" : "select * from T_money where e like npcbdvftqw and a = lskgatph or b like ert;",
+	  "@timestamp" : "2020-11-11T11:17:25.176468",
+	  "query_time" : 4.208698476839378,
+	  "lock_time" : 8.188964490889036,
+	  "rows_sent" : 3488,
+	  "rows_examined" : 40718,
+	  "user" : "Arnoldo_dev2",
+	  "schema" : "Arnoldo",
+	  "host" : "192.168.31.55",
+	  "finger" : "select * from t_money where e like npcbdvftqw and a = lskgatph or b like ert;",
+	  "hash" : "e3f8eb8f1566a802615974b7e68bddda"  --这个是什么？ "hash": hashlib.md5(finger_print.encode('utf-8')).hexdigest() 即 sql指纹md5+hash过后的值
+	}
+  },
+  
+ 
+print(aggs)
+{'date': {'buckets': [{'key_as_string': '2020-11-01T00:00:00...'}
+
+ 
+print(aggs.date)
+{'buckets': [{'key_as_string': '2020-11-01T00:00:00.000Z', '...'}
+
+print(aggs['date'])
+
+{'buckets': [{'key_as_string': '2020-11-01T00:00:00.000Z', '...'}
 
 
