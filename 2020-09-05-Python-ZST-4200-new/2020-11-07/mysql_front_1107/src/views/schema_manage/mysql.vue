@@ -31,7 +31,7 @@
             <div>
                 <el-button type="primary" @click="installMySQL">安装MySQL</el-button>
             </div>
-            
+
         </el-row>
 
         <el-table v-loading="tableLoading" :data="tableData" border style="width: 100%">
@@ -182,7 +182,9 @@
             // 处理每页页数/大小变动
             handleSizeChange(val) {
                 // console.log(`每页 ${val} 条`)
+                console.log("this.$route.query: ", this.$route.query)
                 let queryCopy = _.cloneDeep(this.$route.query)
+                console.log("queryCopy: ", queryCopy)
                 queryCopy.page_size = val
                 this.updateRouteQuery(queryCopy)
             },
@@ -197,6 +199,7 @@
             // 更改url中的query参数
             updateRouteQuery(query) {
                 // console.log("query: ", query)
+                // 实现分页的跳转
                 this.$router.push({
                     //path: this.$route.path,
                     query: query
