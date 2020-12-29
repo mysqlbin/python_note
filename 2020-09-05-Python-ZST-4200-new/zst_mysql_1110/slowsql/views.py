@@ -10,20 +10,97 @@ from rest_framework.pagination import PageNumberPagination
 
 
 class CustomPagination(PageNumberPagination):
-    page_size = 10
+    page_size = 5
     page_size_query_param = 'page_size'
     page_query_param = 'page_num'
     max_page_size = 500
 
 
+def build_aggs(agg):
+    for k in agg.keys():
+        if k != "aggs":
+            options = agg.get(k)
+            return A(k, **options)
+
+
+def get_aggs(agg, d):
+    if 'aggs' not in d.keys():
+        return
+
+    aggs = d.get('aggs')
+    if len(aggs.keys()) > 1:
+        for metric_name in aggs.keys():
+            agg = agg.metric(metric_name, build_aggs(aggs.get(metric_name)))
+    elif len(aggs.keys()) == 1:
+        k = list(aggs.keys())[0]
+        agg = agg.bucket(k, build_aggs(aggs.get(k)))
+        get_aggs(agg, aggs.get(k))
+
+
+def get_results(agg_query, result):
+    if 'aggs' not in agg_query.keys():
+        return {}
+
+    aggs = agg_query.get('aggs')
+    if len(aggs.keys()) == 1:
+        key_name = list(aggs.keys())[0]
+        bucket_results = []
+        for bucket in result[key_name]['buckets']:
+            doc_count = 0
+            key_val = ''
+            if 'key_as_string' in bucket:
+                key_val = bucket.key_as_string
+            elif 'key' in bucket:
+                key_val = bucket.key
+            else:
+                raise Exception('no key found in bucket')
+            if 'doc_count' in bucket:
+                doc_count = bucket.doc_count
+            ret = get_results(aggs[key_name], bucket)
+            if isinstance(ret, list):
+                for r in ret:
+                    r[key_name + "_count"] = doc_count
+                    r[key_name] = key_val
+                bucket_results.extend(ret)
+            elif isinstance(ret, dict):
+                ret[key_name] = key_val
+                ret[key_name + "_count"] = doc_count
+                bucket_results.append(ret)
+        return bucket_results
+    else:
+        ret = {}
+        for key_name in aggs.keys():
+            if 'value' in result[key_name]:
+                val = result[key_name]['value']
+                ret[key_name] = val
+            elif list(aggs[key_name].keys())[0] == 'top_hits':
+                print(result[key_name])
+                hits = result[key_name]['hits']['hits']
+                if len(hits) > 0:
+                    for source_field in hits[0]['_source']:
+                        ret[source_field] = hits[0]['_source'][source_field]
+
+        return ret
+
 class SlowSqlViewSet(viewsets.ViewSet):
     # print(1)
 
     def list(self, request, *args, **kwargs):
+
         # 入参： 开始时间、结束时间、库名、第几页、每页多少个
         start = request.query_params.get('start')
         end = request.query_params.get('end')
         schema = request.query_params.get('schema', None)
+
+        is_aggr_by_hash = request.query_params.get('is_aggr_by_hash', False)
+        if isinstance(is_aggr_by_hash, str) and is_aggr_by_hash.lower() == 'true':
+            is_aggr_by_hash = True
+        else:
+            is_aggr_by_hash = False
+
+        interval = request.query_params.get('interval', '1d')
+
+
         s = SlowQuery.search()
         if schema is not None and len(schema) > 0:
             s = s.filter('term', schema__keyword=schema)
@@ -35,27 +112,89 @@ class SlowSqlViewSet(viewsets.ViewSet):
             s = s.filter('range', **{'@timestamp': options})
         s = s.sort('-@timestamp')
 
-
-        timeAggs = A('date_histogram', field='@timestamp',
-                     fixed_interval="hour")
-
-        schemaAggs = A('terms', field='schema.keyword')
-        # fingerAggs = A('terms', field='slowlog_query_fingprint.keyword')
-        rowsExaminedAvg = A('avg', field='rows_examined')
-        queryTimeAvg = A('avg', field='query_time_sec')
-
-        s.aggs.bucket('date', timeAggs)\
-            .bucket('schema', schemaAggs)\
-            .metric('rowsExaminedAvg',rowsExaminedAvg)\
-            .metric('queryTimeAvg', queryTimeAvg)
-
-        aggs = s.execute().aggregations
-        for date_item in aggs['date'].buckets:
-            print(date_item)
-            print(date_item.finger)
-
-
         paginator = CustomPagination()
+
+        if is_aggr_by_hash:
+            aggs = {
+                "aggs": {
+                    "date": {
+                        "date_histogram": {
+                            "field": "@timestamp",
+                            "calendar_interval": interval
+                        },
+                        "aggs": {
+                            "schema": {
+                                "terms": {
+                                    "field": "schema.keyword"
+                                },
+                                "aggs": {
+                                    "hash": {
+                                        "terms": {
+                                            "field": "hash.keyword"
+                                        },
+                                        "aggs": {
+                                            "rowsSentAvg": {
+                                                "avg": {
+                                                    "field": "rows_sent"
+                                                }
+                                            },
+                                            "rowsExamineAvg": {
+                                                "avg": {
+                                                    "field": "rows_examined"
+                                                }
+                                            },
+                                            "queryTimeAvg": {
+                                                "avg": {
+                                                    "field": "query_time"
+                                                }
+                                            },
+                                            "sql": {
+                                                "top_hits": {
+                                                    "_source": [
+                                                        "finger",
+                                                        "@timestamp"
+                                                    ],
+                                                    "sort": [
+                                                        {
+                                                            "@timestamp": {
+                                                                "order": "desc"
+                                                            }
+                                                        }
+                                                    ],
+                                                    "size": 1
+                                                }
+                                            }
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            # 这一步要看看
+            get_aggs(s.aggs, aggs)
+
+            result = s.execute().aggregations
+
+            # 这一步也要看看
+            rs = get_results(aggs, result)
+
+        if is_aggr_by_hash:
+            data = paginator.paginate_queryset(rs, request)
+        else:
+            data = paginator.paginate_queryset(s, request)
+            data = [q.to_dict() for q in data]
+
+        # data = paginator.paginate_queryset(s, request)
+        # data = [q.to_dict() for q in data]
+
+        return paginator.get_paginated_response(data)
+
+        # return Response('success')
+
 
     # def list(self, request):
         # print(1)
@@ -119,3 +258,43 @@ class SlowSqlViewSet(viewsets.ViewSet):
         #     # print(i)
         #     print(i.to_dict())
         # return Response('success')
+
+
+
+        """
+        
+        # 多层聚合数据
+        s = SlowQuery.search()
+       
+        s = s.sort('-@timestamp')
+
+        timeAggs = A('date_histogram', field='@timestamp',
+                     fixed_interval="1d")
+
+        schemaAggs = A('terms', field='schema.keyword')
+
+        hashFingerAggs = A('terms', field='hash.keyword')
+
+        rowsExaminedAvg = A('avg', field='rows_examined')
+        queryTimeAvg = A('avg', field='query_time_sec')
+
+        s.aggs.bucket('date', timeAggs)\
+            .bucket('schema', schemaAggs)\
+            .bucket('hash', hashFingerAggs)
+            # .metric('rowsExaminedAvg',rowsExaminedAvg)\
+            # .metric('queryTimeAvg', queryTimeAvg)
+
+        aggs = s.execute().aggregations
+
+        print(aggs['date'])
+
+        for date_buckets in aggs['date'].buckets:
+            print("date_buckets: ", date_buckets)
+
+            for schema_buckets in date_buckets['schema'].buckets:
+                print("schema_buckets: ", schema_buckets)
+
+                for hash_buckets in schema_buckets['hash'].buckets:
+                    print("hash_buckets: ", hash_buckets)
+        """
+
