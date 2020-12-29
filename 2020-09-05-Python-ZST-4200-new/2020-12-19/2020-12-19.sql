@@ -1,5 +1,12 @@
 
 
+未完成：
+	点击可以查看SQL的详情
+	
+	或者参考： https://demo.archerydms.com/slowquery/  分2个tab来做，1个是慢日志统计，另1个是慢日志明细
+		
+	聚合显示的 sql指纹、不聚合显示sql语句
+	
 pipenv install elasticsearch-dsl
 pipenv install elasticsearch
 pipenv install tqdm
@@ -320,7 +327,21 @@ ES数据结构
 	}
   },
   
-  
+ 
+print(aggs)
+{'date': {'buckets': [{'key_as_string': '2020-11-01T00:00:00...'}
+
+ 
+print(aggs.date)
+{'buckets': [{'key_as_string': '2020-11-01T00:00:00.000Z', '...'}
+
+print(aggs['date'])
+
+{'buckets': [{'key_as_string': '2020-11-01T00:00:00.000Z', '...'}
+
+
+不聚合，就不需要做 group by，显示的结果就是慢查询记录一行行的展示
+ 
 	
 多层（嵌套）聚合
 
@@ -442,3 +463,95 @@ ES数据结构
 				  }
 				},
 				
+
+插入数据	
+	
+	https://blog.csdn.net/apple_wolf/article/details/109404820
+	
+	
+	POST mysql-slowsql-test-2020-11-10/_doc
+	{
+		"@timestamp": "2020-12-18T07:25:03.881083",
+		"finger": "select * from t_user where a = o and d like ljuz;",
+		"hash": "c2e50534cba2678374afc4bcf74551a1",
+		"host": "192.168.31.55",
+		"lock_time": 3.544714736293374,
+		"query_sql": "select * from T_user where a = o and d like ljuz;",
+		"query_time": 5.1313155923716858,
+		"rows_examined": 750,
+		"rows_sent": 1000,
+		"schema": "Ana",
+		"user": "Ana_dev3"
+	}			
+
+	POST mysql-slowsql-test-2020-11-10/_doc
+	{
+		"@timestamp": "2020-12-18T07:25:03.881083",
+		"finger": "select * from t_user where a = o and d like ljuz;",
+		"hash": "c2e50534cba2678374afc4bcf74551a1",
+		"host": "192.168.31.55",
+		"lock_time": 3.544714736293374,
+		"query_sql": "select * from T_user where a = o and d like ljuz;",
+		"query_time": 1.1313155923716858,
+		"rows_examined": 750,
+		"rows_sent": 1000,
+		"schema": "Ana",
+		"user": "Ana_dev3"
+	}	
+
+rowsExamineAvg
+
+	result = s.filter('term', schema__keyword='Ena').scan()
+	
+	
+	GET mysql-slowsql-test-*/_search
+	{
+	  
+		"query": {
+		  "term": {
+			  "schema": {
+				"value": "Ana"
+			  }
+		  }
+	  }
+	}
+	
+	GET mysql-slowsql-test-*/_search
+	{
+	  
+		"query": {
+		  "term": {
+			  "schema": "Ana"
+		  }
+	  }
+	}	
+	
+	从 kibana 的查询结果跟界面的数据对得上
+	"hash" : "c2e50534cba2678374afc4bcf74551a1",
+	"query_time" : 5.131315592371686,
+	"rows_examined" : 70513,
+	"rows_sent" : 80182,
+	 ------------------------------------------------
+	"hash" : "c2e50534cba2678374afc4bcf74551a1",
+	"query_time" : 1.1313155923716858,
+	"rows_examined": 750,
+	"rows_sent": 1000,
+	------------------------------------------------
+	"hash" : "c2e50534cba2678374afc4bcf74551a1"
+	"query_time" : 1.1313155923716858,
+	"rows_examined": 750,
+	"rows_sent": 1000,
+	
+	query_time_avg: select (5.131315592371686+1.1313155923716858+1.1313155923716858)/3 = 2.46464892570501920000
+																						2.464648962020874  --by界面的数据
+	rows_examined_avg: select (70513+750*2)/3 = 24004.3333
+										24004.333333333332   --by界面的数据
+										
+	rows_sent_avg: select (80182+1000*2)/3 = 27394
+										27394                --by界面的数据
+					
+
+es 在kibana上做查询还有待加强，需要系统学习下
+
+
+
