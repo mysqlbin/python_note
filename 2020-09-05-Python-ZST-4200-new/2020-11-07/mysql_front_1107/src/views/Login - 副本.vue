@@ -20,8 +20,12 @@
     <div id="container" style="width: 100%; height: 300px"></div>
   </div>
 </template>
+
 <script>
+
+  // import Axios from "axios"
   import {login} from '../api/auth'
+
   import Highcharts from "highcharts";
   import stockInit from "highcharts/modules/stock";
   stockInit(Highcharts);
@@ -51,9 +55,13 @@
       }
     },
     created(){
+      // console.log('created')
+        
     },
     mounted(){
-      console.log("mounted: ", 'mounted')
+      // console.log("mounted")
+      // console.log("this.drawChart(): ", this.drawChart());
+      // this.drawChart();
       this.createChart();
     },
     methods: {
@@ -117,12 +125,42 @@
         });
 
       },
+      // drawChart() {
+      //     // 基于准备好的dom，初始化echarts实例
+      //     let myChart = this.$echarts.init(document.getElementById("main"));
+      //     // 指定图表的配置项和数据
+      //     let option = {
+      //         title: {
+      //         text: "ECharts 入门示例"
+      //         },
+      //         tooltip: {},
+      //         legend: {
+      //         data: ["销量"]
+      //         },
+      //         xAxis: {
+      //         data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+      //         },
+      //         yAxis: {},
+      //         series: [
+      //         {
+      //             name: "销量",
+      //             type: "bar",
+      //             data: [5, 20, 36, 10, 10, 20]
+      //         }
+      //         ]
+      //     };
+      //     // 使用刚指定的配置项和数据显示图表。
+      //     myChart.setOption(option);
+      // } 
+      
       createChart() {
+            let that = this;
             Highcharts.setOptions({
                 lang: {
                     rangeSelectorZoom: "",
                 },
             });
+
             $.getJSON('https://data.jianshukeji.com/jsonp?filename=json/aapl-c.json&callback=?', function (data) {
                 // Create the chart
                 Highcharts.stockChart('container',  {
@@ -136,7 +174,13 @@
                       events: {
                         // 监听时间范围的变化 
                         afterSetExtremes: function (e) {
+    
                           console.log(e.min, e.max);
+                          let startTime = _.toInteger(e.min) / 1000;
+                          let endTime = _.toInteger(e.max) / 1000;
+                          
+                          console.log("startTime: ", startTime);
+                          console.log("endTime: ", endTime);
                         },
                       },
                     },
@@ -150,7 +194,9 @@
                     }],
                     
                 });
+
                 console.log("data: ", data)
+                // console.log("stockChart: ", this.stockChart)
             });
         },
     }

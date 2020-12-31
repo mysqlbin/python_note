@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import Zst from '../views/Zst.vue'
-import Login from '../views/Login.vue'
+// import Home from '../views/Home.vue'
+// import Zst from '../views/Zst.vue'
+// import Login from '../views/Login.vue'
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -19,13 +19,13 @@ export const menuRouts = [
         path: 'home',
         name: 'Home',
         meta: { title: 'Home' },
-        component: Home
+        component: () => import('@/views/Home')
       },
       {
         path: 'about',
         name: 'About',
         meta: { title: 'About' },
-        component: () => import('@/views/About.vue')
+        component: () => import('@/views/About')
       },
 
     ]
@@ -49,10 +49,21 @@ export const menuRouts = [
     component: () => import('@/layout/index'),
     children: [
         {
-            path: 'index',
+            path: 'list',
             meta: { title: '列表' },
             component: () => import('@/views/slowsql/index')
-        }
+        },
+        {
+          path: 'sample',
+          meta: { title: 'Highcharts图表示例' },
+          component: () => import('@/views/slowsql/sample')
+        },
+        {
+          path: 'slow_sample',
+          meta: { title: '慢查询图表示例' },
+          component: () => import('@/views/slowsql/slow_sample')
+        },
+
     ]
   },
 
@@ -63,13 +74,14 @@ const mainRouter = [
   {
     path: '/login',
     name: 'Login',
-    component: () => import('../views/Login')
+    component: () => import('@/views/Login')
   }
 ]
 
 const routes = [].concat(
+    mainRouter,
     menuRouts,
-    mainRouter
+    
 )
 
 const router = new VueRouter({
@@ -78,6 +90,8 @@ const router = new VueRouter({
   routes
 })
 
+
+export default router
 
 router.beforeEach(async(to, from, next) => {
   let username = await store.dispatch('getCurrentUserF') 
@@ -232,4 +246,3 @@ router.beforeEach(async(to, from , next) => {
 
 
 
-export default router

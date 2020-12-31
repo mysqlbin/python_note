@@ -1,38 +1,34 @@
 <template>
-  <div >
-    <div id="aboutecharts" style="width: 100%; height: 300px"></div>
+  <div class="login-container">
+    
+    <div id="main" style="width: 100%; height: 300px"></div>
+
   </div>
 </template>
 
 <script>
 
-  // import Axios from "axios"
-
   export default {
-    name: 'About',
+    name: 'slow_sample',
     data(){
       return {
-       
+  
+
       }
     },
-    
     created(){
       // console.log('created')
         
     },
     mounted(){
-      
-      console.log("mounted: ", 'mounted')
-      
+      // console.log("mounted")
       this.drawChart()
-      
     },
     methods: {
+     
       drawChart() {
-          
           // 基于准备好的dom，初始化echarts实例
-          let myChart = this.$echarts.init(document.getElementById("aboutecharts"));
-         
+          let myChart = this.$echarts.init(document.getElementById("main"));
           // 指定图表的配置项和数据
           let option = {
               title: {
@@ -55,12 +51,9 @@
               ]
           };
           // 使用刚指定的配置项和数据显示图表。
-          
           myChart.setOption(option);
-         
       }  
-    },
-    
+    }
   }
 </script>
 

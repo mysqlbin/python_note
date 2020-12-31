@@ -17,10 +17,10 @@ export default new Vuex.Store({
     // 方法名
     getCurrentUserF(context) {
       let {commit} = context
-      console.log('content: ', context)
-      console.log('context_typeof: ', typeof(context))  // context_typeof:  object
-      console.log('commit_typeof: ', typeof(commit))    // commit_typeof:   function
-      console.log('commit: ', {commit})
+      // console.log('content: ', context)
+      // console.log('context_typeof: ', typeof(context))  // context_typeof:  object
+      // console.log('commit_typeof: ', typeof(commit))    // commit_typeof:   function
+      // console.log('commit: ', {commit})
       
       return new Promise((resolve, reject) => {
         if(_.isEmpty(context.state.username)) {
