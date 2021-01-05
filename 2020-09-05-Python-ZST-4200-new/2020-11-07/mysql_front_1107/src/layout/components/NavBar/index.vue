@@ -16,15 +16,16 @@
 
             </el-dropdown>
             
-            <el-main>
+            <!-- <el-main>
                 <router-view></router-view>
-            </el-main>
+            </el-main> -->
      
         </div>
     </div>
 </template>
 
 <script>
+    import {logout} from '@/api/user'
     export default {
         name: "index",
         methods: {

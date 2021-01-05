@@ -9,7 +9,6 @@
                 <Navbar></Navbar>
             </el-header>
 
-
             <el-main>
                 <router-view></router-view>
             </el-main>
@@ -22,11 +21,6 @@
 
     import Sidebar from './components/Sidebar/index'
     import Navbar from './components/NavBar/index'
-
-    
-    import {logout} from '../api/user'
-    
-
     export default {
         name: "index",
         components: { Sidebar, Navbar },

@@ -36,7 +36,7 @@
 </template>
 
 <script>
-    import { menuRouts } from '../../../router/index'
+    import { menuRouts } from '@/router/index'
     import path from 'path'
     export default {
         name: "index",
