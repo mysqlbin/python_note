@@ -482,30 +482,6 @@
 
 
 	
-	
-	GET mysql-slowsql-test-*/_search
-	{
-	  
-		"query": {
-		  "term": {
-			  "schema": {
-				"value": "Ana"
-			  }
-		  }
-	  }
-	}
-	
-	GET mysql-slowsql-test-*/_search
-	{
-	  
-		"query": {
-		  "term": {
-			  "schema": "Ana"
-		  }
-	  }
-	}	
-	
-	
 	"hash" : "c2e50534cba2678374afc4bcf74551a1",
 	"query_time" : 5.131315592371686,
 	"rows_examined" : 70513,
