@@ -7,6 +7,7 @@ from slowsql.esmodel import SlowQuery
 from elasticsearch_dsl import Q,A
 # Create your views here.
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.decorators import action
 
 
 class CustomPagination(PageNumberPagination):
@@ -83,7 +84,97 @@ def get_results(agg_query, result):
         return ret
 
 class SlowSqlViewSet(viewsets.ViewSet):
+
+    @action(detail=False, methods=['get'])
+    def get_aggs_by_schema(self, request, *args, **kwargs):
+        s = self.get_query_by_params(request)
+        aggs = {
+            "aggs":
+                {
+                "schema": {
+                    "terms": {
+                        "field": "schema.keyword"
+                    }
+                }
+            }
+        }
+        get_aggs(s.aggs, aggs)
+
+        result = s.execute().aggregations
+
+        rs = get_results(aggs, result)
+        return Response(rs)
+
+    @action(detail=False, methods=['get'])
+    def get_aggs_by_date(self, request, *args, **kwargs):
+        s = self.get_query_by_params(request, sorts="@timestamp")
+        aggs = {
+            "aggs": {
+                "date": {
+                    "date_histogram": {
+                        "field": "@timestamp",
+                        "calendar_interval": 'day'
+                    }
+                }
+            }
+        }
+        get_aggs(s.aggs, aggs)
+
+        result = s.execute().aggregations
+
+        rs = get_results(aggs, result)
+        return Response(rs)
+
     # print(1)
+    @action(detail=False, methods=['get'])
+    def get_top10_sql(self, request, *args, **kwargs):
+        s = self.get_query_by_params(request)
+        composite = A('terms', script="doc['schema.keyword'].value+'#'+doc['hash.keyword'].value", size=10)
+        s.aggs.bucket('sql', composite).bucket('finger', A('top_hits', _source=["finger"], size=1))
+        aggs = s.execute().aggregations
+        results = []
+        for bucket in aggs.sql.buckets:
+            k = bucket.key
+            keys = k.split('#')
+            data = {
+                "schema": keys[0],
+                "hash": keys[1],
+                "count": bucket.doc_count,
+                "finger": bucket.finger.hits.hits[0]['_source']['finger']
+            }
+            results.append(data)
+
+        return Response(results)
+
+    # 通用获取参数
+    def get_query_by_params(self, request, sorts=None):
+        start = request.query_params.get('start')
+        end = request.query_params.get('end')
+        s = SlowQuery.search()
+        if start is None or not isinstance(start, str) or len(start.strip()) == 0:
+            start = None
+        if end is None or not isinstance(end, str) or len(end.strip()) == 0:
+            end = None
+
+        if start is not None and end is not None:
+            options = {
+                # greater or equal than  -> gte 大于等于
+                # greater than  -> gt 大于
+                # little or equal thant -> lte 小于或等于
+                'gte': start,
+                'lte': end
+            }
+            print(options)
+            s = s.filter('range', **{'@timestamp': options})
+
+
+        sorts = request.query_params.get('sorts', sorts)
+        if isinstance(sorts, str) and len(sorts) > 0:
+            sorts = [item.strip() for item in sorts.split(",") if len(item.strip()) > 0]
+            s = s.sort(*sorts)
+        else:
+            s = s.sort('-@timestamp')
+        return s
 
     def list(self, request, *args, **kwargs):
 
@@ -195,11 +286,11 @@ class SlowSqlViewSet(viewsets.ViewSet):
 
         # return Response('success')
 
-
-    # def list(self, request):
+    @action(detail=False, methods=['get'])
+    def es_test(self, request):
         # print(1)
         # return HttpResponse(1)
-        # s = SlowQuery.search()
+        s = SlowQuery.search()
 
         # 查询所有的数据
         # result = s.scan()
@@ -211,8 +302,8 @@ class SlowSqlViewSet(viewsets.ViewSet):
         # result = s.sort('-@timestamp')
 
         # 指定范围
-        # from_date = '2020-11-10T19:00:00'
-        # to_date = '2020-11-10T20:00:00'
+        # from_date = '2020-12-20T00:00:00'
+        # to_date = '2020-12-21T00:00:00'
         # options = {
         #     'gte': from_date,
         #     'lte': to_date
@@ -220,52 +311,53 @@ class SlowSqlViewSet(viewsets.ViewSet):
         # result = s.filter('range', **{'@timestamp': options}).execute()
 
         #
-        # result = s.filter('wildcard', schema__keyword='*L*').scan()
+        # result = s.filter('wildcard', schema__keyword='*An*').scan()
 
         # result = s.filter('prefix', schema__keyword='L').scan()
 
         # result = s.filter('match', query_sql='abc cda').scan()
+        # result = s.filter('match', query_sql='abc urtaevhwcz').scan()
 
-        # result = s.filter('match', query_sql='T_computer').filter('term', schema__keyword='Talia').scan()
+        # result = s.filter('match', query_sql='T_computer').filter('term', schema__keyword='Cna').scan()
 
-        # q = Q("match", query_sql='gqfeyhtnr') | Q("term", schema__keyword="Talia")
+        q = Q("match", query_sql='T_computer') | Q("term", schema__keyword="Cna")
 
-        # result = s.filter(q).scan()
+        result = s.filter(q).scan()
 
         # result = s.sort('-@timestamp', 'rows_examined')
 
         """
         # 一层聚合数据: 简单的一个根据日期聚合的
-        
+
         # 执行查询
         timeAggs = A('date_histogram', field='@timestamp', fixed_interval="10m")
 
         # 'date' 为分组的名称
         s.aggs.bucket('date', timeAggs)
-        
+
         # 获取数据
         aggs = s.execute().aggregations
-        
+
         # 这里要 debugger 一下，然后才知道怎么取数据 
         print(aggs)
-        
+
         for date_item in aggs['date'].buckets:
             print(date_item)
 
         """
 
-        # for i in result:
-        #     # print(i)
-        #     print(i.to_dict())
-        # return Response('success')
+        for i in result:
+            # print(i)
+            print(i.to_dict(include_meta=True))
+        return Response('success')
 
 
 
         """
-        
+
         # 多层聚合数据
         s = SlowQuery.search()
-       
+
         s = s.sort('-@timestamp')
 
         timeAggs = A('date_histogram', field='@timestamp',
@@ -297,4 +389,5 @@ class SlowSqlViewSet(viewsets.ViewSet):
                 for hash_buckets in schema_buckets['hash'].buckets:
                     print("hash_buckets: ", hash_buckets)
         """
+
 
