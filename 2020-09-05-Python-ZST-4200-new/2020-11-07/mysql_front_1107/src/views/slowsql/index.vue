@@ -143,7 +143,7 @@
 
     import SchemaSearch from '@/components/schema_search'
     import * as moment from 'moment'
-    import {getSlowSqlList} from '../../api/slowsql'
+    import {getSlowSqlList} from '@/api/slowsql'
 
     export default {
         name: "index",

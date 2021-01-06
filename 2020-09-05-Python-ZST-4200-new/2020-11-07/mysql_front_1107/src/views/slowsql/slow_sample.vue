@@ -1,20 +1,103 @@
 <template>
+    <div>
+        <div id="container" style="width: 100%; height: 300px"></div>
+        
+        <el-row>
+            <el-col :span="12">
+                <div class="grid-content bg-purple">
+                    <highcharts :options="schemaPieOptions"></highcharts>
+                </div>
+            </el-col>
+            <el-col :span="12">
+                <div class="grid-content bg-purple-light">
+                    <el-table :data="tableData" border>
+                        <el-table-column
+                                prop="schema"
+                                label="库名"
+                                width="100">
+                        </el-table-column>
 
-    <div id="container" style="width: 100%; height: 300px"></div>
-    
+                        <el-table-column
+                                prop="finger"
+                                label="finger"
+                                :show-overflow-tooltip='true'
+                                >
+                        </el-table-column>
+                        <el-table-column
+                                prop="count"
+                                label="count"
+                                width="80">
+                        </el-table-column>
+                    </el-table>
+
+                </div>
+            </el-col>
+        </el-row>
+
+
+
+    </div>
 </template>
 
 <script>
 import Highcharts from "highcharts";
 import stockInit from "highcharts/modules/stock";
 stockInit(Highcharts);
+
+import { Chart } from "highcharts-vue";
+
 import $ from "jquery";
 import * as moment from 'moment'
+import {getAggsByDate, getSlowSqlTop10, getAggsBySchema} from '@/api/slowsql'
+
+
 
 export default {
     name: 'slow_sample',
+    // 注册 highcharts
+    components: {
+        highcharts: Chart,
+    },
     data(){
         return {
+            tableData: [],
+            queryParams: {
+                start: "",
+                end: "",
+            },
+            schemaPieOptions: {
+                chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false,
+                        type: 'pie'
+                },
+                title: {
+                        text: '各数据库慢SQL占比'
+                },
+                tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                        pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                        enabled: true,
+                                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                                        style: {
+                                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                                        }
+                                }
+                        }
+                },
+                series: [{
+                        name: 'Brands',
+                        colorByPoint: true,
+                        data: []
+                }]                   
+
+            }
         }
     },
     created(){
@@ -24,7 +107,7 @@ export default {
             function (startTime, endTime) {
                 this.queryParams.start = startTime;
                 this.queryParams.end = endTime;
-                console.log(this.queryParams);
+                // console.log(this.queryParams);
                 this.$emit("updateQueryParams");
             }.bind(this),
             1000
@@ -34,7 +117,9 @@ export default {
             "updateQueryParams",
             function () {
                 console.log("query params has changed");
-                // this.doSearch();
+                // console.log("this.queryParams.start: ", this.queryParams.start)
+                // console.log("this.queryParams.end: ", this.queryParams.end)
+                this.doSearch();
             }.bind(this)
         );
 
@@ -42,6 +127,7 @@ export default {
     mounted(){
         console.log("mounted: ", 'mounted')
         this.createChart();
+        this.doSearch();
     },
     methods: {
 
@@ -65,7 +151,37 @@ export default {
                 this.stockChart = new Highcharts.stockChart("container", {
 
                     rangeSelector: {
-                        selected: 1
+                        // 时间范围按钮数组
+                        // buttons: [new Date() - 3600 * 1000 * 24 * 30, new Date()],
+
+                        buttons: [{
+                            type: 'day',
+                            count: 7,
+                            text: '7d'
+                        },{
+                            type: 'month',
+                            count: 1,
+                            text: '1m'
+                        }, {
+                            type: 'month',
+                            count: 3,
+                            text: '3m'
+                        }, {
+                            type: 'month',
+                            count: 6,
+                            text: '6m'
+                        }, {
+                            type: 'ytd',
+                            text: 'YTD'
+                        }, {
+                            type: 'year',
+                            count: 1,
+                            text: '1y'
+                        }, {
+                            type: 'all',
+                            text: 'All'
+                        }],
+                        selected: 2
                     },
                     title: {
                         text: '每日慢SQL数量'
@@ -88,7 +204,7 @@ export default {
                     },
                     series: [{
                         name: '数量',
-                        data: data,
+                        data: chartData,
                         type: 'spline',
                         tooltip: {
                             valueDecimals: 2
@@ -99,17 +215,29 @@ export default {
 
             })
 
-
             // $.getJSON('https://data.jianshukeji.com/jsonp?filename=json/aapl-c.json&callback=?', function (data) {
                 
-
-
-
         },
         doSearch(){
-            getTop10(this.queryParams).then(resp=> {
-                this.tableData = resp.data
-            })
+            getSlowSqlTop10(this.queryParams).then(resp=> {
+                console.log("this.queryParams.start: ", this.queryParams.start)
+                console.log("this.queryParams.end: ", this.queryParams.end)
+                this.tableData = resp.data;
+                console.log("tableData: ", resp.data)
+            }),
+            getAggsBySchema(this.queryParams).then((resp) => {
+                const reducer = (accumulator, item) => accumulator + item["schema_count"];
+                let countAll = resp.data.reduce(reducer, 0);
+                console.log("countAll: ", countAll);
+                this.schemaPieOptions.series[0].data = resp.data.map((v) => {
+                    return {
+                        name: v["schema"],
+                        y: v["schema_count"] / countAll,
+                    };
+                });
+
+                console.log("this.schemaPieOptions.series[0].data: ", this.schemaPieOptions.series[0].data);
+            });
         },
 
         // createChart() {

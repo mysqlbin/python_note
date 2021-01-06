@@ -1,5 +1,36 @@
 
 
+相关参考
+
+	https://blog.csdn.net/ifenggege/article/details/86103918   ES（四）ES使用（基本查询、聚合查询）
+	https://www.cnblogs.com/xing901022/p/4947436.html  Elasticsearch聚合 之 Terms
+	
+	
+	highcharts图表相关
+		https://www.highcharts.com.cn/docs/install-from-npm
+		https://blog.jianshukeji.com/highcharts/use-highcharts-with-vue.html
+
+		https://www.highcharts.com.cn/docs/highcharts-vue   Highcharts Vue
+
+
+		https://codesandbox.io/embed/vue-template-c91vy?fontsize=14    vue使用highcharts示例
+
+
+		https://codesandbox.io/s/nw4qk1zj24?file=/src/App.vue 
+
+		https://codesandbox.io/s/nw4qk1zj24?file=/src/main.js
+
+
+		https://jshare.com.cn/highstock/hhhhio/13  上课用的图表示例
+
+			https://www.highcharts.com.cn/docs/highstock
+			
+			https://www.highcharts.com.cn/demo/highstock/spline
+		
+		https://www.highcharts.com.cn/demo/highcharts/pie-basic 饼状图
+		
+		https://demo-live-data.highcharts.com/aapl-c.json
+
 
 未完成：
 	总结下es的查询 
@@ -80,7 +111,7 @@
 	
 	
 
-https://www.highcharts.com.cn/demo/highcharts/pie-basic 饼状图
+
 
 Highcharts.chart('container', {
 		chart: {
@@ -152,25 +183,6 @@ Highcharts.chart('container', {
 
 
 
-https://www.highcharts.com.cn/docs/install-from-npm
-https://blog.jianshukeji.com/highcharts/use-highcharts-with-vue.html
-
-https://www.highcharts.com.cn/docs/highcharts-vue   Highcharts Vue
-
-
-https://codesandbox.io/embed/vue-template-c91vy?fontsize=14    vue使用highcharts示例
-
-
-https://codesandbox.io/s/nw4qk1zj24?file=/src/App.vue 
-
-https://codesandbox.io/s/nw4qk1zj24?file=/src/main.js
-
-
-https://jshare.com.cn/highstock/hhhhio/13  上课用的图表示例
-
-	https://www.highcharts.com.cn/docs/highstock
-	
-	https://www.highcharts.com.cn/demo/highstock/spline
 
 
 
@@ -247,200 +259,88 @@ var chart = Highcharts.chart('container', {
 
 
 
-https://demo-live-data.highcharts.com/aapl-c.json
+
+ERROR:root:exception occur: Invalid page.
+Traceback (most recent call last):
+  File "/home/vagrant/.local/share/virtualenvs/zst_mysql_1110-XKCR2RrO/lib/python3.6/site-packages/rest_framework/pagination.py", line 206, in paginate_queryset
+    self.page = paginator.page(page_number)
+  File "/home/vagrant/.local/share/virtualenvs/zst_mysql_1110-XKCR2RrO/lib/python3.6/site-packages/django/core/paginator.py", line 73, in page
+    number = self.validate_number(number)
+  File "/home/vagrant/.local/share/virtualenvs/zst_mysql_1110-XKCR2RrO/lib/python3.6/site-packages/django/core/paginator.py", line 55, in validate_number
+    raise EmptyPage(_('That page contains no results'))
+django.core.paginator.EmptyPage: That page contains no results
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/vagrant/.local/share/virtualenvs/zst_mysql_1110-XKCR2RrO/lib/python3.6/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/vagrant/src/python_note/2020-09-05-Python-ZST-4200-new/zst_mysql_1110/slowsql/views.py", line 257, in list
+    data = paginator.paginate_queryset(rs, request)
+  File "/home/vagrant/.local/share/virtualenvs/zst_mysql_1110-XKCR2RrO/lib/python3.6/site-packages/rest_framework/pagination.py", line 211, in paginate_queryset
+    raise NotFound(msg)
+rest_framework.exceptions.NotFound: Invalid page.
 
 
-https://www.cnblogs.com/xing901022/p/4947436.html  Elasticsearch聚合 之 Terms
-
-
-
-Terms 聚合
-
-topsql10
-GET mysql-slowsql-test-*/_search
-{
-  "aggs":{
-    "schema": {
-      "terms": {  
-        "script": "doc['schema.keyword'].value+'#'+doc['hash.keyword'].value",
-        "size": 5
-      }
-    }
-  }
-}
-
-result
-  "aggregations" : {
-    "schema" : {
-      "doc_count_error_upper_bound" : 14,
-      "sum_other_doc_count" : 495,
-      "buckets" : [
-        {
-          "key" : "Ana#05565c7c62dd546642e1a61a3b06cb59",
-          "doc_count" : 1
-        },
-        {
-          "key" : "Ana#0ae70d1d056f46eda180c69c26061fd4",
-          "doc_count" : 1
-        },
-        {
-          "key" : "Ana#2a7593c2dba528b8a82d96d8463da608",
-          "doc_count" : 1
-        },
-        {
-          "key" : "Ana#3b87de8b53853ffd3b426ac652201c9c",
-          "doc_count" : 1
-        },
-        {
-          "key" : "Ana#3b9ebc56e56b3a265c3f8738e60ed41b",
-          "doc_count" : 1
-        }
-      ]
-    }
-  }
-
--- 没有 order by ？ 不需要，默认 desc 
-def get_top10_sql(self, request, *args, **kwargs):
-	s = self.get_query_by_params(request)
-	composite = A('terms', script="doc['schema.keyword'].value+'#'+doc['hash.keyword'].value", size=10)
-	s.aggs.bucket('sql', composite).bucket('finger', A('top_hits', _source=["finger"], size=1))
-	aggs = s.execute().aggregations
-
-取sql top 10
-
-	根据schema分组，出现次数最多的前前10个慢查询
-	
-		取 schema +　finger的hash值 
-		
-		再返回每个桶的前1条的finger
-	
--- 还写不出下面的查询
-GET mysql-slowsql-test-*/_search
-{
-  "aggs":{
-    "schema": {   --分组字段
-      "terms": {
-        "script": "doc['schema.keyword'].value+'#'+doc['hash.keyword'].value",
-        "size": 5
-      },
-      "aggs": {
-        "finger": {
-          "top_hits": {    			-- 聚合类型为 top_hits, 返回每个桶的前1条
-            "_source": ["finger"],  -- 只取 finger 字段 
-            "size": 1               -- 只取1条
-          }
-        }
-      }
-    }
-  }
-}
-
-
-手工补数据
-	POST mysql-slowsql-test-2020-11-10/_doc
-	{
-		"@timestamp": "2020-12-18T07:25:03.881083",
-		"finger": "select * from t_money where e = xch and d = urtaevhwcz and c = zsgplydh;",
-		"hash": "05565c7c62dd546642e1a61a3b06cb59",
-		"host": "192.168.31.55",
-		"lock_time": 3.544714736293374,
-		"query_sql": "select * from t_money where e = xch and d = urtaevhwcz and c = zsgplydh;",
-		"query_time": 5.1313155923716858,
-		"rows_examined": 750,
-		"rows_sent": 1000,
-		"schema": "Ana",
-		"user": "Ana_dev3"
-	}			
-			
-		
-	POST mysql-slowsql-test-2020-11-10/_doc
-	{
-		"@timestamp": "2020-12-18T07:25:03.881083",
-		"finger": "select * from t_computer where b like kuexrj or d = czqjhpg;",
-		"hash": "0ae70d1d056f46eda180c69c26061fd4",
-		"host": "192.168.31.55",
-		"lock_time": 3.544714736293374,
-		"query_sql": "select * from t_computer where b like kuexrj or d = czqjhpg;",
-		"query_time": 5.1313155923716858,
-		"rows_examined": 750,
-		"rows_sent": 1000,
-		"schema": "Ana",
-		"user": "Ana_dev3"
-	}	
-
-
-		
-result
-"aggregations" : {
-    "schema" : {
-      "doc_count_error_upper_bound" : 24,
-      "sum_other_doc_count" : 499,
-      "buckets" : [
-        {
-          "key" : "Ana#0ae70d1d056f46eda180c69c26061fd4",
-          "doc_count" : 3,
-          "finger" : {
-            "hits" : {
-              "total" : {
-                "value" : 3,
-                "relation" : "eq"
-              },
-              "max_score" : 1.0,
-              "hits" : [
-                {
-                  "_index" : "mysql-slowsql-test-2020-11-10",
-                  "_type" : "_doc",
-                  "_id" : "rhryt3YBQ5LDcFvTLU3o",
-                  "_score" : 1.0,
-                  "_source" : {
-                    "finger" : "select * from t_computer where b like kuexrj or d = czqjhpg;"
-                  }
-                }
-              ]
-            }
-          }
-        },
-        {
-          "key" : "Ana#05565c7c62dd546642e1a61a3b06cb59",
-          "doc_count" : 2,
-          "finger" : {
-            "hits" : {
-              "total" : {
-                "value" : 2,
-                "relation" : "eq"
-              },
-              "max_score" : 1.0,
-              "hits" : [
-                {
-                  "_index" : "mysql-slowsql-test-2020-11-10",
-                  "_type" : "_doc",
-                  "_id" : "rRrpt3YBQ5LDcFvT5E1W",
-                  "_score" : 1.0,
-                  "_source" : {
-                    "finger" : "select * from t_money where e = xch and d = urtaevhwcz and c = zsgplydh;"
-                  }
-                }
-              ]
-            }
-          }
-        }
-      ]
-    }
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Highcharts.chart('container', {
+		chart: {
+				plotBackgroundColor: null,
+				plotBorderWidth: null,
+				plotShadow: false,
+				type: 'pie'
+		},
+		title: {
+				text: '2018年1月浏览器市场份额'
+		},
+		tooltip: {
+				pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+		},
+		plotOptions: {
+				pie: {
+						allowPointSelect: true,
+						cursor: 'pointer',
+						dataLabels: {
+								enabled: true,
+								format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+								style: {
+										color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+								}
+						}
+				}
+		},
+		series: [{
+				name: 'Brands',
+				colorByPoint: true,
+				data: [{
+						name: 'Chrome',
+						y: 61.41,
+						sliced: true,
+						selected: true
+				}, {
+						name: 'Internet Explorer',
+						y: 11.84
+				}, {
+						name: 'Firefox',
+						y: 10.85
+				}, {
+						name: 'Edge',
+						y: 4.67
+				}, {
+						name: 'Safari',
+						y: 4.18
+				}, {
+						name: 'Sogou Explorer',
+						y: 1.64
+				}, {
+						name: 'Opera',
+						y: 1.6
+				}, {
+						name: 'QQ',
+						y: 1.2
+				}, {
+						name: 'Other',
+						y: 2.61
+				}]
+		}]
+});
 
