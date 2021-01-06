@@ -86,8 +86,10 @@ def get_results(agg_query, result):
 class SlowSqlViewSet(viewsets.ViewSet):
 
     @action(detail=False, methods=['get'])
+    # 每个schema慢日志数量的饼状图
     def get_aggs_by_schema(self, request, *args, **kwargs):
         s = self.get_query_by_params(request)
+        # 根据schema做聚合
         aggs = {
             "aggs":
                 {
@@ -106,6 +108,7 @@ class SlowSqlViewSet(viewsets.ViewSet):
         return Response(rs)
 
     @action(detail=False, methods=['get'])
+    # 用来画每天的慢日志数据曲线图
     def get_aggs_by_date(self, request, *args, **kwargs):
         s = self.get_query_by_params(request, sorts="@timestamp")
         aggs = {
@@ -127,6 +130,7 @@ class SlowSqlViewSet(viewsets.ViewSet):
 
     # print(1)
     @action(detail=False, methods=['get'])
+    # 慢日志top10
     def get_top10_sql(self, request, *args, **kwargs):
         s = self.get_query_by_params(request)
         composite = A('terms', script="doc['schema.keyword'].value+'#'+doc['hash.keyword'].value", size=10)
@@ -326,11 +330,11 @@ class SlowSqlViewSet(viewsets.ViewSet):
 
         # result = s.sort('-@timestamp', 'rows_examined')
 
-        """
+
         # 一层聚合数据: 简单的一个根据日期聚合的
 
-        # 执行查询
-        timeAggs = A('date_histogram', field='@timestamp', fixed_interval="10m")
+        # 查询语句
+        timeAggs = A('date_histogram', field='@timestamp', fixed_interval="1d")
 
         # 'date' 为分组的名称
         s.aggs.bucket('date', timeAggs)
@@ -344,11 +348,11 @@ class SlowSqlViewSet(viewsets.ViewSet):
         for date_item in aggs['date'].buckets:
             print(date_item)
 
-        """
 
-        for i in result:
-            # print(i)
-            print(i.to_dict(include_meta=True))
+
+        # for i in result:
+        #     # print(i)
+        #     print(i.to_dict(include_meta=True))
         return Response('success')
 
 
