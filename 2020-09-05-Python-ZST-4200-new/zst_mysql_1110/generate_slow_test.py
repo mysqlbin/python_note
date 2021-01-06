@@ -77,7 +77,7 @@ if __name__ == '__main__':
                 "".join(random.sample('zyxwvutsrqponmlkjihgfedcba', random.randint(1, 10)))))
         sql = "select * from {} where {};".format(tables[table_idx], " ".join(where_list[1:]))
         random_schema = random.choice(schema)
-        random_time = randomtimes('2020-11-01', '2020-12-20')
+        random_time = randomtimes('2020-11-20', '2020-12-20')
         finger_print = get_finger_print(sql)
         data = {
             "query_sql": sql,
@@ -90,7 +90,8 @@ if __name__ == '__main__':
             "schema": random_schema,
             "host": "192.168.31.55",
             "finger": finger_print,
-            "hash": hashlib.md5(finger_print.encode('utf-8')).hexdigest()
+            "hash": hashlib.md5(finger_print.encode('utf-8')).hexdigest(),
+            "time": random_time
         }
         es_index = datetime.datetime.strftime(random_time, "mysql-slowsql-test-%Y-%m-%d")
         write_elasticsearch(es, es_index, data)

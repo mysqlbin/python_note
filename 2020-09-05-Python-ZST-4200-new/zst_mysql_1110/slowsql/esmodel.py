@@ -14,5 +14,6 @@ class SlowQuery(Document):
 
     class Index:
     # 声明使用哪个索引
-        name = 'mysql-slowsql-test-*'
+        name = 'mysql-slowsql-test-2021-01-05'
+        # name = 'mysql-slowsql-test-*'
     #     name = 'mysql-slowsql-test-2020-11-10'
