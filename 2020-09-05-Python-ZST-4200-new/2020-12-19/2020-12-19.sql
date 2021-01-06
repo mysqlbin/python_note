@@ -318,29 +318,29 @@
 			  }
 			}
 		  }, 
-		  "aggs": {
+		  "aggs": {  // 表示要分组
 			  "date": {  -- 自定义的分组聚合名称
-				  "date_histogram": {
+				  "date_histogram": { //按照日期时间聚合分析数据
 					  "field": "@timestamp",
 					  "calendar_interval": "hour"
 				  },
-				  "aggs": {
-					  "schema": {   -- 以schema为单位做分组
-						  "terms": {
+				  "aggs": {   //aggs可以嵌套在别的aggs裡面，第二层聚合 
+					  "schema": {   //记得使用aggs需要先自定义一个name
+						  "terms": { // terms桶 : 针对某个field的值进行分组，field有几种值就分成几组
 							  "field": "schema.keyword"
 						  },
-						  "aggs": {
-							  "hash": {
-								  "terms": {
+						  "aggs": {   //aggs可以嵌套在别的aggs裡面，第三层聚合 
+							  "hash": {   //记得使用aggs需要先自定义一个name
+								  "terms": {  // terms桶 : 针对某个field的值进行分组，field有几种值就分成几组
 									  "field": "hash.keyword"
 								  },
-								  "aggs": {
-									  "rowsExamineAvg": {
+								  "aggs": {  //嵌套两个指标avg、avg在terms桶中
+									  "rowsExamineAvg": {  //rowsExamineAvg计算每个bucket的平均扫描行数
 										"avg": {
 										  "field": "rows_examined"
 										}
 									  },
-									  "queryTimeAvg": {
+									  "queryTimeAvg": {  //rowsExamineAvg计算每个bucket的平均执行时间
 										  "avg": {
 											  "field": "query_time"
 										  }
