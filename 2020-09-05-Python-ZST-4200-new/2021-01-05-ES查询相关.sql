@@ -914,6 +914,7 @@
 	看/理解原理、参考例子、实践，逐步理解
 	自己也要在python重新写一遍es的查询
 	
+	
 相关参考
 	https://blog.csdn.net/weixin_40341116/article/details/81173016   ElasticSearch - 聚合 aggs
 	https://blog.csdn.net/weixin_40341116/article/details/80608874   ElasticSearch - 基本类型与映射 (es5.x以上)

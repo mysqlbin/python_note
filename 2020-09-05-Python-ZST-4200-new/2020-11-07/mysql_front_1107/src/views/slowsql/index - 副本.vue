@@ -27,7 +27,20 @@
                 </el-form-item>
 
             </el-form>
-        
+
+            <div>
+                <el-switch
+                    v-model="searchBar.is_aggr_by_hash"
+                    active-text="不聚合"
+                    inactive-text="聚合"
+                    @change="doSearch"
+                    >
+                </el-switch>
+                <el-tooltip class="item" effect="dark" content="选择聚合后，慢SQL将会按照指纹进行折叠" placement="top">
+                    <i class="el-icon-question"></i>
+                </el-tooltip>
+            </div>
+
         </el-row>
 
         <el-table v-loading="tableLoading" :data="tableData" border style="width: 100%">
@@ -35,7 +48,7 @@
             <el-table-column type="expand">
                 <template slot-scope="props">
                     <el-form label-position="left" inline class="demo-table-expand">
-                        <el-form-item label="显示完整的SQL语句：">
+                        <el-form-item label="完整的SQL语句：">
                          <span>{{ props.row.finger }}</span>
                         </el-form-item>
 
@@ -45,17 +58,72 @@
 
             <el-table-column prop="schema" label="库名" width="100"></el-table-column>
 
-            <el-table-column prop="host" label="ip" > </el-table-column>
+            <!-- <el-table-column prop="host" label="ip" width="180"> </el-table-column> -->
+
+
+            <el-table-column :label="searchBar.is_aggr_by_hash ? '执行总次数': 'ip'" width="150">
+                <template slot-scope="scope">
+                <div v-if="searchBar.is_aggr_by_hash">
+                    {{ scope.row.hash_count }}
+                </div>
+                <div v-else>
+                    {{ scope.row.host }}
+                </div>
+                </template>
+            </el-table-column>
+
             
             <el-table-column prop="finger" label="SQL语句" width="500" :show-overflow-tooltip='true'> </el-table-column>
 
-            <el-table-column prop="rows_examined" label="扫描行数" width="100"></el-table-column>
-            
-            <el-table-column prop="rows_sent" label="返回行数" width="100"></el-table-column>
-            
-            <el-table-column prop="query_time" label="执行时长(秒)" width="100"></el-table-column>
+            <!-- <el-table-column prop="query_time" label="query_time"></el-table-column> -->
 
-            <el-table-column prop="lock_time" label="持有锁时长(秒)" width="100"></el-table-column>
+            <!-- <el-table-column prop="rows_examined" label="rows_examined"></el-table-column> -->
+
+            <el-table-column :label="searchBar.is_aggr_by_hash ? '扫描总行数': '扫描行数'" width="100">
+                <template slot-scope="scope">
+                <div v-if="searchBar.is_aggr_by_hash">
+                    {{ scope.row.rowsExamineAvg }}
+                </div>
+                <div v-else>
+                    {{ scope.row.rows_examined }}
+                </div>
+                </template>
+            </el-table-column>
+
+            <el-table-column :label="searchBar.is_aggr_by_hash ? '返回总行数': '返回行数'" width="100">
+                <template slot-scope="scope">
+                <div v-if="searchBar.is_aggr_by_hash">
+                    {{ scope.row.rowsSentAvg }}
+                </div>
+                <div v-else>
+                    {{ scope.row.rows_sent }}
+                </div>
+                </template>
+            </el-table-column>
+
+            <!-- <el-table-column prop="rows_sent" label="rows_sent"></el-table-column> -->
+
+            <el-table-column :label="searchBar.is_aggr_by_hash ? '执行总时长(秒)': '执行时长(秒)'" width="150">
+                <template slot-scope="scope">
+                <div v-if="searchBar.is_aggr_by_hash">
+                    {{ scope.row.queryTimeAvg }}
+                </div>
+                <div v-else>
+                    {{ scope.row.query_time }}
+                </div>
+                </template>
+            </el-table-column>
+
+            <el-table-column :label="searchBar.is_aggr_by_hash ? '操作': '执行时间'">
+                <template slot-scope="scope">
+                <div v-if="searchBar.is_aggr_by_hash">
+                   <el-button @click="showProcessList(scope.row)" type="primary" size="small">查看慢日志明细</el-button>
+                </div>
+                <div v-else>
+                    {{ scope.row.time }}
+                </div>
+                </template>
+            </el-table-column>
 
         </el-table>
         <el-pagination
@@ -88,8 +156,7 @@
                     page_num: 1,
                     start: "",
                     end: "",
-                    is_aggr_by_hash: false,
-                    hash: "",
+                    is_aggr_by_hash: true,
                     
                 },
                 tableData: [],
@@ -136,22 +203,6 @@
                 this.searchBar.page_size = parseInt(this.$route.query.page_size)     
             }    
 
-            if(this.$route.query.hash){
-                this.searchBar.hash = parseInt(this.$route.query.hash)  
-            }
-
-            
-            if(this.$route.query.start){
-
-                this.searchBar.start = parseInt(this.$route.query.start)      
-                
-            }
-
-            if(this.$route.query.end){
-                this.searchBar.end = parseInt(this.$route.query.end)  
-            }
-                
-
             this.doSearch()
 
         },
@@ -168,23 +219,6 @@
                    this.searchBar.page_size = parseInt(to.query.page_size)   
                     console.log("to.query.page_size: ", to.query.page_size)  
                 }    
-
-                if(to.query.hash){
-                    this.searchBar.hash = parseInt(to.query.hash)  
-                    console.log("to.query.hash: ", to.query.hash)   
-                }
-
-                if(to.query.start){
-                    if (to.query.start != parseInt(to.query.start)){
-                      this.searchBar.start = parseInt(to.query.start)        
-                    }   
-                }
-
-                if(to.query.end){
-                    if (to.query.end != parseInt(to.query.end)){
-                      this.searchBar.end = parseInt(to.query.end)        
-                    } 
-                }
 
                this.doSearch()
 

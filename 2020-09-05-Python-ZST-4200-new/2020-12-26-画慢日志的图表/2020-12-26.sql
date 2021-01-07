@@ -344,3 +344,21 @@ Highcharts.chart('container', {
 		}]
 });
 
+
+
+
+	POST mysql-slowsql-test-2021-01-07/_doc
+	{
+		"@timestamp": "2021-01-07T07:25:03.881083",
+		"finger": "select * from t_money where e = xch and d = urtaevhwcz and c = zsgplydh;",
+		"hash": "05565c7c62dd546642e1a61a3b06cb59",
+		"host": "192.168.31.55",
+		"lock_time": 2.544714736293374,
+		"query_sql": "select * from t_money where e = xch and d = urtaevhwcz and c = zsgplydh;",
+		"query_time": 8.1313155923716858,
+		"rows_examined": 10000,
+		"rows_sent": 10000,
+		"schema": "Ana",
+		"user": "Ana_dev3"
+	}
+	

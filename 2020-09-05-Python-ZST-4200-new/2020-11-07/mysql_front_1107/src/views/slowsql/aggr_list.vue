@@ -27,7 +27,7 @@
                 </el-form-item>
 
             </el-form>
-        
+
         </el-row>
 
         <el-table v-loading="tableLoading" :data="tableData" border style="width: 100%">
@@ -35,7 +35,7 @@
             <el-table-column type="expand">
                 <template slot-scope="props">
                     <el-form label-position="left" inline class="demo-table-expand">
-                        <el-form-item label="显示完整的SQL语句：">
+                        <el-form-item label="完整的SQL语句：">
                          <span>{{ props.row.finger }}</span>
                         </el-form-item>
 
@@ -45,17 +45,26 @@
 
             <el-table-column prop="schema" label="库名" width="100"></el-table-column>
 
-            <el-table-column prop="host" label="ip" > </el-table-column>
             
             <el-table-column prop="finger" label="SQL语句" width="500" :show-overflow-tooltip='true'> </el-table-column>
 
-            <el-table-column prop="rows_examined" label="扫描行数" width="100"></el-table-column>
-            
-            <el-table-column prop="rows_sent" label="返回行数" width="100"></el-table-column>
-            
-            <el-table-column prop="query_time" label="执行时长(秒)" width="100"></el-table-column>
 
-            <el-table-column prop="lock_time" label="持有锁时长(秒)" width="100"></el-table-column>
+            <el-table-column prop="hash_count" label="执行总次数" width="100"> </el-table-column>
+
+            <el-table-column prop="rowsExamineAvg" label="平均扫描行数" width="100"> </el-table-column>
+
+            <el-table-column prop="rowsSentAvg" label="平均返回行数" width="100"> </el-table-column>
+
+            <el-table-column prop="queryTimeAvg" label="平均执行时长(秒)" width="100"> </el-table-column>
+
+
+            <el-table-column label='操作'>
+                <template slot-scope="scope">
+                    {{ scope.row }}
+                   <el-button @click="showSlowSqlList(scope.row)" type="primary" size="small">查看慢日志明细</el-button>
+                
+                </template>
+            </el-table-column>
 
         </el-table>
         <el-pagination
@@ -88,7 +97,7 @@
                     page_num: 1,
                     start: "",
                     end: "",
-                    is_aggr_by_hash: false,
+                    is_aggr_by_hash: true,
                     hash: "",
                     
                 },
@@ -136,22 +145,6 @@
                 this.searchBar.page_size = parseInt(this.$route.query.page_size)     
             }    
 
-            if(this.$route.query.hash){
-                this.searchBar.hash = parseInt(this.$route.query.hash)  
-            }
-
-            
-            if(this.$route.query.start){
-
-                this.searchBar.start = parseInt(this.$route.query.start)      
-                
-            }
-
-            if(this.$route.query.end){
-                this.searchBar.end = parseInt(this.$route.query.end)  
-            }
-                
-
             this.doSearch()
 
         },
@@ -169,29 +162,31 @@
                     console.log("to.query.page_size: ", to.query.page_size)  
                 }    
 
-                if(to.query.hash){
-                    this.searchBar.hash = parseInt(to.query.hash)  
-                    console.log("to.query.hash: ", to.query.hash)   
-                }
-
-                if(to.query.start){
-                    if (to.query.start != parseInt(to.query.start)){
-                      this.searchBar.start = parseInt(to.query.start)        
-                    }   
-                }
-
-                if(to.query.end){
-                    if (to.query.end != parseInt(to.query.end)){
-                      this.searchBar.end = parseInt(to.query.end)        
-                    } 
-                }
-
                this.doSearch()
 
            }
         },
         methods: {
-          
+           showSlowSqlList(row){
+               
+               console.log("row", row) 
+            //    this.searchBar.hash = row.hash
+            //    this.searchBar.is_aggr_by_hash = false
+               console.log("this.searchBar", this.searchBar) 
+               
+                let routeUrl = this.$router.resolve({
+                    path: '/slowsql/list',
+                    query: {
+                        start: this.searchBar.start,
+                        end: this.searchBar.end,
+                        schema: row.schema,
+                        is_aggr_by_hash: false,
+                        hash: row.hash
+                    }
+                });
+                window.open(routeUrl.href, '_blank')
+
+           },
             // 获取慢查询列表
             doSearch(){
                 
