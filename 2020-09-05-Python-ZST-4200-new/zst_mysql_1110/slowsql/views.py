@@ -182,6 +182,7 @@ class SlowSqlViewSet(viewsets.ViewSet):
         start = request.query_params.get('start')
         end = request.query_params.get('end')
         schema = request.query_params.get('schema', None)
+        hash = request.query_params.get('hash', None)
 
         is_aggr_by_hash = request.query_params.get('is_aggr_by_hash', False)
         if isinstance(is_aggr_by_hash, str) and is_aggr_by_hash.lower() == 'true':
@@ -195,6 +196,10 @@ class SlowSqlViewSet(viewsets.ViewSet):
         s = SlowQuery.search()
         if schema is not None and len(schema) > 0:
             s = s.filter('term', schema__keyword=schema)
+
+        if hash is not None and len(hash) > 0:
+            s = s.filter('term', hash=hash)
+
         if start is not None and end is not None:
             options = {
                 'gte': start,
@@ -226,17 +231,17 @@ class SlowSqlViewSet(viewsets.ViewSet):
                                         "aggs": {
                                             "rowsSentAvg": {
                                                 "avg": {
-                                                    "field": "rows_sent"
+                                                    "field": "slowlog_rows_sent"
                                                 }
                                             },
                                             "rowsExamineAvg": {
                                                 "avg": {
-                                                    "field": "rows_examined"
+                                                    "field": "slowlog_rows_examined"
                                                 }
                                             },
                                             "queryTimeAvg": {
                                                 "avg": {
-                                                    "field": "query_time"
+                                                    "field": "slowlog_query_time_sec"
                                                 }
                                             },
                                             "sql": {
