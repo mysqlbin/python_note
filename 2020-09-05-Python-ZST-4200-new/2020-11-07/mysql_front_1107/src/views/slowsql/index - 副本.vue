@@ -27,7 +27,20 @@
                 </el-form-item>
 
             </el-form>
-        
+
+            <div>
+                <el-switch
+                    v-model="searchBar.is_aggr_by_hash"
+                    active-text="不聚合"
+                    inactive-text="聚合"
+                    @change="doSearch"
+                    >
+                </el-switch>
+                <el-tooltip class="item" effect="dark" content="选择聚合后，慢SQL将会按照指纹进行折叠" placement="top">
+                    <i class="el-icon-question"></i>
+                </el-tooltip>
+            </div>
+
         </el-row>
 
         <el-table v-loading="tableLoading" :data="tableData" border style="width: 100%">
@@ -35,41 +48,82 @@
             <el-table-column type="expand">
                 <template slot-scope="props">
                     <el-form label-position="left" inline class="demo-table-expand">
-                        <el-form-item label="显示完整的SQL语句：">
+                        <el-form-item label="完整的SQL语句：">
                          <span>{{ props.row.finger }}</span>
                         </el-form-item>
 
                     </el-form>
                 </template>
             </el-table-column>
-            
-            <!-- 添加一列：执行时间2222 -->
 
             <el-table-column prop="schema" label="库名" width="100"></el-table-column>
 
-            <el-table-column prop="slowlog_timestamp" :formatter="formatter" label="执行时间" width="220"></el-table-column>
+            <!-- <el-table-column prop="host" label="ip" width="180"> </el-table-column> -->
 
-            <el-table-column prop="ip" label="IP" width="150"></el-table-column>
 
-            <el-table-column label='账号' width="200">
+            <el-table-column :label="searchBar.is_aggr_by_hash ? '执行总次数': 'ip'" width="150">
                 <template slot-scope="scope">
-                   {{ scope.row.slowlog_user }}@{{ scope.row.slowlog_host }}
+                <div v-if="searchBar.is_aggr_by_hash">
+                    {{ scope.row.hash_count }}
+                </div>
+                <div v-else>
+                    {{ scope.row.host }}
+                </div>
                 </template>
             </el-table-column>
 
-            <!-- <el-table-column prop="slowlog_host" label="ip" width="200"> 
-
-            </el-table-column> -->
             
-            <el-table-column prop="slowlog_query" label="SQL语句" width="500" :show-overflow-tooltip='true'> </el-table-column>
+            <el-table-column prop="finger" label="SQL语句" width="500" :show-overflow-tooltip='true'> </el-table-column>
 
-            <el-table-column prop="slowlog_rows_examined" label="扫描行数" width="100"></el-table-column>
-            
-            <el-table-column prop="slowlog_rows_sent" label="返回行数" width="100"></el-table-column>
-            
-            <el-table-column prop="slowlog_query_time_sec" label="执行时长(秒)" width="100"></el-table-column>
+            <!-- <el-table-column prop="query_time" label="query_time"></el-table-column> -->
 
-            <el-table-column prop="slowlog_lock_time_sec" label="持有锁时长(秒)" width="100"></el-table-column>
+            <!-- <el-table-column prop="rows_examined" label="rows_examined"></el-table-column> -->
+
+            <el-table-column :label="searchBar.is_aggr_by_hash ? '扫描总行数': '扫描行数'" width="100">
+                <template slot-scope="scope">
+                <div v-if="searchBar.is_aggr_by_hash">
+                    {{ scope.row.rowsExamineAvg }}
+                </div>
+                <div v-else>
+                    {{ scope.row.rows_examined }}
+                </div>
+                </template>
+            </el-table-column>
+
+            <el-table-column :label="searchBar.is_aggr_by_hash ? '返回总行数': '返回行数'" width="100">
+                <template slot-scope="scope">
+                <div v-if="searchBar.is_aggr_by_hash">
+                    {{ scope.row.rowsSentAvg }}
+                </div>
+                <div v-else>
+                    {{ scope.row.rows_sent }}
+                </div>
+                </template>
+            </el-table-column>
+
+            <!-- <el-table-column prop="rows_sent" label="rows_sent"></el-table-column> -->
+
+            <el-table-column :label="searchBar.is_aggr_by_hash ? '执行总时长(秒)': '执行时长(秒)'" width="150">
+                <template slot-scope="scope">
+                <div v-if="searchBar.is_aggr_by_hash">
+                    {{ scope.row.queryTimeAvg }}
+                </div>
+                <div v-else>
+                    {{ scope.row.query_time }}
+                </div>
+                </template>
+            </el-table-column>
+
+            <el-table-column :label="searchBar.is_aggr_by_hash ? '操作': '执行时间'">
+                <template slot-scope="scope">
+                <div v-if="searchBar.is_aggr_by_hash">
+                   <el-button @click="showProcessList(scope.row)" type="primary" size="small">查看慢日志明细</el-button>
+                </div>
+                <div v-else>
+                    {{ scope.row.time }}
+                </div>
+                </template>
+            </el-table-column>
 
         </el-table>
         <el-pagination
@@ -102,8 +156,7 @@
                     page_num: 1,
                     start: "",
                     end: "",
-                    is_aggr_by_hash: false,
-                    hash: "",
+                    is_aggr_by_hash: true,
                     
                 },
                 tableData: [],
@@ -141,10 +194,7 @@
             }
         },
         created() {
-
-             console.log("created: ", 'created')   
-             console.log("this.searchBar0: ", this.searchBar);     
-             console.log("this.$route.query1:", this.$route.query)
+             console.log("created: ", 'created')      
             if (this.$route.query.page_num){
                    this.searchBar.page_num = parseInt(this.$route.query.page_num)    
             }
@@ -152,29 +202,6 @@
             if(this.$route.query.page_size){
                 this.searchBar.page_size = parseInt(this.$route.query.page_size)     
             }    
-
-            if(this.$route.query.hash){
-                this.searchBar.hash = this.$route.query.hash
-            }
-
-            
-            if(this.$route.query.start){
-                         
-                this.searchBar.start = this.$route.query.start 
-
-            }
-
-             if(this.$route.query.schema){
-
-                this.searchBar.schema = this.$route.query.schema    
-
-            }
-
-            if(this.$route.query.end){
-                this.searchBar.end = this.$route.query.end
-            }
-                
-            console.log("this.searchBar1: ", this.searchBar);  
 
             this.doSearch()
 
@@ -193,28 +220,6 @@
                     console.log("to.query.page_size: ", to.query.page_size)  
                 }    
 
-                if(to.query.hash){
-                    this.searchBar.hash = to.query.hash  
-                    console.log("to.query.hash: ", to.query.hash)   
-                }
-
-                if(to.query.start){
-                    if ( this.searchBar.start != to.query.start){
-                      this.searchBar.start = to.query.start      
-                    }   
-                }
-
-                if(to.query.schema){
-                    if ( this.searchBar.schema != to.query.schema){
-                      this.searchBar.schema = to.query.schema       
-                    }   
-                }
-                if(to.query.end){
-                    if (this.searchBar.end != to.query.end){
-                      this.searchBar.end = to.query.end   
-                    } 
-                }
-               console.log("this.searchBar2: ", this.searchBar);     
                this.doSearch()
 
            }
@@ -224,32 +229,11 @@
             // 获取慢查询列表
             doSearch(){
                 
-                
-                if(this.$route.query.start){
-                           
-                    this.searchBar.start = this.$route.query.start 
-                    this.timeRange[0] = this.$route.query.start
+                this.searchBar.start = moment(this.timeRange[0]).format();
+                this.searchBar.end = moment(this.timeRange[1]).format();
 
-                }else{
-                    this.searchBar.start = moment(this.timeRange[0]).format();
-                }
-
-                if(this.$route.query.schema){
-
-                    this.searchBar.schema = this.$route.query.schema    
-
-                }
-
-                if(this.$route.query.end){
-                    this.searchBar.end = this.$route.query.end
-                    this.timeRange[1] = this.$route.query.end
-                }else{
-                    this.searchBar.end = moment(this.timeRange[1]).format();
-                }
-                
                 getSlowSqlList(this.searchBar).then(resp => {
                     console.log("resp: ", resp)
-                    console.log("resp: ", 111111)
                     this.total = resp.data.count
                     this.tableData = resp.data.results
                     // 总共有多少行记录
@@ -298,12 +282,7 @@
                 }).catch(err => {})
 
             },
-            formatter(row, column) {
             
-                console.log("timestamp: ", row.slowlog_timestamp);
-                let timestamp = moment(row.slowlog_timestamp*1000).format("YYYY-MM-DD HH:mm:ss")// 2020-12-30 19:41:45  时间戳转时间
-                return timestamp;
-            }
            
         },
 

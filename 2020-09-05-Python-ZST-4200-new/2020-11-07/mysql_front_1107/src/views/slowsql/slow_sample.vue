@@ -10,23 +10,29 @@
             </el-col>
             <el-col :span="12">
                 <div class="grid-content bg-purple-light">
-                    <el-table :data="tableData" border>
-                        <el-table-column
-                                prop="schema"
-                                label="库名"
-                                width="100">
+                    <el-table :data="tableData" border >
+                         
+                        <el-table-column prop="schema" label="库名" width="100"  type="expand">
+                            <template slot-scope="props">
+                                <el-form label-position="left" inline class="demo-table-expand">
+                                    <el-form-item label="完整的SQL语句：">
+                                        <span>{{ props.row.finger }}</span>
+                                    </el-form-item>
+                                </el-form>
+                            </template>
+                        </el-table-column>
+                    
+                        <el-table-column prop="finger" label="finger" width="500" :show-overflow-tooltip='true'>
                         </el-table-column>
 
-                        <el-table-column
-                                prop="finger"
-                                label="finger"
-                                :show-overflow-tooltip='true'
-                                >
+                        <el-table-column prop="count" label="count" width="80">
                         </el-table-column>
-                        <el-table-column
-                                prop="count"
-                                label="count"
-                                width="80">
+                            <el-table-column label='操作'>
+                            <template slot-scope="scope">
+                                <!-- {{ scope.row }} -->
+                            <el-button @click="showSlowSqlList(scope.row)" type="primary" size="small">查看慢日志明细</el-button>
+                            
+                            </template>
                         </el-table-column>
                     </el-table>
 
@@ -181,7 +187,7 @@ export default {
                             type: 'all',
                             text: 'All'
                         }],
-                        selected: 2
+                        selected: 1
                     },
                     title: {
                         text: '每日慢SQL数量'

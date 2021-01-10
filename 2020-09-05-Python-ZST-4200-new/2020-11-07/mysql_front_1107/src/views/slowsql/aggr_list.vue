@@ -27,7 +27,7 @@
                 </el-form-item>
 
             </el-form>
-        
+
         </el-row>
 
         <el-table v-loading="tableLoading" :data="tableData" border style="width: 100%">
@@ -35,41 +35,36 @@
             <el-table-column type="expand">
                 <template slot-scope="props">
                     <el-form label-position="left" inline class="demo-table-expand">
-                        <el-form-item label="显示完整的SQL语句：">
+                        <el-form-item label="完整的SQL语句：">
                          <span>{{ props.row.finger }}</span>
                         </el-form-item>
 
                     </el-form>
                 </template>
             </el-table-column>
-            
-            <!-- 添加一列：执行时间2222 -->
 
             <el-table-column prop="schema" label="库名" width="100"></el-table-column>
 
-            <el-table-column prop="slowlog_timestamp" :formatter="formatter" label="执行时间" width="220"></el-table-column>
+            
+            <el-table-column prop="finger" label="SQL语句" width="500" :show-overflow-tooltip='true'> </el-table-column>
 
-            <el-table-column prop="ip" label="IP" width="150"></el-table-column>
 
-            <el-table-column label='账号' width="200">
+            <el-table-column prop="hash_count" label="执行总次数" width="100" sortable> </el-table-column>
+
+            <el-table-column prop="rowsExamineAvg" label="平均扫描行数" width="100"> </el-table-column>
+
+            <el-table-column prop="rowsSentAvg" label="平均返回行数" width="100"> </el-table-column>
+
+            <el-table-column prop="queryTimeAvg" label="平均执行时长(秒)" width="100"> </el-table-column>
+
+
+            <el-table-column label='操作'>
                 <template slot-scope="scope">
-                   {{ scope.row.slowlog_user }}@{{ scope.row.slowlog_host }}
+                    {{ scope.row }}
+                   <el-button @click="showSlowSqlList(scope.row)" type="primary" size="small">查看慢日志明细</el-button>
+                
                 </template>
             </el-table-column>
-
-            <!-- <el-table-column prop="slowlog_host" label="ip" width="200"> 
-
-            </el-table-column> -->
-            
-            <el-table-column prop="slowlog_query" label="SQL语句" width="500" :show-overflow-tooltip='true'> </el-table-column>
-
-            <el-table-column prop="slowlog_rows_examined" label="扫描行数" width="100"></el-table-column>
-            
-            <el-table-column prop="slowlog_rows_sent" label="返回行数" width="100"></el-table-column>
-            
-            <el-table-column prop="slowlog_query_time_sec" label="执行时长(秒)" width="100"></el-table-column>
-
-            <el-table-column prop="slowlog_lock_time_sec" label="持有锁时长(秒)" width="100"></el-table-column>
 
         </el-table>
         <el-pagination
@@ -102,7 +97,7 @@
                     page_num: 1,
                     start: "",
                     end: "",
-                    is_aggr_by_hash: false,
+                    is_aggr_by_hash: true,
                     hash: "",
                     
                 },
@@ -141,10 +136,7 @@
             }
         },
         created() {
-
-             console.log("created: ", 'created')   
-             console.log("this.searchBar0: ", this.searchBar);     
-             console.log("this.$route.query1:", this.$route.query)
+             console.log("created: ", 'created')      
             if (this.$route.query.page_num){
                    this.searchBar.page_num = parseInt(this.$route.query.page_num)    
             }
@@ -152,29 +144,6 @@
             if(this.$route.query.page_size){
                 this.searchBar.page_size = parseInt(this.$route.query.page_size)     
             }    
-
-            if(this.$route.query.hash){
-                this.searchBar.hash = this.$route.query.hash
-            }
-
-            
-            if(this.$route.query.start){
-                         
-                this.searchBar.start = this.$route.query.start 
-
-            }
-
-             if(this.$route.query.schema){
-
-                this.searchBar.schema = this.$route.query.schema    
-
-            }
-
-            if(this.$route.query.end){
-                this.searchBar.end = this.$route.query.end
-            }
-                
-            console.log("this.searchBar1: ", this.searchBar);  
 
             this.doSearch()
 
@@ -193,63 +162,39 @@
                     console.log("to.query.page_size: ", to.query.page_size)  
                 }    
 
-                if(to.query.hash){
-                    this.searchBar.hash = to.query.hash  
-                    console.log("to.query.hash: ", to.query.hash)   
-                }
-
-                if(to.query.start){
-                    if ( this.searchBar.start != to.query.start){
-                      this.searchBar.start = to.query.start      
-                    }   
-                }
-
-                if(to.query.schema){
-                    if ( this.searchBar.schema != to.query.schema){
-                      this.searchBar.schema = to.query.schema       
-                    }   
-                }
-                if(to.query.end){
-                    if (this.searchBar.end != to.query.end){
-                      this.searchBar.end = to.query.end   
-                    } 
-                }
-               console.log("this.searchBar2: ", this.searchBar);     
                this.doSearch()
 
            }
         },
         methods: {
-          
+           showSlowSqlList(row){
+               
+               console.log("row", row) 
+            //    this.searchBar.hash = row.hash
+            //    this.searchBar.is_aggr_by_hash = false
+               console.log("this.searchBar", this.searchBar) 
+               
+                let routeUrl = this.$router.resolve({
+                    path: '/slowsql/list',
+                    query: {
+                        start: this.searchBar.start,
+                        end: this.searchBar.end,
+                        schema: row.schema,
+                        is_aggr_by_hash: false,
+                        hash: row.hash
+                    }
+                });
+                window.open(routeUrl.href, '_blank')
+
+           },
             // 获取慢查询列表
             doSearch(){
                 
-                
-                if(this.$route.query.start){
-                           
-                    this.searchBar.start = this.$route.query.start 
-                    this.timeRange[0] = this.$route.query.start
+                this.searchBar.start = moment(this.timeRange[0]).format();
+                this.searchBar.end = moment(this.timeRange[1]).format();
 
-                }else{
-                    this.searchBar.start = moment(this.timeRange[0]).format();
-                }
-
-                if(this.$route.query.schema){
-
-                    this.searchBar.schema = this.$route.query.schema    
-
-                }
-
-                if(this.$route.query.end){
-                    this.searchBar.end = this.$route.query.end
-                    this.timeRange[1] = this.$route.query.end
-                }else{
-                    this.searchBar.end = moment(this.timeRange[1]).format();
-                }
-                
                 getSlowSqlList(this.searchBar).then(resp => {
                     console.log("resp: ", resp)
-                    console.log("resp: ", 111111)
                     this.total = resp.data.count
                     this.tableData = resp.data.results
                     // 总共有多少行记录
@@ -298,12 +243,7 @@
                 }).catch(err => {})
 
             },
-            formatter(row, column) {
             
-                console.log("timestamp: ", row.slowlog_timestamp);
-                let timestamp = moment(row.slowlog_timestamp*1000).format("YYYY-MM-DD HH:mm:ss")// 2020-12-30 19:41:45  时间戳转时间
-                return timestamp;
-            }
            
         },
 

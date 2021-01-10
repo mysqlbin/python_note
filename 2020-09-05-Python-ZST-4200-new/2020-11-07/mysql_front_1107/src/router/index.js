@@ -54,14 +54,19 @@ export const menuRouts = [
             component: () => import('@/views/slowsql/index')
         },
         {
-          path: 'sample',
-          meta: { title: 'Highcharts图表示例' },
-          component: () => import('@/views/slowsql/sample')
+          path: 'aggr_list',
+          meta: { title: '聚合列表' },
+          component: () => import('@/views/slowsql/aggr_list')
         },
         {
           path: 'slow_sample',
-          meta: { title: '慢查询图表示例' },
+          meta: { title: '慢查询图表' },
           component: () => import('@/views/slowsql/slow_sample')
+        },
+        {
+          path: 'sample',
+          meta: { title: 'Highcharts图表示例' },
+          component: () => import('@/views/slowsql/sample')
         },
 
     ]

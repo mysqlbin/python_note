@@ -83,7 +83,7 @@ es做全文搜索
 	nohup ./filebeat &
 	-- 会生成文件： -rw-------.  1 root root  1181058 12月 14 01:10 nohup.out
 
-
+	nohup ./filebeat 1>/dev/null 2>&1 &
 	
 	# enable mysql模块
 		./filebeat modules enable mysql
@@ -98,6 +98,14 @@ es做全文搜索
 		  enabled: true
 		  var.paths: ['/home/mysql/3306/data/slow.log']
 
+
+		  
+	  第4步：设置初始环境：
+
+	./filebeat setup -e
+	第5步：运行Filebeat
+
+	./filebeat -e
 
 
 
