@@ -49,7 +49,7 @@
             <el-table-column prop="finger" label="SQL语句" width="500" :show-overflow-tooltip='true'> </el-table-column>
 
 
-            <el-table-column prop="hash_count" label="执行总次数" width="100"> </el-table-column>
+            <el-table-column prop="hash_count" label="执行总次数" width="100" sortable> </el-table-column>
 
             <el-table-column prop="rowsExamineAvg" label="平均扫描行数" width="100"> </el-table-column>
 

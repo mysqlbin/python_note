@@ -42,20 +42,34 @@
                     </el-form>
                 </template>
             </el-table-column>
+            
+            <!-- 添加一列：执行时间2222 -->
 
             <el-table-column prop="schema" label="库名" width="100"></el-table-column>
 
-            <el-table-column prop="host" label="ip" > </el-table-column>
-            
-            <el-table-column prop="finger" label="SQL语句" width="500" :show-overflow-tooltip='true'> </el-table-column>
+            <el-table-column prop="slowlog_timestamp" :formatter="formatter" label="执行时间" width="220"></el-table-column>
 
-            <el-table-column prop="rows_examined" label="扫描行数" width="100"></el-table-column>
-            
-            <el-table-column prop="rows_sent" label="返回行数" width="100"></el-table-column>
-            
-            <el-table-column prop="query_time" label="执行时长(秒)" width="100"></el-table-column>
+            <el-table-column prop="ip" label="IP" width="150"></el-table-column>
 
-            <el-table-column prop="lock_time" label="持有锁时长(秒)" width="100"></el-table-column>
+            <el-table-column label='账号' width="200">
+                <template slot-scope="scope">
+                   {{ scope.row.slowlog_user }}@{{ scope.row.slowlog_host }}
+                </template>
+            </el-table-column>
+
+            <!-- <el-table-column prop="slowlog_host" label="ip" width="200"> 
+
+            </el-table-column> -->
+            
+            <el-table-column prop="slowlog_query" label="SQL语句" width="500" :show-overflow-tooltip='true'> </el-table-column>
+
+            <el-table-column prop="slowlog_rows_examined" label="扫描行数" width="100"></el-table-column>
+            
+            <el-table-column prop="slowlog_rows_sent" label="返回行数" width="100"></el-table-column>
+            
+            <el-table-column prop="slowlog_query_time_sec" label="执行时长(秒)" width="100"></el-table-column>
+
+            <el-table-column prop="slowlog_lock_time_sec" label="持有锁时长(秒)" width="100"></el-table-column>
 
         </el-table>
         <el-pagination
@@ -127,7 +141,10 @@
             }
         },
         created() {
-             console.log("created: ", 'created')      
+
+             console.log("created: ", 'created')   
+             console.log("this.searchBar0: ", this.searchBar);     
+             console.log("this.$route.query1:", this.$route.query)
             if (this.$route.query.page_num){
                    this.searchBar.page_num = parseInt(this.$route.query.page_num)    
             }
@@ -137,20 +154,27 @@
             }    
 
             if(this.$route.query.hash){
-                this.searchBar.hash = parseInt(this.$route.query.hash)  
+                this.searchBar.hash = this.$route.query.hash
             }
 
             
             if(this.$route.query.start){
+                         
+                this.searchBar.start = this.$route.query.start 
 
-                this.searchBar.start = parseInt(this.$route.query.start)      
-                
+            }
+
+             if(this.$route.query.schema){
+
+                this.searchBar.schema = this.$route.query.schema    
+
             }
 
             if(this.$route.query.end){
-                this.searchBar.end = parseInt(this.$route.query.end)  
+                this.searchBar.end = this.$route.query.end
             }
                 
+            console.log("this.searchBar1: ", this.searchBar);  
 
             this.doSearch()
 
@@ -170,22 +194,27 @@
                 }    
 
                 if(to.query.hash){
-                    this.searchBar.hash = parseInt(to.query.hash)  
+                    this.searchBar.hash = to.query.hash  
                     console.log("to.query.hash: ", to.query.hash)   
                 }
 
                 if(to.query.start){
-                    if (to.query.start != parseInt(to.query.start)){
-                      this.searchBar.start = parseInt(to.query.start)        
+                    if ( this.searchBar.start != to.query.start){
+                      this.searchBar.start = to.query.start      
                     }   
                 }
 
+                if(to.query.schema){
+                    if ( this.searchBar.schema != to.query.schema){
+                      this.searchBar.schema = to.query.schema       
+                    }   
+                }
                 if(to.query.end){
-                    if (to.query.end != parseInt(to.query.end)){
-                      this.searchBar.end = parseInt(to.query.end)        
+                    if (this.searchBar.end != to.query.end){
+                      this.searchBar.end = to.query.end   
                     } 
                 }
-
+               console.log("this.searchBar2: ", this.searchBar);     
                this.doSearch()
 
            }
@@ -195,11 +224,32 @@
             // 获取慢查询列表
             doSearch(){
                 
-                this.searchBar.start = moment(this.timeRange[0]).format();
-                this.searchBar.end = moment(this.timeRange[1]).format();
+                
+                if(this.$route.query.start){
+                           
+                    this.searchBar.start = this.$route.query.start 
+                    this.timeRange[0] = this.$route.query.start
 
+                }else{
+                    this.searchBar.start = moment(this.timeRange[0]).format();
+                }
+
+                if(this.$route.query.schema){
+
+                    this.searchBar.schema = this.$route.query.schema    
+
+                }
+
+                if(this.$route.query.end){
+                    this.searchBar.end = this.$route.query.end
+                    this.timeRange[1] = this.$route.query.end
+                }else{
+                    this.searchBar.end = moment(this.timeRange[1]).format();
+                }
+                
                 getSlowSqlList(this.searchBar).then(resp => {
                     console.log("resp: ", resp)
+                    console.log("resp: ", 111111)
                     this.total = resp.data.count
                     this.tableData = resp.data.results
                     // 总共有多少行记录
@@ -248,7 +298,12 @@
                 }).catch(err => {})
 
             },
+            formatter(row, column) {
             
+                console.log("timestamp: ", row.slowlog_timestamp);
+                let timestamp = moment(row.slowlog_timestamp*1000).format("YYYY-MM-DD HH:mm:ss")// 2020-12-30 19:41:45  时间戳转时间
+                return timestamp;
+            }
            
         },
 
