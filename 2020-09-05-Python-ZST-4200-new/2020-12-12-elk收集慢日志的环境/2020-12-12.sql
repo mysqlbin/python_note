@@ -693,3 +693,15 @@ kibana
 			logging.error("failed to query schema: %s", ce)
 			pass
 			
+
+
+es_data: {'slowlog_lock_time_sec': 6.1e-05, 'slowlog_query': 'select count(*) from t_20201030;', 'slowlog_rows_examined': 500000, 
+'slowlog_user': 'root', 'slowlog_query_time_sec': 0.177794, 
+'slowlog_host': 'localhost', 'slowlog_id': '249', 
+'slowlog_timestamp': 1610443790, 'slowlog_rows_sent': 1, 
+'@timestamp': '2021-01-12T09:29:50.000Z', 'finger': 'select count(*) from t_20201030;', 
+'hash': 'fd129bebc41dc3ae17ec5ca5dfc12fd5', 'schema': 'test_db', 'ip': '192.168.0.201'}
+
+
+
+

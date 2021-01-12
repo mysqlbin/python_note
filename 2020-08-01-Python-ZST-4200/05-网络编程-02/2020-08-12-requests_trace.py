@@ -27,12 +27,12 @@ if __name__ == "__main__":
 
    """ 1. get 请求 """
 
-   host = "http://httpbin.org/"
-   headers = {
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Safari/537.36'
-   }
-   resp = requests.get(host + "/get", headers=headers)
-   print(resp.text)
+   # host = "http://httpbin.org/"
+   # headers = {
+   #    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Safari/537.36'
+   # }
+   # resp = requests.get(host + "/get", headers=headers)
+   # print(resp.text)
 
 
    """
@@ -53,16 +53,17 @@ if __name__ == "__main__":
 
    """ 2. post请求： 表单 """
 
-   # host = "http://httpbin.org/"
-   # headers = {
-   #    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Safari/537.36'
-   # }
-   # data = {
-   #    'username': 'mysqlbin',
-   #    'password': 'guangdong',
-   # }
-   # resp = requests.post(host + "/post", headers=headers, data=data)
-   # print(resp.text)
+   host = "http://httpbin.org/"
+   headers = {
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Safari/537.36'
+   }
+   data = {
+      'username': 'mysqlbin',
+      'password': 'guangdong',
+   }
+   print(type(data))
+   resp = requests.post(host + "/post", headers=headers, data=data)
+   print(resp.text)
 
 
    """
