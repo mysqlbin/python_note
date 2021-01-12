@@ -38,7 +38,7 @@
         methods: {
             logout(){
                 logout().then(resp => {
-                    console.log(resp)
+                    // console.log(resp)
                     let data = resp.data
                     if (data.code === 2000) {
                         this.$message.info('退出成功'); 

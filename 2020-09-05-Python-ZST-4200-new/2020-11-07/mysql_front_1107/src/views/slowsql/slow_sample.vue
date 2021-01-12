@@ -107,7 +107,7 @@ export default {
         }
     },
     created(){
-        console.log("created: ", 'created')
+        // console.log("created: ", 'created')
 
         this.updateQueryParams = _.debounce(
             function (startTime, endTime) {
@@ -122,7 +122,7 @@ export default {
         this.$on(
             "updateQueryParams",
             function () {
-                console.log("query params has changed");
+                // console.log("query params has changed");
                 // console.log("this.queryParams.start: ", this.queryParams.start)
                 // console.log("this.queryParams.end: ", this.queryParams.end)
                 this.doSearch();
@@ -131,7 +131,7 @@ export default {
 
     },
     mounted(){
-        console.log("mounted: ", 'mounted')
+        // console.log("mounted: ", 'mounted')
         this.createChart();
         this.doSearch();
     },
@@ -152,7 +152,7 @@ export default {
                 _.forEach(resp.data, (v) => {
                     chartData.push([moment(v["date"]).unix() * 1000, v["date_count"]]);
                 });
-                console.log("chartData", chartData);
+                // console.log("chartData", chartData);
 
                 this.stockChart = new Highcharts.stockChart("container", {
 
@@ -226,15 +226,15 @@ export default {
         },
         doSearch(){
             getSlowSqlTop10(this.queryParams).then(resp=> {
-                console.log("this.queryParams.start: ", this.queryParams.start)
-                console.log("this.queryParams.end: ", this.queryParams.end)
+                // console.log("this.queryParams.start: ", this.queryParams.start)
+                // console.log("this.queryParams.end: ", this.queryParams.end)
                 this.tableData = resp.data;
-                console.log("tableData: ", resp.data)
+                // console.log("tableData: ", resp.data)
             }),
             getAggsBySchema(this.queryParams).then((resp) => {
                 const reducer = (accumulator, item) => accumulator + item["schema_count"];
                 let countAll = resp.data.reduce(reducer, 0);
-                console.log("countAll: ", countAll);
+                // console.log("countAll: ", countAll);
                 this.schemaPieOptions.series[0].data = resp.data.map((v) => {
                     return {
                         name: v["schema"],
@@ -242,10 +242,30 @@ export default {
                     };
                 });
 
-                console.log("this.schemaPieOptions.series[0].data: ", this.schemaPieOptions.series[0].data);
+                // console.log("this.schemaPieOptions.series[0].data: ", this.schemaPieOptions.series[0].data);
             });
         },
 
+        showSlowSqlList(row){
+            
+            // console.log("row", row) 
+        //    this.searchBar.hash = row.hash
+        //    this.searchBar.is_aggr_by_hash = false
+            // console.log("this.searchBar", this.searchBar) 
+            
+            let routeUrl = this.$router.resolve({
+                path: '/slowsql/list',
+                query: {
+                    start: this.queryParams.start,
+                    end: this.queryParams.end,
+                    schema: row.schema,
+                    is_aggr_by_hash: false,
+                    hash: row.hash
+                }
+            });
+            window.open(routeUrl.href, '_blank')
+
+        },
         // createChart() {
             
         //     Highcharts.setOptions({

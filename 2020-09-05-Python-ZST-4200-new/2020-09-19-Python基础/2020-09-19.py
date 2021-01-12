@@ -35,7 +35,7 @@ if __name__ == '__main__':
     # weather(name='zst', time='20200919')
     # weather("1", "2")
     # weather('zst', '20200919', "a", "b", "cde")
-    # weather('zst', '20200919', "a", "b", "cde", k=1, v=3)
+    weather('zst', '20200919', "a", "b", "cde", k=1, v=3)
 
     print(".....................")
 
