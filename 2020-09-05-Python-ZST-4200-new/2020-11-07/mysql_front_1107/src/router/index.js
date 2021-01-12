@@ -38,7 +38,7 @@ export const menuRouts = [
         {
             path: 'mysql',
             name: 'MySQLManage',
-            meta: { title: 'mysql实例' },
+            meta: { title: 'MySQL实例列表' },
             component: () => import('@/views/schema_manage/mysql')
         }
     ]
@@ -100,7 +100,7 @@ export default router
 
 router.beforeEach(async(to, from, next) => {
   let username = await store.dispatch('getCurrentUserF') 
-	console.log('current username:', username)
+	// console.log('current username:', username)
 	let hasLogin = !_.isEmpty(username)
 	if (to.path !== '/login') {
 		if (hasLogin) {

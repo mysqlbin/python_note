@@ -16,8 +16,7 @@
       </el-form-item>
 
     </el-form>
-    <!-- <div id="main" style="width: 100%; height: 300px"></div> -->
-    <div id="container" style="width: 100%; height: 300px"></div>
+   
   </div>
 </template>
 <script>
@@ -53,13 +52,13 @@
     created(){
     },
     mounted(){
-      console.log("mounted: ", 'mounted')
+      // console.log("mounted: ", 'mounted')
       this.createChart();
     },
     methods: {
       handleLogin(formName){
 
-        console.log("login_username: ", this.formLogin.username)
+        // console.log("login_username: ", this.formLogin.username)
         // this.login.username = this.login.username.toUpperCase()
 
         // this.login 就是参数
@@ -117,42 +116,6 @@
         });
 
       },
-      createChart() {
-            Highcharts.setOptions({
-                lang: {
-                    rangeSelectorZoom: "",
-                },
-            });
-            $.getJSON('https://data.jianshukeji.com/jsonp?filename=json/aapl-c.json&callback=?', function (data) {
-                // Create the chart
-                Highcharts.stockChart('container',  {
-                    rangeSelector: {
-                        selected: 1
-                    },
-                    title: {
-                        text: 'AAPL Stock Price'
-                    },
-                    xAxis: {
-                      events: {
-                        // 监听时间范围的变化 
-                        afterSetExtremes: function (e) {
-                          console.log(e.min, e.max);
-                        },
-                      },
-                    },
-                    series: [{
-                        name: 'AAPL Stock Price',
-                        data: data,
-                        type: 'spline',
-                        tooltip: {
-                            valueDecimals: 2
-                        }
-                    }],
-                    
-                });
-                console.log("data: ", data)
-            });
-        },
     }
   }
 </script>
