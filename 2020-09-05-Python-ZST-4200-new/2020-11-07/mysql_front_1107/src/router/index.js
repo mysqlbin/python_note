@@ -8,10 +8,10 @@ import store from '../store'
 Vue.use(VueRouter)
 
 export const menuRouts = [
-  {
-    path: '/',
+  {   // 一个对象就是一个路由声明
+    path: '/',   // path 路径
     name: 'Home',
-    component: () => import('@/layout/index'),
+    component: () => import('@/layout/index'),   // component 组件
     redirect: '/home',
     meta: { title: 'Dashboard' },
     children: [

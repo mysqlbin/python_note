@@ -25,15 +25,14 @@
                         <el-table-column prop="finger" label="finger" width="500" :show-overflow-tooltip='true'>
                         </el-table-column>
 
-                        <el-table-column prop="count" label="count" width="80">
-                        </el-table-column>
-                            <el-table-column label='操作'>
+                        <el-table-column prop="count" label="count" width="80"></el-table-column>
+                        
+                        <el-table-column label='操作'>
                             <template slot-scope="scope">
-                                <!-- {{ scope.row }} -->
-                            <el-button @click="showSlowSqlList(scope.row)" type="primary" size="small">查看慢日志明细</el-button>
-                            
+                                <el-button @click="showSlowSqlList(scope.row)" type="primary" size="small">查看慢日志明细</el-button>
                             </template>
                         </el-table-column>
+
                     </el-table>
 
                 </div>

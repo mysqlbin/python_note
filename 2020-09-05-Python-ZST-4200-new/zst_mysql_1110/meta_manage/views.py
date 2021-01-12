@@ -140,7 +140,7 @@ class SchemaViewSet(viewsets.ModelViewSet):
         pk=1
 
         """
-        if pk is None is None:
+        if pk is None:
             raise Http404
 
         # 通过序列化器来在服务端做参数的数据验证
