@@ -11,7 +11,8 @@ from rest_framework.decorators import action
 
 
 class CustomPagination(PageNumberPagination):
-    page_size = 5
+    # 每页显示记录数，前端没有传入page_num，则默认显示此参数
+    page_size = 10
     page_size_query_param = 'page_size'
     page_query_param = 'page_num'
     max_page_size = 500
@@ -245,6 +246,11 @@ class SlowSqlViewSet(viewsets.ViewSet):
                                             },
                                             "queryTimeAvg": {
                                                 "avg": {
+                                                    "field": "slowlog_query_time_sec"
+                                                }
+                                            },
+                                            "queryTimeSum": {
+                                                "sum": {
                                                     "field": "slowlog_query_time_sec"
                                                 }
                                             },

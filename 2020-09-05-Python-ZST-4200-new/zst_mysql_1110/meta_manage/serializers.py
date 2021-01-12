@@ -30,7 +30,7 @@ class KillMySQLProcessSerializer(serializers.Serializer):
     process_id = serializers.IntegerField(min_value=1)
 
 
-class SchemaEsSerializer(serializers.ModelSerializer):
+class SchemaSerializer(serializers.ModelSerializer):
     class Meta:
         model = SchemaModel
         fields = '__all__'

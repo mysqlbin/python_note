@@ -172,3 +172,69 @@ CELERY_RESULT_BACKEND = 'redis://:niuniu_redis@192.168.0.252:6379/8'   # BACKEND
 CELERY_RESULT_SERIALIZER = 'json'  # 结果序列化方案
 
 connections.create_connection(hosts=['192.168.0.45:9200'], timeout=60)
+
+
+# LOG配置
+BASE_LOG_DIR = os.path.join(BASE_DIR, "log")
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    # 日志文件的格式
+    'formatters': {
+        # 详细的日志格式
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        # 简单的日志格式
+        'simple': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(message)s'
+        },
+    },
+    # 处理器
+	# 日志输出方式;共3种, logging.StreamHandler终端输出， logging.handlers.TimedRotatingFileHandler 时间格式文件记录（分割），
+	# logging.handlers.RotatingFileHandler 文件大小格式记录（分割）
+
+    'handlers': {
+        #打印SQL语句，方便开发
+        'sql': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'filename': os.path.join(BASE_LOG_DIR, "sql_info.log"),
+            'when': 'midnight',              # 按天分割日志文件
+			'interval': 1,
+            'backupCount': 7,
+            'formatter': 'verbose',
+        },
+        #在终端打印
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+        },
+        # 默认的
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'filename': os.path.join(BASE_LOG_DIR, "record_info.log"),
+            'when': 'midnight',              # 按天分割日志文件
+			'interval': 1,
+            'backupCount': 7,
+            'formatter': 'verbose',
+        },
+    },
+
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+			'propagate': True,
+        },
+        # 打印SQL语句
+        'django.db.backends': {
+            'handlers': ['sql'],
+            'level': 'DEBUG',
+            'propagate': True,
+
+        },
+    }
+}
+

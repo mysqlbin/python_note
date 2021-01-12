@@ -81,6 +81,7 @@ es做全文搜索
 	
 	-- 启动 filebeat, 这时会把慢日志输出到 nohup.out 文件中
 	nohup ./filebeat &
+	nohup ./filebeat 1>/dev/null 2>&1 &
 	-- 会生成文件： -rw-------.  1 root root  1181058 12月 14 01:10 nohup.out
 
 
@@ -1293,5 +1294,101 @@ Traceback (most recent call last):
 	[2021-01-09T02:07:32,445][ERROR][logstash.agent           ] Failed to execute action {:action=>LogStash::PipelineAction::Create/pipeline_id:main, :exception=>"LogStash::ConfigurationError", :message=>"Expected one of [ \\t\\r\\n], \"#\", \"=>\" at line 28, column 9 (byte 836) after filter {\r\n\tgrok {\r\n\t\tmatch => { \"message\" => [\"^# User@Host: %{USER:slowlog.user}(\\[[^\\]]+\\])? @ \r\n\t\t(%{HOSTNAME:slowlog.host})? \\[%{IP:slowlog.ip}?\\](\\s*Id:\\s* %{NUMBER:slowlog.id})?\\n# Query_time: \r\n\t\t%{NUMBER:slowlog.query_time.sec}\\s* Lock_time: %{NUMBER:slowlog.lock_time.sec}\\s* Rows_sent: \r\n\t\t%{NUMBER:slowlog.rows_sent}\\s* Rows_examined: %{NUMBER:slowlog.rows_examined}\\n(SET \r\n\t\ttimestamp=%{NUMBER:slowlog.timestamp};\\n)?%{GREEDYMULTILINE:slowlog.query}\"]}\r\n\t\tpattern_definitions => {\r\n\t\t\t\"GREEDYMULTILINE\" => \"(.|\\n)*\"\r\n\t\t}\r\n\t\tremove_field => \"message\"\r\n\t}\r\n\tdate {\r\n\t\tmatch => [ \"slowlog.timestamp\", \"UNIX\" ]\r\n\t}\r\n\tmutate {\r\n\t\tgsub => [\"slowlog.query\", \"\\n# Time: [0-9]+ [0-9][0-9]:[0-9][0-9]:[0-9][0-9](\\\\.[0-9]+)?$\", \"\"]\r\n}\r\n\r\noutput {\r\n  kafka ", :backtrace=>["/home/vagrant/src/logstash-7.10.1/logstash-core/lib/logstash/compiler.rb:32:in `compile_imperative'", "org/logstash/execution/AbstractPipelineExt.java:184:in `initialize'", "org/logstash/execution/JavaBasePipelineExt.java:69:in `initialize'", "/home/vagrant/src/logstash-7.10.1/logstash-core/lib/logstash/java_pipeline.rb:47:in `initialize'", "/home/vagrant/src/logstash-7.10.1/logstash-core/lib/logstash/pipeline_action/create.rb:52:in `execute'", "/home/vagrant/src/logstash-7.10.1/logstash-core/lib/logstash/agent.rb:365:in `block in converge_state'"]}
 
 
+
+# Time: 2021-01-11T16:19:16.635657+08:00
+# User@Host: root[root] @  [192.168.0.202]  Id:    10
+# Query_time: 0.358495  Lock_time: 0.120588 Rows_sent: 1  Rows_examined: 500000
+SET timestamp=1610353156;
+select count(*) from t_20210111;
+
+^# User@Host: %{USER:slowlog.user}(\[[^\]]+\])? @ (%{HOSTNAME:slowlog.host})? \[%{IP:slowlog.ip}?\]
+
+
+{
+  "slowlog": {
+    "user": "root",
+    "ip": "192.168.0.202"
+  }
+}
+
+--------------------------------------------------------------------------------------------------------
+# Time: 2021-01-11T16:23:52.860888+08:00
+# User@Host: root[root] @ localhost []  Id:    11
+# Query_time: 0.174356  Lock_time: 0.000107 Rows_sent: 1  Rows_examined: 500000
+SET timestamp=1610353432;
+
+^# User@Host: %{USER:slowlog.user}(\[[^\]]+\])? @ (%{HOSTNAME:slowlog.host})? \[%{IP:slowlog.ip}?\]
+
+select count(*) from t_20210111;
+{
+  "slowlog": {
+    "host": "localhost",
+    "user": "root"
+  }
+}
+
+
+
+Traceback (most recent call last):
+  File "/home/vagrant/.local/share/virtualenvs/zst_mysql_1110-XKCR2RrO/lib/python3.6/site-packages/urllib3/connection.py", line 170, in _new_conn
+    (self._dns_host, self.port), self.timeout, **extra_kw
+  File "/home/vagrant/.local/share/virtualenvs/zst_mysql_1110-XKCR2RrO/lib/python3.6/site-packages/urllib3/util/connection.py", line 96, in create_connection
+    raise err
+  File "/home/vagrant/.local/share/virtualenvs/zst_mysql_1110-XKCR2RrO/lib/python3.6/site-packages/urllib3/util/connection.py", line 86, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/vagrant/.local/share/virtualenvs/zst_mysql_1110-XKCR2RrO/lib/python3.6/site-packages/urllib3/connectionpool.py", line 706, in urlopen
+    chunked=chunked,
+  File "/home/vagrant/.local/share/virtualenvs/zst_mysql_1110-XKCR2RrO/lib/python3.6/site-packages/urllib3/connectionpool.py", line 394, in _make_request
+    conn.request(method, url, **httplib_request_kw)
+  File "/home/vagrant/.local/share/virtualenvs/zst_mysql_1110-XKCR2RrO/lib/python3.6/site-packages/urllib3/connection.py", line 234, in request
+    super(HTTPConnection, self).request(method, url, body=body, headers=headers)
+  File "/usr/local/lib/python3.6/http/client.py", line 1239, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/usr/local/lib/python3.6/http/client.py", line 1285, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/usr/local/lib/python3.6/http/client.py", line 1234, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/local/lib/python3.6/http/client.py", line 1026, in _send_output
+    self.send(msg)
+  File "/usr/local/lib/python3.6/http/client.py", line 964, in send
+    self.connect()
+  File "/home/vagrant/.local/share/virtualenvs/zst_mysql_1110-XKCR2RrO/lib/python3.6/site-packages/urllib3/connection.py", line 200, in connect
+    conn = self._new_conn()
+  File "/home/vagrant/.local/share/virtualenvs/zst_mysql_1110-XKCR2RrO/lib/python3.6/site-packages/urllib3/connection.py", line 182, in _new_conn
+    self, "Failed to establish a new connection: %s" % e
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x7f4453046748>: Failed to establish a new connection: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/vagrant/.local/share/virtualenvs/zst_mysql_1110-XKCR2RrO/lib/python3.6/site-packages/requests/adapters.py", line 449, in send
+    timeout=timeout
+  File "/home/vagrant/.local/share/virtualenvs/zst_mysql_1110-XKCR2RrO/lib/python3.6/site-packages/urllib3/connectionpool.py", line 756, in urlopen
+    method, url, error=e, _pool=self, _stacktrace=sys.exc_info()[2]
+  File "/home/vagrant/.local/share/virtualenvs/zst_mysql_1110-XKCR2RrO/lib/python3.6/site-packages/urllib3/util/retry.py", line 573, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='192.168.0.45', port=8001): Max retries exceeded with url: /api/meta_manage/v1/get_schema_by_ip?ip=192.168.0.202 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f4453046748>: Failed to establish a new connection: [Errno 111] Connection refused',))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "consumer_kafka.py", line 59, in <module>
+    response_url_schema = requests.get(url_schema, headers={'Content-Type': 'application/json'})
+  File "/home/vagrant/.local/share/virtualenvs/zst_mysql_1110-XKCR2RrO/lib/python3.6/site-packages/requests/api.py", line 76, in get
+    return request('get', url, params=params, **kwargs)
+  File "/home/vagrant/.local/share/virtualenvs/zst_mysql_1110-XKCR2RrO/lib/python3.6/site-packages/requests/api.py", line 61, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/vagrant/.local/share/virtualenvs/zst_mysql_1110-XKCR2RrO/lib/python3.6/site-packages/requests/sessions.py", line 542, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/home/vagrant/.local/share/virtualenvs/zst_mysql_1110-XKCR2RrO/lib/python3.6/site-packages/requests/sessions.py", line 655, in send
+    r = adapter.send(request, **kwargs)
+  File "/home/vagrant/.local/share/virtualenvs/zst_mysql_1110-XKCR2RrO/lib/python3.6/site-packages/requests/adapters.py", line 516, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPConnectionPool(host='192.168.0.45', port=8001): Max retries exceeded with url: /api/meta_manage/v1/get_schema_by_ip?ip=192.168.0.202 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f4453046748>: Failed to establish a new connection: [Errno 111] Connection refused',))
 
 
