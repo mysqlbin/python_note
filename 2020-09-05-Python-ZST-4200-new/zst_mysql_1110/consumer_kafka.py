@@ -38,7 +38,7 @@ if __name__ == '__main__':
             val = str(message.value, encoding='utf-8')
             # 将消息反序列化为python对象
             obj = json.loads(val)
-            print("got a obj", obj.keys())
+            # print("got a obj", obj.keys())
 
             # obj.keys(): 返回一个字典所有的键。
             if "slowlog.query" not in obj.keys():
@@ -53,7 +53,14 @@ if __name__ == '__main__':
                 payload = {
                     "sql": obj['slowlog.query']
                 }
+
+                print(type(payload))
+                # <class 'dict'>
+
                 payload = json.dumps(payload)
+                print(type(payload))
+                # <class 'str'>
+
                 headers = {
                     'Content-Type': 'application/json'
                 }
@@ -63,7 +70,8 @@ if __name__ == '__main__':
                 # 通过api进行查询，获取schema信息
                 url_schema = 'http://192.168.0.45:8001/api/meta_manage/v1/get_schema_by_ip?ip={}'.format(
                     obj['host']['ip'][0])
-                response_url_schema = requests.get(url_schema, headers={'Content-Type': 'application/json'})
+
+                response_url_schema = requests.get(url_schema, headers=headers)
 
                 if response.status_code != 200 or response_url_schema.status_code != 200:
                     logging.error("got none-200 response: %d", response.status_code)
@@ -85,12 +93,14 @@ if __name__ == '__main__':
                         newKey = k.replace(".", "_")
                         es_data[newKey] = v
 
-                print(obj["@timestamp"])
+                # print(obj["@timestamp"])
                 es_data["@timestamp"] = obj["@timestamp"]
                 es_data["finger"] = finger_print
                 es_data["hash"] = hashlib.md5(finger_print.encode('utf-8')).hexdigest()
                 es_data["schema"] = respJson['data']['schema']
                 es_data["ip"] = respJson['data']["schema_ip"]
+
+                print("es_data:", es_data)
 
                 write_elasticsearch(es_data)
 
