@@ -916,6 +916,7 @@
 	
 	
 相关参考
+	
 	https://blog.csdn.net/weixin_40341116/article/details/81173016   ElasticSearch - 聚合 aggs
 	https://blog.csdn.net/weixin_40341116/article/details/80608874   ElasticSearch - 基本类型与映射 (es5.x以上)
 

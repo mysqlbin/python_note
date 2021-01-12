@@ -49,18 +49,36 @@
             <el-table-column prop="finger" label="SQL语句" width="500" :show-overflow-tooltip='true'> </el-table-column>
 
 
-            <el-table-column prop="hash_count" label="执行总次数" width="100" sortable> </el-table-column>
+            <el-table-column prop="hash_count" label="执行总次数" width="130" sortable> </el-table-column>
 
-            <el-table-column prop="rowsExamineAvg" label="平均扫描行数" width="100"> </el-table-column>
+            <el-table-column prop="queryTimeSum" label="执行总时长(秒)" width="150" sortable>
+                <template slot-scope="scope">
+                    <span>{{ scope.row.queryTimeSum | numFilter }}</span>
+                </template>
+            </el-table-column>
 
-            <el-table-column prop="rowsSentAvg" label="平均返回行数" width="100"> </el-table-column>
+            <el-table-column prop="rowsExamineAvg" label="平均扫描行数" width="150">
+                <template slot-scope="scope">
+                    <span>{{ scope.row.rowsExamineAvg | numFilter }}</span>
+                </template>
+            </el-table-column>
 
-            <el-table-column prop="queryTimeAvg" label="平均执行时长(秒)" width="100"> </el-table-column>
+            <el-table-column prop="rowsSentAvg" label="平均返回行数" width="150"> 
+                <template slot-scope="scope">
+                    <span>{{ scope.row.rowsSentAvg | numFilter }}</span>
+                </template>
+            </el-table-column>
+
+            <el-table-column prop="queryTimeAvg" label="平均执行时长(秒)" width="160"> 
+                <template slot-scope="scope">
+                    <span>{{ scope.row.queryTimeAvg | numFilter }}</span>
+                </template>
+            </el-table-column>
 
 
             <el-table-column label='操作'>
                 <template slot-scope="scope">
-                    {{ scope.row }}
+                    <!-- {{ scope.row }} -->
                    <el-button @click="showSlowSqlList(scope.row)" type="primary" size="small">查看慢日志明细</el-button>
                 
                 </template>
@@ -135,8 +153,15 @@
                 },
             }
         },
+        filters: {
+            // 截取当前数据到小数点后两位
+            numFilter(value) {
+                let realVal = parseFloat(value).toFixed(2);
+                return realVal;
+            },
+        },
         created() {
-             console.log("created: ", 'created')      
+            //  console.log("created: ", 'created')      
             if (this.$route.query.page_num){
                    this.searchBar.page_num = parseInt(this.$route.query.page_num)    
             }
@@ -154,12 +179,12 @@
               
                 if (to.query.page_num){
                    this.searchBar.page_num = parseInt(to.query.page_num)  
-                    console.log("to.query.page_num: ", to.query.page_num)  
+                    // console.log("to.query.page_num: ", to.query.page_num)  
                 }
 
                 if(to.query.page_size){
                    this.searchBar.page_size = parseInt(to.query.page_size)   
-                    console.log("to.query.page_size: ", to.query.page_size)  
+                    // console.log("to.query.page_size: ", to.query.page_size)  
                 }    
 
                this.doSearch()
@@ -169,10 +194,10 @@
         methods: {
            showSlowSqlList(row){
                
-               console.log("row", row) 
+            //    console.log("row", row) 
             //    this.searchBar.hash = row.hash
             //    this.searchBar.is_aggr_by_hash = false
-               console.log("this.searchBar", this.searchBar) 
+            //    console.log("this.searchBar", this.searchBar) 
                
                 let routeUrl = this.$router.resolve({
                     path: '/slowsql/list',
@@ -194,7 +219,7 @@
                 this.searchBar.end = moment(this.timeRange[1]).format();
 
                 getSlowSqlList(this.searchBar).then(resp => {
-                    console.log("resp: ", resp)
+                    // console.log("resp: ", resp)
                     this.total = resp.data.count
                     this.tableData = resp.data.results
                     // 总共有多少行记录
@@ -207,13 +232,13 @@
 
             handleSizeChange(val) {
 
-                console.log(`每页 ${val} 条`);
+                // console.log(`每页 ${val} 条`);
                 
                 // this.searchBar.page_size = val
                 // this.doSearch()
 
                 let queryCopy = _.cloneDeep(this.$route.query)
-                console.log("queryCopy: ", queryCopy)
+                // console.log("queryCopy: ", queryCopy)
                 queryCopy.page_size = val
 
                 // 修改 url
@@ -226,14 +251,14 @@
 
             },
             handleCurrentChange(val) {
-                console.log(`当前页: ${val}`);
+                // console.log(`当前页: ${val}`);
 
                 // 这种方式也可以实现分页改变之后的数据变化，不过不完善
                 // this.searchBar.page_num = val 
                 // this.doSearch()
 
                 let queryCopy = _.cloneDeep(this.$route.query)
-                console.log("queryCopy: ", queryCopy)
+                // console.log("queryCopy: ", queryCopy)
                 queryCopy.page_num = val
                 // 修改 url
                 this.$router.push({

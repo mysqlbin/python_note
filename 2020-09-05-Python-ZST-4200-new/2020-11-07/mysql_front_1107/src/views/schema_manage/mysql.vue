@@ -78,7 +78,7 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="searchBar.page_num"
-            :page-sizes="[2, 5, 20, 100, 200, 500]"
+            :page-sizes="[5, 10, 20, 100, 200, 500]"
             :page-size="searchBar.page_size"
             layout="total, sizes, prev, pager, next, jumper"
             :total="total">
@@ -101,7 +101,7 @@
             return {
                 searchBar: {
                     schema: "",
-                    page_size: 2,
+                    page_size: 10,
                     page_num: 1,
                     
                 },
@@ -168,7 +168,7 @@
             // dialog弹窗
             // 这个方法是表格中，"查看process list" 按钮的click 回调函数
             showProcessList(row){
-                console.log('row: ', row)
+                // console.log('row: ', row)
                 const loading = this.$loading({
                     lock: true,
                     text: 'Loading',
@@ -182,9 +182,9 @@
             // 处理每页页数/大小变动
             handleSizeChange(val) {
                 // console.log(`每页 ${val} 条`)
-                console.log("this.$route.query: ", this.$route.query)
+                // console.log("this.$route.query: ", this.$route.query)
                 let queryCopy = _.cloneDeep(this.$route.query)
-                console.log("queryCopy: ", queryCopy)
+                // console.log("queryCopy: ", queryCopy)
                 queryCopy.page_size = val
                 this.updateRouteQuery(queryCopy)
             },

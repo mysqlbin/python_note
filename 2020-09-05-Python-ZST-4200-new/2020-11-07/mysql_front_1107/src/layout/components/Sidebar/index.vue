@@ -48,13 +48,13 @@
         },
         watch: {
             $route() {
-                console.log(1)
+                // console.log(1)
             }
         },
         created(){
 
             // console.log("route_path: ", this.$route.path)
-            console.log("routePath: ", this.routePath);
+            // console.log("routePath: ", this.routePath);
             // console.log("menuRouts: ", this.menuRouts)
             // console.log("path: ", path)
         },
