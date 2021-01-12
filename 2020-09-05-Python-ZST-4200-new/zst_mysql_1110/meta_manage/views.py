@@ -14,7 +14,7 @@ from rest_framework import mixins, generics
 from rest_framework import viewsets
 from django.urls import reverse
 from rest_framework.pagination import PageNumberPagination
-from meta_manage.serializers import MySQLSchemaSerializer, KillMySQLProcessSerializer
+from meta_manage.serializers import MySQLSchemaSerializer, KillMySQLProcessSerializer, SchemaSerializer
 
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -23,9 +23,38 @@ from meta_manage import tasks
 from celery.result import AsyncResult
 from zst_mysql_1110.celery import app
 
+from .models import SchemaModel
+from django.core.exceptions import ValidationError
+from django.http import JsonResponse, Http404
+
 import MySQLdb
 
 from rest_framework.decorators import api_view
+
+@api_view(['GET'])
+def get_schema_by_ip(request):
+    ip = request.GET.get("ip")
+
+    if not isinstance(ip, str) or len(ip) == 0:
+        raise ValidationError("invalid parameter: ip")
+
+    data = SchemaModel.objects.filter(ip=ip).all().values()
+    serializer = SchemaSerializer(data, many=True)
+
+    if len(serializer.data) != 1:
+        return MyJsonResponse(code=404, data="")
+
+    # print(serializer.data[0]['schema'])
+    schema_data = serializer.data[0]
+
+    dict_data = {
+        "schema": schema_data['schema'],
+        "db_type": schema_data['db_type'],
+        "schema_ip": schema_data['ip'],
+        "schema_port": schema_data['port'],
+    }
+
+    return MyJsonResponse(data=dict_data)
 
 @api_view(['GET'])
 def celery_debug(request):
@@ -53,7 +82,7 @@ def celery_result(request):
 class CustomPagination(PageNumberPagination):
 
     # 每页显示记录数，前端没有传入page_num，则默认显示此参数
-    page_size = 2
+    page_size = 10
 
     # 前端传入每页显示的数量
     page_size_query_param = 'page_size'

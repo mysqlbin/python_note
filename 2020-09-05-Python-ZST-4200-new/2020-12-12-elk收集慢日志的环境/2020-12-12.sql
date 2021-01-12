@@ -82,6 +82,7 @@ es做全文搜索
 	
 	-- 启动 filebeat, 这时会把慢日志输出到 nohup.out 文件中
 	nohup ./filebeat &
+	nohup ./filebeat 1>/dev/null 2>&1 &
 	-- 会生成文件： -rw-------.  1 root root  1181058 12月 14 01:10 nohup.out
 
 
@@ -350,7 +351,41 @@ es做全文搜索
 			失败的filter grok：
 			^# User@Host: %{USER:slowlog.user}(\[[^\]]+\])? @ (%{HOSTNAME:slowlog.host})? \[%{IP:slowlog.ip}?\](\s*Id:\s* %{NUMBER:slowlog.id})?\n# Query_time: %{NUMBER:slowlog.query_time.sec}\s
 
-				
+			-------------------------------------------------------------------------------------------------------
+			ip为 192.168.0.202
+				# Time: 2021-01-11T16:19:16.635657+08:00
+				# User@Host: root[root] @  [192.168.0.202]  Id:    10
+				# Query_time: 0.358495  Lock_time: 0.120588 Rows_sent: 1  Rows_examined: 500000
+				SET timestamp=1610353156;
+				select count(*) from t_20210111;
+
+				^# User@Host: %{USER:slowlog.user}(\[[^\]]+\])? @ (%{HOSTNAME:slowlog.host})? \[%{IP:slowlog.ip}?\]
+
+
+				{
+				  "slowlog": {
+					"user": "root",
+					"ip": "192.168.0.202"
+				  }
+				}
+
+			--------------------------------------------------------------------------------------------------------
+			ip为localhost
+				# Time: 2021-01-11T16:23:52.860888+08:00
+				# User@Host: root[root] @ localhost []  Id:    11
+				# Query_time: 0.174356  Lock_time: 0.000107 Rows_sent: 1  Rows_examined: 500000
+				SET timestamp=1610353432;
+
+				^# User@Host: %{USER:slowlog.user}(\[[^\]]+\])? @ (%{HOSTNAME:slowlog.host})? \[%{IP:slowlog.ip}?\]
+
+				select count(*) from t_20210111;
+				{
+				  "slowlog": {
+					"host": "localhost",
+					"user": "root"
+				  }
+				}
+							
 5. 问题和解决
 
 	1. 内存不足	
@@ -615,7 +650,6 @@ kibana
 	[2021-01-08T08:36:35,746][ERROR][org.logstash.Logstash    ] java.lang.IllegalStateException: Logstash stopped processing because of an error: (SystemExit) exit
 
 
-	
 3. http无法建立新的连接
 	Traceback (most recent call last):
 	  File "/home/vagrant/.local/share/virtualenvs/zst_mysql_1110-XKCR2RrO/lib/python3.6/site-packages/urllib3/connection.py", line 170, in _new_conn
