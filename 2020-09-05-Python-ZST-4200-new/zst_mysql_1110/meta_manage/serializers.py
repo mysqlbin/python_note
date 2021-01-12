@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Host,MySQLSchema
+from .models import Host,MySQLSchema,SchemaModel
 
 
 class HostSerializer(serializers.Serializer):
@@ -28,3 +28,9 @@ class MySQLSchemaSerializer(serializers.ModelSerializer):
 
 class KillMySQLProcessSerializer(serializers.Serializer):
     process_id = serializers.IntegerField(min_value=1)
+
+
+class SchemaEsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SchemaModel
+        fields = '__all__'

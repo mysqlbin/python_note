@@ -49,3 +49,17 @@ class MySQLSchema(CommonModel):
             raise ValidationError("repeat data for " + str(self))
 
         super().save(force_insert=force_insert, force_update=force_update, using=using,update_fields=update_fields)
+
+
+class SchemaModel(models.Model):
+    MYSQL = 'MySQL'
+    SQLSERVER = 'SQLServer'
+    REDIS = 'Redis'
+    schema = models.CharField(max_length=128, verbose_name='库名')
+    db_type = models.CharField(choices=[
+        (MYSQL, 'mysql'),
+        (SQLSERVER, 'sqlserver'),
+        (REDIS, 'redis')
+    ], max_length=128, verbose_name='数据库类型')
+    ip = models.GenericIPAddressField(verbose_name='ip')
+    port = models.IntegerField(verbose_name='端口')
