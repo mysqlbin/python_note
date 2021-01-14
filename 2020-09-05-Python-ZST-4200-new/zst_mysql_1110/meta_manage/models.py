@@ -63,3 +63,25 @@ class SchemaModel(models.Model):
     ], max_length=128, verbose_name='数据库类型')
     ip = models.GenericIPAddressField(verbose_name='ip')
     port = models.IntegerField(verbose_name='端口')
+
+
+
+class SchemaTest3(models.Model):
+    MYSQL = 'MySQL'
+    SQLSERVER = 'SQLServer'
+    REDIS = 'Redis'
+    schema = models.CharField(max_length=128, verbose_name='库名')
+    db_type = models.CharField(choices=[
+        (MYSQL, 'mysql'),
+        (SQLSERVER, 'sqlserver'),
+        (REDIS, 'redis')
+    ], max_length=128, verbose_name='数据库类型')
+    ip = models.GenericIPAddressField(verbose_name='ip')
+    port = models.IntegerField(verbose_name='端口')
+
+    class Meta:
+        managed = False
+        db_table = 'schema_test3'
+        verbose_name = u'测试表'
+        verbose_name_plural = u'测试表'
+

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
     'check.apps.CheckConfig',
     'slowsql.apps.SlowsqlConfig',
+    'slowquery.apps.SlowqueryConfig',
     'django_filters',
     # 'corsheaders',
 ]
@@ -224,7 +225,7 @@ LOGGING = {
 
     'loggers': {
         'django': {
-            'handlers': ['console', 'file'],
+            'handlers': ['console'],
             'level': 'INFO',
 			'propagate': True,
         },
