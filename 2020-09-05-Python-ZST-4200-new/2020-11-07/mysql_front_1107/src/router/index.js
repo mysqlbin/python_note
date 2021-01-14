@@ -45,7 +45,7 @@ export const menuRouts = [
   },
   {
     path: '/slowsql',
-    meta: { title: '慢SQL管理' },
+    meta: { title: '慢SQL管理-从ES读取数据' },
     component: () => import('@/layout/index'),
     children: [
         {
@@ -71,7 +71,28 @@ export const menuRouts = [
 
     ]
   },
-
+  {
+    path: '/slowquery',
+    meta: { title: '慢SQL管理-从MySQL读取数据' },
+    component: () => import('@/layout/index'),
+    children: [
+        {
+            path: 'list',
+            meta: { title: '列表' },
+            component: () => import('@/views/slowquery/index')
+        },
+        {
+          path: 'aggr_list',
+          meta: { title: '聚合列表' },
+          component: () => import('@/views/slowquery/aggr_list')
+        },
+        {
+          path: 'slow_sample',
+          meta: { title: '慢查询图表' },
+          component: () => import('@/views/slowquery/slow_sample')
+        },
+    ]
+  },
 ]
 
 

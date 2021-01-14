@@ -8,6 +8,8 @@
     python基础
     DRF相关
     项目中的代码
+	django orm
+	
  节后复习MySQL
 一样样来
 

@@ -8,16 +8,17 @@ from django.http import HttpResponse
 
 
 
-def slowquery_review(request):
+# 慢日志聚合列表
+def slowquery_aggr(request):
 
     # 代码的优化空间
-    start_time = request.GET.get('StartTime')
-    end_time = request.GET.get('EndTime')
+    start_time = request.GET.get('startTime')
+    end_time = request.GET.get('endTime')
 
     if start_time is None or not isinstance(start_time, str) or len(start_time.strip()) == 0:
         start_time = None
     if end_time is None or not isinstance(end_time, str) or len(end_time.strip()) == 0:
-        start_time = None
+        end_time = None
 
     db_name = request.GET.get('db_name', None)
     limit = request.GET.get('limit', 10)
@@ -30,7 +31,7 @@ def slowquery_review(request):
     if db_name:
         # 获取慢查数据, 跨表一对多查询
         slowsql_obj = SlowQuery.objects.filter(
-            slowqueryhistory__hostname_max=('{}:{}'.format(insname.host, insname.port)),
+            # slowqueryhistory__hostname_max=('{}:{}'.format(insname.host, insname.port)),
             slowqueryhistory__db_max=db_name,
             slowqueryhistory__ts_min__range=(start_time, end_time)
         ).annotate(SQLText=F('fingerprint'), SQLId=F('checksum')).values('SQLText', 'SQLId').annotate(
@@ -45,7 +46,7 @@ def slowquery_review(request):
     else:
         # 获取慢查数据, 跨表一对多查询
         slowsql_obj = SlowQuery.objects.filter(
-            slowqueryhistory__hostname_max=('{}:{}'.format(insname.host, insname.port)),
+            # slowqueryhistory__hostname_max=('{}:{}'.format(insname.host, insname.port)),
             slowqueryhistory__ts_min__range=(start_time, end_time),
         ).annotate(SQLText=F('fingerprint'), SQLId=F('checksum')).values('SQLText', 'SQLId').annotate(
             CreateTime=Max('slowqueryhistory__ts_max'),
@@ -67,8 +68,95 @@ def slowquery_review(request):
     # QuerySet 序列化
     sql_slow_log = [SlowLog for SlowLog in slow_sql_list]
     result = {"total": slow_sql_count, "rows": sql_slow_log}
+    # 返回查询结果
+    respJson = json.dumps(result, cls=RewriteJsonEncoder)
+    return HttpResponse(respJson, content_type='application/json')
 
+
+# 慢日志明细
+def slowquery_history(request):
+
+    start_time = request.POST.get('StartTime')
+    end_time = request.POST.get('EndTime')
+    # 时间处理
+    end_time = datetime.datetime.strptime(end_time, '%Y-%m-%d') + datetime.timedelta(days=1)
+
+    db_name = request.POST.get('db_name')
+    sql_id = request.POST.get('SQLId')
+    limit = int(request.POST.get('limit'))
+    offset = int(request.POST.get('offset'))
+    limit = offset + limit
+
+    instance_res = Db_instance.objects.get(id=int(request.POST.get('instance_id')))
+
+    if sql_id:
+        # 获取慢查明细数据
+        slow_sql_record_obj = SlowQueryHistory.objects.filter(
+            # hostname_max=('{}:{}'.format(instance_res.host, instance_res.port)),
+            checksum=sql_id,
+            ts_min__range=(start_time, end_time)
+        ).annotate(ExecutionStartTime=F('ts_min'),  # 本次统计(每5分钟一次)该类型sql语句出现的最小时间
+                   DBName=F('db_max'),  # 数据库名
+                   HostAddress=Concat(V('\''), 'user_max', V('\''), V('@'), V('\''), 'client_max', V('\'')),  # 用户名
+                   SQLText=F('sample'),  # SQL语句
+                   TotalExecutionCounts=F('ts_cnt'),  # 本次统计该sql语句出现的次数
+                   QueryTimePct95=F('query_time_pct_95'),  # 本次统计该sql语句95%耗时
+                   QueryTimes=F('query_time_sum'),  # 本次统计该sql语句花费的总时间(秒)
+                   LockTimes=F('lock_time_sum'),  # 本次统计该sql语句锁定总时长(秒)
+                   ParseRowCounts=F('rows_examined_sum'),  # 本次统计该sql语句解析总行数
+                   ReturnRowCounts=F('rows_sent_sum')  # 本次统计该sql语句返回总行数
+                   )
+    else:
+        if db_name:
+            # 获取慢查明细数据
+            slow_sql_record_obj = SlowQueryHistory.objects.filter(
+                hostname_max=('{}:{}'.format(instance_res.host, instance_res.port)),
+                db_max=db_name,
+                ts_min__range=(start_time, end_time)
+            ).annotate(ExecutionStartTime=F('ts_min'),  # 本次统计(每5分钟一次)该类型sql语句出现的最小时间
+                       DBName=F('db_max'),  # 数据库名
+                       HostAddress=Concat(V('\''), 'user_max', V('\''), V('@'), V('\''), 'client_max', V('\'')), # 用户名
+                       SQLText=F('sample'),  # SQL语句
+                       TotalExecutionCounts=F('ts_cnt'),  # 本次统计该sql语句出现的次数
+                       QueryTimePct95=F('query_time_pct_95'),  # 本次统计该sql语句出现的次数
+                       QueryTimes=F('query_time_sum'),  # 本次统计该sql语句花费的总时间(秒)
+                       LockTimes=F('lock_time_sum'),  # 本次统计该sql语句锁定总时长(秒)
+                       ParseRowCounts=F('rows_examined_sum'),  # 本次统计该sql语句解析总行数
+                       ReturnRowCounts=F('rows_sent_sum')  # 本次统计该sql语句返回总行数
+                       )
+        else:
+            # 获取慢查明细数据
+            slow_sql_record_obj = SlowQueryHistory.objects.filter(
+                hostname_max=('{}:{}'.format(instance_res.host, instance_res.port)),
+                ts_min__range=(start_time, end_time)
+            ).annotate(ExecutionStartTime=F('ts_min'),  # 本次统计(每5分钟一次)该类型sql语句出现的最小时间
+                       DBName=F('db_max'),  # 数据库名
+                       HostAddress=Concat(V('\''), 'user_max', V('\''), V('@'), V('\''), 'client_max', V('\'')), # 用户名
+                       SQLText=F('sample'),  # SQL语句
+                       TotalExecutionCounts=F('ts_cnt'),  # 本次统计该sql语句出现的次数
+                       QueryTimePct95=F('query_time_pct_95'),  # 本次统计该sql语句95%耗时
+                       QueryTimes=F('query_time_sum'),  # 本次统计该sql语句花费的总时间(秒)
+                       LockTimes=F('lock_time_sum'),  # 本次统计该sql语句锁定总时长(秒)
+                       ParseRowCounts=F('rows_examined_sum'),  # 本次统计该sql语句解析总行数
+                       ReturnRowCounts=F('rows_sent_sum')  # 本次统计该sql语句返回总行数
+                       )
+
+    slow_sql_record_count = slow_sql_record_obj.count()
+    slow_sql_record_list  = slow_sql_record_obj[offset:limit].values('ExecutionStartTime',
+                                                           'DBName',
+                                                           'HostAddress',
+                                                           'SQLText',
+                                                           'TotalExecutionCounts',
+                                                           'QueryTimePct95',
+                                                           'QueryTimes',
+                                                           'LockTimes',
+                                                           'ParseRowCounts',
+                                                           'ReturnRowCounts')
+
+    # QuerySet 序列化
+    sql_slow_record = [SlowRecord for SlowRecord in slow_sql_record_list]
+    result = {"total": slow_sql_record_count, "rows": sql_slow_record}
 
     # 返回查询结果
-    return HttpResponse(json.dumps(result, cls=RewriteJsonEncoder),
-                        content_type='application/json')
+    respJson = json.dumps(result, cls=RewriteJsonEncoder)
+    return HttpResponse(respJson, content_type='application/json')
