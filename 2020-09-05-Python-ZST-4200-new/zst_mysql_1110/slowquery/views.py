@@ -11,6 +11,25 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage, Invali
 from django.db.models.functions import Concat
 
 
+
+def get_aggs_by_date(request):
+    start_time = request.GET.get('start')
+    end_time = request.GET.get('end')
+
+    if start_time is None or not isinstance(start_time, str) or len(start_time.strip()) == 0:
+        start_time = None
+    if end_time is None or not isinstance(end_time, str) or len(end_time.strip()) == 0:
+        end_time = None
+
+    slow_query_ojb = SlowQueryHistory.objects.filter(ts_min__range=(start_time, end_time)
+                                    ).extra(select={"byday": "DATE_FORMAT(ts_min, '%%Y-%%m-%%d %%H:%%i:%%s')"}).values("byday").annotate(date_count=Sum('ts_cnt'))
+
+    result = [SlowLog for SlowLog in slow_query_ojb]
+    result = {"rows": result}
+    respJson = json.dumps(result, cls=RewriteJsonEncoder)
+    # 用来画每天的慢日志数据曲线图
+    return HttpResponse(respJson, content_type='application/json')
+
 # 慢日志聚合列表
 def slowquery_aggr(request):
 

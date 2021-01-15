@@ -2,7 +2,7 @@
     <div>
         <div id="container" style="width: 100%; height: 300px"></div>
         
-        <el-row>
+        <!-- <el-row>
             <el-col :span="12">
                 <div class="grid-content bg-purple">
                     <highcharts :options="schemaPieOptions"></highcharts>
@@ -38,7 +38,7 @@
                 </div>
             </el-col>
         </el-row>
-
+ -->
 
 
     </div>
@@ -53,7 +53,7 @@ import { Chart } from "highcharts-vue";
 
 import $ from "jquery";
 import * as moment from 'moment'
-import {getAggsByDate, getSlowSqlTop10, getAggsBySchema} from '@/api/slowsql'
+import {getAggsByDate} from '@/api/slowquery'
 
 
 
@@ -70,69 +70,69 @@ export default {
                 start: "",
                 end: "",
             },
-            schemaPieOptions: {
-                chart: {
-                        plotBackgroundColor: null,
-                        plotBorderWidth: null,
-                        plotShadow: false,
-                        type: 'pie'
-                },
-                title: {
-                        text: '各数据库慢SQL占比'
-                },
-                tooltip: {
-                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-                },
-                plotOptions: {
-                        pie: {
-                                allowPointSelect: true,
-                                cursor: 'pointer',
-                                dataLabels: {
-                                        enabled: true,
-                                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                                        style: {
-                                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                                        }
-                                }
-                        }
-                },
-                series: [{
-                        name: 'Brands',
-                        colorByPoint: true,
-                        data: []
-                }]                   
+            // schemaPieOptions: {
+            //     chart: {
+            //             plotBackgroundColor: null,
+            //             plotBorderWidth: null,
+            //             plotShadow: false,
+            //             type: 'pie'
+            //     },
+            //     title: {
+            //             text: '各数据库慢SQL占比'
+            //     },
+            //     tooltip: {
+            //             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            //     },
+            //     plotOptions: {
+            //             pie: {
+            //                     allowPointSelect: true,
+            //                     cursor: 'pointer',
+            //                     dataLabels: {
+            //                             enabled: true,
+            //                             format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+            //                             style: {
+            //                                     color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+            //                             }
+            //                     }
+            //             }
+            //     },
+            //     series: [{
+            //             name: 'Brands',
+            //             colorByPoint: true,
+            //             data: []
+            //     }]                   
 
-            }
+            // }
         }
     },
     created(){
         // console.log("created: ", 'created')
 
-        this.updateQueryParams = _.debounce(
-            function (startTime, endTime) {
-                this.queryParams.start = startTime;
-                this.queryParams.end = endTime;
-                // console.log(this.queryParams);
-                this.$emit("updateQueryParams");
-            }.bind(this),
-            1000
-        );
+        // this.updateQueryParams = _.debounce(
+        //     function (startTime, endTime) {
+        //         this.queryParams.start = startTime;
+        //         this.queryParams.end = endTime;
+        //         // console.log(this.queryParams);
+        //         this.$emit("updateQueryParams");
+        //     }.bind(this),
+        //     1000
+        // );
 
-        this.$on(
-            "updateQueryParams",
-            function () {
-                // console.log("query params has changed");
-                // console.log("this.queryParams.start: ", this.queryParams.start)
-                // console.log("this.queryParams.end: ", this.queryParams.end)
-                this.doSearch();
-            }.bind(this)
-        );
+        // this.$on(
+        //     "updateQueryParams",
+        //     function () {
+        //         // console.log("query params has changed");
+        //         // console.log("this.queryParams.start: ", this.queryParams.start)
+        //         // console.log("this.queryParams.end: ", this.queryParams.end)
+        //         this.doSearch();
+        //     }.bind(this)
+        // );
 
     },
     mounted(){
         // console.log("mounted: ", 'mounted')
         this.createChart();
-        this.doSearch();
+        // this.doSearch();
     },
     methods: {
 
@@ -149,7 +149,7 @@ export default {
                 let chartData = [];
                 // 组装数据，渲染到图表中
                 _.forEach(resp.data, (v) => {
-                    chartData.push([moment(v["date"]).unix() * 1000, v["date_count"]]);
+                    chartData.push([moment(v["byday"]).unix() * 1000, v["date_count"]]);
                 });
                 // console.log("chartData", chartData);
 
@@ -203,7 +203,7 @@ export default {
                                 endTime = moment.unix(endTime).format();
                                 console.log("startTime: ", startTime);
                                 console.log("endTime: ", endTime);
-                                that.updateQueryParams(startTime, endTime);
+                                // that.updateQueryParams(startTime, endTime);
                             },
                         },
                     },
@@ -224,47 +224,42 @@ export default {
                 
         },
         doSearch(){
-            getSlowSqlTop10(this.queryParams).then(resp=> {
-                // console.log("this.queryParams.start: ", this.queryParams.start)
-                // console.log("this.queryParams.end: ", this.queryParams.end)
-                this.tableData = resp.data;
-                // console.log("tableData: ", resp.data)
-            }),
-            getAggsBySchema(this.queryParams).then((resp) => {
-                const reducer = (accumulator, item) => accumulator + item["schema_count"];
-                let countAll = resp.data.reduce(reducer, 0);
-                // console.log("countAll: ", countAll);
-                this.schemaPieOptions.series[0].data = resp.data.map((v) => {
-                    return {
-                        name: v["schema"],
-                        y: v["schema_count"] / countAll,
-                    };
-                });
+            // getSlowSqlTop10(this.queryParams).then(resp=> {
+            //     // console.log("this.queryParams.start: ", this.queryParams.start)
+            //     // console.log("this.queryParams.end: ", this.queryParams.end)
+            //     this.tableData = resp.data;
+            //     // console.log("tableData: ", resp.data)
+            // }),
+            // getAggsBySchema(this.queryParams).then((resp) => {
+            //     const reducer = (accumulator, item) => accumulator + item["schema_count"];
+            //     let countAll = resp.data.reduce(reducer, 0);
+            //     // console.log("countAll: ", countAll);
+            //     this.schemaPieOptions.series[0].data = resp.data.map((v) => {
+            //         return {
+            //             name: v["schema"],
+            //             y: v["schema_count"] / countAll,
+            //         };
+            //     });
 
-                // console.log("this.schemaPieOptions.series[0].data: ", this.schemaPieOptions.series[0].data);
-            });
+            //     // console.log("this.schemaPieOptions.series[0].data: ", this.schemaPieOptions.series[0].data);
+            // });
         },
 
-        showSlowSqlList(row){
-            
-            // console.log("row", row) 
-        //    this.searchBar.hash = row.hash
-        //    this.searchBar.is_aggr_by_hash = false
-            // console.log("this.searchBar", this.searchBar) 
-            
-            let routeUrl = this.$router.resolve({
-                path: '/slowsql/list',
-                query: {
-                    start: this.queryParams.start,
-                    end: this.queryParams.end,
-                    schema: row.schema,
-                    is_aggr_by_hash: false,
-                    hash: row.hash
-                }
-            });
-            window.open(routeUrl.href, '_blank')
+        // showSlowSqlList(row){
+        
+        //     let routeUrl = this.$router.resolve({
+        //         path: '/slowsql/list',
+        //         query: {
+        //             start: this.queryParams.start,
+        //             end: this.queryParams.end,
+        //             schema: row.schema,
+        //             is_aggr_by_hash: false,
+        //             hash: row.hash
+        //         }
+        //     });
+        //     window.open(routeUrl.href, '_blank')
 
-        },
+        // },
         // createChart() {
             
         //     Highcharts.setOptions({
