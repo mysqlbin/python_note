@@ -16,9 +16,9 @@
                   
                 </el-form-item>
 
-                <el-form-item label="schema: ">
+                <el-form-item label="实例名称: " style="width:300"> 
 
-                    <SchemaSearch v-model="searchBar.schema"></SchemaSearch>       
+                    <InstanceSearch v-model="searchBar.instance"></InstanceSearch>       
             
                 </el-form-item>
 
@@ -36,7 +36,7 @@
                 <template slot-scope="props">
                     <el-form label-position="left" inline class="demo-table-expand">
                         <el-form-item label="显示完整的SQL语句：">
-                         <span>{{ props.row.finger }}</span>
+                         <span>{{ props.row.SQLText }}</span>
                         </el-form-item>
 
                     </el-form>
@@ -45,39 +45,42 @@
             
             <!-- 添加一列：执行时间2222 -->
 
-            <el-table-column prop="schema" label="库名" width="100"></el-table-column>
+            <el-table-column prop="DBName" label="库名" width="100"></el-table-column>
 
-            <el-table-column prop="slowlog_timestamp" :formatter="formatter" label="执行时间" width="220"></el-table-column>
+            <el-table-column prop="ExecutionStartTime" :formatter="formatter" label="执行开始时间" width="170"></el-table-column>
 
-            <el-table-column prop="ip" label="IP" width="150"></el-table-column>
+            <el-table-column prop="ExecutionEndTime" :formatter="formatter" label="最近一次执行时间" width="170"></el-table-column>
 
-            <el-table-column label='账号' width="200">
+            <el-table-column prop="HostAddress" label='用户名' width="200"></el-table-column>
+            
+            <el-table-column prop="SQLText" label="SQL语句" width="450" :show-overflow-tooltip='true'> </el-table-column>
+            
+            <el-table-column prop="TotalExecutionCounts" label="执行总次数" width="80" sortable></el-table-column>
+
+            <el-table-column prop="QueryTimePct95" label="执行时长(95%)" width="100">
+                 <template slot-scope="scope">
+                    <span>{{ scope.row.QueryTimePct95 | numFilter }}</span>
+                </template>
+            </el-table-column>
+            
+            <el-table-column prop="QueryTimes" label="执行总时长(秒)" width="100" sortable>
                 <template slot-scope="scope">
-                   {{ scope.row.slowlog_user }}@{{ scope.row.slowlog_ip }}
+                    <span>{{ scope.row.QueryTimes | numFilter }}</span>
+                </template>
+            </el-table-column>
+            
+            <el-table-column prop="LockTimes" label="持有锁总时长(秒)" width="100" sortable>
+                <template slot-scope="scope">
+                    <span>{{ scope.row.LockTimes | numFilter }}</span>
                 </template>
             </el-table-column>
 
-            <!-- <el-table-column prop="slowlog_host" label="ip" width="200"> 
-
-            </el-table-column> -->
-            
-            <el-table-column prop="slowlog_query" label="SQL语句" width="450" :show-overflow-tooltip='true'> </el-table-column>
-
-            <el-table-column prop="slowlog_rows_examined" label="扫描行数" width="100"></el-table-column>
-            
-            <el-table-column prop="slowlog_rows_sent" label="返回行数" width="100"></el-table-column>
-            
-            <el-table-column prop="slowlog_query_time_sec" label="执行时长(秒)" width="120">
-                <template slot-scope="scope">
-                    <span>{{ scope.row.slowlog_query_time_sec | numFilter }}</span>
-                </template>
+            <el-table-column prop="ParseRowCounts" label="扫描总行数" width="150" sortable>
             </el-table-column>
 
-            <el-table-column prop="slowlog_lock_time_sec" label="持有锁时长(秒)" width="150">
-                <template slot-scope="scope">
-                    <span>{{ scope.row.slowlog_lock_time_sec | numFilter }}</span>
-                </template>
+             <el-table-column prop="ReturnRowCounts" label="返回总行数" width="150" sortable>
             </el-table-column>
+
 
         </el-table>
         <el-pagination
@@ -95,24 +98,21 @@
 
 <script>
 
-    import SchemaSearch from '@/components/schema_search'
+    import InstanceSearch from '@/components/instance_search'
     import * as moment from 'moment'
     import {getSlowSqlList} from '@/api/slowquery'
 
     export default {
         name: "index",
-        components: {SchemaSearch},
+        components: {InstanceSearch},
         data() {
             return {
                 searchBar: {
-                    schema: "",
+                    instance: "",
                     page_size: 10,
                     page_num: 1,
                     start: "",
                     end: "",
-                    is_aggr_by_hash: false,
-                    hash: "",
-                    
                 },
                 tableData: [],
                 schemaNameList: [],
@@ -160,6 +160,7 @@
             //  console.log("created: ", 'created')   
             //  console.log("this.searchBar0: ", this.searchBar);     
             //  console.log("this.$route.query1:", this.$route.query)
+            // 用于url跳转之后重新获取参数
             if (this.$route.query.page_num){
                    this.searchBar.page_num = parseInt(this.$route.query.page_num)    
             }
@@ -168,8 +169,8 @@
                 this.searchBar.page_size = parseInt(this.$route.query.page_size)     
             }    
 
-            if(this.$route.query.hash){
-                this.searchBar.hash = this.$route.query.hash
+            if(this.$route.query.SQLId){
+                this.searchBar.SQLId = this.$route.query.SQLId
             }
 
             
@@ -179,9 +180,9 @@
 
             }
 
-             if(this.$route.query.schema){
+            if(this.$route.query.instance){
 
-                this.searchBar.schema = this.$route.query.schema    
+                this.searchBar.instance = this.$route.query.instance    
 
             }
 
@@ -208,9 +209,9 @@
                     console.log("to.query.page_size: ", to.query.page_size)  
                 }    
 
-                if(to.query.hash){
-                    this.searchBar.hash = to.query.hash  
-                    console.log("to.query.hash: ", to.query.hash)   
+                if(to.query.SQLId){
+                    this.searchBar.SQLId = to.query.SQLId  
+                    console.log("to.query.SQLId: ", to.query.SQLId)   
                 }
 
                 if(to.query.start){
@@ -219,9 +220,9 @@
                     }   
                 }
 
-                if(to.query.schema){
-                    if ( this.searchBar.schema != to.query.schema){
-                      this.searchBar.schema = to.query.schema       
+                if(to.query.instance){
+                    if ( this.searchBar.instance != to.query.instance){
+                      this.searchBar.instance = to.query.instance       
                     }   
                 }
                 if(to.query.end){
@@ -248,9 +249,9 @@
                     this.searchBar.start = moment(this.timeRange[0]).format();
                 }
 
-                if(this.$route.query.schema){
+                if(this.$route.query.instance){
 
-                    this.searchBar.schema = this.$route.query.schema    
+                    this.searchBar.instance = this.$route.query.instance    
 
                 }
 
@@ -262,13 +263,9 @@
                 }
                 
                 getSlowSqlList(this.searchBar).then(resp => {
-                    // console.log("resp: ", resp)
-                    // console.log("resp: ", 111111)
-                    this.total = resp.data.count
-                    this.tableData = resp.data.results
-                    // 总共有多少行记录
-                    // this.total = resp.data.count
-                    // this.tableData = resp.data.results
+                    console.log("resp: ", resp)
+                    this.total = resp.data.total
+                    this.tableData = resp.data.rows
                 }).finally(_ => {
                     // this.tableLoading = false
                 })
@@ -315,7 +312,7 @@
             formatter(row, column) {
             
                 // console.log("timestamp: ", row.slowlog_timestamp);
-                let timestamp = moment(row.slowlog_timestamp*1000).format("YYYY-MM-DD HH:mm:ss")// 2020-12-30 19:41:45  时间戳转时间
+                let timestamp = moment(row.ExecutionStartTime).format("YYYY-MM-DD HH:mm:ss")// 2020-12-30 19:41:45  时间戳转时间
                 return timestamp;
             },
             

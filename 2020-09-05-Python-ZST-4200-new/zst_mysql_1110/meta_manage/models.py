@@ -25,12 +25,13 @@ class MySQLSchema(CommonModel):
     MASTER = 'master'
     SLAVE = 'slave'
     id = models.BigAutoField(primary_key=True)
-    host_ip = models.GenericIPAddressField(max_length=128)
+    host_ip = models.GenericIPAddressField(max_length=64)
     port = models.IntegerField()
     schema = models.CharField(max_length=64)
     role = models.CharField(max_length=64, choices=((MASTER, 'master'), (SLAVE, 'slave')))
     status = models.EmailField(max_length=64, null=False, default='online')
     phy_host = models.ForeignKey(Host, null=True, on_delete=models.PROTECT, db_constraint=False)
+    instance_name = models.CharField(max_length=128, null=True, default=None)
 
     class Meta:
         db_table = "mysql_schema"

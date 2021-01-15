@@ -31,16 +31,14 @@ INSERT INTO `auth_permission` (`name`, `content_type_id`, `codename`) VALUES ('C
 
 https://blog.csdn.net/weixin_44685869/article/details/102690814
 
-
 https://blog.csdn.net/qq_44955537/article/details/103279928
-
 
 https://www.656463.com/wenda/zDjangoRESTkjzxlhyddgx_529
 
 http://ask.sov5.cn/q/MWtEJzdkVD
 
+https://www.jianshu.com/p/332406309476 Django 实现分页功能
 
 
-/home/vagrant/.local/share/virtualenvs/zst_mysql_1110-XKCR2RrO/lib/python3.6/site-packages/rest_framework/pagination.py:200: UnorderedObjectListWarning: Pagination may yield inconsistent results with an unordered object_list: <class 'slowquery.models.SlowQueryHistory'> QuerySet.
-  paginator = self.django_paginator_class(queryset, page_size)
+
   

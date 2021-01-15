@@ -16,9 +16,9 @@
                   
                 </el-form-item>
 
-                <el-form-item label="schema: ">
+                <el-form-item label="实例名: ">
 
-                    <SchemaSearch v-model="searchBar.schema"></SchemaSearch>       
+                    <InstanceSearch v-model="searchBar.instance"></InstanceSearch>       
             
                 </el-form-item>
 
@@ -36,45 +36,57 @@
                 <template slot-scope="props">
                     <el-form label-position="left" inline class="demo-table-expand">
                         <el-form-item label="完整的SQL语句：">
-                         <span>{{ props.row.finger }}</span>
+                         <span>{{ props.row.SQLText }}</span>
                         </el-form-item>
 
                     </el-form>
                 </template>
             </el-table-column>
 
-            <el-table-column prop="schema" label="库名" width="100"></el-table-column>
+            <el-table-column prop="CreateTime" label="日志统计时间" :formatter="formatter" width="180"></el-table-column>
 
-            
-            <el-table-column prop="finger" label="SQL语句" width="500" :show-overflow-tooltip='true'> </el-table-column>
+            <el-table-column prop="DBName" label="库名" width="100"></el-table-column>
+
+            <el-table-column prop="SQLText" label="SQL语句" width="400" :show-overflow-tooltip='true'> </el-table-column>
 
 
-            <el-table-column prop="hash_count" label="执行总次数" width="130" sortable> </el-table-column>
+            <el-table-column prop="MySQLTotalExecutionCounts" label="执行总次数" width="100" sortable> </el-table-column>
 
-            <el-table-column prop="queryTimeSum" label="执行总时长(秒)" width="150" sortable>
+            <el-table-column prop="MySQLTotalExecutionTimes" label="执行总时长(秒)" width="100" sortable>
                 <template slot-scope="scope">
-                    <span>{{ scope.row.queryTimeSum | numFilter }}</span>
+                    <span>{{ scope.row.MySQLTotalExecutionTimes | numFilter }}</span>
                 </template>
             </el-table-column>
 
-            <el-table-column prop="rowsExamineAvg" label="平均扫描行数" width="150">
+            <el-table-column prop="QueryTimeAvg" label="平均执行时长(秒)" width="100" sortable> 
                 <template slot-scope="scope">
-                    <span>{{ scope.row.rowsExamineAvg | numFilter }}</span>
+                    <span>{{ scope.row.QueryTimeAvg | numFilter }}</span>
                 </template>
             </el-table-column>
 
-            <el-table-column prop="rowsSentAvg" label="平均返回行数" width="150"> 
+            <el-table-column prop="ParseTotalRowCounts" label="扫描总行数" width="120" sortable>
                 <template slot-scope="scope">
-                    <span>{{ scope.row.rowsSentAvg | numFilter }}</span>
+                    <span>{{ scope.row.ParseTotalRowCounts | numFilter }}</span>
                 </template>
             </el-table-column>
 
-            <el-table-column prop="queryTimeAvg" label="平均执行时长(秒)" width="160"> 
+            <el-table-column prop="ParseRowAvg" label="平均扫描行数" width="120" sortable>
                 <template slot-scope="scope">
-                    <span>{{ scope.row.queryTimeAvg | numFilter }}</span>
+                    <span>{{ scope.row.ParseRowAvg | numFilter }}</span>
                 </template>
             </el-table-column>
 
+            <el-table-column prop="ReturnTotalRowCounts" label="返回总行数" width="150" sortable>
+                <template slot-scope="scope">
+                    <span>{{ scope.row.ReturnTotalRowCounts | numFilter }}</span>
+                </template>
+            </el-table-column>
+
+            <el-table-column prop="ReturnRowAvg" label="平均返回行数" width="100" sortable> 
+                <template slot-scope="scope">
+                    <span>{{ scope.row.ReturnRowAvg | numFilter }}</span>
+                </template>
+            </el-table-column>
 
             <el-table-column label='操作'>
                 <template slot-scope="scope">
@@ -100,22 +112,21 @@
 
 <script>
 
-    import SchemaSearch from '@/components/schema_search'
+     import InstanceSearch from '@/components/instance_search'
     import * as moment from 'moment'
-    import {getSlowSqlList} from '@/api/slowquery'
+    import {getSlowSqlAggrList} from '@/api/slowquery'
 
     export default {
         name: "index",
-        components: {SchemaSearch},
+        components: {InstanceSearch},
         data() {
             return {
                 searchBar: {
-                    schema: "",
+                    instance: "",
                     page_size: 5,
                     page_num: 1,
                     start: "",
                     end: "",
-                    is_aggr_by_hash: true,
                     hash: "",
                     
                 },
@@ -193,20 +204,20 @@
         },
         methods: {
            showSlowSqlList(row){
+
                
-            //    console.log("row", row) 
+               console.log("row", row) 
             //    this.searchBar.hash = row.hash
             //    this.searchBar.is_aggr_by_hash = false
             //    console.log("this.searchBar", this.searchBar) 
                
                 let routeUrl = this.$router.resolve({
-                    path: '/slowsql/list',
+                    path: '/slowquery/list',
                     query: {
                         start: this.searchBar.start,
                         end: this.searchBar.end,
                         schema: row.schema,
-                        is_aggr_by_hash: false,
-                        hash: row.hash
+                        SQLId: row.SQLId
                     }
                 });
                 window.open(routeUrl.href, '_blank')
@@ -218,10 +229,12 @@
                 this.searchBar.start = moment(this.timeRange[0]).format();
                 this.searchBar.end = moment(this.timeRange[1]).format();
 
-                getSlowSqlList(this.searchBar).then(resp => {
-                    // console.log("resp: ", resp)
-                    this.total = resp.data.count
-                    this.tableData = resp.data.results
+                console.log("this.searchBar", this.searchBar) 
+
+                getSlowSqlAggrList(this.searchBar).then(resp => {
+                    console.log("resp: ", resp)
+                    this.total = resp.data.total
+                    this.tableData = resp.data.rows
                     // 总共有多少行记录
                     // this.total = resp.data.count
                     // this.tableData = resp.data.results
@@ -268,6 +281,13 @@
                 }).catch(err => {})
 
             },
+            formatter(row, column) {
+            
+                // console.log("timestamp: ", row.slowlog_timestamp);
+                let timestamp = moment(row.slowlCreateTimeog_timestamp).format("YYYY-MM-DD HH:mm:ss")// 2020-12-30 19:41:45  时间戳转时间
+                return timestamp;
+            },
+            
             
            
         },

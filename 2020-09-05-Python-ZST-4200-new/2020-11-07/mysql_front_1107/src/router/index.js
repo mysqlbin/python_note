@@ -45,7 +45,7 @@ export const menuRouts = [
   },
   {
     path: '/slowsql',
-    meta: { title: '慢SQL管理-从ES读取数据' },
+    meta: { title: '慢SQL管理-从ES读取' },
     component: () => import('@/layout/index'),
     children: [
         {
@@ -73,7 +73,7 @@ export const menuRouts = [
   },
   {
     path: '/slowquery',
-    meta: { title: '慢SQL管理-从MySQL读取数据' },
+    meta: { title: '慢SQL管理-从MySQL读取' },
     component: () => import('@/layout/index'),
     children: [
         {

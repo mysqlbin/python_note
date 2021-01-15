@@ -110,6 +110,13 @@ class SchemaViewSet(viewsets.ModelViewSet):
 
         return Response(name_list)
 
+    @action(detail=False, methods=['get'])
+    def get_distinct_instance_names(self, request, *args, **kwargs):
+        queryset = self.get_queryset().values('instance_name').distinct()
+        # 我们这里没有使用序列化器，而是将query set变成了一个列表返回
+        instance_list = [d["instance_name"] for d in list(queryset)]
+
+        return Response(instance_list)
 
     @action(detail=True, methods=['get'])
     def get_schema_processlist(self, request, pk=None, *args, **kwargs):
