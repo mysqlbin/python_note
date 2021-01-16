@@ -11,5 +11,6 @@ urlpatterns = [
     path('slowquery_history/', slowquery_history),
     path('slowquery_aggr/', slowquery_aggr),
     path('get_aggs_by_date/', get_aggs_by_date),
+    path('get_aggs_by_instance/', get_aggs_by_instance),
     # *router.urls
 ]

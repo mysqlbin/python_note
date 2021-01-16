@@ -27,4 +27,16 @@ export let getAggsByDate = (params)=> {
 
 
 
+export let getAggsByInstance = (params) => {
+    return request({
+        url: '/slowquery//get_aggs_by_instance/',
+        method: 'get',
+        params: params
+    })
+}
+
+
+
+
+
 

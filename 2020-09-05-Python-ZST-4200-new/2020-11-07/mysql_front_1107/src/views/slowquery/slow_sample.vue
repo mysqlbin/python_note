@@ -2,13 +2,14 @@
     <div>
         <div id="container" style="width: 100%; height: 300px"></div>
         
-        <!-- <el-row>
+        <el-row>
             <el-col :span="12">
                 <div class="grid-content bg-purple">
                     <highcharts :options="schemaPieOptions"></highcharts>
                 </div>
             </el-col>
-            <el-col :span="12">
+
+            <!-- <el-col :span="12">
                 <div class="grid-content bg-purple-light">
                     <el-table :data="tableData" border >
                          
@@ -37,8 +38,9 @@
 
                 </div>
             </el-col>
+             -->
         </el-row>
- -->
+
 
 
     </div>
@@ -53,7 +55,7 @@ import { Chart } from "highcharts-vue";
 
 import $ from "jquery";
 import * as moment from 'moment'
-import {getAggsByDate} from '@/api/slowquery'
+import {getAggsByDate, getAggsByInstance} from '@/api/slowquery'
 
 
 
@@ -70,69 +72,69 @@ export default {
                 start: "",
                 end: "",
             },
-            // schemaPieOptions: {
-            //     chart: {
-            //             plotBackgroundColor: null,
-            //             plotBorderWidth: null,
-            //             plotShadow: false,
-            //             type: 'pie'
-            //     },
-            //     title: {
-            //             text: '各数据库慢SQL占比'
-            //     },
-            //     tooltip: {
-            //             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-            //     },
-            //     plotOptions: {
-            //             pie: {
-            //                     allowPointSelect: true,
-            //                     cursor: 'pointer',
-            //                     dataLabels: {
-            //                             enabled: true,
-            //                             format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-            //                             style: {
-            //                                     color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-            //                             }
-            //                     }
-            //             }
-            //     },
-            //     series: [{
-            //             name: 'Brands',
-            //             colorByPoint: true,
-            //             data: []
-            //     }]                   
+            schemaPieOptions: {
+                chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false,
+                        type: 'pie'
+                },
+                title: {
+                        text: '各实例/数据库慢SQL占比'
+                },
+                tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                        pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                        enabled: true,
+                                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                                        style: {
+                                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                                        }
+                                }
+                        }
+                },
+                series: [{
+                        name: 'Brands',
+                        colorByPoint: true,
+                        data: []
+                }]                   
 
-            // }
+            }
         }
     },
     created(){
         // console.log("created: ", 'created')
 
-        // this.updateQueryParams = _.debounce(
-        //     function (startTime, endTime) {
-        //         this.queryParams.start = startTime;
-        //         this.queryParams.end = endTime;
-        //         // console.log(this.queryParams);
-        //         this.$emit("updateQueryParams");
-        //     }.bind(this),
-        //     1000
-        // );
+        this.updateQueryParams = _.debounce(
+            function (startTime, endTime) {
+                this.queryParams.start = startTime;
+                this.queryParams.end = endTime;
+                // console.log(this.queryParams);
+                this.$emit("updateQueryParams");
+            }.bind(this),
+            1000
+        );
 
-        // this.$on(
-        //     "updateQueryParams",
-        //     function () {
-        //         // console.log("query params has changed");
-        //         // console.log("this.queryParams.start: ", this.queryParams.start)
-        //         // console.log("this.queryParams.end: ", this.queryParams.end)
-        //         this.doSearch();
-        //     }.bind(this)
-        // );
+        this.$on(
+            "updateQueryParams",
+            function () {
+                // console.log("query params has changed");
+                // console.log("this.queryParams.start: ", this.queryParams.start)
+                // console.log("this.queryParams.end: ", this.queryParams.end)
+                this.doSearch();
+            }.bind(this)
+        );
 
     },
     mounted(){
         // console.log("mounted: ", 'mounted')
         this.createChart();
-        // this.doSearch();
+        this.doSearch();
     },
     methods: {
 
@@ -204,7 +206,7 @@ export default {
                                 endTime = moment.unix(endTime).format();
                                 console.log("startTime: ", startTime);
                                 console.log("endTime: ", endTime);
-                                // that.updateQueryParams(startTime, endTime);
+                                that.updateQueryParams(startTime, endTime);
                             },
                         },
                     },
@@ -231,19 +233,19 @@ export default {
             //     this.tableData = resp.data;
             //     // console.log("tableData: ", resp.data)
             // }),
-            // getAggsBySchema(this.queryParams).then((resp) => {
-            //     const reducer = (accumulator, item) => accumulator + item["schema_count"];
-            //     let countAll = resp.data.reduce(reducer, 0);
-            //     // console.log("countAll: ", countAll);
-            //     this.schemaPieOptions.series[0].data = resp.data.map((v) => {
-            //         return {
-            //             name: v["schema"],
-            //             y: v["schema_count"] / countAll,
-            //         };
-            //     });
+            getAggsByInstance(this.queryParams).then((resp) => {
+                const reducer = (accumulator, item) => accumulator + item["instance_slow_count"];
+                let countAll = resp.data.rows.reduce(reducer, 0);
+                // console.log("countAll: ", countAll);
+                this.schemaPieOptions.series[0].data = resp.data.rows.map((v) => {
+                    return {
+                        name: v["hostname_max"],
+                        y: v["instance_slow_count"] / countAll,
+                    };
+                });
 
-            //     // console.log("this.schemaPieOptions.series[0].data: ", this.schemaPieOptions.series[0].data);
-            // });
+                // console.log("this.schemaPieOptions.series[0].data: ", this.schemaPieOptions.series[0].data);
+            });
         },
 
         // showSlowSqlList(row){
