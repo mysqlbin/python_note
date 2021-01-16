@@ -3,30 +3,31 @@
         <div id="container" style="width: 100%; height: 300px"></div>
         
         <el-row>
-            <el-col :span="12">
+            <el-col :span="10">
                 <div class="grid-content bg-purple">
                     <highcharts :options="schemaPieOptions"></highcharts>
                 </div>
             </el-col>
 
-            <!-- <el-col :span="12">
+            <el-col :span="14">
                 <div class="grid-content bg-purple-light">
                     <el-table :data="tableData" border >
                          
-                        <el-table-column prop="schema" label="库名" width="100"  type="expand">
+                        <el-table-column type="expand">
                             <template slot-scope="props">
                                 <el-form label-position="left" inline class="demo-table-expand">
                                     <el-form-item label="完整的SQL语句：">
-                                        <span>{{ props.row.finger }}</span>
+                                        <span>{{ props.row.FingerPrint }}</span>
                                     </el-form-item>
                                 </el-form>
                             </template>
                         </el-table-column>
-                    
-                        <el-table-column prop="finger" label="finger" width="500" :show-overflow-tooltip='true'>
-                        </el-table-column>
 
-                        <el-table-column prop="count" label="count" width="80"></el-table-column>
+                        <el-table-column prop="HostnameMax" label="实例名称" width="200"></el-table-column>
+
+                        <el-table-column prop="FingerPrint" label="finger" width="500" :show-overflow-tooltip='true'></el-table-column>
+
+                        <el-table-column prop="MySQLTotalExecutionCounts" label="count" width="80"></el-table-column>
                         
                         <el-table-column label='操作'>
                             <template slot-scope="scope">
@@ -38,7 +39,7 @@
 
                 </div>
             </el-col>
-             -->
+            
         </el-row>
 
 
@@ -55,7 +56,7 @@ import { Chart } from "highcharts-vue";
 
 import $ from "jquery";
 import * as moment from 'moment'
-import {getAggsByDate, getAggsByInstance} from '@/api/slowquery'
+import {getAggsByDate, getAggsByInstance, getSlowSqlTop10} from '@/api/slowquery'
 
 
 
@@ -227,12 +228,12 @@ export default {
                 
         },
         doSearch(){
-            // getSlowSqlTop10(this.queryParams).then(resp=> {
-            //     // console.log("this.queryParams.start: ", this.queryParams.start)
-            //     // console.log("this.queryParams.end: ", this.queryParams.end)
-            //     this.tableData = resp.data;
-            //     // console.log("tableData: ", resp.data)
-            // }),
+            getSlowSqlTop10(this.queryParams).then(resp=> {
+                // console.log("this.queryParams.start: ", this.queryParams.start)
+                // console.log("this.queryParams.end: ", this.queryParams.end)
+                this.tableData = resp.data.rows;
+                // console.log("tableData: ", resp.data)
+            }),
             getAggsByInstance(this.queryParams).then((resp) => {
                 const reducer = (accumulator, item) => accumulator + item["instance_slow_count"];
                 let countAll = resp.data.rows.reduce(reducer, 0);

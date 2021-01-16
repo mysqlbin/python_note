@@ -11,6 +11,26 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage, Invali
 from django.db.models.functions import Concat
 
 
+# 慢日志top10
+def get_top10_sql(request):
+
+    start_time = '2020-09-01 00:00:00'
+    end_time = '2020-09-10 00:00:00'
+
+    slowsql_obj = SlowQuery.objects.filter(
+            slowqueryhistory__ts_min__range=(start_time, end_time)
+        ).values('slowqueryhistory__hostname_max', 'slowqueryhistory__checksum').annotate(
+                MySQLTotalExecutionCounts=Sum('slowqueryhistory__ts_cnt'),
+                FingerPrint=F('fingerprint'),
+                HostnameMax=F('slowqueryhistory__hostname_max')
+        ).order_by("-MySQLTotalExecutionCounts")[:10]
+
+    result = [SlowLog for SlowLog in slowsql_obj]
+    result = {"rows": result}
+    respJson = json.dumps(result, cls=RewriteJsonEncoder)
+    return HttpResponse(respJson, content_type='application/json')
+
+
 # 每个实例慢日志数量的饼状图
 def get_aggs_by_instance(request):
     # select hostname_max, sum(ts_cnt) from mysql_slow_query_review_history where ts_min between '2020-09-01 00:00:00' and '2020-09-08 00:00:00' group by hostname_max;
