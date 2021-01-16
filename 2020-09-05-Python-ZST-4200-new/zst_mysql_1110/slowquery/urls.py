@@ -10,5 +10,6 @@ from django.urls import path, include
 urlpatterns = [
     path('slowquery_history/', slowquery_history),
     path('slowquery_aggr/', slowquery_aggr),
+    path('get_aggs_by_date/', get_aggs_by_date),
     # *router.urls
 ]

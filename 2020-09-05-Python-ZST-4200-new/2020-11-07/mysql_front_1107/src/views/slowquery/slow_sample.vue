@@ -145,13 +145,14 @@ export default {
             });
 
             getAggsByDate(this.queryParams).then((resp) => {
-
+                console.log("resp", resp.data);   
                 let chartData = [];
                 // 组装数据，渲染到图表中
-                _.forEach(resp.data, (v) => {
+                _.forEach(resp.data.rows, (v) => {
+                    // chartData.push([v["byday"], v["date_count"]]);
                     chartData.push([moment(v["byday"]).unix() * 1000, v["date_count"]]);
                 });
-                // console.log("chartData", chartData);
+                console.log("chartData", chartData);
 
                 this.stockChart = new Highcharts.stockChart("container", {
 

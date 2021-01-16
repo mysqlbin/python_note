@@ -13,8 +13,11 @@ from django.db.models.functions import Concat
 
 
 def get_aggs_by_date(request):
-    start_time = request.GET.get('start')
-    end_time = request.GET.get('end')
+    # start_time = request.GET.get('start', '2020-09-01 00:00:00')
+    # end_time = request.GET.get('end', '2020-09-10 00:00:00')
+
+    start_time = '2020-09-01 00:00:00'
+    end_time = '2020-09-10 00:00:00'
 
     if start_time is None or not isinstance(start_time, str) or len(start_time.strip()) == 0:
         start_time = None
@@ -22,7 +25,7 @@ def get_aggs_by_date(request):
         end_time = None
 
     slow_query_ojb = SlowQueryHistory.objects.filter(ts_min__range=(start_time, end_time)
-                                    ).extra(select={"byday": "DATE_FORMAT(ts_min, '%%Y-%%m-%%d %%H:%%i:%%s')"}).values("byday").annotate(date_count=Sum('ts_cnt'))
+                                    ).extra(select={"byday": "DATE_FORMAT(ts_min, '%%Y-%%m-%%d')"}).values("byday").annotate(date_count=Sum('ts_cnt')).order_by('byday')# 执行总次数倒序排列
 
     result = [SlowLog for SlowLog in slow_query_ojb]
     result = {"rows": result}
