@@ -25,13 +25,13 @@
 
                         <el-table-column prop="HostnameMax" label="实例名称" width="200"></el-table-column>
 
-                        <el-table-column prop="FingerPrint" label="finger" width="500" :show-overflow-tooltip='true'></el-table-column>
+                        <el-table-column prop="FingerPrint" label="finger" width="350" :show-overflow-tooltip='true'></el-table-column>
 
                         <el-table-column prop="MySQLTotalExecutionCounts" label="count" width="80"></el-table-column>
                         
                         <el-table-column label='操作'>
                             <template slot-scope="scope">
-                                <el-button @click="showSlowSqlList(scope.row)" type="primary" size="small">查看慢日志明细</el-button>
+                                <el-button @click="showSlowQueryList(scope.row)" type="primary" size="small">查看慢日志明细</el-button>
                             </template>
                         </el-table-column>
 
@@ -115,7 +115,7 @@ export default {
             function (startTime, endTime) {
                 this.queryParams.start = startTime;
                 this.queryParams.end = endTime;
-                // console.log(this.queryParams);
+                console.log(this.queryParams);
                 this.$emit("updateQueryParams");
             }.bind(this),
             1000
@@ -229,9 +229,11 @@ export default {
         },
         doSearch(){
             getSlowSqlTop10(this.queryParams).then(resp=> {
-                // console.log("resp: ", resp.data)
+                console.log("resp_top10: ", resp.data.date.start)
                 // console.log("this.queryParams.start: ", this.queryParams.start)
                 // console.log("this.queryParams.end: ", this.queryParams.end)
+                this.queryParams.start = resp.data.date.start
+                this.queryParams.end = resp.data.date.end
                 this.tableData = resp.data.data;
                 // console.log("tableData: ", resp.data)
             }),
@@ -250,69 +252,21 @@ export default {
             });
         },
 
-        // showSlowSqlList(row){
-        
-        //     let routeUrl = this.$router.resolve({
-        //         path: '/slowsql/list',
-        //         query: {
-        //             start: this.queryParams.start,
-        //             end: this.queryParams.end,
-        //             schema: row.schema,
-        //             is_aggr_by_hash: false,
-        //             hash: row.hash
-        //         }
-        //     });
-        //     window.open(routeUrl.href, '_blank')
+        showSlowQueryList(row){
+            console.log("row", row) 
+            console.log("queryParams", this.queryParams) 
+            let routeUrl = this.$router.resolve({
+                path: '/slowquery/list',
+                query: {
+                    start: this.queryParams.start,
+                    end: this.queryParams.end,
+                    schema: row.schema,
+                    SQLId: row.SQLId,
+                }
+            });
+            window.open(routeUrl.href, '_blank')
 
-        // },
-        // createChart() {
-            
-        //     Highcharts.setOptions({
-        //         lang: {
-        //             rangeSelectorZoom: "",
-        //         },
-        //     });
-
-        //     // $.getJSON('https://data.jianshukeji.com/jsonp?filename=json/aapl-c.json&callback=?', function (data) {
-        //     $.getJSON('https://demo-live-data.highcharts.com/aapl-c.json', function (data) {
-        //         // Create the chart
-        //         Highcharts.stockChart('container',  {
-        //             rangeSelector: {
-        //                 selected: 1
-        //             },
-        //             title: {
-        //                 text: 'AAPL Stock Price'
-        //             },
-        //             xAxis: {
-        //                 events: {
-        //                 // 监听时间范围的变化
-        //                 afterSetExtremes: function (e) {
-        //                     // e.min 和 e.max 为坐标轴当前的范围
-        //                     console.log(e.min, e.max);
-        //                     let startTime = _.toInteger(e.min) / 1000;
-        //                     let endTime = _.toInteger(e.max) / 1000;
-        //                     startTime = moment.unix(startTime).format();
-        //                     endTime = moment.unix(endTime).format();
-        //                     console.log("startTime: ", startTime);
-        //                     console.log("endTime: ", endTime);
-        //                 },
-        //                 },
-        //             },
-        //             series: [{
-        //                 name: 'AAPL Stock Price',
-        //                 data: data,
-        //                 type: 'spline',
-        //                 tooltip: {
-        //                     valueDecimals: 2
-        //                 }
-        //             }],
-                    
-        //         });
-
-        //         console.log("data: ", data)
-        //     });
-        // },
-    
+        },
     }
 }
 </script>

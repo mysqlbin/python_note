@@ -90,27 +90,14 @@ WSGI_APPLICATION = 'zst_mysql_1110.wsgi.application'
 #     }
 # }
 
-# DATABASES = {
-#     'default': {
-#     'ENGINE': 'django.db.backends.mysql',  # 数据库引擎
-#     'NAME': 'zst_mysql_1110',  # 数据库名，先前创建的
-#     'USER': 'root',  # 用户名，可以自己创建用户
-#     'PASSWORD': '123456abc',  # 密码
-#     # 'HOST': '192.168.1.27',  # mysql服务所在的主机ip
-#     'HOST': '192.168.0.201',  # mysql服务所在的主机ip
-#     'PORT': '3306',  # mysql服务端口
-#     }
-# }
-
-
 DATABASES = {
     'default': {
     'ENGINE': 'django.db.backends.mysql',  # 数据库引擎
-    'NAME': '1110_mysql',  # 数据库名，先前创建的
+    'NAME': 'zst_mysql_1110',  # 数据库名，先前创建的
     'USER': 'root',  # 用户名，可以自己创建用户
-    'PASSWORD': '7febd546',  # 密码
+    'PASSWORD': '123456abc',  # 密码
     # 'HOST': '192.168.1.27',  # mysql服务所在的主机ip
-    'HOST': '119.23.148.24 ',  # mysql服务所在的主机ip
+    'HOST': '192.168.0.201',  # mysql服务所在的主机ip
     'PORT': '3306',  # mysql服务端口
     }
 }
@@ -179,9 +166,9 @@ REST_FRAMEWORK = {
 
 
 
-# CELERY_BROKER_URL = 'redis://:niuniu_redis@192.168.0.252:6379/8'       # Broker配置，使用Redis作为消息中间件
+# CELERY_BROKER_URL = 'redis://:aiuaiu_redis@192.168.0.252:6379/8'       # Broker配置，使用Redis作为消息中间件
 #
-# CELERY_RESULT_BACKEND = 'redis://:niuniu_redis@192.168.0.252:6379/8'   # BACKEND配置，这里使用redis
+# CELERY_RESULT_BACKEND = 'redis://:aiuaiu_redis@192.168.0.252:6379/8'   # BACKEND配置，这里使用redis
 #
 # CELERY_RESULT_SERIALIZER = 'json'  # 结果序列化方案
 

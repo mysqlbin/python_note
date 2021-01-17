@@ -16,26 +16,28 @@ def get_top10_sql(request):
 
     result = {'status': 2000, 'msg': 'ok', 'data': {}}
 
-    # start_time = request.GET.get('start', '2020-09-01 00:00:00')
-    # end_time = request.GET.get('end', '2020-09-10 00:00:00')
-
-    start_time = '2020-09-01 00:00:00'
-    end_time = '2020-09-10 00:00:00'
-
+    start_time = request.GET.get('start')
+    end_time = request.GET.get('end')
+    # 默认要取当前最近的1个月
     if start_time is None or not isinstance(start_time, str) or len(start_time.strip()) == 0:
-        start_time = None
+        start_time = '2020-09-01 00:00:00'
     if end_time is None or not isinstance(end_time, str) or len(end_time.strip()) == 0:
-        end_time = None
+        end_time = '2020-09-10 00:00:00'
 
     slowquery_ojb = SlowQuery.objects.filter(
             slowqueryhistory__ts_min__range=(start_time, end_time)
         ).values('slowqueryhistory__hostname_max', 'slowqueryhistory__checksum').annotate(
                 MySQLTotalExecutionCounts=Sum('slowqueryhistory__ts_cnt'),
                 FingerPrint=F('fingerprint'),
-                HostnameMax=F('slowqueryhistory__hostname_max')
+                HostnameMax=F('slowqueryhistory__hostname_max'),
+                SQLId=F('slowqueryhistory__checksum')
         ).order_by("-MySQLTotalExecutionCounts")[:10]
 
     result['data'] = [SlowLog for SlowLog in slowquery_ojb]
+    result['date'] = {
+        "start": start_time,
+        "end": end_time,
+    }
     return JsonResponse(result)
 
 
@@ -47,16 +49,13 @@ def get_top10_sql(request):
 def get_aggs_by_instance(request):
 
     result = {'status': 2000, 'msg': 'ok', 'data': {}}
-    # start_time = request.GET.get('start', '2020-09-01 00:00:00')
-    # end_time = request.GET.get('end', '2020-09-10 00:00:00')
-
-    start_time = '2020-09-01 00:00:00'
-    end_time = '2020-09-10 00:00:00'
-
+    start_time = request.GET.get('start')
+    end_time = request.GET.get('end')\
+    # 默认要取当前最近的1个月
     if start_time is None or not isinstance(start_time, str) or len(start_time.strip()) == 0:
-        start_time = None
+        start_time = '2020-09-01 00:00:00'
     if end_time is None or not isinstance(end_time, str) or len(end_time.strip()) == 0:
-        end_time = None
+        end_time = '2020-09-10 00:00:00'
 
     slowquery_ojb = SlowQueryHistory.objects.filter(ts_min__range=(start_time, end_time)
                                     ).values("hostname_max").annotate(instance_slow_count=Sum('ts_cnt'))
@@ -70,16 +69,18 @@ def get_aggs_by_instance(request):
 def get_aggs_by_date(request):
 
     result = {'status': 2000, 'msg': 'ok', 'data': {}}
-    # start_time = request.GET.get('start', '2020-09-01 00:00:00')
-    # end_time = request.GET.get('end', '2020-09-10 00:00:00')
 
-    start_time = '2020-09-01 00:00:00'
-    end_time = '2020-09-10 00:00:00'
+    start_time = request.GET.get('start')
+    end_time = request.GET.get('end')
 
+    # 默认要取当前最近的1个月
     if start_time is None or not isinstance(start_time, str) or len(start_time.strip()) == 0:
-        start_time = None
+        start_time = '2020-09-01 00:00:00'
     if end_time is None or not isinstance(end_time, str) or len(end_time.strip()) == 0:
-        end_time = None
+        end_time = '2020-09-10 00:00:00'
+
+    print(start_time)
+    print(end_time)
 
     slowquery_ojb = SlowQueryHistory.objects.filter(ts_min__range=(start_time, end_time)
                                     ).extra(select={"byday": "DATE_FORMAT(ts_min, '%%Y-%%m-%%d')"}).values("byday").annotate(date_count=Sum('ts_cnt')).order_by('byday')# 执行总次数倒序排列
@@ -170,8 +171,8 @@ def slowquery_history(request):
 
     result = {'status': 2000, 'msg': 'ok', 'data': {}}
 
-    # start_time = request.GET.get('starts', '2020-09-01 00:00:00')
-    # end_time = request.GET.get('ends', '2020-09-08 00:00:00')
+    # start_time = request.GET.get('start', '2020-09-01 00:00:00')
+    # end_time = request.GET.get('end', '2020-09-08 00:00:00')
 
     start_time = request.GET.get('start')
     end_time = request.GET.get('end')
@@ -183,7 +184,7 @@ def slowquery_history(request):
 
     # checksum
     sql_id = request.GET.get('SQLId')
-    print(sql_id)
+    # print(sql_id)
     instance = request.GET.get('instance', None)
 
     if instance is None or not isinstance(instance, str) or len(instance.strip()) == 0:

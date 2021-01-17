@@ -45,9 +45,9 @@
 
             <el-table-column prop="CreateTime" label="日志统计时间" :formatter="formatter" width="180"></el-table-column>
 
-            <el-table-column prop="DBName" label="库名" width="100"></el-table-column>
+            <el-table-column prop="DBName" label="实例名称" width="180"></el-table-column>
 
-            <el-table-column prop="SQLText" label="SQL语句" width="400" :show-overflow-tooltip='true'> </el-table-column>
+            <el-table-column prop="SQLText" label="SQL语句" width="300" :show-overflow-tooltip='true'> </el-table-column>
 
 
             <el-table-column prop="MySQLTotalExecutionCounts" label="执行总次数" width="100" sortable> </el-table-column>
@@ -205,12 +205,8 @@
         methods: {
            showSlowSqlList(row){
 
-               
                console.log("row", row) 
-            //    this.searchBar.hash = row.hash
-            //    this.searchBar.is_aggr_by_hash = false
-            //    console.log("this.searchBar", this.searchBar) 
-               
+                           
                 let routeUrl = this.$router.resolve({
                     path: '/slowquery/list',
                     query: {
