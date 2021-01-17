@@ -13,6 +13,9 @@
  节后复习MySQL
 一样样来
 
+return HttpResponse 改为 JsonResponse
+
+
 
 未完成的功能：
 	1. 添加实例列表

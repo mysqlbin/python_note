@@ -151,7 +151,7 @@ export default {
                 console.log("resp", resp.data);   
                 let chartData = [];
                 // 组装数据，渲染到图表中
-                _.forEach(resp.data.rows, (v) => {
+                _.forEach(resp.data.data, (v) => {
                     // chartData.push([v["byday"], v["date_count"]]);
                     chartData.push([moment(v["byday"]).unix() * 1000, v["date_count"]]);
                 });
@@ -229,16 +229,17 @@ export default {
         },
         doSearch(){
             getSlowSqlTop10(this.queryParams).then(resp=> {
+                // console.log("resp: ", resp.data)
                 // console.log("this.queryParams.start: ", this.queryParams.start)
                 // console.log("this.queryParams.end: ", this.queryParams.end)
-                this.tableData = resp.data.rows;
+                this.tableData = resp.data.data;
                 // console.log("tableData: ", resp.data)
             }),
             getAggsByInstance(this.queryParams).then((resp) => {
                 const reducer = (accumulator, item) => accumulator + item["instance_slow_count"];
-                let countAll = resp.data.rows.reduce(reducer, 0);
+                let countAll = resp.data.data.reduce(reducer, 0);
                 // console.log("countAll: ", countAll);
-                this.schemaPieOptions.series[0].data = resp.data.rows.map((v) => {
+                this.schemaPieOptions.series[0].data = resp.data.data.map((v) => {
                     return {
                         name: v["hostname_max"],
                         y: v["instance_slow_count"] / countAll,

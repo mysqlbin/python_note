@@ -232,9 +232,9 @@
                 console.log("this.searchBar", this.searchBar) 
 
                 getSlowSqlAggrList(this.searchBar).then(resp => {
-                    console.log("resp: ", resp)
+                    console.log("resp: ", resp.data.data)
                     this.total = resp.data.total
-                    this.tableData = resp.data.rows
+                    this.tableData = resp.data.data
                     // 总共有多少行记录
                     // this.total = resp.data.count
                     // this.tableData = resp.data.results
