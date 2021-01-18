@@ -43,9 +43,7 @@
                 </template>
             </el-table-column>
             
-            <!-- 添加一列：执行时间2222 -->
-
-            <el-table-column prop="DBName" label="实例名称" width="180"></el-table-column>
+            <el-table-column prop="HostnameMax" label="实例名称" width="180"></el-table-column>
 
             <el-table-column prop="ExecutionStartTime" :formatter="formatter" label="日志统计开始时间" width="170"></el-table-column>
 

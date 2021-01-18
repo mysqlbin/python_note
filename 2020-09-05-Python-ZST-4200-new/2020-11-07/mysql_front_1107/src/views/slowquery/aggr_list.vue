@@ -45,7 +45,7 @@
 
             <el-table-column prop="CreateTime" label="日志统计时间" :formatter="formatter" width="180"></el-table-column>
 
-            <el-table-column prop="DBName" label="实例名称" width="180"></el-table-column>
+            <el-table-column prop="HostnameMax" label="实例名称" width="180"></el-table-column>
 
             <el-table-column prop="SQLText" label="SQL语句" width="300" :show-overflow-tooltip='true'> </el-table-column>
 

@@ -27,7 +27,7 @@ class SlowQueryHistory(models.Model):
     hostname_max = models.CharField(max_length=64, null=False)
     client_max = models.CharField(max_length=64, null=True)
     user_max = models.CharField(max_length=64, null=False)
-    db_max = models.CharField(max_length=64, null=True, default=None)
+    db_max = models.CharField(max_length=64, null=True)
     checksum = models.ForeignKey(SlowQuery, db_constraint=False, to_field='checksum', db_column='checksum',
                                  on_delete=models.CASCADE)
     sample = models.TextField()
@@ -130,7 +130,6 @@ class SlowQueryHistory(models.Model):
 
     class Meta:
         db_table = 'mysql_slow_query_review_history'
-
 
     def __str__(self):
         return f"history: {self.id}-{self.checksum}-{self.ts_cnt}"

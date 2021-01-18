@@ -15,7 +15,7 @@ def celery_task_test(request):
 
 
 def orm_operate_three_table(request):
-    # 查询 卢建斌现在居住的省份
+    # 查询 现在居住的省份
     p_res = Person.objects.select_related('living__province').get(name = '卢建斌')
 
     """

@@ -29,5 +29,7 @@ urlpatterns = [
     # path('v1/celery_debug/', celery_debug),
     # path('v1/celery_result/', celery_result),
     path('v1/get_schema_by_ip/', get_schema_by_ip),
+    path('v1/adddata/', adddata),
+    path('v1/adddata02/', adddata02),
     *router.urls
 ]

@@ -1,11 +1,32 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.utils import timezone
 
+
+# 基础表，包含了gmt_update 和gmt_create两个字段
+class AbcModel(models.Model):
+    name = models.CharField(max_length=30)
+    memory = models.CharField(max_length=30)
+    cpu = models.CharField(max_length=30)
+    gmt_create = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        db_table = "mysql_abc"
+
+class EfgModel(models.Model):
+    name = models.CharField(max_length=30)
+    memory = models.CharField(max_length=30)
+    cpu = models.CharField(max_length=30)
+    gmt_create = models.DateTimeField(auto_now_add=True, null=True)
+
+    class Meta:
+        db_table = "mysql_efg"
 
 # 基础表，包含了gmt_update 和gmt_create两个字段
 class CommonModel(models.Model):
     gmt_update = models.DateTimeField(auto_now=True, null=True)
-    gmt_create = models.DateTimeField(auto_now_add=True, null=True)
+    # gmt_create = models.DateTimeField(auto_now_add=True, null=True)
+    gmt_create = models.DateTimeField(default=timezone.now)
 
     class Meta:
         abstract = True

@@ -26,10 +26,23 @@ from rest_framework.response import Response
 from .models import SchemaModel
 from django.core.exceptions import ValidationError
 from django.http import JsonResponse, Http404
+from django.http import HttpResponse
 
 import MySQLdb
 
 from rest_framework.decorators import api_view
+from .models import AbcModel, EfgModel
+
+def adddata(request):
+    b = AbcModel(name="python基础",memory='32', cpu='10')
+    b.save()#保存
+    return HttpResponse("添加成功")
+
+def adddata02(request):
+    b = EfgModel(name="python基础",memory='32', cpu='10')
+    b.save()#保存
+    return HttpResponse("添加成功")
+
 
 @api_view(['GET'])
 def get_schema_by_ip(request):
@@ -78,6 +91,7 @@ def get_schema_by_ip(request):
 #     # print(result)
 #     print(result.state)
 #     return MyJsonResponse(message="success")
+
 
 class CustomPagination(PageNumberPagination):
 

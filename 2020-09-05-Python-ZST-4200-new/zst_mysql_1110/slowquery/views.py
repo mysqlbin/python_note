@@ -6,9 +6,12 @@ from .models import SlowQuery, SlowQueryHistory
 from django.db.models import F, Max, Sum, Value as V
 from django.http import HttpResponse,JsonResponse
 import json
-from common.utils.rewrite_json_encoder import RewriteJsonEncoder
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage, InvalidPage
 from django.db.models.functions import Concat
+from django.utils.timezone import utc
+import datetime
+from django.utils.timezone import localtime
+
 
 
 # 慢日志top10
@@ -124,7 +127,7 @@ def slowquery_aggr(request):
             slowqueryhistory__ts_min__range=(start_time, end_time)
         ).annotate(SQLText=F('fingerprint'), SQLId=F('checksum')).values('SQLText', 'SQLId').annotate(
             CreateTime=Max('slowqueryhistory__ts_max'),
-            DBName=Max('slowqueryhistory__db_max'),  # 数据库
+            HostnameMax=Max('slowqueryhistory__hostname_max'),  # 数据库
             MySQLTotalExecutionCounts=Sum('slowqueryhistory__ts_cnt'),  # 执行总次数
             MySQLTotalExecutionTimes=Sum('slowqueryhistory__query_time_sum'),  # 执行总时长
             QueryTimeAvg=Sum('slowqueryhistory__query_time_sum') / Sum('slowqueryhistory__ts_cnt'),  # 平均执行时长
@@ -139,7 +142,7 @@ def slowquery_aggr(request):
             slowqueryhistory__ts_min__range=(start_time, end_time),
         ).annotate(SQLText=F('fingerprint'), SQLId=F('checksum')).values('SQLText', 'SQLId').annotate(
             CreateTime=Max('slowqueryhistory__ts_max'),
-            DBName=Max('slowqueryhistory__db_max'),  # 数据库
+            HostnameMax=Max('slowqueryhistory__hostname_max'),  # 数据库
             MySQLTotalExecutionCounts=Sum('slowqueryhistory__ts_cnt'),  # 执行总次数
             MySQLTotalExecutionTimes=Sum('slowqueryhistory__query_time_sum'),  # 执行总时长
             QueryTimeAvg=Sum('slowqueryhistory__query_time_sum') / Sum('slowqueryhistory__ts_cnt'),  # 平均执行时长
@@ -177,6 +180,15 @@ def slowquery_history(request):
     start_time = request.GET.get('start')
     end_time = request.GET.get('end')
 
+    print(type(start_time))
+
+    utc = start_time
+    UTC_FORMAT = "%Y-%m-%dT%H:%M:%S"
+    utcTime = datetime.datetime.strptime(utc, UTC_FORMAT)
+    localtime = utcTime + datetime.timedelta(hours=0)
+    print(localtime)
+
+    print(end_time)
     if start_time is None or not isinstance(start_time, str) or len(start_time.strip()) == 0:
         start_time = None
     if end_time is None or not isinstance(end_time, str) or len(end_time.strip()) == 0:
@@ -202,7 +214,7 @@ def slowquery_history(request):
             checksum=sql_id,
             ts_min__range=(start_time, end_time)
         ).annotate(ExecutionStartTime=F('ts_min'),  # 本次统计(每5分钟一次)该类型sql语句出现的最小时间
-                   DBName=F('db_max'),  # 数据库名
+                   HostnameMax=F('hostname_max'),  # 实例名称
                    HostAddress=Concat(V('\''), 'user_max', V('\''), V('@'), V('\''), 'client_max', V('\'')),  # 用户名
                    SQLText=F('sample'),  # SQL语句
                    TotalExecutionCounts=F('ts_cnt'),  # 本次统计该sql语句出现的次数
@@ -220,7 +232,7 @@ def slowquery_history(request):
                 ts_min__range=(start_time, end_time)
             ).annotate(ExecutionStartTime=F('ts_min'),  # 本次统计(每5分钟一次)该类型sql语句出现的最小时间
                        ExecutionEndTime=F('ts_max'),  # 本次统计(每5分钟一次)该类型sql语句出现的最小时间
-                       DBName=F('db_max'),  # 数据库名
+                       HostnameMax=F('hostname_max'),  # 实例名称
                        HostAddress=Concat(V('\''), 'user_max', V('\''), V('@'), V('\''), 'client_max', V('\'')), # 用户名
                        SQLText=F('sample'),  # SQL语句
                        TotalExecutionCounts=F('ts_cnt'),  # 本次统计该sql语句出现的次数
@@ -236,7 +248,7 @@ def slowquery_history(request):
                 ts_min__range=(start_time, end_time)
             ).annotate(ExecutionStartTime=F('ts_min'),  # 本次统计(每5分钟一次)该类型sql语句出现的最小时间
                        ExecutionEndTime=F('ts_max'),  # 本次统计(每5分钟一次)该类型sql语句出现的最大时间
-                       DBName=F('db_max'),  # 数据库名
+                       HostnameMax=F('hostname_max'),  # 数据库名
                        HostAddress=Concat(V('\''), 'user_max', V('\''), V('@'), V('\''), 'client_max', V('\'')), # 用户名
                        SQLText=F('sample'),  # SQL语句
                        TotalExecutionCounts=F('ts_cnt'),  # 本次统计该sql语句出现的次数
@@ -248,7 +260,7 @@ def slowquery_history(request):
                        )
 
     slow_sql_list = slow_sql_record_obj.values('ExecutionStartTime',
-                                       'DBName',
+                                        'HostnameMax',
                                         'HostAddress',
                                         'SQLText',
                                         'TotalExecutionCounts',
