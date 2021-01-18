@@ -13,6 +13,10 @@ import datetime
 from django.utils.timezone import localtime
 
 
+def format_utc_time(current_time):
+    format_time = current_time.split('+')[0]
+    format_time = format_time.replace("T", " ")
+    return format_time
 
 # 慢日志top10
 def get_top10_sql(request):
@@ -23,9 +27,15 @@ def get_top10_sql(request):
     end_time = request.GET.get('end')
     # 默认要取当前最近的1个月
     if start_time is None or not isinstance(start_time, str) or len(start_time.strip()) == 0:
+        # 默认的日期要减少8小时
         start_time = '2020-09-01 00:00:00'
+    else:
+        start_time = format_utc_time(start_time)
+
     if end_time is None or not isinstance(end_time, str) or len(end_time.strip()) == 0:
         end_time = '2020-09-10 00:00:00'
+    else:
+        end_time = format_utc_time(end_time)
 
     slowquery_ojb = SlowQuery.objects.filter(
             slowqueryhistory__ts_min__range=(start_time, end_time)
@@ -53,12 +63,18 @@ def get_aggs_by_instance(request):
 
     result = {'status': 2000, 'msg': 'ok', 'data': {}}
     start_time = request.GET.get('start')
-    end_time = request.GET.get('end')\
+    end_time = request.GET.get('end')
     # 默认要取当前最近的1个月
     if start_time is None or not isinstance(start_time, str) or len(start_time.strip()) == 0:
+        # 默认的日期要减少8小时
         start_time = '2020-09-01 00:00:00'
+    else:
+        start_time = format_utc_time(start_time)
+
     if end_time is None or not isinstance(end_time, str) or len(end_time.strip()) == 0:
         end_time = '2020-09-10 00:00:00'
+    else:
+        end_time = format_utc_time(end_time)
 
     slowquery_ojb = SlowQueryHistory.objects.filter(ts_min__range=(start_time, end_time)
                                     ).values("hostname_max").annotate(instance_slow_count=Sum('ts_cnt'))
@@ -75,15 +91,17 @@ def get_aggs_by_date(request):
 
     start_time = request.GET.get('start')
     end_time = request.GET.get('end')
-
     # 默认要取当前最近的1个月
     if start_time is None or not isinstance(start_time, str) or len(start_time.strip()) == 0:
+        # 默认的日期要减少8小时
         start_time = '2020-09-01 00:00:00'
+    else:
+        start_time = format_utc_time(start_time)
+
     if end_time is None or not isinstance(end_time, str) or len(end_time.strip()) == 0:
         end_time = '2020-09-10 00:00:00'
-
-    print(start_time)
-    print(end_time)
+    else:
+        end_time = format_utc_time(end_time)
 
     slowquery_ojb = SlowQueryHistory.objects.filter(ts_min__range=(start_time, end_time)
                                     ).extra(select={"byday": "DATE_FORMAT(ts_min, '%%Y-%%m-%%d')"}).values("byday").annotate(date_count=Sum('ts_cnt')).order_by('byday')# 执行总次数倒序排列
@@ -99,16 +117,18 @@ def slowquery_aggr(request):
 
     # 代码优化的空间
 
-    # start_time = request.GET.get('startTime', '2020-09-01 00:00:00')
-    # end_time = request.GET.get('endTime', '2020-09-08 00:00:00')
-
     start_time = request.GET.get('start')
     end_time = request.GET.get('end')
 
     if start_time is None or not isinstance(start_time, str) or len(start_time.strip()) == 0:
         start_time = None
+    else:
+        start_time = format_utc_time(start_time)
+
     if end_time is None or not isinstance(end_time, str) or len(end_time.strip()) == 0:
         end_time = None
+    else:
+        end_time = format_utc_time(end_time)
 
     instance = request.GET.get('instance', None)
 
@@ -180,19 +200,15 @@ def slowquery_history(request):
     start_time = request.GET.get('start')
     end_time = request.GET.get('end')
 
-    print(type(start_time))
-
-    utc = start_time
-    UTC_FORMAT = "%Y-%m-%dT%H:%M:%S"
-    utcTime = datetime.datetime.strptime(utc, UTC_FORMAT)
-    localtime = utcTime + datetime.timedelta(hours=0)
-    print(localtime)
-
-    print(end_time)
     if start_time is None or not isinstance(start_time, str) or len(start_time.strip()) == 0:
         start_time = None
+    else:
+        start_time = format_utc_time(start_time)
+
     if end_time is None or not isinstance(end_time, str) or len(end_time.strip()) == 0:
         end_time = None
+    else:
+        end_time = format_utc_time(end_time)
 
     # checksum
     sql_id = request.GET.get('SQLId')

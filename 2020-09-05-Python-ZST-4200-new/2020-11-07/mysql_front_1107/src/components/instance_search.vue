@@ -5,6 +5,7 @@
             v-model="instance"
             :fetch-suggestions="querySearch"
             placeholder="请输入实例名称"
+            style="width:300px"
     ></el-autocomplete>
     
 </template>

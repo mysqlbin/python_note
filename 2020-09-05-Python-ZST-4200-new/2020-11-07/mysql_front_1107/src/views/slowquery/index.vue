@@ -16,7 +16,7 @@
                   
                 </el-form-item>
 
-                <el-form-item label="实例名称: " style="width:300"> 
+                <el-form-item label="实例名称: " > 
 
                     <InstanceSearch v-model="searchBar.instance"></InstanceSearch>       
             
