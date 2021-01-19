@@ -158,7 +158,7 @@
         },
         created() {
            
-            // 用于url跳转之后重新获取参数
+            // 获取通过url跳转到当前页面后的参数
             if (this.$route.query.page_num){
                    this.searchBar.page_num = parseInt(this.$route.query.page_num)    
             }
@@ -170,7 +170,6 @@
             }
             
             if(this.$route.query.start){
-                         
                 this.searchBar.start = this.$route.query.start 
             }
             if(this.$route.query.instance){
@@ -180,17 +179,19 @@
             if(this.$route.query.end){
                 this.searchBar.end = this.$route.query.end
             }
-                
+            
+            // 页面加载，就触发搜索功能
             this.doSearch()
 
-            //清空地址栏参数
+            //当从聚合列表点击进来查看详情后，清空地址栏参数
             // this.$router.push({ query: {} });  
-
-            this.$router.replace({ query: {} })
-
-
+            if(this.$route.query.sqlid){
+               this.$router.replace({ query: {} })     
+            }
+            
+                   
         },
-        // 侦听事件，不加这个，点击上一页、下一页不生效
+        // 侦听事件，监听路由的变化，不加这个，点击上一页、下一页不生效
         watch: {
            $route(to, from){
                 
@@ -203,7 +204,9 @@
                 }    
 
                 if(to.query.sqlid){
-                    this.searchBar.sqlid = to.query.sqlid  
+                    if (this.searchBar.sqlid != to.query.sqlid){
+                        this.searchBar.sqlid = to.query.sqlid   
+                    } 
                 }
 
                 if(to.query.instance){
@@ -232,26 +235,25 @@
             doSearch(){
                 
                 if(this.$route.query.start){
-                    this.searchBar.start = this.$route.query.start 
-                    this.timeRange[0] = this.$route.query.start
+                    this.searchBar.start = this.$route.query.start   // 把url start参数绑定到服务端请求参数中
+                    this.timeRange[0] = this.$route.query.start      // 开始时间为url start参数的值
                 }else{
                     this.searchBar.start = moment(this.timeRange[0]).format();
                 }
 
-                if(this.$route.query.instance){
-                    this.searchBar.instance = this.$route.query.instance   
-                }
-                
-                if(this.$route.query.end){
 
+                if(this.$route.query.end){
                     this.searchBar.end = this.$route.query.end
                     this.timeRange[1] = this.$route.query.end
                 }else{
                     this.searchBar.end = moment(this.timeRange[1]).format();
                 }
                 
+                if(this.$route.query.instance){
+                    this.searchBar.instance = this.$route.query.instance   
+                }
+
                 getSlowSqlList(this.searchBar).then(resp => {
-                    console.log("resp: ", resp.data)
                     this.total = resp.data.total
                     this.tableData = resp.data.data
                 }).finally(_ => {

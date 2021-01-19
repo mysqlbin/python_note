@@ -32,7 +32,7 @@
             }
         },
         created() {
-            console.log("value:", this.value)
+            // console.log("value:", this.value)
             this.instance = this.value
             getInstanceNameList().then(resp => {
                 // console.log(111111)

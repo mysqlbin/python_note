@@ -260,8 +260,8 @@ export default {
                 query: {
                     start: this.queryParams.start,
                     end: this.queryParams.end,
-                    schema: row.schema,
-                    SQLId: row.SQLId,
+                    instance: row.HostnameMax,
+                    sqlid: row.SQLId
                 }
             });
             window.open(routeUrl.href, '_blank')

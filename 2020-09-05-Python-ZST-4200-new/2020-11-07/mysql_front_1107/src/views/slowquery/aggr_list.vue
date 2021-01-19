@@ -16,10 +16,12 @@
                   
                 </el-form-item>
 
-                <el-form-item label="实例名: ">
-
+                <el-form-item label="实例名称: ">
                     <InstanceSearch v-model="searchBar.instance"></InstanceSearch>       
-            
+                </el-form-item>
+
+                <el-form-item label="SQLId: " >
+                    <SqlIdSearch v-model="searchBar.sqlid"></SqlIdSearch>       
                 </el-form-item>
 
                 <el-form-item>
@@ -51,7 +53,6 @@
             <el-table-column prop="HostnameMax" label="实例名称" width="180"></el-table-column>
 
             <el-table-column prop="SQLText" label="SQL语句" width="300" :show-overflow-tooltip='true'> </el-table-column>
-
 
             <el-table-column prop="MySQLTotalExecutionCounts" label="执行总次数" width="100" sortable> </el-table-column>
 
@@ -93,9 +94,7 @@
 
             <el-table-column label='操作'>
                 <template slot-scope="scope">
-                    <!-- {{ scope.row }} -->
-                   <el-button @click="showSlowSqlList(scope.row)" type="primary" size="small">查看慢日志明细</el-button>
-                
+                   <el-button @click="showSlowSqlList(scope.row)" type="primary" size="small">查看慢日志明细</el-button> 
                 </template>
             </el-table-column>
 
@@ -115,13 +114,14 @@
 
 <script>
 
-     import InstanceSearch from '@/components/instance_search'
+    import InstanceSearch from '@/components/instance_search'
+    import SqlIdSearch from '@/components/checksum_search'
     import * as moment from 'moment'
     import {getSlowSqlAggrList} from '@/api/slowquery'
 
     export default {
         name: "index",
-        components: {InstanceSearch},
+        components: {InstanceSearch, SqlIdSearch},
         data() {
             return {
                 searchBar: {
