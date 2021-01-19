@@ -130,7 +130,7 @@ def slowquery_aggr(request):
     else:
         end_time = format_utc_time(end_time)
 
-    instance = request.GET.get('instance', None)
+    instance = request.GET.get('instance')
 
     if instance is None or not isinstance(instance, str) or len(instance.strip()) == 0:
         instance = None
@@ -141,6 +141,7 @@ def slowquery_aggr(request):
     page_num = request.GET.get('page_num', 1)
 
     if instance:
+
         # 获取慢查数据, 跨表一对多查询
         slowsql_obj = SlowQuery.objects.filter(
             slowqueryhistory__hostname_max=instance,
@@ -172,8 +173,6 @@ def slowquery_aggr(request):
             ReturnRowAvg=Sum('slowqueryhistory__rows_sent_sum') / Sum('slowqueryhistory__ts_cnt'),  # 平均返回行数
         )
 
-    # SELECT COUNT(*) FROM (SELECT `mysql_slow_query_review`.`fingerprint` AS `SQLText`, `mysql_slow_query_review`.`checksum` AS `SQLId`, MAX(`mysql_slow_query_review_history`.`ts_max`) AS `CreateTime`, MAX(`mysql_slow_query_review_history`.`db_max`) AS `DBName`, (SUM(`mysql_slow_query_review_history`.`Query_time_sum`) / SUM(`mysql_slow_query_review_history`.`ts_cnt`)) AS `QueryTimeAvg`, SUM(`mysql_slow_query_review_history`.`ts_cnt`) AS `MySQLTotalExecutionCounts`, SUM(`mysql_slow_query_review_history`.`Query_time_sum`) AS `MySQLTotalExecutionTimes`, SUM(`mysql_slow_query_review_history`.`Rows_examined_sum`) AS `ParseTotalRowCounts`, SUM(`mysql_slow_query_review_history`.`Rows_sent_sum`) AS `ReturnTotalRowCounts` FROM `mysql_slow_query_review` INNER JOIN `mysql_slow_query_review_history` ON (`mysql_slow_query_review`.`checksum` = `mysql_slow_query_review_history`.`checksum`) WHERE (`mysql_slow_query_review_history`.`hostname_max` = '192.168.0.54:3306' AND `mysql_slow_query_review_history`.`ts_min` BETWEEN '2019-05-08 00:00:00' AND '2019-12-19 00:00:00') GROUP BY `mysql_slow_query_review`.`checksum` ORDER BY NULL) subquery; args=('192.168.0.54:3306', '2019-05-08 00:00:00', '2019-12-19 00:00:00')
-    # SELECT `mysql_slow_query_review`.`fingerprint` AS `SQLText`, `mysql_slow_query_review`.`checksum` AS `SQLId`, MAX(`mysql_slow_query_review_history`.`ts_max`) AS `CreateTime`, MAX(`mysql_slow_query_review_history`.`db_max`) AS `DBName`, (SUM(`mysql_slow_query_review_history`.`Query_time_sum`) / SUM(`mysql_slow_query_review_history`.`ts_cnt`)) AS `QueryTimeAvg`, SUM(`mysql_slow_query_review_history`.`ts_cnt`) AS `MySQLTotalExecutionCounts`, SUM(`mysql_slow_query_review_history`.`Query_time_sum`) AS `MySQLTotalExecutionTimes`, SUM(`mysql_slow_query_review_history`.`Rows_examined_sum`) AS `ParseTotalRowCounts`, SUM(`mysql_slow_query_review_history`.`Rows_sent_sum`) AS `ReturnTotalRowCounts` FROM `mysql_slow_query_review` INNER JOIN `mysql_slow_query_review_history` ON (`mysql_slow_query_review`.`checksum` = `mysql_slow_query_review_history`.`checksum`) WHERE (`mysql_slow_query_review_history`.`hostname_max` = '192.168.0.54:3306' AND `mysql_slow_query_review_history`.`ts_min` BETWEEN '2019-05-08 00:00:00' AND '2019-12-19 00:00:00') GROUP BY `mysql_slow_query_review`.`checksum` ORDER BY `MySQLTotalExecutionCounts` DESC LIMIT 2; args=('192.168.0.54:3306', '2019-05-08 00:00:00', '2019-12-19 00:00:00')
 
     slowquery_ojb = slowsql_obj.order_by('-MySQLTotalExecutionCounts')# 执行总次数倒序排列
 
@@ -211,8 +210,8 @@ def slowquery_history(request):
         end_time = format_utc_time(end_time)
 
     # checksum
-    sql_id = request.GET.get('SQLId')
-    # print(sql_id)
+    sql_id = request.GET.get('sqlid')
+    print(sql_id)
     instance = request.GET.get('instance', None)
 
     if instance is None or not isinstance(instance, str) or len(instance.strip()) == 0:
@@ -238,7 +237,8 @@ def slowquery_history(request):
                    QueryTimes=F('query_time_sum'),  # 本次统计该sql语句花费的总时间(秒)
                    LockTimes=F('lock_time_sum'),  # 本次统计该sql语句锁定总时长(秒)
                    ParseRowCounts=F('rows_examined_sum'),  # 本次统计该sql语句解析总行数
-                   ReturnRowCounts=F('rows_sent_sum')  # 本次统计该sql语句返回总行数
+                   ReturnRowCounts=F('rows_sent_sum'),  # 本次统计该sql语句返回总行数
+                   SQLId=F('checksum')
                    )
     else:
         if instance:
@@ -256,7 +256,8 @@ def slowquery_history(request):
                        QueryTimes=F('query_time_sum'),  # 本次统计该sql语句花费的总时间(秒)
                        LockTimes=F('lock_time_sum'),  # 本次统计该sql语句锁定总时长(秒)
                        ParseRowCounts=F('rows_examined_sum'),  # 本次统计该sql语句解析总行数
-                       ReturnRowCounts=F('rows_sent_sum')  # 本次统计该sql语句返回总行数
+                       ReturnRowCounts=F('rows_sent_sum'),  # 本次统计该sql语句返回总行数
+                       SQLId=F('checksum')
                        )
         else:
             # 获取慢查明细数据
@@ -272,7 +273,8 @@ def slowquery_history(request):
                        QueryTimes=F('query_time_sum'),  # 本次统计该sql语句花费的总时间(秒)
                        LockTimes=F('lock_time_sum'),  # 本次统计该sql语句锁定总时长(秒)
                        ParseRowCounts=F('rows_examined_sum'),  # 本次统计该sql语句解析总行数
-                       ReturnRowCounts=F('rows_sent_sum')  # 本次统计该sql语句返回总行数
+                       ReturnRowCounts=F('rows_sent_sum'),  # 本次统计该sql语句返回总行数
+                       SQLId=F('checksum')
                        )
 
     slow_sql_list = slow_sql_record_obj.values('ExecutionStartTime',
@@ -284,7 +286,8 @@ def slowquery_history(request):
                                         'QueryTimes',
                                         'LockTimes',
                                         'ParseRowCounts',
-                                        'ReturnRowCounts').order_by('-ExecutionStartTime')  # 执行总次数倒序排列
+                                        'ReturnRowCounts',
+                                        'SQLId').order_by('-ExecutionStartTime')  # 执行总次数倒序排列
 
     # 将数据按照规定每页显示 10 条, 进行分割
     paginator = Paginator(slow_sql_list, page_size)

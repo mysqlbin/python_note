@@ -16,7 +16,7 @@
                   
                 </el-form-item>
 
-                <el-form-item label="实例名: ">
+                <el-form-item label="实例名称: " > 
 
                     <InstanceSearch v-model="searchBar.instance"></InstanceSearch>       
             
@@ -27,7 +27,7 @@
                 </el-form-item>
 
             </el-form>
-
+        
         </el-row>
 
         <el-table v-loading="tableLoading" :data="tableData" border style="width: 100%">
@@ -35,69 +35,50 @@
             <el-table-column type="expand">
                 <template slot-scope="props">
                     <el-form label-position="left" inline class="demo-table-expand">
-                        <el-form-item label="SQLId：">
-                            <span>{{ props.row.SQLId }}</span>
-                        </el-form-item>
-                        <el-form-item label="完整的SQL语句：">
-                            <span>{{ props.row.SQLText }}</span>
+                        <el-form-item label="显示完整的SQL语句：">
+                         <span>{{ props.row.SQLText }}</span>
                         </el-form-item>
 
                     </el-form>
                 </template>
             </el-table-column>
-
-            <el-table-column prop="CreateTime" label="日志统计时间" :formatter="formatter" width="180"></el-table-column>
-
+            
             <el-table-column prop="HostnameMax" label="实例名称" width="180"></el-table-column>
 
-            <el-table-column prop="SQLText" label="SQL语句" width="300" :show-overflow-tooltip='true'> </el-table-column>
+            <el-table-column prop="ExecutionStartTime" :formatter="formatter" label="日志统计开始时间" width="170"></el-table-column>
 
+            <el-table-column prop="ExecutionEndTime" :formatter="formatter" label="日志统计结束时间" width="170"></el-table-column>
 
-            <el-table-column prop="MySQLTotalExecutionCounts" label="执行总次数" width="100" sortable> </el-table-column>
+            <el-table-column prop="HostAddress" label='用户名' width="220"></el-table-column>
+            
+            <el-table-column prop="SQLText" label="SQL语句" width="450" :show-overflow-tooltip='true'> </el-table-column>
+            
+            <el-table-column prop="TotalExecutionCounts" label="执行总次数" width="80" sortable></el-table-column>
 
-            <el-table-column prop="MySQLTotalExecutionTimes" label="执行总时长(秒)" width="100" sortable>
+            <!-- <el-table-column prop="QueryTimePct95" label="执行时长(95%)" width="100">
+                 <template slot-scope="scope">
+                    <span>{{ scope.row.QueryTimePct95 | numFilter }}</span>
+                </template>
+            </el-table-column> -->
+            
+            <el-table-column prop="QueryTimes" label="执行总时长(秒)" width="100" sortable>
                 <template slot-scope="scope">
-                    <span>{{ scope.row.MySQLTotalExecutionTimes | numFilter }}</span>
+                    <span>{{ scope.row.QueryTimes | numFilter }}</span>
+                </template>
+            </el-table-column>
+            
+            <el-table-column prop="LockTimes" label="持有锁总时长(秒)" width="100" sortable>
+                <template slot-scope="scope">
+                    <span>{{ scope.row.LockTimes | numFilter }}</span>
                 </template>
             </el-table-column>
 
-            <el-table-column prop="QueryTimeAvg" label="平均执行时长(秒)" width="100" sortable> 
-                <template slot-scope="scope">
-                    <span>{{ scope.row.QueryTimeAvg | numFilter }}</span>
-                </template>
+            <el-table-column prop="ParseRowCounts" label="扫描总行数" width="120" sortable>
             </el-table-column>
 
-            <el-table-column prop="ParseTotalRowCounts" label="扫描总行数" width="120" sortable>
-                <template slot-scope="scope">
-                    <span>{{ scope.row.ParseTotalRowCounts | numFilter }}</span>
-                </template>
+             <el-table-column prop="ReturnRowCounts" label="返回总行数" width="120" sortable>
             </el-table-column>
 
-            <el-table-column prop="ParseRowAvg" label="平均扫描行数" width="120" sortable>
-                <template slot-scope="scope">
-                    <span>{{ scope.row.ParseRowAvg | numFilter }}</span>
-                </template>
-            </el-table-column>
-
-            <el-table-column prop="ReturnTotalRowCounts" label="返回总行数" width="150" sortable>
-                <template slot-scope="scope">
-                    <span>{{ scope.row.ReturnTotalRowCounts | numFilter }}</span>
-                </template>
-            </el-table-column>
-
-            <el-table-column prop="ReturnRowAvg" label="平均返回行数" width="100" sortable> 
-                <template slot-scope="scope">
-                    <span>{{ scope.row.ReturnRowAvg | numFilter }}</span>
-                </template>
-            </el-table-column>
-
-            <el-table-column label='操作'>
-                <template slot-scope="scope">
-                    <!-- {{ scope.row }} -->
-                   <el-button @click="showSlowSqlList(scope.row)" type="primary" size="small">查看慢日志明细</el-button>
-                
-                </template>
-            </el-table-column>
 
         </el-table>
         <el-pagination
@@ -114,11 +95,9 @@
 </template>
 
 <script>
-
-     import InstanceSearch from '@/components/instance_search'
+    import InstanceSearch from '@/components/instance_search'
     import * as moment from 'moment'
-    import {getSlowSqlAggrList} from '@/api/slowquery'
-
+    import {getSlowSqlList} from '@/api/slowquery'
     export default {
         name: "index",
         components: {InstanceSearch},
@@ -130,8 +109,6 @@
                     page_num: 1,
                     start: "",
                     end: "",
-                    hash: "",
-                    
                 },
                 tableData: [],
                 schemaNameList: [],
@@ -175,17 +152,34 @@
             },
         },
         created() {
-            //  console.log("created: ", 'created')      
+            //  console.log("created: ", 'created')   
+            //  console.log("this.searchBar0: ", this.searchBar);     
+            //  console.log("this.$route.query1:", this.$route.query)
+            // 用于url跳转之后重新获取参数
             if (this.$route.query.page_num){
                    this.searchBar.page_num = parseInt(this.$route.query.page_num)    
             }
-
             if(this.$route.query.page_size){
                 this.searchBar.page_size = parseInt(this.$route.query.page_size)     
             }    
-
+            if(this.$route.query.SQLId){
+                this.searchBar.SQLId = this.$route.query.SQLId
+            }
+            
+            if(this.$route.query.start){
+                         
+                this.searchBar.start = this.$route.query.start 
+            }
+            if(this.$route.query.instance){
+                console.log(111111)
+                this.searchBar.instance = this.$route.query.instance    
+            }
+            if(this.$route.query.end){
+                this.searchBar.end = this.$route.query.end
+            }
+                
+            // console.log("this.searchBar1: ", this.searchBar);  
             this.doSearch()
-
         },
         // 侦听事件，不加这个，点击上一页、下一页不生效
         watch: {
@@ -193,51 +187,81 @@
               
                 if (to.query.page_num){
                    this.searchBar.page_num = parseInt(to.query.page_num)  
-                    // console.log("to.query.page_num: ", to.query.page_num)  
+                    console.log("to.query.page_num: ", to.query.page_num)  
                 }
-
                 if(to.query.page_size){
                    this.searchBar.page_size = parseInt(to.query.page_size)   
-                    // console.log("to.query.page_size: ", to.query.page_size)  
+                    console.log("to.query.page_size: ", to.query.page_size)  
                 }    
-
+                if(to.query.SQLId){
+                    this.searchBar.SQLId = to.query.SQLId  
+                    console.log("to.query.SQLId: ", to.query.SQLId)   
+                }
+                if(to.query.start){
+                    if (this.searchBar.start != to.query.start){
+                      this.searchBar.start = to.query.start      
+                    }   
+                }
+                if(to.query.instance){
+                    // console.log("to.query.instance: ", to.query.instance)
+                    // console.log("this.searchBar.instance: ", this.searchBar)
+                    if (this.searchBar.instance != to.query.instance){
+                        this.searchBar.instance = to.query.instance   
+                    }   
+                }
+                if(to.query.end){
+                    if (this.searchBar.end != to.query.end){
+                      this.searchBar.end = to.query.end   
+                    } 
+                }
+            //    console.log("this.searchBar2: ", this.searchBar);     
                this.doSearch()
-
            }
         },
         methods: {
-           showSlowSqlList(row){
-
-               console.log("row", row) 
-                           
-                let routeUrl = this.$router.resolve({
-                    path: '/slowquery/list',
-                    query: {
-                        start: this.searchBar.start,
-                        end: this.searchBar.end,
-                        instance: row.HostnameMax,
-                        sqlid: row.SQLId
-                    }
-                });
-                window.open(routeUrl.href, '_blank')
-
-           },
+          
             // 获取慢查询列表
             doSearch(){
                 
-                this.searchBar.start = moment(this.timeRange[0]).format();
-                this.searchBar.end = moment(this.timeRange[1]).format();
+                if(this.$route.query.start){
+                           
+                    this.searchBar.start = this.$route.query.start 
+                    this.timeRange[0] = this.$route.query.start
+                }else{
+                    this.searchBar.start = moment(this.timeRange[0]).format();
+                }
 
-                getSlowSqlAggrList(this.searchBar).then(resp => {
+                // 优先获取搜索框的值
+                if (this.searchBar.instance){
+                    console.log("this.searchBar: ", this.searchBar)
+                    this.searchBar.SQLId = ""
+                    this.searchBar.instance = this.searchBar.instance    
+                }else if(this.$route.query.instance){
+                    this.searchBar.instance = this.$route.query.instance
+                }
+                
+                if(this.$route.query.end){
+                    this.searchBar.end = this.$route.query.end
+                    this.timeRange[1] = this.$route.query.end
+                }else{
+                    this.searchBar.end = moment(this.timeRange[1]).format();
+                }
+                
+                
+
+                getSlowSqlList(this.searchBar).then(resp => {
+                    console.log("resp1: ", resp)
                     this.total = resp.data.total
                     this.tableData = resp.data.data
                 }).finally(_ => {
                     // this.tableLoading = false
                 })
             },
-
             handleSizeChange(val) {
-
+                // console.log(`每页 ${val} 条`);
+                
+                // this.searchBar.page_size = val
+                // this.doSearch()
                 let queryCopy = _.cloneDeep(this.$route.query)
                 // console.log("queryCopy: ", queryCopy)
                 queryCopy.page_size = val
@@ -245,36 +269,29 @@
                 this.$router.push({
                     query: queryCopy
                 }).catch(err => {})
-
-
             },
             handleCurrentChange(val) {
                 // console.log(`当前页: ${val}`);
-
                 // 这种方式也可以实现分页改变之后的数据变化，不过不完善
                 // this.searchBar.page_num = val 
                 // this.doSearch()
-
                 let queryCopy = _.cloneDeep(this.$route.query)
                 // console.log("queryCopy: ", queryCopy)
                 queryCopy.page_num = val
                 // 修改 url
                 this.$router.push({
                     query: queryCopy
+                    
                 }).catch(err => {})
-
             },
             formatter(row, column) {
             
                 // console.log("timestamp: ", row.slowlog_timestamp);
-                let timestamp = moment(row.slowlCreateTimeog_timestamp).format("YYYY-MM-DD HH:mm:ss")// 2020-12-30 19:41:45  时间戳转时间
+                let timestamp = moment(row.ExecutionStartTime).format("YYYY-MM-DD HH:mm:ss")// 2020-12-30 19:41:45  时间戳转时间
                 return timestamp;
             },
             
-            
-           
         },
-
     }
 </script>
 

@@ -22,6 +22,13 @@
             
                 </el-form-item>
 
+
+                <el-form-item label="SQLId: " > 
+
+                    <SqlIdSearch v-model="searchBar.sqlid"></SqlIdSearch>       
+            
+                </el-form-item>
+                
                 <el-form-item>
                     <el-button type="primary" @click="doSearch">查询</el-button>
                 </el-form-item>
@@ -35,10 +42,12 @@
             <el-table-column type="expand">
                 <template slot-scope="props">
                     <el-form label-position="left" inline class="demo-table-expand">
-                        <el-form-item label="显示完整的SQL语句：">
-                         <span>{{ props.row.SQLText }}</span>
+                        <el-form-item label="SQLId：">
+                            <span>{{ props.row.SQLId }}</span>
                         </el-form-item>
-
+                        <el-form-item label="显示完整的SQL语句：">
+                            <span>{{ props.row.SQLText }}</span>
+                        </el-form-item>
                     </el-form>
                 </template>
             </el-table-column>
@@ -55,12 +64,6 @@
             
             <el-table-column prop="TotalExecutionCounts" label="执行总次数" width="80" sortable></el-table-column>
 
-            <el-table-column prop="QueryTimePct95" label="执行时长(95%)" width="100">
-                 <template slot-scope="scope">
-                    <span>{{ scope.row.QueryTimePct95 | numFilter }}</span>
-                </template>
-            </el-table-column>
-            
             <el-table-column prop="QueryTimes" label="执行总时长(秒)" width="100" sortable>
                 <template slot-scope="scope">
                     <span>{{ scope.row.QueryTimes | numFilter }}</span>
@@ -73,10 +76,10 @@
                 </template>
             </el-table-column>
 
-            <el-table-column prop="ParseRowCounts" label="扫描总行数" width="150" sortable>
+            <el-table-column prop="ParseRowCounts" label="扫描总行数" width="120" sortable>
             </el-table-column>
 
-             <el-table-column prop="ReturnRowCounts" label="返回总行数" width="150" sortable>
+             <el-table-column prop="ReturnRowCounts" label="返回总行数" width="120" sortable>
             </el-table-column>
 
 
@@ -96,15 +99,17 @@
 
 <script>
     import InstanceSearch from '@/components/instance_search'
+    import SqlIdSearch from '@/components/checksum_search'
     import * as moment from 'moment'
     import {getSlowSqlList} from '@/api/slowquery'
     export default {
         name: "index",
-        components: {InstanceSearch},
+        components: {InstanceSearch, SqlIdSearch},
         data() {
             return {
                 searchBar: {
                     instance: "",
+                    sqlid: "",
                     page_size: 10,
                     page_num: 1,
                     start: "",
@@ -152,9 +157,7 @@
             },
         },
         created() {
-            //  console.log("created: ", 'created')   
-            //  console.log("this.searchBar0: ", this.searchBar);     
-            //  console.log("this.$route.query1:", this.$route.query)
+           
             // 用于url跳转之后重新获取参数
             if (this.$route.query.page_num){
                    this.searchBar.page_num = parseInt(this.$route.query.page_num)    
@@ -162,8 +165,8 @@
             if(this.$route.query.page_size){
                 this.searchBar.page_size = parseInt(this.$route.query.page_size)     
             }    
-            if(this.$route.query.SQLId){
-                this.searchBar.SQLId = this.$route.query.SQLId
+            if(this.$route.query.sqlid){
+                this.searchBar.sqlid = this.$route.query.sqlid
             }
             
             if(this.$route.query.start){
@@ -171,66 +174,76 @@
                 this.searchBar.start = this.$route.query.start 
             }
             if(this.$route.query.instance){
+                
                 this.searchBar.instance = this.$route.query.instance    
             }
             if(this.$route.query.end){
                 this.searchBar.end = this.$route.query.end
             }
                 
-            // console.log("this.searchBar1: ", this.searchBar);  
             this.doSearch()
+
+            //清空地址栏参数
+            // this.$router.push({ query: {} });  
+
+            this.$router.replace({ query: {} })
+
+
         },
         // 侦听事件，不加这个，点击上一页、下一页不生效
         watch: {
            $route(to, from){
-              
+                
                 if (to.query.page_num){
-                   this.searchBar.page_num = parseInt(to.query.page_num)  
-                    console.log("to.query.page_num: ", to.query.page_num)  
+                   this.searchBar.page_num = parseInt(to.query.page_num)     
                 }
+
                 if(to.query.page_size){
                    this.searchBar.page_size = parseInt(to.query.page_size)   
-                    console.log("to.query.page_size: ", to.query.page_size)  
                 }    
-                if(to.query.SQLId){
-                    this.searchBar.SQLId = to.query.SQLId  
-                    console.log("to.query.SQLId: ", to.query.SQLId)   
+
+                if(to.query.sqlid){
+                    this.searchBar.sqlid = to.query.sqlid  
                 }
+
+                if(to.query.instance){
+                    if (this.searchBar.instance != to.query.instance){
+                        this.searchBar.instance = to.query.instance   
+                    }   
+                }
+
                 if(to.query.start){
-                    if ( this.searchBar.start != to.query.start){
+                    if (this.searchBar.start != to.query.start){
                       this.searchBar.start = to.query.start      
                     }   
                 }
-                if(to.query.instance){
-                    if ( this.searchBar.instance != to.query.instance){
-                      this.searchBar.instance = to.query.instance       
-                    }   
-                }
+
                 if(to.query.end){
                     if (this.searchBar.end != to.query.end){
                       this.searchBar.end = to.query.end   
                     } 
-                }
-            //    console.log("this.searchBar2: ", this.searchBar);     
+                }   
                this.doSearch()
            }
         },
         methods: {
           
-            // 获取慢查询列表
+            // 获取慢查询列表, 点击搜索按钮时触发
             doSearch(){
                 
                 if(this.$route.query.start){
-                           
                     this.searchBar.start = this.$route.query.start 
                     this.timeRange[0] = this.$route.query.start
                 }else{
                     this.searchBar.start = moment(this.timeRange[0]).format();
                 }
+
                 if(this.$route.query.instance){
-                    this.searchBar.instance = this.$route.query.instance    
+                    this.searchBar.instance = this.$route.query.instance   
                 }
+                
                 if(this.$route.query.end){
+
                     this.searchBar.end = this.$route.query.end
                     this.timeRange[1] = this.$route.query.end
                 }else{
@@ -238,7 +251,7 @@
                 }
                 
                 getSlowSqlList(this.searchBar).then(resp => {
-                    console.log("resp: ", resp)
+                    console.log("resp: ", resp.data)
                     this.total = resp.data.total
                     this.tableData = resp.data.data
                 }).finally(_ => {
@@ -246,12 +259,7 @@
                 })
             },
             handleSizeChange(val) {
-                // console.log(`每页 ${val} 条`);
-                
-                // this.searchBar.page_size = val
-                // this.doSearch()
                 let queryCopy = _.cloneDeep(this.$route.query)
-                // console.log("queryCopy: ", queryCopy)
                 queryCopy.page_size = val
                 // 修改 url
                 this.$router.push({

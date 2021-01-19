@@ -21,8 +21,11 @@
             value: {
                 type: String,
                 required: true
+            },
+            placeholder: {
+                type: String,
+                default: '请输入内容'
             }
-        
         },
         data() {
             return {
@@ -31,8 +34,9 @@
 
             }
         },
+        // 侦听事件
+
         created() {
-            console.log("value:", this.value)
             this.instance = this.value
             getInstanceNameList().then(resp => {
                 // console.log(111111)
@@ -42,14 +46,24 @@
                 // }
             })
         },
-        // 侦听事件，不加这个，点击上一页、下一页不生效
+        // 侦听事件
         watch: {
            instance(newVal, oldVal) {
-				// console.log("newVal: ", newVal)
-                // console.log("oldVal: ", oldVal)
-                this.$emit('input', newVal)   // 子组件向父组件传递数据, 初步理解了，不这样传递数据，在子组件修改数据，父组件的值不会改变
-                
-            }
+                if (newVal !== this.value) {
+                    console.log("newVal: ", newVal)
+                    console.log("oldVal: ", oldVal)
+                    this.$emit('input', newVal)  // 子组件向父组件传递数据, 初步理解了，不这样传递数据，在子组件修改数据，父组件的值不会改变
+                    console.log("this.instance: ", this.instance)
+                }                
+            },
+            // value(newVal, oldVal){
+            //     console.log("newVal2: ", newVal)
+            //     console.log("oldVal2: ", oldVal)
+            //     if (newVal !== this.instance) { 
+            //         console.log("newVal3: ", newVal)
+            //         this.instance = newVal
+            //     }
+            // }
         },
         methods: {
             

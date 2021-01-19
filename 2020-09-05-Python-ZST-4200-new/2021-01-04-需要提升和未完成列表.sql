@@ -9,8 +9,10 @@
     DRF相关
     项目中的代码
 	django orm
+	vue父子组件之间的传值
 	
- 节后复习MySQL
+节后复习MySQL
+ 
 一样样来
 
 return HttpResponse 改为 JsonResponse
@@ -19,6 +21,8 @@ return HttpResponse 改为 JsonResponse
 
 未完成的功能：
 	1. 添加实例列表
+	2. Vue页面添加接收返回的状态判断
+	
 	
 	
 https://blog.csdn.net/weixin_47454485/article/details/107482332  Django之DRF自定义action

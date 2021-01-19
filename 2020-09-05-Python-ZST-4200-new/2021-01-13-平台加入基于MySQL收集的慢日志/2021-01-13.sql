@@ -98,3 +98,9 @@ django时间落后8小时的解决办法之一：
 	后端应该在数据库统一存储UTC时间并返回UTC时间给前端
 	前端在发送时间和接收时间的时候要把时间分别从当前时区转换成UTC发送给后端，以及接收后端的UTC时间转换成当地时区。
   
+  
+https://blog.csdn.net/huhuhuja/article/details/109524949   vue 学习经验总结（this.$router.push url传参后清空地址栏中的参数）
+
+
+https://www.cnblogs.com/corgisyj/p/11352862.html   vue 之this.$router.push、replace、go的区别
+
