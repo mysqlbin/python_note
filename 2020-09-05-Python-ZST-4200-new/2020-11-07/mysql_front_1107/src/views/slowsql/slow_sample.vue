@@ -121,9 +121,6 @@ export default {
         this.$on(
             "updateQueryParams",
             function () {
-                // console.log("query params has changed");
-                // console.log("this.queryParams.start: ", this.queryParams.start)
-                // console.log("this.queryParams.end: ", this.queryParams.end)
                 this.doSearch();
             }.bind(this)
         );
@@ -144,21 +141,20 @@ export default {
                 },
             });
 
+            
             getAggsByDate(this.queryParams).then((resp) => {
-
+                // console.log("es.resp: ", resp)    
                 let chartData = [];
                 // 组装数据，渲染到图表中
                 _.forEach(resp.data, (v) => {
-                    chartData.push([moment(v["date"]).unix() * 1000, v["date_count"]]);
+                    chartData.push([moment(v["date"]).utcOffset(480).unix() * 1000, v["date_count"]]);
                 });
-                // console.log("chartData", chartData);
+                console.log("chartData", chartData);
 
                 this.stockChart = new Highcharts.stockChart("container", {
 
                     rangeSelector: {
                         // 时间范围按钮数组
-                        // buttons: [new Date() - 3600 * 1000 * 24 * 30, new Date()],
-
                         buttons: [{
                             type: 'day',
                             count: 7,
@@ -225,10 +221,7 @@ export default {
         },
         doSearch(){
             getSlowSqlTop10(this.queryParams).then(resp=> {
-                // console.log("this.queryParams.start: ", this.queryParams.start)
-                // console.log("this.queryParams.end: ", this.queryParams.end)
                 this.tableData = resp.data;
-                // console.log("tableData: ", resp.data)
             }),
             getAggsBySchema(this.queryParams).then((resp) => {
                 const reducer = (accumulator, item) => accumulator + item["schema_count"];

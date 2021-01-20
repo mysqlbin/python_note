@@ -179,12 +179,10 @@
               
                 if (to.query.page_num){
                    this.searchBar.page_num = parseInt(to.query.page_num)  
-                    // console.log("to.query.page_num: ", to.query.page_num)  
                 }
 
                 if(to.query.page_size){
                    this.searchBar.page_size = parseInt(to.query.page_size)   
-                    // console.log("to.query.page_size: ", to.query.page_size)  
                 }    
 
                this.doSearch()
@@ -193,11 +191,6 @@
         },
         methods: {
            showSlowSqlList(row){
-               
-            //    console.log("row", row) 
-            //    this.searchBar.hash = row.hash
-            //    this.searchBar.is_aggr_by_hash = false
-            //    console.log("this.searchBar", this.searchBar) 
                
                 let routeUrl = this.$router.resolve({
                     path: '/slowsql/list',
@@ -222,9 +215,6 @@
                     // console.log("resp: ", resp)
                     this.total = resp.data.count
                     this.tableData = resp.data.results
-                    // 总共有多少行记录
-                    // this.total = resp.data.count
-                    // this.tableData = resp.data.results
                 }).finally(_ => {
                     // this.tableLoading = false
                 })
@@ -232,39 +222,25 @@
 
             handleSizeChange(val) {
 
-                // console.log(`每页 ${val} 条`);
-                
-                // this.searchBar.page_size = val
-                // this.doSearch()
-
                 let queryCopy = _.cloneDeep(this.$route.query)
                 // console.log("queryCopy: ", queryCopy)
                 queryCopy.page_size = val
 
                 // 修改 url
                 this.$router.push({
-
                     query: queryCopy
-
                 }).catch(err => {})
 
 
             },
             handleCurrentChange(val) {
-                // console.log(`当前页: ${val}`);
-
-                // 这种方式也可以实现分页改变之后的数据变化，不过不完善
-                // this.searchBar.page_num = val 
-                // this.doSearch()
-
+                
                 let queryCopy = _.cloneDeep(this.$route.query)
                 // console.log("queryCopy: ", queryCopy)
                 queryCopy.page_num = val
                 // 修改 url
                 this.$router.push({
-
                     query: queryCopy
-                    
                 }).catch(err => {})
 
             },

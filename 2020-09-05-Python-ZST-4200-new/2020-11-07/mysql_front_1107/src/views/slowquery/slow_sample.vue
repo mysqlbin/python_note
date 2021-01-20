@@ -109,8 +109,6 @@ export default {
         }
     },
     created(){
-        // console.log("created: ", 'created')
-
         this.updateQueryParams = _.debounce(
             function (startTime, endTime) {
                 this.queryParams.start = startTime;
@@ -124,16 +122,12 @@ export default {
         this.$on(
             "updateQueryParams",
             function () {
-                // console.log("query params has changed");
-                // console.log("this.queryParams.start: ", this.queryParams.start)
-                // console.log("this.queryParams.end: ", this.queryParams.end)
                 this.doSearch();
             }.bind(this)
         );
 
     },
     mounted(){
-        // console.log("mounted: ", 'mounted')
         this.createChart();
         this.doSearch();
     },
@@ -146,23 +140,19 @@ export default {
                     rangeSelectorZoom: "",
                 },
             });
-
-            getAggsByDate(this.queryParams).then((resp) => {
-                console.log("resp", resp.data);   
+            
+            getAggsByDate(this.queryParams).then((resp) => {        
                 let chartData = [];
                 // 组装数据，渲染到图表中
                 _.forEach(resp.data.data, (v) => {
-                    // chartData.push([v["byday"], v["date_count"]]);
-                    chartData.push([moment(v["byday"]).unix() * 1000, v["date_count"]]);
+                    chartData.push([moment(v["byday"].concat(" 08:00:00")).unix() * 1000, v["date_count"]]);
                 });
-                console.log("chartData", chartData);
-
+                // console.log("chartData", chartData);
                 this.stockChart = new Highcharts.stockChart("container", {
 
                     rangeSelector: {
                         // 时间范围按钮数组
-                        // buttons: [new Date() - 3600 * 1000 * 24 * 30, new Date()],
-
+                       
                         buttons: [{
                             type: 'day',
                             count: 7,
@@ -175,22 +165,8 @@ export default {
                             type: 'month',
                             count: 3,
                             text: '3m'
-                        }, {
-                            type: 'month',
-                            count: 6,
-                            text: '6m'
-                        }, {
-                            type: 'ytd',
-                            text: 'YTD'
-                        }, {
-                            type: 'year',
-                            count: 1,
-                            text: '1y'
-                        }, {
-                            type: 'all',
-                            text: 'All'
                         }],
-                        selected: 1
+                        selected: 2
                     },
                     title: {
                         text: '每日慢SQL数量'
@@ -229,18 +205,15 @@ export default {
         },
         doSearch(){
             getSlowSqlTop10(this.queryParams).then(resp=> {
-                console.log("resp_top10: ", resp.data.date.start)
-                // console.log("this.queryParams.start: ", this.queryParams.start)
-                // console.log("this.queryParams.end: ", this.queryParams.end)
                 this.queryParams.start = resp.data.date.start
                 this.queryParams.end = resp.data.date.end
                 this.tableData = resp.data.data;
-                // console.log("tableData: ", resp.data)
+    
             }),
             getAggsByInstance(this.queryParams).then((resp) => {
                 const reducer = (accumulator, item) => accumulator + item["instance_slow_count"];
                 let countAll = resp.data.data.reduce(reducer, 0);
-                // console.log("countAll: ", countAll);
+               
                 this.schemaPieOptions.series[0].data = resp.data.data.map((v) => {
                     return {
                         name: v["hostname_max"],
@@ -248,13 +221,12 @@ export default {
                     };
                 });
 
-                // console.log("this.schemaPieOptions.series[0].data: ", this.schemaPieOptions.series[0].data);
             });
         },
 
         showSlowQueryList(row){
-            console.log("row", row) 
-            console.log("queryParams", this.queryParams) 
+            // console.log("row", row) 
+            // console.log("queryParams", this.queryParams) 
             let routeUrl = this.$router.resolve({
                 path: '/slowquery/list',
                 query: {

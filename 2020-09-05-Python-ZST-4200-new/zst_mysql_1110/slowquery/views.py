@@ -9,13 +9,18 @@ import json
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage, InvalidPage
 from django.db.models.functions import Concat
 from django.utils.timezone import utc
-import datetime
 from django.utils.timezone import localtime
-
+import datetime
+import time
 
 def format_utc_time(current_time):
     format_time = current_time.split('+')[0]
     format_time = format_time.replace("T", " ")
+    return format_time
+
+
+def format_utc_time_by_day(current_time):
+    format_time = current_time.split('T')[0]
     return format_time
 
 # 慢日志top10
@@ -23,19 +28,23 @@ def get_top10_sql(request):
 
     result = {'status': 2000, 'msg': 'ok', 'data': {}}
 
+    current_date = time.strftime("%Y-%m-%d")
+    default_start_time = datetime.datetime.strptime(current_date, '%Y-%m-%d') + datetime.timedelta(days=-91)
+    default_end_time = time.strftime("%Y-%m-%d 23:59:59")
+
     start_time = request.GET.get('start')
     end_time = request.GET.get('end')
-    # 默认要取当前最近的1个月
     if start_time is None or not isinstance(start_time, str) or len(start_time.strip()) == 0:
-        # 默认的日期要减少8小时
-        start_time = '2020-09-01 00:00:00'
+        start_time = default_start_time
     else:
-        start_time = format_utc_time(start_time)
+        start_time = format_utc_time_by_day(start_time)
+        start_time = '{}{}'.format(start_time, ' 00:00:00')
 
     if end_time is None or not isinstance(end_time, str) or len(end_time.strip()) == 0:
-        end_time = '2020-09-10 00:00:00'
+        end_time = default_end_time
     else:
-        end_time = format_utc_time(end_time)
+        end_time = format_utc_time_by_day(end_time)
+        end_time = '{}{}'.format(end_time, ' 23:59:59')
 
     slowquery_ojb = SlowQuery.objects.filter(
             slowqueryhistory__ts_min__range=(start_time, end_time)
@@ -54,27 +63,29 @@ def get_top10_sql(request):
     return JsonResponse(result)
 
 
-    # respJson = json.dumps(result, cls=RewriteJsonEncoder)
-    # return HttpResponse(respJson, content_type='application/json')
-
 
 # 每个实例慢日志数量的饼状图
 def get_aggs_by_instance(request):
 
     result = {'status': 2000, 'msg': 'ok', 'data': {}}
+
+    current_date = time.strftime("%Y-%m-%d")
+    default_start_time = datetime.datetime.strptime(current_date, '%Y-%m-%d') + datetime.timedelta(days=-91)
+    default_end_time = time.strftime("%Y-%m-%d 23:59:59")
+
     start_time = request.GET.get('start')
     end_time = request.GET.get('end')
-    # 默认要取当前最近的1个月
     if start_time is None or not isinstance(start_time, str) or len(start_time.strip()) == 0:
-        # 默认的日期要减少8小时
-        start_time = '2020-09-01 00:00:00'
+        start_time = default_start_time
     else:
-        start_time = format_utc_time(start_time)
+        start_time = format_utc_time_by_day(start_time)
+        start_time = '{}{}'.format(start_time, ' 00:00:00')
 
     if end_time is None or not isinstance(end_time, str) or len(end_time.strip()) == 0:
-        end_time = '2020-09-10 00:00:00'
+        end_time = default_end_time
     else:
-        end_time = format_utc_time(end_time)
+        end_time = format_utc_time_by_day(end_time)
+        end_time = '{}{}'.format(end_time, ' 23:59:59')
 
     slowquery_ojb = SlowQueryHistory.objects.filter(ts_min__range=(start_time, end_time)
                                     ).values("hostname_max").annotate(instance_slow_count=Sum('ts_cnt'))
@@ -84,30 +95,22 @@ def get_aggs_by_instance(request):
     return JsonResponse(result)
 
 
-# 用来画每天的慢日志数据曲线图
+# 用来画每天的慢日志数据曲线图，最多显示最近3个月的数据
 def get_aggs_by_date(request):
 
     result = {'status': 2000, 'msg': 'ok', 'data': {}}
+    current_date = time.strftime("%Y-%m-%d")
+    start_time = datetime.datetime.strptime(current_date, '%Y-%m-%d') + datetime.timedelta(days=-91)
 
-    start_time = request.GET.get('start')
-    end_time = request.GET.get('end')
-    # 默认要取当前最近的1个月
-    if start_time is None or not isinstance(start_time, str) or len(start_time.strip()) == 0:
-        # 默认的日期要减少8小时
-        start_time = '2020-09-01 00:00:00'
-    else:
-        start_time = format_utc_time(start_time)
-
-    if end_time is None or not isinstance(end_time, str) or len(end_time.strip()) == 0:
-        end_time = '2020-09-10 00:00:00'
-    else:
-        end_time = format_utc_time(end_time)
-
+    end_time = time.strftime("%Y-%m-%d 23:59:59")
     slowquery_ojb = SlowQueryHistory.objects.filter(ts_min__range=(start_time, end_time)
-                                    ).extra(select={"byday": "DATE_FORMAT(ts_min, '%%Y-%%m-%%d')"}).values("byday").annotate(date_count=Sum('ts_cnt')).order_by('byday')# 执行总次数倒序排列
+                                                    ).extra(
+        select={"byday": "DATE_FORMAT(ts_min, '%%Y-%%m-%%d')"}).values("byday").annotate(
+        date_count=Sum('ts_cnt')).order_by('byday')  # 执行总次数倒序排列
 
     result['data'] = [SlowLog for SlowLog in slowquery_ojb]
     return JsonResponse(result)
+
 
 
 # 慢日志聚合列表
@@ -129,14 +132,12 @@ def slowquery_aggr(request):
         end_time = None
     else:
         end_time = format_utc_time(end_time)
-
+        
     instance = request.GET.get('instance')
     if instance is None or not isinstance(instance, str) or len(instance.strip()) == 0:
         instance = None
 
-    # checksum
     sql_id = request.GET.get('sqlid')
-    print(sql_id)
 
     # 每页大小
     page_size = request.GET.get('page_size', 10)
@@ -227,12 +228,8 @@ def slowquery_history(request):
 
     result = {'status': 2000, 'msg': 'ok', 'data': {}}
 
-    # start_time = request.GET.get('start', '2020-09-01 00:00:00')
-    # end_time = request.GET.get('end', '2020-09-08 00:00:00')
-
     start_time = request.GET.get('start')
     end_time = request.GET.get('end')
-
     if start_time is None or not isinstance(start_time, str) or len(start_time.strip()) == 0:
         start_time = None
     else:
@@ -243,11 +240,8 @@ def slowquery_history(request):
     else:
         end_time = format_utc_time(end_time)
 
-    # checksum
     sql_id = request.GET.get('sqlid')
-    print(sql_id)
     instance = request.GET.get('instance', None)
-
     if instance is None or not isinstance(instance, str) or len(instance.strip()) == 0:
         instance = None
 

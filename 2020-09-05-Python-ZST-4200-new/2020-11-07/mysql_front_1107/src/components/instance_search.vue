@@ -32,21 +32,14 @@
             }
         },
         created() {
-            // console.log("value:", this.value)
             this.instance = this.value
             getInstanceNameList().then(resp => {
-                // console.log(111111)
-                // if(resp.code === 2000) {
                 this.instanceNameList = resp.data
-                // console.log("schemaNameList:", this.schemaNameList)
-                // }
             })
         },
         // 侦听事件，不加这个，点击上一页、下一页不生效
         watch: {
            instance(newVal, oldVal) {
-				// console.log("newVal: ", newVal)
-                // console.log("oldVal: ", oldVal)
                 this.$emit('input', newVal)   // 子组件向父组件传递数据, 初步理解了，不这样传递数据，在子组件修改数据，父组件的值不会改变
                 
             }

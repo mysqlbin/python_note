@@ -39,13 +39,6 @@ INSERT INTO `auth_permission` (`name`, `content_type_id`, `codename`) VALUES ('C
 ('Can view 慢日志明细', 14, 'view_slowqueryhistory')
 
 
-https://blog.csdn.net/weixin_44685869/article/details/102690814
-
-https://blog.csdn.net/qq_44955537/article/details/103279928
-
-https://www.656463.com/wenda/zDjangoRESTkjzxlhyddgx_529
-
-http://ask.sov5.cn/q/MWtEJzdkVD
 
 https://www.jianshu.com/p/332406309476 Django 实现分页功能
 
@@ -100,7 +93,20 @@ django时间落后8小时的解决办法之一：
   
   
 https://blog.csdn.net/huhuhuja/article/details/109524949   vue 学习经验总结（this.$router.push url传参后清空地址栏中的参数）
-
-
 https://www.cnblogs.com/corgisyj/p/11352862.html   vue 之this.$router.push、replace、go的区别
+
+
+
+
+
+https://blog.csdn.net/qq_31083285/article/details/100584241  解决vue+element 时间控件时间差，区域时差8小时
+
+
+https://www.dazhuanlan.com/2020/02/18/5e4b450f17699/   Highstock 横坐标日期显示说明
+ 
+ 
+https://www.highcharts.com.cn/docs/basic-axis  坐标轴 
+
+每日曲线图，把横坐标的时分秒取消
+
 
