@@ -23,4 +23,5 @@ urlpatterns = [
     path('api/slowquery/', include('slowquery.urls')),
     path('api/slowsql/', include('slowsql.urls')),
     path('api/check/', include('check.urls')),
+    path('api/alertinfo/', include('alertinfo.urls')),
 ]

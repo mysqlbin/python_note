@@ -9,6 +9,7 @@
     DRF相关
     项目中的代码
 	django orm
+		model建表、字段相关
 	vue父子组件之间的传值
 	
 节后复习MySQL

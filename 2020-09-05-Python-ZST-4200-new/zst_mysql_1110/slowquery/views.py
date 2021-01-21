@@ -4,7 +4,7 @@ from django.shortcuts import render
 
 from .models import SlowQuery, SlowQueryHistory
 from django.db.models import F, Max, Sum, Value as V
-from django.http import HttpResponse,JsonResponse
+from django.http import HttpResponse, JsonResponse
 import json
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage, InvalidPage
 from django.db.models.functions import Concat

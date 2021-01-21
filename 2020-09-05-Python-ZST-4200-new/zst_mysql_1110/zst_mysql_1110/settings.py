@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'check.apps.CheckConfig',
     'slowsql.apps.SlowsqlConfig',
     'slowquery.apps.SlowqueryConfig',
+    'alertinfo.apps.AlertinfoConfig',
     'django_filters',
     # 'corsheaders',
 ]

@@ -3,8 +3,8 @@
     <el-autocomplete
             class="inline-input"
             v-model="instance"
+            :placeholder="placeholder" 
             :fetch-suggestions="querySearch"
-            placeholder="请输入实例名称"
             style="width:300px"
     ></el-autocomplete>
     
@@ -21,6 +21,10 @@
             value: {
                 type: String,
                 required: true
+            },
+            placeholder: {
+                type: String,
+                default: '请输入实例名称'
             }
         
         },
