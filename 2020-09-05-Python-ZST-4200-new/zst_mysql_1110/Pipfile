@@ -24,6 +24,7 @@ elasticsearch-dsl = "*"
 elasticsearch = "*"
 numpy = "*"
 matplotlib = "*"
+celery = "==5.0.5"
 
 [requires]
 python_version = "3.6"

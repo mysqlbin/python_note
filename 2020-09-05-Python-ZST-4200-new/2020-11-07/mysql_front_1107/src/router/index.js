@@ -91,6 +91,7 @@ export const menuRouts = [
           meta: { title: '慢查询图表' },
           component: () => import('@/views/slowquery/slow_sample')
         },
+        
     ]
   },
 ]

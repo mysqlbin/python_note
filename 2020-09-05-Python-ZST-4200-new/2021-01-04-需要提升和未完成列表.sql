@@ -11,6 +11,7 @@
 	django orm
 		model建表、字段相关
 	vue父子组件之间的传值
+	celery 的结果用MySQL来存储
 	
 节后复习MySQL
  

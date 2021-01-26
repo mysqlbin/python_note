@@ -19,9 +19,9 @@ from meta_manage.serializers import MySQLSchemaSerializer, KillMySQLProcessSeria
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-# from meta_manage import tasks
-# from celery.result import AsyncResult
-# from zst_mysql_1110.celery import app
+from meta_manage import tasks
+from celery.result import AsyncResult
+from zst_mysql_1110.celery import app
 
 from .models import SchemaModel
 from django.core.exceptions import ValidationError
@@ -69,18 +69,19 @@ def get_schema_by_ip(request):
 
     return MyJsonResponse(data=dict_data)
 
-# @api_view(['GET'])
-# def celery_debug(request):
-# 
-#     res = tasks.add.delay(1, 3)
-#     #任务逻辑
-#     # return JsonResponse({'status':'successful','task_id':res.task_id})
-# 
-#     # print(res.task_id)
-#     print(res)
-# 
-#     return MyJsonResponse(message="success")
-# 
+@api_view(['GET'])
+def celery_debug(request):
+
+    res = tasks.add.delay(1, 3)
+    #任务逻辑
+    # return JsonResponse({'status':'successful','task_id':res.task_id})
+
+    # print(res.task_id)
+    print(res)
+
+    return MyJsonResponse(message="success")
+
+
 # @api_view(['GET'])
 # def celery_result(request):
 # 

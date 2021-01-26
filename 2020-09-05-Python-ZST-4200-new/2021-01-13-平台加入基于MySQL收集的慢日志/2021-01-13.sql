@@ -108,3 +108,10 @@ https://www.highcharts.com.cn/docs/basic-axis  坐标轴
 每日曲线图，把横坐标的时分秒取消
 
 
+
+
+select hostname_max, ROUND(sum(Query_time_sum) / sum(ts_cnt), 2) as avg_time, sum(ts_cnt) as all_cnt from mysql_slow_query_review_history where ts_min >= '2021-01-01 00:00:00' group by hostname_max
+order by all_cnt desc;
+
+
+

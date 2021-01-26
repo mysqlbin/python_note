@@ -54,9 +54,9 @@
             
             <el-table-column prop="HostnameMax" label="实例名称" width="180"></el-table-column>
 
-            <el-table-column prop="ExecutionStartTime" :formatter="formatter" label="日志统计开始时间" width="170"></el-table-column>
+            <el-table-column prop="ExecutionStartTime" :formatter="formatter" label="本次统计的第一次执行时间" width="170"></el-table-column>
 
-            <el-table-column prop="ExecutionEndTime" :formatter="formatter" label="日志统计结束时间" width="170"></el-table-column>
+            <el-table-column prop="ExecutionEndTime" :formatter="formatter" label="本次统计的最一次执行时间" width="170"></el-table-column>
 
             <el-table-column prop="HostAddress" label='用户名' width="200"></el-table-column>
             
