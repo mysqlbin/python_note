@@ -103,17 +103,6 @@ WSGI_APPLICATION = 'zst_mysql_1110.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    'default': {
-    'ENGINE': 'django.db.backends.mysql',  # 数据库引擎
-    'NAME': '1110_mysql',  # 数据库名，先前创建的
-    'USER': 'root',  # 用户名，可以自己创建用户
-    'PASSWORD': '7febd546',  # 密码
-    # 'HOST': '192.168.1.27',  # mysql服务所在的主机ip
-    'HOST': '119.23.148.24 ',  # mysql服务所在的主机ip
-    'PORT': '3306',  # mysql服务端口
-    }
-}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
