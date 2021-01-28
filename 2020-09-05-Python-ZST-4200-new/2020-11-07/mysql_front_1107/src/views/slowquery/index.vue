@@ -182,7 +182,6 @@
             
             // 页面加载，就触发搜索功能
             this.doSearch()
-
             //当从聚合列表点击进来查看详情后，清空地址栏参数
             // this.$router.push({ query: {} });  
             if(this.$route.query.sqlid){
@@ -198,29 +197,24 @@
                 if (to.query.page_num){
                    this.searchBar.page_num = parseInt(to.query.page_num)     
                 }
-
                 if(to.query.page_size){
                    this.searchBar.page_size = parseInt(to.query.page_size)   
                 }    
-
                 if(to.query.sqlid){
                     if (this.searchBar.sqlid != to.query.sqlid){
                         this.searchBar.sqlid = to.query.sqlid   
                     } 
                 }
-
                 if(to.query.instance){
                     if (this.searchBar.instance != to.query.instance){
                         this.searchBar.instance = to.query.instance   
                     }   
                 }
-
                 if(to.query.start){
                     if (this.searchBar.start != to.query.start){
                       this.searchBar.start = to.query.start      
                     }   
                 }
-
                 if(to.query.end){
                     if (this.searchBar.end != to.query.end){
                       this.searchBar.end = to.query.end   
@@ -240,8 +234,6 @@
                 }else{
                     this.searchBar.start = moment(this.timeRange[0]).format();
                 }
-
-
                 if(this.$route.query.end){
                     this.searchBar.end = this.$route.query.end
                     this.timeRange[1] = this.$route.query.end
@@ -252,7 +244,6 @@
                 if(this.$route.query.instance){
                     this.searchBar.instance = this.$route.query.instance   
                 }
-
                 getSlowSqlList(this.searchBar).then(resp => {
                     this.total = resp.data.total
                     this.tableData = resp.data.data
