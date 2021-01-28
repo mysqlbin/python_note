@@ -113,7 +113,7 @@ export default {
             function (startTime, endTime) {
                 this.queryParams.start = startTime;
                 this.queryParams.end = endTime;
-                console.log(this.queryParams);
+                // console.log(this.queryParams);
                 this.$emit("updateQueryParams");
             }.bind(this),
             1000
@@ -176,13 +176,13 @@ export default {
                             // 监听时间范围的变化
                             afterSetExtremes: function (e) {
                                 // e.min 和 e.max 为坐标轴当前的范围
-                                console.log(e.min, e.max);
+                                // console.log(e.min, e.max);
                                 let startTime = _.toInteger(e.min) / 1000;
                                 let endTime = _.toInteger(e.max) / 1000;
                                 startTime = moment.unix(startTime).format();
                                 endTime = moment.unix(endTime).format();
-                                console.log("startTime: ", startTime);
-                                console.log("endTime: ", endTime);
+                                // console.log("startTime: ", startTime);
+                                // console.log("endTime: ", endTime);
                                 that.updateQueryParams(startTime, endTime);
                             },
                         },
