@@ -12,7 +12,7 @@
         props: {
             value: {
                 type: String,
-                required: true
+                required: false
             },
             placeholder: {
                 type: String,
@@ -26,7 +26,7 @@
             }
         },
         created() {
-            
+                
             this.sqlid = this.value
            
         },

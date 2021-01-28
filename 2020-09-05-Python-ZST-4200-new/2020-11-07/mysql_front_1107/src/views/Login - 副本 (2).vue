@@ -20,7 +20,7 @@
   </div>
 </template>
 <script>
-  // import {login} from '../api/auth'
+  import {login} from '../api/auth'
   import Highcharts from "highcharts";
   import stockInit from "highcharts/modules/stock";
   stockInit(Highcharts);
@@ -51,78 +51,51 @@
     },
     created(){
     },
-    mounted(){  
+    mounted(){
+      this.createChart();
     },
     methods: {
       handleLogin(formName){
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.loading = true   // 表示在加载中
-            this.$store.dispatch("login", this.formLogin).then(() => {
-              this.$message.info('登录成功')
-              let redirect = this.$route.query.redirect;
-              // console.log("redirect: ",redirect)
-              redirect = _.isString(redirect) ? redirect : undefined;
-              redirect = redirect ? decodeURI(redirect) : "/";
-              // console.log("redirect: ", redirect)
-              this.$router.push({
-                path: redirect,
-              });
+            login(this.formLogin).then(resp => {
+              console.log(resp)
+              let data = resp.data
+
+              if (data.code === 2000) {
+                    this.$message.info('登录成功')
+                    // 存储用户的登录状态, 提交到 mutations 的 setUser()中
+                    this.$store.commit('setUser', data.data)
+                    let redirect = this.$route.query.redirect;
+                    redirect = _.isString(redirect) ? redirect : undefined;
+                    redirect = redirect ? decodeURI(redirect) : "/";
+                    console.log("redirect: ", redirect)
+                    this.$router.push({
+                      path: redirect,
+                    });
+
+                }else{
+                    this.$message.error('用户名或者密码不正确')
+                }
+
             }).catch(err => {
+            
               this.$message.error('无法连接服务器')
+              console.error(err)
+
             }).finally(() => {
               // 访问完成，把 loading 改为 false
               this.loading = false
             })
+
           }else{
             this.$message.warning('用户名或者密码不符合规则')
             return false;
           }
         });
+
       },
-
-      // handleLogin(formName){
-      //   this.$refs[formName].validate((valid) => {
-      //     if (valid) {
-      //       this.loading = true   // 表示在加载中
-      //       login(this.formLogin).then(resp => {
-      //         // console.log(resp)
-      //         let data = resp.data
-      //         if (data.code === 2000) {
-      //               this.$message.info('登录成功')
-      //               // 存储用户的登录状态, 提交到 mutations 的 setUser()中
-      //               this.$store.commit('setUser', data.data)
-      //               let redirect = this.$route.query.redirect;
-      //               // console.log("redirect1:", redirect)
-      //               redirect = _.isString(redirect) ? redirect : undefined;
-      //               redirect = redirect ? decodeURI(redirect) : "/";
-      //               // console.log("redirect2: ", redirect)
-      //               // 跳转到登录前的页面
-      //               this.$router.push({
-      //                 path: redirect,
-      //               });
-
-      //           }else{
-      //               this.$message.error('用户名或者密码不正确')
-      //           }
-
-      //       }).catch(err => {
-            
-      //         this.$message.error('无法连接服务器')
-      //         console.error(err)
-
-      //       }).finally(() => {
-      //         // 访问完成，把 loading 改为 false
-      //         this.loading = false
-      //       })
-
-      //     }else{
-      //       this.$message.warning('用户名或者密码不符合规则')
-      //       return false;
-      //     }
-      //   });
-
-      // },
     }
   }
 </script>

@@ -1,4 +1,6 @@
 
+
+
 1. 当用户访问未登录界面时跳回登录界面
 2. 导航守卫
 3. vue实现登录后跳转到之前的页面
@@ -7,13 +9,15 @@
 6. mutations和actions	
 7. vue中异步函数async和await的用法
 8. js变量赋值给大括号
+9. 变量声明
+10. router.beforeEach
 
 
 1. 当用户访问未登录界面时跳回登录界面
 	逻辑
 		if to.path != ‘login’ 也就是访问除登录界面以外的界面
 			• if 用户这时候已经登录了
-				• 那么允许用户继续访问
+				• 那么允许用户继续访问, 跳转到登录前的页面
 			• else 用户还没有登录
 				• 跳转到登录界面
 		else
@@ -22,6 +26,7 @@
 			• else
 				• 允许用户继续访问，也就是login页面
 	代码实现
+	
 	// 也就是访问除登录界面以外的界面
 	if (to.path !== '/login') {
 		// 已经登录
@@ -52,7 +57,8 @@
 		} 
 	}
 	  
-
+	
+	  
 2. 导航守卫
 
 	next('/') 和 next() 的区别
@@ -69,6 +75,19 @@
 	https://router.vuejs.org/zh/guide/advanced/navigation-guards.html#%E5%85%A8%E5%B1%80%E5%89%8D%E7%BD%AE%E5%AE%88%E5%8D%AB
 
 
+
+	next() 表示路由成功，直接进入to路由，不会再次调用router.beforeEach()
+	next('login') 表示路由拦截成功，重定向至login，会再次调用router.beforeEach()
+	也就是说beforeEach()必须调用next(),否则就会出现无限循环，
+	next() 和 next('xxx') 是不一样的，区别就是前者不会再次调用router.beforeEach()，后者会！！！
+
+
+	to.path
+	to.fullPath
+
+	https://segmentfault.com/a/1190000011042794  关于vue-router的beforeEach无限循环的问题
+	https://www.cnblogs.com/sinosaurus/p/9016163.html   vue-router beforeEach死循环
+	
 	-- 如何解决next无限循环
 
 3. vue实现登录后跳转到之前的页面
@@ -85,7 +104,7 @@
 	Vuex 是一个专为Vue.js 应用程序开发的状态管理模式。
 		它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化。
 	状态是什么， 简单地说，就是变量的取值
-	我们把用户是否登录的状态放在vuex中，那么之前关于如何获取的用户是否登录这个问题是否就解决了
+	我们把用户是否登录的状态放在vuex中，那么之前关于如何获取用户是否登录这个问题是否就解决了
 
 	https://vuex.vuejs.org/zh/guide/
 	
@@ -175,18 +194,14 @@
 
 			dispatch：
 				含有异步操作，数据提交至 actions ，可用于向后台提交数据
-				写法示例： this.$store.dispatch('action方法名',值)
+				写法示例： this.$store.dispatch('actions方法名',值)
 
 			commit：
 				同步操作，数据提交至 mutations ，可用于登录成功后读取用户信息写到缓存里
 				写法示例： this.$store.commit('mutations方法名',值)
 	
-
-
-	
 6. mutations和actions
-	
-	
+
 	https://blog.csdn.net/joyvonlee/article/details/96916489  vuex的mutations用法
 	https://vuex.vuejs.org/zh/guide/mutations.html   
 	
@@ -341,7 +356,11 @@
 		})
 		
 	------------------------------------------------------------------------------------------
-	
+
+
+	https://www.cnblogs.com/xianrongbin/p/2781659.html  Vuex- Action的 { commit }
+
+
 	1. 这里的 context 是什么，感觉是回调函数
 		是的，从 actions 的回调函数来的。
 		getCurrentUser(context) {
@@ -435,8 +454,13 @@
 	console.log(name); // hello
 	
 	
-变量声明
+9. 变量声明
 	函数内使用 var 声明的变量只能在函数内容访问，如果不使用，var 则是全局变量。
 	使用 let 关键字来实现块级作用域
 	const 用于声明一个或多个常量，不能通过再赋值修改，也不能再次声明
+
+
+10. router.beforeEach
+	https://blog.csdn.net/qq_26249609/article/details/94434711   vue router.beforeEach()，详解
+
 
