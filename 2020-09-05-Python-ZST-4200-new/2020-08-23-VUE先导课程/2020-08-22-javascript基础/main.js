@@ -11,7 +11,7 @@ console.log('javascript study')
 // 1
 
 
-// ...... let .......
+// ...... let ，es6的语法 .......
 // if (true){
 //     let efg = 2;
 //     console.log(efg) 
@@ -31,7 +31,7 @@ console.log('javascript study')
 // 123
 // Uncaught TypeError: Assignment to constant variable.
 
-
+// const 常量的修改方式
 // const abc = [1, 2, 3]
 // console.log(abc)
 // abc.push(4)
@@ -40,7 +40,7 @@ console.log('javascript study')
 // (3) [1, 2, 3]
 // (4) [1, 2, 3, 4]
 
-
+// const常量的赋值修改
 // const abc = [1, 2, 3]
 // console.log(abc);
 // abc = [4, 5, 6]
