@@ -22,6 +22,9 @@ export default new Vuex.Store({
     // 方法名
     login(context, loginRequest){
       let {commit} = context
+      console.log("loginRequest: ", loginRequest)
+      console.log("loginRequest type: ", typeof(loginRequest))
+      // 对象的解构
       const { username, password } = loginRequest
       return new Promise((resolve, reject) => {
         // 异步请求

@@ -6,6 +6,7 @@ console.log('javascript study')
 
 // ...... setTimeout ......
 // 箭头函数 setTimeout 有两个参数, 第一个参数是function, 第二个参数是延迟时间
+// 简单的异步例子
 // setTimeout(() => console.log('i am time out'),1000)
 // console.log('i am a console log')
 

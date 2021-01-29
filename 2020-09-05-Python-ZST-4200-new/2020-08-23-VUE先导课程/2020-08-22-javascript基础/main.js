@@ -64,11 +64,13 @@ console.log('javascript study')
 //     console.log('sums')
 // }
 
-// console.log(sums.name)   
+// console.log(sums.name)  
 
+ 
+// ...... 对象 ......
 
-// ...... 对象表达式 ......
-// 标识符号作为属性名
+// 标识符号作为属性名，标识符号没有空格
+// 声明1个空对象
 // var obj = {}
 // obj.addr = '1st'
 // console.log(typeof(obj))
@@ -84,7 +86,8 @@ console.log('javascript study')
 // {home addr: "1st"}
 
 
-// 对象表达式 es6 里面的语法
+// ...... 对象表达式 ......
+// 对象表达式 es6 里面的语法，变量名作为属性名
 // let addr = 'abc';
 // let num = 1;
 // var obj = {
@@ -92,12 +95,14 @@ console.log('javascript study')
 //     num
 // }
 // console.log(obj)
-
+// 可以看下在项目中哪里用到了
 // {addr: "abc", num: 1}
+
 
 
 // ...... 函数 ......
 // 普通函数
+// function functionName(parameter1, parameter2){}
 // function abcd(p1, p2){
 //     console.log(p1, p2)
 // }
@@ -109,11 +114,13 @@ console.log('javascript study')
 
 // 匿名函数
 // let f = function(){
-
+	
 // }
 
 // 箭头函数
+// 箭头函数的优势：代码简洁
 // 相关参考：https://www.cnblogs.com/fundebug/p/6904753.html
+// let functionName = (parameter1, parameter2) => {表达式} ;
 
 // 返回值只能一个表达式，可以省略大括号
 // let sum = (a, b) => a + b;
@@ -124,10 +131,8 @@ console.log('javascript study')
 // let print = () => {
 //     console.log('hello world')
 // }
-
 // print()
 // hello world
-
 
 // let print = (p1, p2) => {
 //     console.log(p1, p2)
@@ -140,13 +145,15 @@ console.log('javascript study')
 // let arr = []
 // arr[0] = 1
 // arr[1] = '2'
+
+// 添加元素
 // arr.push('3')
 // console.log(arr)
 // arr[40] = '41'
 // console.log(arr)
 //  [1, "2", "3", empty × 37, "41"]
 
-// delete删除
+// delete 删除元素
 // let arr = []
 // arr[0] = 1
 // arr[1] = '2'
@@ -175,6 +182,29 @@ console.log('javascript study')
 // before splice (41) [1, "2", "3", empty × 37, "41"]
 // after splice (40) [1, "2", "3", empty × 37]
 
+
+arr = []
+
+arr.push(['bin', 28])
+arr.push(['neo', 30])
+console.log(arr)
+/*
+arr = [
+ ['bin', 28],
+ ['neo', 30],
+]
+*/
+
+/*
+项目中的应用
+let chartData = [];
+// 组装数据，渲染到图表中
+	_.forEach(resp.data.data, (v) => {
+	chartData.push([moment(v["byday"].concat(" 08:00:00")).unix() * 1000, v["date_count"]]);
+});
+*/			
+				
+
 /*
 https://www.cnblogs.com/jhuang-com/p/10476365.html  js数组删除（splice和delete）
 最近一直在写js的数组，然后就发现了很奇怪的问题，后来才发现了规律。
@@ -184,6 +214,8 @@ https://www.cnblogs.com/jhuang-com/p/10476365.html  js数组删除（splice和de
 splice：删除了数组后，数组的长度会自动变化。用法：arr.splice(2,1)——2是数组的下标值，1 代表输出一行数据。
 
 delete: 删除了数组后，数组的长度不会变化。 用法：delete arr[2] ——2是数组的下标值
+
+// 理解了,最重要的是理解
 */
 
 
@@ -214,12 +246,20 @@ let obj = {
 // b = obj.b;
 // c = obj.c;
 // console.log(a, b, c)
+// 1 2 3
 
-// let { a: a1, b: b1, c: c1 } = obj;
-// console.log(a1, b1, c1)
+// ----------------------------
 
-let {a, b, c} = obj;
-console.log(a, b, c)
+let obj = {
+    a: '1',
+    b: '2',
+    c: '3'
+}
+let { a: a1, b: b1, c: c1 } = obj;
+console.log(a1, b1, c1)
+
+// let {a, b, c} = obj;
+// console.log(a, b, c)
 
 
 // ...... 展开操作符 ......
@@ -239,6 +279,7 @@ console.log(a, b, c)
 
 // ...... setTimeout ......
 // setTimeout有两个参数, 第一个参数是function, 第二个参数是延迟时间
+// 简单的异步
 // setTimeout(() => console.log('i am time out'),1000)
 // console.log('i am a console log')
 
