@@ -6,7 +6,6 @@
         {{ k }} - {{ v.content }} 
         <button @click="toDelete(k)">delete</button>
       </li>
-      
     </ul>
   </div>
 </template>
@@ -31,19 +30,29 @@ ViewModel 是 view 跟 model 之间的桥梁：
 </li>
   此时input 框输入： 22222
 
-然后对点击删除 ‘1-今天去超市’ 这个 li 标签中的 button 删除按钮
-触发内部的修改逻辑如下：
-  其中， 只修改应该修改的部分，没有必要对 input 的内容进行修改，因为没有对 input 进行任何的绑定，
+然后对点击删除 ‘1-今天去超市’ 这个 li 标签中的 button 删除按钮，触发内部的修改逻辑如下：
+  其中， 只修改应该修改的部分，没有必要对 input 的内容进行修改，因为没有对 input 进行任何的绑定，   ********
   "
   0 - 今天去银行 
   1 - 今天去超市 
   2 - 今天去上班 
   3 - 今天去吃饭 
   "
-  把  "1 - 今天去超市" 改为 "1 - 今天去上班"
+  把  "1 - 今天去超市" 改为 "1 - 今天去上班" 并且input框的值为： 22222
   把  "2 - 今天去上班" 改为 "2 - 今天去吃饭"
 
   最后把 "3 - 今天去吃饭" 删除掉。
+  
+  input 没有必要进行修改，因为 :key="k" 没有传到 input中。
+
+  总的来说就是 先更新、再删除。
+  
+  "
+
+    {{ k }} - {{ v.content }} 
+    <button @click="toDelete(k)">delete</button>
+
+  "
 
 */
 
@@ -55,7 +64,7 @@ export default {
         {
           content: '今天去银行'
         },
-         {
+        {
           content: '今天去超市'
         },
         {
@@ -69,8 +78,11 @@ export default {
   },
   methods:{
     toDelete(index){
+        console.log("index:", index)
         console.log('delete ' + 'index:' + index + ', content: ' + this.todo_list[index].content)
+        // 根据索引删除1个元素
         this.todo_list.splice(index, 1)
+        console.log("(this.todo_list:", this.todo_list)
     }
   }
 }

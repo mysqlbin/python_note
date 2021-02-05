@@ -58,10 +58,9 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.loading = true   // 表示在加载中
-            this.$store.dispatch("login", this.formLogin).then(() => {
-              this.$message.info('登录成功')
+            this.$store.dispatch("login", this.formLogin).then((message) => {
+              this.$message.info('message')
               let redirect = this.$route.query.redirect;
-              // console.log("redirect: ",redirect)
               redirect = _.isString(redirect) ? redirect : undefined;
               redirect = redirect ? decodeURI(redirect) : "/";
               // console.log("redirect: ", redirect)

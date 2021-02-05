@@ -183,11 +183,19 @@ console.log('javascript study')
 // after splice (40) [1, "2", "3", empty × 37]
 
 
-arr = []
+let arr = []
+arr[0] = 1
+arr[1] = '2'
+arr.push('3')
+arr.splice(1, 1)
+console.log("arr:", arr)
 
-arr.push(['bin', 28])
-arr.push(['neo', 30])
-console.log(arr)
+// 二维数组
+// arr = []
+// arr.push(['bin', 28])
+// arr.push(['neo', 30])
+// console.log(arr)
+
 /*
 arr = [
  ['bin', 28],
@@ -235,11 +243,11 @@ delete: 删除了数组后，数组的长度不会变化。 用法：delete arr[
 
 // 对象的解析
 
-let obj = {
-    a: '1',
-    b: '2',
-    c: '3'
-}
+// let obj = {
+//     a: '1',
+//     b: '2',
+//     c: '3'
+// }
 
 // var a, b, c;
 // a = obj.a;
@@ -250,13 +258,13 @@ let obj = {
 
 // ----------------------------
 
-let obj = {
-    a: '1',
-    b: '2',
-    c: '3'
-}
-let { a: a1, b: b1, c: c1 } = obj;
-console.log(a1, b1, c1)
+// let obj = {
+//     a: '1',
+//     b: '2',
+//     c: '3'
+// }
+// let { a: a1, b: b1, c: c1 } = obj;
+// console.log(a1, b1, c1)
 
 // let {a, b, c} = obj;
 // console.log(a, b, c)
@@ -275,163 +283,19 @@ console.log(a1, b1, c1)
 
 
 
-// ...... 异步 ......
-
-// ...... setTimeout ......
-// setTimeout有两个参数, 第一个参数是function, 第二个参数是延迟时间
-// 简单的异步
-// setTimeout(() => console.log('i am time out'),1000)
-// console.log('i am a console log')
-
-// setTimeout(function(){
-//     console.log('i am a timeout function')
-// }, 2000)
-// console.log('i am a console log')
+// let redirect = '/mysql';
+// console.log(typeof(redirect))
+// redirect = typeof(redirect) == "number" ? redirect : undefined;
+// console.log(redirect);
+// console.log("decodeURI(redirect): ", decodeURI(redirect));
+// redirect = redirect ? decodeURI(redirect) : "/";  // 如果 redirect 为 undefined，就取 "/" ？ 是的。
+// console.log(redirect);
 
 
+// a = undefined
 
-// ...... Ajax ......
-
-// function reqListener(){ 
-//     console.log(this.responseText);
-// }
-// var oReq = new XMLHttpRequest();
-// oReq.addEventListener("load", reqListener);   // callback, 回调函数
-// oReq.open("GET", 
-// "http://localhost:9090/index.html");
-// oReq.send();
-// console.log('after oReq.send')
-
-// ...... 回调地狱 ......
-// setTimeout(function(){
-//     console.log("I am first")
-//     setTimeout(function(){
-//         console.log("I am second")
-//         setTimeout(function(){
-//             console.log("I am third")
-//         }, 1000)
-//     },1000)
-// },1000)
-
-
-// https://www.cnblogs.com/wenxuehai/p/10455664.html              JavaScript中的回调地狱及解决方法
-// https://www.runoob.com/w3cnote/javascript-promise-object.html  JavaScript Promise 对象
-// https://blog.csdn.net/hyupeng1006/article/details/80351174     ES6---new Promise()讲解
-
-// 创建 promise 的步骤：
-
-// var promise = new Promise(function(resolve, reject) {
-//     // 异步处理
-//     // 处理结束后、调用resolve 或 reject
-// });
-
-
-// var myFirstPromise = new Promise(function(resolve, reject){
-//     //当异步代码执行成功时，我们才会调用resolve(...), 当异步代码失败时就会调用reject(...)
-//     //在本例中，我们使用setTimeout(...)来模拟异步代码，实际编码时可能是XHR请求或是HTML5的一些API方法.
-//     setTimeout(function(){
-//         resolve("成功!"); //代码正常执行！
-//     }, 3000);
-// });
-
-// myFirstPromise.then(function(successMessage){
-//     //successMessage的值是上面调用resolve(...)方法传入的值.
-//     //successMessage参数不一定非要是字符串类型，这里只是举个例子
-//     console.log("Yay! " + successMessage);
-// });
-// 对于已经实例化过的 promise 对象可以调用 promise.then() 方法，传递 resolve 和 reject 方法作为回调。
-
-
-
-// .............................................................................................
-
-// wait 是一个 function, 它的参数 ms
-let wait = (ms) => new Promise(
-        // 异步处理， (resolve) 的含义：等价于 function(resolve) {} 
-    (resolve) => setTimeout(resolve, ms)
-)
-// // // // 链式调用 
-// wait(5000)
-//     // 先执行这里
-//     .then(() => {console.log("i am first");  return wait(2000)})
-//     // 再执行这里
-//     .then(() => {console.log("i am second"); return wait(1000)})
-//     // 最后执行这里
-//     .then(() => console.log("i am third"))
-
- 
-// 这里是拆分上面的步骤
-// wait 是一个 function, 它的参数 ms
-
-// let wait = function(ms){
-//     return new Promise(function(resolve, reject){
-//         //异步处理，处理结束后调用 resolve
-//         setTimeout(resolve, ms)
-
-//     })
-// }
-
-// wait(2000).then(function(){
-//     console.log("i am first")
-//     return wait(2000)
-// }).then(function(){
-//     console.log("i am second")
-//     return wait(1000)
-// }).then(function(){
-//     console.log("i am third")
-// })
-
-// then() 方法是 Promise对象的方法
-
-// .............................................................................................
-
-// 
-// Promise.resolve('foo')
-// .then(Promise.resolve('bar'))   // 这一步不会输出
-// .then(function (result) {       // result是function一个参数
-//     console.log(result);
-// });
-
-// Promise.resolve('foo') 方法 会生成一个Promise对象 newPromise, 调用resolve后， 它的状态为fulfilled，调用then函数， 所以回调函数会立即执行，Promise.resolve方法的参数就是回调函数的参数。
-// 如果 Promise.resolve 方法的参数，不是具有 then 方法的对象（又称 thenable 对象），则返回一个新的 Promise 对象，且它的状态为fulfilled。
-// 调用resolve后，编程fulfilled状态，调用then函数
-// 当代码执行成功时，会调用resolve(...)
-let newPromise = Promise.resolve('foo')
-newPromise.then(Promise.resolve('bar'))   // 这一步不会输出, 原因：
-// then 是 newPromise对象的方法
-.then(function (result_data) {       
-    // result_data 是function一个参数
-    // result_data的值是上面调用resolve(...)方法传入的值.
-    // result_data参数不一定非要是字符串类型，这里只是举个例子
-    console.log(result_data);
-});
-
-
-// 默认是pending状态
-// 调用resolve后，变成fulfilled状态，调用then函数
-// 调用reject函数后，变成Rejected状 态
-
-// pending   待定
-// resolve   解决
-    // fulfilled 实现
-// rejected  拒绝
-
-
-
-
-let redirect = '/mysql';
-console.log(typeof(redirect))
-redirect = typeof(redirect) == "number" ? redirect : undefined;
-console.log(redirect);
-console.log("decodeURI(redirect): ", decodeURI(redirect));
-redirect = redirect ? decodeURI(redirect) : "/";  // 如果 redirect 为 undefined，就取 "/" ？ 是的。
-console.log(redirect);
-
-
-a = undefined
-
-if (a)
-	console.log(1)
+// if (a)
+// 	console.log(1)
 
 // 如果值等于undefined，那么不为真
 

@@ -31,7 +31,7 @@ export default new Vuex.Store({
         login(loginRequest).then(resp => {
           console.log('username:', username)
           commit('setUser', username)
-          resolve()
+          resolve("登录成功")
         }).catch(err => {
           reject(err)
         })
@@ -57,9 +57,11 @@ export default new Vuex.Store({
               // 返回用户名
               resolve(respData.data)
             }else{
+              // 返回1个空对象
               resolve({})
             }
          }).catch(err => {
+           // 返回1个空对象
             resolve({})
           })
         }else{
