@@ -6,7 +6,7 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-django = {version = "==3.1.3", index = "https://pypi.tuna.tsinghua.edu.cn/simple"}
+django = {version = "==3.1.12", index = "https://pypi.tuna.tsinghua.edu.cn/simple"}
 mysqlclient = "*"
 #python-ldap = {path = "./python_ldap-3.3.1-cp36-cp36m-win_amd64.whl"}
 djangorestframework = "*"
