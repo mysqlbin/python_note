@@ -406,3 +406,46 @@ class SlowSqlViewSet(viewsets.ViewSet):
         """
 
 
+def send_with_matplotlib(request):
+
+    s = SlowQuery.search()
+    options = {
+        # greater or equal than  -> gte 大于等于
+        # greater than  -> gt 大于
+        # little or equal thant -> lte 小于或等于
+        'gte': '2020-12-22T00:00:00.000Z',
+        'lte': '2021-01-21T00:00:00.000Z'
+    }
+    s = s.filter('range', **{'@timestamp': options})
+    aggs = {
+        "aggs": {
+            "date": {
+                "date_histogram": {
+                    "field": "@timestamp",
+                    "calendar_interval": "day"
+                },
+                "aggs": {
+                    "avg_query_time": {
+                        "avg": {
+                            "field": "query_time"
+                        }
+                    },
+                    "avg_lock_time": {
+                        "avg": {
+                            "field": "lock_time"
+                        }
+                    }
+                }
+            }
+        }
+    }
+    get_aggs(s.aggs, aggs)
+    result = s.execute().aggregations
+    rs = get_results(aggs, result)
+    dates = [r['date'][:10] for r in rs]
+    counts = [r['date_count'] for r in rs]
+
+    print(dates)
+    print(counts)
+
+    return Response("success")

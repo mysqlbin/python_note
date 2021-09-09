@@ -9,4 +9,6 @@ export let logout = () => {
     return request.get('/user/logout_user/')
 }
 
-
+export let login = (data) => {
+    return request.post("/user/django_ldap_login/", data)
+}

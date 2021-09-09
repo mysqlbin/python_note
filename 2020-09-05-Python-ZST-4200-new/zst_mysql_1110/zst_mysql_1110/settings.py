@@ -26,7 +26,7 @@ SECRET_KEY = 'f-m5=u@hh0l@w&2ki&ni0u*y4wh^$#k3ta4q!w-kwj0z4v=0rb'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.0.45', '127.0.0.1']
+ALLOWED_HOSTS = ['192.168.0.45', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
     'check.apps.CheckConfig',
     'slowsql.apps.SlowsqlConfig',
+    'slowquery.apps.SlowqueryConfig',
+    'alertinfo.apps.AlertinfoConfig',
     'django_filters',
     # 'corsheaders',
 ]
@@ -125,14 +127,15 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
+# TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+# USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -165,11 +168,14 @@ REST_FRAMEWORK = {
 
 
 
-CELERY_BROKER_URL = 'redis://:niuniu_redis@192.168.0.252:6379/8'       # Broker配置，使用Redis作为消息中间件
+CELERY_BROKER_URL = 'redis://:aiuaiu_rds@192.168.0.252:6379/9'      # Broker配置，使用Redis作为消息中间件
+CELERY_RESULT_BACKEND = 'redis://:aiuaiu_rds@192.168.0.252:6379/9'  # BACKEND配置，这里使用redis，改为MySQL，更方便查询
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'   # 结果序列化方案
+CELERY_TIMEZONE = "Asia/Shanghai"
+CELERY_TASK_TIME_LIMIT = 30 * 60
 
-CELERY_RESULT_BACKEND = 'redis://:niuniu_redis@192.168.0.252:6379/8'   # BACKEND配置，这里使用redis
-
-CELERY_RESULT_SERIALIZER = 'json'  # 结果序列化方案
 
 connections.create_connection(hosts=['192.168.0.45:9200'], timeout=60)
 
@@ -224,7 +230,7 @@ LOGGING = {
 
     'loggers': {
         'django': {
-            'handlers': ['console', 'file'],
+            'handlers': ['console'],
             'level': 'INFO',
 			'propagate': True,
         },

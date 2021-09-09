@@ -20,6 +20,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/user/', include('user.urls')),
     path('api/meta_manage/', include('meta_manage.urls')),
+    path('api/slowquery/', include('slowquery.urls')),
     path('api/slowsql/', include('slowsql.urls')),
     path('api/check/', include('check.urls')),
+    path('api/alertinfo/', include('alertinfo.urls')),
 ]

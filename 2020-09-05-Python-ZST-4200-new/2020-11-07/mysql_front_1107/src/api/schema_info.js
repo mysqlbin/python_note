@@ -7,6 +7,11 @@ export let getSchemaNameList = () => {
     return request.get("/meta_manage/mysql_schema/get_distinct_schema_names/")
 }
 
+export let getInstanceNameList = () => {
+    return request.get("/meta_manage/mysql_schema/get_distinct_instance_names/")
+}
+
+
 /*
 export let getSchemaList = () => {
     return request.get("/meta_manage/mysql_schema/")

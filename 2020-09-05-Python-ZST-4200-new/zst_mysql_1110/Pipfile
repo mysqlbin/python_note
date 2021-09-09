@@ -1,6 +1,6 @@
 [[source]]
 name = "pypi"
-url = "https://pypi.douban.com/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple/"
 verify_ssl = true
 
 [dev-packages]
@@ -14,14 +14,17 @@ django-filter = "*"
 django-cors-headers = "*"
 update = "*"
 kombu = "*"
-celery = "==5.0.3"
-celery-with-redis = "*"
-redis = "*"
+# celery = "==5.0.3"
+# celery-with-redis = "*"
+# redis = "*"
 kafka-python = "*"
 tqdm = "*"
 requests = "*"
 elasticsearch-dsl = "*"
 elasticsearch = "*"
+numpy = "*"
+matplotlib = "*"
+celery = "==5.0.5"
 
 [requires]
 python_version = "3.6"

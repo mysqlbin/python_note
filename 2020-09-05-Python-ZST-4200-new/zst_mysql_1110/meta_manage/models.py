@@ -1,11 +1,32 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.utils import timezone
 
+
+# 基础表，包含了gmt_update 和gmt_create两个字段
+class AbcModel(models.Model):
+    name = models.CharField(max_length=30)
+    memory = models.CharField(max_length=30)
+    cpu = models.CharField(max_length=30)
+    gmt_create = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        db_table = "mysql_abc"
+
+class EfgModel(models.Model):
+    name = models.CharField(max_length=30)
+    memory = models.CharField(max_length=30)
+    cpu = models.CharField(max_length=30)
+    gmt_create = models.DateTimeField(auto_now_add=True, null=True)
+
+    class Meta:
+        db_table = "mysql_efg"
 
 # 基础表，包含了gmt_update 和gmt_create两个字段
 class CommonModel(models.Model):
     gmt_update = models.DateTimeField(auto_now=True, null=True)
-    gmt_create = models.DateTimeField(auto_now_add=True, null=True)
+    # gmt_create = models.DateTimeField(auto_now_add=True, null=True)
+    gmt_create = models.DateTimeField(default=timezone.now)
 
     class Meta:
         abstract = True
@@ -25,12 +46,13 @@ class MySQLSchema(CommonModel):
     MASTER = 'master'
     SLAVE = 'slave'
     id = models.BigAutoField(primary_key=True)
-    host_ip = models.GenericIPAddressField(max_length=128)
+    host_ip = models.GenericIPAddressField(max_length=64)
     port = models.IntegerField()
     schema = models.CharField(max_length=64)
     role = models.CharField(max_length=64, choices=((MASTER, 'master'), (SLAVE, 'slave')))
     status = models.EmailField(max_length=64, null=False, default='online')
     phy_host = models.ForeignKey(Host, null=True, on_delete=models.PROTECT, db_constraint=False)
+    instance_name = models.CharField(max_length=128, null=True, default=None)
 
     class Meta:
         db_table = "mysql_schema"
@@ -63,3 +85,25 @@ class SchemaModel(models.Model):
     ], max_length=128, verbose_name='数据库类型')
     ip = models.GenericIPAddressField(verbose_name='ip')
     port = models.IntegerField(verbose_name='端口')
+
+
+
+class SchemaTest3(models.Model):
+    MYSQL = 'MySQL'
+    SQLSERVER = 'SQLServer'
+    REDIS = 'Redis'
+    schema = models.CharField(max_length=128, verbose_name='库名')
+    db_type = models.CharField(choices=[
+        (MYSQL, 'mysql'),
+        (SQLSERVER, 'sqlserver'),
+        (REDIS, 'redis')
+    ], max_length=128, verbose_name='数据库类型')
+    ip = models.GenericIPAddressField(verbose_name='ip')
+    port = models.IntegerField(verbose_name='端口')
+
+    class Meta:
+        managed = False
+        db_table = 'schema_test3'
+        verbose_name = u'测试表'
+        verbose_name_plural = u'测试表'
+

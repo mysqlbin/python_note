@@ -26,10 +26,23 @@ from zst_mysql_1110.celery import app
 from .models import SchemaModel
 from django.core.exceptions import ValidationError
 from django.http import JsonResponse, Http404
+from django.http import HttpResponse
 
 import MySQLdb
 
 from rest_framework.decorators import api_view
+from .models import AbcModel, EfgModel
+
+def adddata(request):
+    b = AbcModel(name="python基础",memory='32', cpu='10')
+    b.save()#保存
+    return HttpResponse("添加成功")
+
+def adddata02(request):
+    b = EfgModel(name="python基础",memory='32', cpu='10')
+    b.save()#保存
+    return HttpResponse("添加成功")
+
 
 @api_view(['GET'])
 def get_schema_by_ip(request):
@@ -68,16 +81,18 @@ def celery_debug(request):
 
     return MyJsonResponse(message="success")
 
-@api_view(['GET'])
-def celery_result(request):
 
-    # 使用 AsyncResult 方式获取执行结果.
-    # AsyncResult 主要用来存储任务执行信息与执行结果(类似 js 中的 Promise 对象)
+# @api_view(['GET'])
+# def celery_result(request):
+# 
+#     # 使用 AsyncResult 方式获取执行结果.
+#     # AsyncResult 主要用来存储任务执行信息与执行结果(类似 js 中的 Promise 对象)
+# 
+#     result = AsyncResult(id="afb720ba-1147-464a-ae69-0af6ced80ad8", app=app)
+#     # print(result)
+#     print(result.state)
+#     return MyJsonResponse(message="success")
 
-    result = AsyncResult(id="afb720ba-1147-464a-ae69-0af6ced80ad8", app=app)
-    # print(result)
-    print(result.state)
-    return MyJsonResponse(message="success")
 
 class CustomPagination(PageNumberPagination):
 
@@ -110,6 +125,13 @@ class SchemaViewSet(viewsets.ModelViewSet):
 
         return Response(name_list)
 
+    @action(detail=False, methods=['get'])
+    def get_distinct_instance_names(self, request, *args, **kwargs):
+        queryset = self.get_queryset().values('instance_name').distinct()
+        # 我们这里没有使用序列化器，而是将query set变成了一个列表返回
+        instance_list = [d["instance_name"] for d in list(queryset)]
+
+        return Response(instance_list)
 
     @action(detail=True, methods=['get'])
     def get_schema_processlist(self, request, pk=None, *args, **kwargs):

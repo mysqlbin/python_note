@@ -1,25 +1,14 @@
 <template>
     <div class="nav-content">
         <div style="float: right;margin-right: 10px;">
-
             <el-dropdown >
-              
                 <span class="el-dropdown-link username">
                     {{username}}<i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
-
                 <el-dropdown-menu slot="dropdown">
-
                     <el-dropdown-item @click.native="logout">退出</el-dropdown-item>
-
                 </el-dropdown-menu>
-
             </el-dropdown>
-            
-            <!-- <el-main>
-                <router-view></router-view>
-            </el-main> -->
-     
         </div>
     </div>
 </template>
@@ -38,16 +27,14 @@
         methods: {
             logout(){
                 logout().then(resp => {
-                    // console.log(resp)
                     let data = resp.data
                     if (data.code === 2000) {
                         this.$message.info('退出成功'); 
-                        this.$store.commit('setUser',''); //更新setUser为空
+                        // 重置mutations setUser()的值为空
+                        this.$store.commit('setUser',''); 
                         this.$router.push('/login');
                     }else{
-
                        this.$message.error("无法退出") 
-
                     }
                 }).catch(err => {
                     if (err) {

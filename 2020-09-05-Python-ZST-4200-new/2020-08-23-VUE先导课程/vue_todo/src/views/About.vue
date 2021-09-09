@@ -2,8 +2,10 @@
   <div class="about">
     <h1>简单的计算器</h1>
     <p>
+      <!-- 3种不同的方式 -->
       <button @click="add()">+</button>
       <button @click="sub">-</button>
+      <button @click="numbers--">--</button>
     </p>
     <p>
       {{numbers}}
@@ -21,8 +23,10 @@ MVVM是Model-View-ViewModel的简写。它本质上就是MVC 的改进版。MVVM
 template 是 view
 model 是 javascript代码
 ViewModel 是 view 跟 model 之间的桥梁：
-  databind
-  dom listener
+  databind：数据绑定
+  dom listener：dom监听
+
+Vue 还提供了 v-model 指令，它能轻松实现表单输入和应用状态之间的双向绑定。 
 
 */
 
@@ -30,15 +34,17 @@ ViewModel 是 view 跟 model 之间的桥梁：
 export default {
   data(){
     return {
-      // 默认为0
+      // 定义numbers变量，默认值为0
       numbers: 0
     }
   },
   methods:{
     add(){
+      // 对变量进行加法计算
       this.numbers++
     },
     sub(){
+      // 对变量进行减法计算
       this.numbers--
     }
   }

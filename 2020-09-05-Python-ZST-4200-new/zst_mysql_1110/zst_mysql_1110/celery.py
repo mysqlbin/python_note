@@ -2,6 +2,7 @@ import os
 
 from celery import Celery
 # from django.conf import settings
+from celery.schedules import crontab
 
 # set the default Django settings module for the 'celery' program.
 # 设置django环境
@@ -25,7 +26,18 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 # app.autodiscover_tasks(settings.INSTALLED_APPS)
 app.autodiscover_tasks()
 
-@app.task(bind=True)
-def debug_task(self):
-    print(f'Request: {self.request!r}')
+app.conf.redbeat_redis_url = 'redis://:niuniu_redis@192.168.0.252:6379/9'
+
+app.conf.beat_schedule = {
+    'check_every_30': {
+        'task': 'meta_manage.tasks.adds',
+        # 'schedule': crontab(minute='*/15'),
+        'schedule': crontab(),
+    }
+}
+
+
+# @app.task(bind=True)
+# def debug_task(self):
+#     print(f'Request: {self.request!r}')
 
