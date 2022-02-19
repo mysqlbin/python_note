@@ -13,20 +13,27 @@
 a = ''
 b = False
 c = []
+d = None
 
-print(a==None)   #比较值
-print(b==None)
-print(c==None)
+print(a == None)   #比较值
+print(b == None)
+print(c == None)
+print(d == None)
 print(a is None)
 print(b is None)
 print(c is None)
+print(d is None)
 
 """
 输出
 False
 False
 False
+True
 False
+False
+False
+True
 """
 #
 
@@ -74,26 +81,49 @@ else:
 S
 F
 运行结果，发现会打印不一样的值:
-    not a 它的意思相当于True， 所以会打印出S
+    not a：它的意思相当于True， 所以会打印出S。初步明白了。
     a is None是比较运算
     它们不属于同一种类型，因此会出现不一样的打印值。
 
 """
 
-start_pos = None
+end_pos = None
+if end_pos:
+    print(1)
+else:
+    print("start_pos = None is false")
 
-start_pos = start_pos if start_pos else 4
+end_pos = 0
+if end_pos:
+    print("end_pos = 0 is false")
 
-print(start_pos)
+end_pos_02 = False
+if end_pos_02:
+    print("end_pos_02 = 0 is false")
+
+end_pos_03 = {}
+if end_pos_03:
+    print("end_pos_02 = {} is false")
+
+end_pos_04 = ()
+if end_pos_04:
+    print("end_pos_04 = () is false")
+
+
+
 
 """
 输出： 4
 """
 
 # 4. 判空操作的推荐方法
-# 那么对于判空操作语法调用，我一般推荐这样操作  if not a：
-# 通过这样一个判空操作，不管a是None还是空字符串、空列表或者布尔值，你都会得到想要的值， 如下所示
 
+"""
+那么对于判空操作语法调用，我一般推荐这样操作  if not a：
+通过这样一个判空操作，不管a是None还是空字符串、空列表或者布尔值，你都会得到想要的值， 如下所示
+https://www.cnblogs.com/devops-qxw/p/9641316.html    python中的not具体表示是什么
+"""
+print(".......................")
 b = None
 if not b:
     print(b)
@@ -125,6 +155,7 @@ if not b:
 """
 输出：[]
 """
+print(".......................")
 
 # 5. None和False
 """
@@ -140,63 +171,67 @@ if not b:
 
 
 
+# 7. not
+"""
+https://www.cnblogs.com/devops-qxw/p/9641316.html    python中的not具体表示是什么
+"""
 
-# cc = 52
-#
-# if not cc:
-#     print(5513)
-# else:
-#     print(111111111)
-#
-# a = None
-# if not a:
-#     seconds_behind_master = None
-#     print(seconds_behind_master)
-#     if seconds_behind_master != 0:
-#         print(1111)
+cc = 52
+if not cc:
+    print(5513)
+else:
+    print(111111111)
 
-
-
+# 8. is or ==
 reaCode = None
 if (reaCode == None):
-    print("is null1")
+    print("== None")
 else:
-    print("not1!")
-
-
+    print("!= None!")
 
 if (reaCode is None):
-    print("is null2")
+    print("is None")
 else:
-    print("not2!")
+    print("not is None")
 
-reaCode = ''
+"""
+SyntaxWarning: "is" with a literal. Did you mean "=="?
+
 if (reaCode is ''):
-    print("is null string")
+    print("is 空 string")
 else:
-    print("not!")
-
+    print("not is 空 string!")
+"""
 
 reaCode = ''
 if (reaCode == ''):
-    print("is null string")
+    print("= 空 string")
 else:
-    print("not!")
+    print("!= 空 string")
+
 
 if (reaCode == None):
-    print("is null")
+    print("空 string == None")
 else:
-    print("not!")
+    print("空 string != None!")
 
 if (reaCode is None):
-    print("is null")
+    print("空 string is None")
 else:
-    print("not!")
-
-# None是一个空的对象，代表什么都没有。
-# 而''，是一个字符串对象，代表一个空的字符串。
-
+    print("空 string not is None!")
 
 a = ''
 if a == '':
     print(2222)
+
+"""
+None是一个空的对象，代表什么都没有。
+而''，是一个字符串对象，代表一个空的字符串。
+is判断：
+    值要相同，并且内存地址要相同才成立
+==判断：
+    值要相同就成立
+    
+
+"""
+

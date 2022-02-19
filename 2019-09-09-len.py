@@ -14,6 +14,15 @@ tuples = (1, None)
 if len(tuples) == 0:
     print('empty tuples')
 
+if tuples:
+    print("debug")
+
+tuples_len = ()
+if len(tuples_len) == 0:
+    print('empty tuples')
+
+if tuples_len:
+    print("debugs")
 
 a = 1
 b = a
