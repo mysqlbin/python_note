@@ -1,21 +1,132 @@
 
-# 在函数内部修改函数外部的变量
-a = 'a'
+"""
+# 1. 可变数据类型-列表的修改(原地修改)
+# 2. 列表的扩容
+# 3. 列表的引用，相当于是别名(对象的引用)
+# 4. 不可变类型-字符串string
+# 5. 可变类型： 在函数内部修改传参的列表，函数外的列表也会发生改变。
+# 6. 不可变类型：在函数内部修改传参的变量，函数外的变量不会发生改变。
 
-def f():
-    global a
-    a = 'b'
-    print(a)
-
+"""
 
 if __name__ == '__main__':
 
     print(".....................")
+    # 1. 可变数据类型-列表的修改(原地修改)
+    l_a = [1, 2]
+    print("id(id): ", id(l_a))
+    l_a.append(3)
+    print("id(la): ", id(l_a))
+    print("l_a value: ", l_a)
+    """
+        id(id):  2109933179392
+        id(la):  2109933179392
+        l_a value:  [1, 2, 3]
+    """
 
-    # print(a)
-    # f()
-    # print(a)
-    
+    print(".....................")
+
+    # 2. 列表的扩容
+    l_a = [1, 2]
+    print("l_a before change: ", l_a, id(l_a))
+    l_a.append(3)
+    print("l_a after change: ", l_a, id(l_a))
+    for i in range(10000000):
+        l_a.append(i)
+    print("l_a after many changes: ", len(l_a), id(l_a))
+
+    """
+        l_a before change:  [1, 2] 2901313295552
+        l_a after change:  [1, 2, 3] 2901313295552
+        l_a after many changes:  10000003 2901313295552      
+        扩容后(拆迁后)的内存地址没有变化
+    """
+
+    print(".....................")
+    # 3. 列表的引用，相当于是别名(对象的引用)
+    l_a = [1, 2]
+    l_b = l_a
+    """
+        区别：
+          l_a = [1, 2]
+          l_b = [1, 2]
+    """
+    print("l_a_value: ", id(l_a))
+    print("l_b_value: ", id(l_b))
+
+    str_01 = 'l_a length before l_b append: {}, len: {}'.format(l_a, len(l_a))
+    print(str_01)
+
+    l_b.append(1)
+    str_02 = 'l_b length after l_b append: {}, len: {}'.format(l_b, len(l_b))
+    str_03 = 'l_a length after l_b append: {}, len: {}'.format(l_a, len(l_a))
+    print(str_02)
+    print(str_03)
+
+    """
+        l_a_value:  2369475400192
+        l_b_value:  2369475400192
+        l_a length before l_b append: [1, 2], len: 2
+        l_b length after l_b append: [1, 2, 1], len: 3
+        l_a length after l_b append: [1, 2, 1], len: 3  
+    """
+
+    print(".....................")
+
+    # 4. 不可变类型-字符串string
+    a_str = "zst"
+    print("a_str before change", a_str, id(a_str))
+    #
+    a_str = "python"
+    print("a_str after change", a_str, id(a_str))
+
+    """
+        a_str before change zst 2095443116808
+        a_str after change python 2095443255344
+    """
+
+
+    print(".....................")
+    # 5. 可变类型： 在函数内部修改传参的列表，函数外的列表也会发生改变。
+    # 传值
+    def lfunc(l):
+        print("in func", l, id(l))
+        l.append(1)
+        print("in func append after", l, id(l))
+    l = []
+    print("out of func", l, id(l))
+    lfunc(l)
+    print("out of func", l, id(l))
+
+    """
+        out of func [] 1535551993992
+        in func [] 1535551993992
+        in func append after [1] 1535551993992
+        out of func [1] 1535551993992
+        这里理解了，可以参考老师画的图来理解。
+    """
+    print(".....................")
+
+
+    # 6. 不可变类型：在函数内部修改传参的变量，函数外的变量不会发生改变。
+    # 不可变类型在函数中传递的变化
+    b = 1
+    def func(a):
+        print("a id", a,  id(a))
+        a += 1
+        # 数值型是不可变的数据类型，所以 a += 1 实际了开辟了新的一块内存地址。
+        print("a after add", a, id(a))
+    print("before func", b, id(b))
+    func(b)
+    print("after func", b, id(b))
+
+    """
+        before func 1 500591360
+        a id 1 500591360
+        a after add 2 500591392
+        after func 1 5005913606
+        这里理解了，可以参考老师画的图来理解。
+    """
 
     # a = 1
     # def funct(a):

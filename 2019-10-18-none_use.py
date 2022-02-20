@@ -1,12 +1,16 @@
 #!/usr/local/bin/python3
 #coding=utf-8
 
+"""
 # 1. None表示空(Null)，但它不等于空字符串、空列表，也不等同于False，通过下面的代码进行验证
 # 2. if  not a和if a is None两者的区别
 # 3. None和False
 # 4. 判空操作的推荐方法
 # 5. None和False
 # 6. 相关参考
+# 7. not
+# 8. is or ==
+"""
 
 # 1.None表示空，但它不等于空字符串、空列表，也不等同于False，通过下面的代码进行验证
 """"""

@@ -33,7 +33,7 @@ def user_detail(request, id):
 
     l = get_object_or_404(Users, id=id)
 
-    # get_object_or_404的介绍： 我们原来调用django 的get方法(model.object.get())，如果查询的对象不存在的话，会抛出一个DoesNotExist的异常，
+    # get_object_or_404 的介绍： 我们原来调用django 的get方法(model.object.get())，如果查询的对象不存在的话，会抛出一个DoesNotExist的异常，
     # l = get_object_or_404(Users, first_name='la')
     # get() returned more than one Users -- it returned 2!
 

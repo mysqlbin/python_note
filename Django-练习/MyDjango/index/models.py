@@ -22,7 +22,7 @@ class Province(models.Model):
 # 城市表
 class City(models.Model):
     name = models.CharField(max_length=5)
-    province = models.ForeignKey(Province, on_delete=models.CASCADE)
+    province = models.ForeignKey(Province, don_delete=models.CASCADE)
 
 # 人物信息表
 class Person(models.Model):
