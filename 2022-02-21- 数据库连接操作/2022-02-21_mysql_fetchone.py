@@ -32,7 +32,7 @@ def get_connect(host, user, passwd, db_name, charset):
 
     # return db, cur
 
-host = "101.37.253.14"
+host = "
 user = "root"
 passwd = "123456abc"
 db_name = "test_db"
