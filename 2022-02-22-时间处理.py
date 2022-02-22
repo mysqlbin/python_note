@@ -4,6 +4,8 @@
 import time
 import datetime
 
+# 要加上目录
+
 
 # start_time = '2019-06-18 03:00:00'
 # start_times = datetime.datetime.strptime(start_time, '%Y-%m-%d %H:%M:%S')
@@ -53,6 +55,8 @@ print(default_time)
 # day = current_time.strftime('%d')
 
 
-
-
+# 时间戳
+import time
+now_time = int(time.time())
+print("时间戳：{}".format(now_time))
 
