@@ -178,6 +178,7 @@ print(".......................")
 # 7. not
 """
 https://www.cnblogs.com/devops-qxw/p/9641316.html    python中的not具体表示是什么
+在python中not是逻辑判断词，用于布尔型True和False，not True为False，not False为True
 """
 
 cc = 52
@@ -185,6 +186,21 @@ if not cc:
     print(5513)
 else:
     print(111111111)
+
+a_20220222 = True
+if not a_20220222:
+    print('not a_20220222: 01')
+else:
+    print('not a_20220222: 02')
+
+
+# not True
+if not True:
+    print('false')
+else:
+    print('true')
+
+
 
 # 8. is or ==
 reaCode = None
