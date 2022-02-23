@@ -1,0 +1,55 @@
+logger_test 2022-02-21 22:44:43 2022-02-21_mysql_fetchone.py:69 INFO this is a debug message
+logger_test 2022-02-21 22:47:38 2022-02-21_mysql_fetchone.py:69 INFO this is a debug message
+logger_test 2022-02-21 23:28:16 2022-02-21_mysql_fetchone.py:62 ERROR (2003, "Can't connect to MySQL server on '101.37.253.142' ([WinError 10061] 由于目标计算机积极拒绝，无法连接。)")
+Traceback (most recent call last):
+  File "D:\mysqlbin\git_project\python_note\venv\lib\site-packages\pymysql\connections.py", line 613, in connect
+    sock = socket.create_connection(
+  File "C:\Users\mysqlbin\AppData\Local\Programs\Python\Python39\lib\socket.py", line 844, in create_connection
+    raise err
+  File "C:\Users\mysqlbin\AppData\Local\Programs\Python\Python39\lib\socket.py", line 832, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [WinError 10061] 由于目标计算机积极拒绝，无法连接。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\mysqlbin\git_project\python_note\2022-02-21- 数据库连接操作\2022-02-21_mysql_fetchone.py", line 48, in <module>
+    cur = get_connect(host, user, passwd, db_name, charset)
+  File "D:\mysqlbin\git_project\python_note\2022-02-21- 数据库连接操作\2022-02-21_mysql_fetchone.py", line 23, in get_connect
+    db = pymysql.connect(
+  File "D:\mysqlbin\git_project\python_note\venv\lib\site-packages\pymysql\connections.py", line 353, in __init__
+    self.connect()
+  File "D:\mysqlbin\git_project\python_note\venv\lib\site-packages\pymysql\connections.py", line 664, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on '101.37.253.142' ([WinError 10061] 由于目标计算机积极拒绝，无法连接。)")
+logger_test 2022-02-21 23:28:59 2022-02-21_mysql_fetchone.py:62 ERROR (2003, "Can't connect to MySQL server on '101.37.253.142' ([WinError 10061] 由于目标计算机积极拒绝，无法连接。)")
+Traceback (most recent call last):
+  File "D:\mysqlbin\git_project\python_note\venv\lib\site-packages\pymysql\connections.py", line 613, in connect
+    sock = socket.create_connection(
+  File "C:\Users\mysqlbin\AppData\Local\Programs\Python\Python39\lib\socket.py", line 844, in create_connection
+    raise err
+  File "C:\Users\mysqlbin\AppData\Local\Programs\Python\Python39\lib\socket.py", line 832, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [WinError 10061] 由于目标计算机积极拒绝，无法连接。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\mysqlbin\git_project\python_note\2022-02-21- 数据库连接操作\2022-02-21_mysql_fetchone.py", line 48, in <module>
+    cur = get_connect(host, user, passwd, db_name, charset)
+  File "D:\mysqlbin\git_project\python_note\2022-02-21- 数据库连接操作\2022-02-21_mysql_fetchone.py", line 23, in get_connect
+    db = pymysql.connect(
+  File "D:\mysqlbin\git_project\python_note\venv\lib\site-packages\pymysql\connections.py", line 353, in __init__
+    self.connect()
+  File "D:\mysqlbin\git_project\python_note\venv\lib\site-packages\pymysql\connections.py", line 664, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on '101.37.253.142' ([WinError 10061] 由于目标计算机积极拒绝，无法连接。)")
+logger_test 2022-02-21 23:28:59 2022-02-21_mysql_fetchone.py:69 INFO this is a debug message
+logger_test 2022-02-21 23:30:48 2022-02-21_mysql_fetchone.py:69 INFO this is a debug message
+logger_test 2022-02-21 23:31:07 2022-02-21_mysql_fetchone.py:70 INFO this is a debug message
+logger_test 2022-02-21 23:31:42 2022-02-21_mysql_fetchone.py:76 INFO this is a debug message
+logger_test 2022-02-21 23:32:58 2022-02-21_mysql_fetchone.py:82 INFO this is a debug message
+logger_test 2022-02-21 23:33:08 2022-02-21_mysql_fetchone.py:82 INFO this is a debug message
+logger_test 2022-02-21 23:33:28 2022-02-21_mysql_fetchone.py:85 INFO this is a debug message
+logger_test 2022-02-21 23:33:35 2022-02-21_mysql_fetchone.py:85 INFO this is a debug message
+logger_test 2022-02-21 23:35:32 2022-02-21_mysql_fetchone.py:85 INFO this is a debug message
