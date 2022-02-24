@@ -2,35 +2,84 @@
 #coding=utf-8
 import re
 
-""" findall """
+# 1. findall
+
+
+# 1. findall
+
 import re
 line = 'Cats are smarter than dogs'
-matchOjb = re.findall(r'\w+', line, re.M | re.I)
-print(matchOjb)
-""" 输出： ['Cats', 'are', 'smarter', 'than', 'dogs'] """
+res = re.findall(r'\w+', line, re.M | re.I)
+if res:
+    print("res: {}".format(res))
+else:
+    print("not find")
+"""
+res: ['Cats', 'are', 'smarter', 'than', 'dogs']
+"""
+print("..................................................")
 
 # 等价于
 import re
 line = 'Cats are smarter than dogs'
 pattern = re.compile(r'\w+', re.M | re.I)
-print(pattern.findall(line))
-""" 输出： ['Cats', 'are', 'smarter', 'than', 'dogs'] """
+res = pattern.findall(line)
+if res:
+    print("res: {}".format(res))
+else:
+    print("not find")
+"""
+res: ['Cats', 'are', 'smarter', 'than', 'dogs']
+"""
 
+print("..................................................")
 
+line = 'carry the barcardi to the car'
+res = re.findall('car', line)
+if res:
+    print("res: {}".format(res))
+else:
+    print("not find")
+"""
+res: ['car', 'car', 'car']
+"""
+
+print("..................................................")
+
+# 2. finditer
 """ finditer """
 import re
 line = 'Cats are smarter than dogs'
-matchOjb = re.finditer(r'\w+', line, re.M | re.I)
-print(matchOjb)
-""" 输出： <callable-iterator object at 0x7f49023a5dd0> """
-for items in matchOjb:
-    print (items.group())
-
+res = re.finditer(r'\w+', line, re.M | re.I)
+print("type: {}".format(type(res)))
+if res:
+    for items in res:
+        print(items.group())
+else:
+    print("not find")
 """
-输出：
+type: <class 'callable_iterator'>
 Cats
 are
 smarter
 than
 dogs
+"""
+
+print("..................................................")
+
+line = 'carry the barcardi to the car'
+res = re.finditer('car', line)
+print("type: {}".format(type(res)))
+if res:
+    for items in res:
+        print(items.group())
+else:
+    print("not find")
+
+"""
+type: <class 'callable_iterator'>
+car
+car
+car
 """

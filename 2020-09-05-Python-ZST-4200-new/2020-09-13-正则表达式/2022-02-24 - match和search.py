@@ -2,31 +2,92 @@
 #coding=utf-8
 import re
 
-
-""" match """
-
-# line = 'Cats are smarter than dogs'
-# matchOjb = re.match(r'dogs', line, re.M|re.I)
-# print(matchOjb)
-# 输出: None
-
-# line = 'Cats are smarter than dogs'
-# matchOjb = re.match(r'Cats are', line, re.M|re.I)
-# print(matchOjb.group())
-# 输出: Cats are
+# 1. match
+# 2. search
+# 3. 小结
+# 4. MySQL 中的模糊匹配/查找
 
 
-""" search """
-# line = 'Cats are smarter than dogs'
-# matchOjb = re.search(r'smarter', line, re.M|re.I)
-# print(matchOjb.group())
-""" 输出: smarter """
+# 1. match
 
+line = 'Cats are smarter than dogs'
+matchOjb = re.match(r'dogs', line, re.M|re.I)
+print(matchOjb)
+if matchOjb is not None:
+    print("matchOjb: {}".format(matchOjb))
+    print("matchOjb.group(): {}".format(matchOjb.group()))
+else:
+    print('None')
 """
-小结：
+    None
+"""
+print("..................................................")
+
+line = 'Cats are smarter than dogs'
+matchOjb = re.match(r'Cats are', line, re.M|re.I)
+if matchOjb is not None:
+    print("matchOjb: {}".format(matchOjb))
+    print("matchOjb.group(): {}".format(matchOjb.group()))
+else:
+    print('None')
+"""
+    matchOjb: <re.Match object; span=(0, 8), match='Cats are'>
+    matchOjb.group(): Cats are
+"""
+
+print("..................................................")
+
+
+# 2. search
+line = 'Cats are smarter than dogs'
+searchOjb = re.search(r'smarter', line, re.M|re.I)
+if searchOjb is not None:
+    print("searchOjb: {}".format(searchOjb))
+    print("searchOjb.group(): {}".format(searchOjb.group()))
+else:
+    print('None')
+
+""" 
+searchOjb: <re.Match object; span=(9, 16), match='smarter'>
+searchOjb.group(): smarter
+"""
+
+print("..................................................")
+
+line = 'Cats are smarter than dogs'
+searchOjb = re.search(r'dog', line, re.M|re.I)
+if searchOjb is not None:
+    print("searchOjb: {}".format(searchOjb))
+    print("searchOjb.group(): {}".format(searchOjb.group()))
+else:
+    print('None')
+"""
+searchOjb: <re.Match object; span=(22, 25), match='dog'>
+searchOjb.group(): dog
+"""
+
+
+print("..................................................")
+
+line = 'Cats are dogs smarter than dogs'
+searchOjb = re.search(r'dog', line, re.M|re.I)
+if searchOjb is not None:
+    print("searchOjb: {}".format(searchOjb))
+    print("searchOjb.group(): {}".format(searchOjb.group()))
+else:
+    print('None')
+"""
+searchOjb: <re.Match object; span=(9, 12), match='dog'>
+searchOjb.group(): dog
+"""
+
+# 3. 小结
+"""
     match：匹配以什么开头的，相当于MySQL的 like 'xxx%';
-    search：匹配包含‘search’的，相当于MySQL的 like '%xxx%'; 
+    search：匹配包含'xxx'的，相当于MySQL的 like '%xxx%'; 
 """
+
+# 4. MySQL 中的模糊匹配/查找
 
 """
 CREATE TABLE `regulars` (
@@ -72,30 +133,9 @@ mysql> select * from regulars where name like '%dogs';
 |  1 | Cats are smarter than dogs |
 +----+----------------------------+
 1 row in set (0.00 sec)
-
-
-CREATE TABLE `regulars` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-INSERT INTO `regulars` (`id`, `name`) VALUES ('1', 'smarter abc');
-select * from regulars where `name` like 'sma%';
-
--- 以 sma 开头的。
-mysql> select * from regulars where `name` like 'sma%';
-+----+-------------+
-| id | name        |
-+----+-------------+
-|  1 | smarter abc |
-+----+-------------+
-1 row in set (0.00 sec)
-
-
 """
 
-""" match 对象, match 方法 """
+
 
 
 # Match 属性
