@@ -43,7 +43,9 @@ def insert_base_data(request):
 
 """
 # 1. all()全表查询
-
+# 2. values()方法查询某个字段
+    # 2.1 查询1个字段
+    # 2.2 filter 跟 values 结合使用并且查询2个字段
 """
 def select_opt(request):
 
@@ -63,12 +65,31 @@ def select_opt(request):
     """
 
     # 2. values()方法查询某个字段
-    name = Product.objects.values('name')
-    print("name: {}".format(name[1]['name']))
-    # name: xiaomi2
+    # 以列表的形式返回数据，列表元素以字典格式表示
 
-    name2 = Product.objects.filter(id=1).values('name')
+    # 2.1 查询1个字段
+    p_name_res = Product.objects.values('name')
+    print("name_res_list_type: {}".format(type(p_name_res)))
+    print("name_res_list: {}".format(p_name_res))
+    print("name: {}".format(p_name_res[1]['name']))
+
+    for res in p_name_res:
+        print("name: {}".format(res['name']))
+
+    """
+    name_res_list_type: <class 'django.db.models.query.QuerySet'>
+    name_res_list: <QuerySet [{'name': 'xiaomi1'}, {'name': 'xiaomi2'}, {'name': 'mac1'}, {'name': 'mac2'}]>
+    name: xiaomi2
+    name: xiaomi1
+    name: xiaomi2
+    name: mac1
+    name: mac2
+
+    """
+
+    # 2.2 filter 跟 values 结合使用并且查询2个字段
+    name2 = Product.objects.filter(id=1).values('name', 'weight')
     print(name2)
-    # <QuerySet [{'name': 'xiaomi1'}]>
+    # <QuerySet [{'name': 'xiaomi1', 'weight': '10'}]>
     
     return HttpResponse("...")

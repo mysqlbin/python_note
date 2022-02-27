@@ -38,7 +38,6 @@ passwd = "123456abc"
 db_name = "test_db"
 charset = "utf8mb4"
 
-
 """
 
 CREATE TABLE `trade_detail` (
@@ -83,6 +82,7 @@ mysql> select * from trade_detail;
 11 rows in set (0.00 sec)
 
 """
+
 if __name__ == '__main__':
 
     # print(sys.version)
@@ -92,76 +92,50 @@ if __name__ == '__main__':
 
         cur = get_connect(host, user, passwd, db_name, charset)
 
-        sql = "select GROUP_CONCAT(`step_info` SEPARATOR ',') from trade_detail where tradeid='333'"
+        sql = "select * from trade_detail where tradeid='aaaaaaad'"
 
         cur.execute(sql)
 
         print("rowcount: {}".format(cur.rowcount))
 
-        data = cur.fetchone()
+        data = cur.fetchall()
 
+        print("type(data): {}".format(type(data)))
+        print("data: {}".format(data))
+
+        for i in data:
+            print("取二维元组的一维元组: {}".format(i))     
+            print("取二维元组的一维元组的第1个元素: {}".format(i[0])) 
+            print("取二维元组的一维元组的第2个元素: {}".format(i[1]))  
        
-        print(type(data))
-        print(data)
-
-        # if data is None:
-        #     print(222)
 
         if data is not None:
             print(222222)
+        
         """
         返回的数据格式为元组
-        查询所有的字段 并且查询语句只查询一行记录：select * from trade_detail where id=1
         查询到数据的场景
-        <class 'tuple'>
-        (1, 'aaaaaaaa', 1, 'add', '')
-        
+            select * from trade_detail where tradeid='aaaaaaad'
+            rowcount: 3
+            type(data): <class 'tuple'>
+            data: ((9, 'aaaaaaad', 11, 'commit', ''), (10, 'aaaaaaad', 11, 'commit', ''), (11, 'aaaaaaad', 11, 'commit', ''))
+            取二维元组的一维元组: (9, 'aaaaaaad', 11, 'commit', '')
+            取二维元组的一维元组的第1个元素: 9
+            取二维元组的一维元组的第2个元素: aaaaaaad
+            取二维元组的一维元组: (10, 'aaaaaaad', 11, 'commit', '')
+            取二维元组的一维元组的第1个元素: 10
+            取二维元组的一维元组的第2个元素: aaaaaaad
+            取二维元组的一维元组: (11, 'aaaaaaad', 11, 'commit', '')
+            取二维元组的一维元组的第1个元素: 11
+            取二维元组的一维元组的第2个元素: aaaaaaad
+            
         查询不到数据的场景
-        <class 'NoneType'>
-        None       
-        
-        查询2个字段 并且查询语句只查询一行记录: ：select id,aaaaaaaa from trade_detail where id=1
-        查询到数据的场景
-        <class 'tuple'>
-        (1, 'aaaaaaaa')
+            rowcount: 0
+            type(data): <class 'tuple'>
+            data: ()
 
-        查询不到数据的场景
-        <class 'NoneType'>
-        None       
-        
-        .....................................................................
-
-        查询语句可以查询到多行记录，但是只取一行
-        sql = "select id,tradeid from trade_detail where tradeid='aaaaaaad'"
-        <class 'tuple'>
-        (9, 'aaaaaaad')
-
-        查询语句有 sum 聚合，并且是查询2个字段
-            select sum(trade_step),sum(id) from trade_detail where tradeid='aaaaaaad'
-
-            查询到数据的场景
-            rowcount: 1
-            <class 'tuple'>
-            (Decimal('33'), Decimal('30'))
-
-            查询不到数据的场景
-            rowcount: 1
-            <class 'tuple'>
-            (None, None)
-
-        查询语句有 GROUP_CONCAT
-            查询到数据的场景
-            select GROUP_CONCAT(`step_info` SEPARATOR ',') from trade_detail where tradeid='aaaaaaad'
-            rowcount: 1
-            <class 'tuple'>
-            ('commit,commit,commit',)
-
-            查询不到数据的场景
-            select GROUP_CONCAT(`step_info` SEPARATOR ',') from trade_detail where tradeid='333'            
-            rowcount: 1
-            <class 'tuple'>
-            (None,)
         """
+
 
     except Exception as e:
         # 异常信息被自动添加到日志消息中
