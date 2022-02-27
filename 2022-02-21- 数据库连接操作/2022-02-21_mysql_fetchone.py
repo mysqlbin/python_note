@@ -34,7 +34,7 @@ def get_connect(host, user, passwd, db_name, charset):
 
 host = "101.37.253.14"
 user = "root"
-passwd = "123456abc"
+passwd = ""
 db_name = "test_db"
 charset = "utf8mb4"
 
