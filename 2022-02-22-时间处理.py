@@ -18,8 +18,8 @@ import datetime
 
 # 日期减一天
 default_time = time.strftime("%Y-%m-%d")
-default_time = datetime.datetime.strptime(default_time, '%Y-%m-%d') + datetime.timedelta(days=-60)
-print(default_time)
+default_time = datetime.datetime.strptime(default_time, '%Y-%m-%d') + datetime.timedelta(days=-1)
+print("前多少天的日期： {}".format(default_time))
 # print(default_time.strftime('%d'))
 
 # default_time = time.strftime("%Y-%m-%d %H:%M:%S")
@@ -82,7 +82,7 @@ print('.................................')
 # 时间戳转为时间
 
 # 获得指定时间时间戳
-now = int(1645516408)
+now = int(1646049600)
 #转换为其他日期格式,如:"%Y-%m-%d %H:%M:%S"
 timeArray = time.localtime(now)
 otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
@@ -92,8 +92,18 @@ print('时间: {}'.format(otherStyleTime))
 print('.................................')
 
 
-# nowtime = 1645516800
-nowtime = int(time.time())
+nowtime = 1646098200
+# nowtime = int(time.time())
 sql_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(nowtime))
 sql_comp_time = str(sql_time) + '.000000'
-print("sql_comp_time: 1".format(sql_comp_time))
+print("sql_comp_time: {}".format(sql_comp_time))
+
+totalAccount = 0
+for i in range(0,totalAccount):
+    print(i)
+
+
+# 当前日期
+
+current_date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+print("当前日期：{}".format(current_date))

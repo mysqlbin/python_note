@@ -46,6 +46,14 @@ res: ['car', 'car', 'car']
 
 print("..................................................")
 
+line = 'carry the barcardi to the car'
+res_03 = re.findall('car222', line)
+print("res_03: {}".format(res_03))
+
+print("..................................................")
+
+
+
 # 2. finditer
 """ finditer """
 import re
@@ -83,3 +91,7 @@ car
 car
 car
 """
+
+
+print("..................................................")
+

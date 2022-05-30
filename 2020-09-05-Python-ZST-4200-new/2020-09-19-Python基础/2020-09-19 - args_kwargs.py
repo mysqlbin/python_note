@@ -20,8 +20,18 @@ def week(*args, **kwargs):
     print(args)
     print(kwargs)
 
+def aaa(**kwargs):
+    print(kwargs)
+
 if __name__ == '__main__':
+
     print(".....................")
+
+
+    aaa(a=1, b=2)
+
+    print(".....................")
+
     weather('zst', '20200919')
     """
     zst
